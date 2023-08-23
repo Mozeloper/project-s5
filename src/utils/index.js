@@ -1,0 +1,38 @@
+// All reuseable helper functions helpers here **
+export function isArrayEmpty(array) {
+  return Array.isArray(array) && array.length > 0;
+}
+
+export function isObjectEmpty(obj) {
+  if (typeof obj !== "object" || obj === null) {
+    return false;
+  }
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function capitalizeFirstLetter(str) {
+  return str?.charAt(0)?.toUpperCase() + str?.slice(1);
+}
+
+export function shortenString(str, maxLength = 20) {
+  if (str.length <= maxLength) {
+    return str;
+  }
+  return str.substring(0, maxLength) + "...";
+}
+
+export const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+export function formatDate(inputDate) {
+  const date = new Date(inputDate);
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const year = String(date.getUTCFullYear()).padStart(4, "0");
+  return `${day}/${month}/${year}`;
+}
