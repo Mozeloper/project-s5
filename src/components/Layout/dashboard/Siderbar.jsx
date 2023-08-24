@@ -14,7 +14,7 @@ import { MdOutlineCollections } from "react-icons/md";
 import { SiFuturelearn } from "react-icons/si";
 import { ImUsers } from "react-icons/im";
 
-import logo from "../../../assets/icons/logo.png";
+import logo from "../../../assets/icons/TPHOL-LOGO-white.png";
 import logo2 from "../../../assets/icons/logo.png";
 import menuArrow from "../../../assets/icons/arrow-side-down.svg";
 
@@ -79,7 +79,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
       >
         <img
           src={logo}
-          alt="logo"
+          alt="tphol logo"
           loading="lazy"
           className="h-[41px] w-[45px]"
         />
