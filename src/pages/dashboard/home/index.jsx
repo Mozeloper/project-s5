@@ -1,12 +1,17 @@
 import React from "react";
-import { TableComponent } from "../../../components/Table/table";
-import PaginationFooter from "../../../components/PaginationFooter";
-// import Charts from "../../../components/chart/chart";
+import { SoulsTable } from "../../../components/Table/souls.table";
+import Charts from "../../../components/chart/chart";
+import SummeryCard from "../../../components/SummeryCard/summeryCard";
 
 export default function Home() {
+    const summeryTitle = ['Souls']
   return <div>
-    {/* <Charts /> */}
-    <TableComponent />
-    <PaginationFooter />
+    <div className="">
+      <SummeryCard title={summeryTitle[0]} />
+    </div>
+    <div className="bg-white">
+      <Charts />
+    </div>
+    <SoulsTable />
   </div>;
 }

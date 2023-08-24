@@ -3,6 +3,7 @@ import Chart from "react-apexcharts";
 
 export default function Charts() {
   const options = {
+    
     chart: {
       toolbar: {
         show: false,
@@ -59,7 +60,7 @@ export default function Charts() {
   const series = [
     {
       name: "2022",
-      data: [20, 40, 50, 30, 40, 50, 30, 30, 60],
+      data: [20, 40, 50, 30, 40, 50, 70, 30, 60],
     },
     {
       name: "2023",
@@ -67,6 +68,6 @@ export default function Charts() {
     },
   ];
   return (
-    <Charts options={options} series={series} type="area" height="279" />
+    <Chart options={options} series={series} type="area" height="279" />
   )
 }
