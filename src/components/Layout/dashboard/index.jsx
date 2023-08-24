@@ -23,7 +23,7 @@ export default function DashboardLayout() {
       <aside
         className={`${
           isSideBarOpen ? "xl:w-[18%]" : "xl:w-[3%] transition-all"
-        } lg:block hidden sticky top-0 h-screen bg-indigo-500 z-50 overflow-auto`}
+        } lg:block hidden sticky top-0 h-screen bg-[#38404b] z-50 overflow-auto`}
       >
         <Siderbar isSideBarOpen={isSideBarOpen} />
       </aside>
@@ -32,7 +32,7 @@ export default function DashboardLayout() {
           isSideBarOpen ? "xl:w-[82%]" : "xl:w-[97%]"
         } w-full h-full transition-none`}
       >
-        <header className="sticky top-0 border-none shadow h-[65px] z-50 bg-indigo-500 xl:px-6 lg:px-4 md:px-2 px-2">
+        <header className="sticky top-0 border-none shadow h-[65px] z-50 bg-[#232931] xl:px-6 lg:px-4 md:px-2 px-2">
           <Header
             setIsSideBarOpen={setIsSideBarOpen}
             isSideBarOpen={isSideBarOpen}
@@ -48,7 +48,7 @@ export default function DashboardLayout() {
         <LogoutConfirm setLogoutConfirmation={setLogoutConfirmation} />
       </ModalPopup>
       <Drawer open={openMobileSidebar} onClose={toggleDrawer} direction="left">
-        <div className="bg-indigo-500 h-screen text-indigo-500 w-[250px] overflow-auto">
+        <div className="bg-[#38404b] h-screen text-indigo-500 w-[250px] overflow-auto">
           <Siderbar isSideBarOpen={isSideBarOpen} toggleDrawer={toggleDrawer} />
         </div>
       </Drawer>

@@ -26,7 +26,7 @@ export default function BeginRegistration() {
         </p>
         <div>
           <Button
-            // onClick={() => navigate("/sign-up")}
+            onClick={() => navigate("/sign-up")}
             title="Begin Registration"
             backgroundColor="bg-primary"
           />

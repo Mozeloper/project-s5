@@ -12,12 +12,12 @@ export default function LogoutConfirm({ setLogoutConfirmation }) {
   return (
     <>
       <div className="bg-white p-8 w-[400px] h-[220px] rounded-md flex flex-col gap-4 items-center justify-center">
-        <GiConfirmed className="w-[48px] h-[48px] text-indigo-500" />
+        <GiConfirmed className="w-[48px] h-[48px] text-[#38404b]" />
         <h4 className="text-grey900 font-bold text-lg">Are you sure ?</h4>
         <div className="w-full flex gap-2">
           <Button
             title="cancel"
-            className="w-full h-[56px] text-indigo-500 text-center rounded-2xl border border-[#D0D5DD]"
+            className="w-full h-[56px] text-[#38404b] text-center rounded-2xl border border-[#D0D5DD]"
             backgroundColor="bg-none"
             type="button"
             onClick={() => setLogoutConfirmation(false)}
@@ -25,7 +25,7 @@ export default function LogoutConfirm({ setLogoutConfirmation }) {
           <Button
             title="Logout"
             className="w-full h-[56px] text-center rounded-2xl"
-            backgroundColor="bg-indigo-500"
+            backgroundColor="bg-[#38404b]"
             type="button"
             onClick={() => handleLogout()}
           />

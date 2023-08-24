@@ -102,12 +102,12 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
                           isSideBarOpen
                             ? "xl:pl-8 lg:pl-6 md:pl-4 pl-2"
                             : "pl-4"
-                        } items-center text-sm text-indigo-500 bg-white font-semibold md:h-[56px] h-[48px] rounded-tl-[20px] rounded-bl-[20px]`
+                        } items-center text-sm text-[#38404b] bg-white font-semibold md:h-[56px] h-[48px] rounded-tl-[20px] rounded-bl-[20px]`
                       : `flex gap-4 ${
                           isSideBarOpen
                             ? "xl:pl-8 lg:pl-6 md:pl-4 pl-2"
                             : "pl-4"
-                        } items-center text-sm text-white md:h-[56px] h-[48px] hover:bg-white hover:text-indigo-500 font-semibold hover:rounded-tl-[20px] hover:rounded-bl-[20px]`
+                        } items-center text-sm text-white md:h-[56px] h-[48px] hover:bg-white hover:text-[#38404b] font-semibold hover:rounded-tl-[20px] hover:rounded-bl-[20px]`
                   }
                 >
                   {list?.icon}
@@ -127,12 +127,12 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
                             isSideBarOpen
                               ? "xl:pl-8 lg:pl-6 md:pl-4 pl-2"
                               : "pl-4"
-                          } items-center justify-between text-sm text-indigo-500 bg-[#f5f5f5] font-semibold md:h-[56px] h-[48px] rounded-tl-[20px] rounded-bl-[20px]`
+                          } items-center justify-between text-sm text-[#38404b] bg-[#f5f5f5] font-semibold md:h-[56px] h-[48px] rounded-tl-[20px] rounded-bl-[20px]`
                         : `flex gap-4 ${
                             isSideBarOpen
                               ? "xl:pl-8 lg:pl-6 md:pl-4 pl-2"
                               : "pl-4"
-                          } items-center text-sm text-white md:h-[56px] h-[48px] hover:bg-[#f5f5f5] hover:text-indigo-500 font-semibold hover:rounded-tl-[20px] hover:rounded-bl-[20px]`
+                          } items-center text-sm text-white md:h-[56px] h-[48px] hover:bg-[#f5f5f5] hover:text-[#38404b] font-semibold hover:rounded-tl-[20px] hover:rounded-bl-[20px]`
                     }
                   >
                     <div className="flex gap-4 w-full items-center">
@@ -164,7 +164,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
                                     isSideBarOpen
                                       ? "xl:pl-16 lg:pl-6 md:pl-4 pl-2"
                                       : "pl-4"
-                                  } items-center mt-2 text-sm text-indigo-500 bg-[#FFFFFF14] font-semibold md:h-[56px] h-[48px] rounded-tl-[20px] rounded-bl-[20px]`
+                                  } items-center mt-2 text-sm text-[#38404b] bg-[#FFFFFF14] font-semibold md:h-[56px] h-[48px] rounded-tl-[20px] rounded-bl-[20px]`
                                 : `flex gap-4 mt-2 ${
                                     isSideBarOpen
                                       ? "xl:pl-16 lg:pl-6 md:pl-4 pl-2"
