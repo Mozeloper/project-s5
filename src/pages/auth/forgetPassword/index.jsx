@@ -4,20 +4,17 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-hot-toast";
 import Button from "../../../components/Button";
-import PasswordField from "../../../components/FormInputs/PasswordField";
 import logo from "../../../assets/icons/logo.png";
 
-export default function Signin() {
+export default function ForgetPassword() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
 
   const loginSchema = Yup.object().shape({
-    userName: Yup.string().required("Username is Required"),
-    password: Yup.string()
-      .min(3, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Password is Required"),
+    email: Yup.string()
+      .email("Not a proper email")
+      .required("Email Address is required"),
   });
 
   return (
@@ -27,18 +24,21 @@ export default function Signin() {
           <img src={logo} alt="logo" className="md:w-[100px] w-[70px]" />
         </div>
         <h3 className="text-gray-900 font-black lg:text-3xl md:text-2xl text-lg mt-4 flex justify-center">
-          Sign in to your Account
+          Reset Account Password
         </h3>
+        <p className="text-gray-600 md:px-8 px-4 text-base font-light text-center mt-2">
+          Please enter your Email Address below. We will send you a reset link
+          to create a new password.
+        </p>
         <Formik
           initialValues={{
-            userName: "",
+            email: "",
             password: "",
           }}
           validationSchema={loginSchema}
           onSubmit={(values, actions) => {
-            sessionStorage.setItem("userObj", JSON.stringify(values));
             navigate(from);
-            toast.success("Login Successful", {
+            toast.success("Link sent Successfully", {
               icon: "👏",
               duration: 4000,
             });
@@ -57,47 +57,28 @@ export default function Signin() {
             <Form onSubmit={handleSubmit} className="mt-3 w-full">
               <div className="mb-3 w-full">
                 <label
-                  htmlFor="userName"
+                  htmlFor="email"
                   className={`text-sm text-black leading-4`}
                 >
-                  Username
+                  Email
                 </label>
                 <input
                   type="text"
-                  name="userName"
-                  id="userName"
+                  name="email"
+                  id="email"
                   className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Username"
+                  placeholder="Enter Your Email"
                   onChange={handleChange}
-                  value={values?.userName}
+                  value={values?.email}
                 />
-                {errors.userName && touched.userName ? (
+                {errors.email && touched.email ? (
                   <div className="text-xs mt-2 text-red-700">
-                    {errors.userName}
+                    {errors.email}
                   </div>
                 ) : null}
               </div>
-              <div>
-                <PasswordField
-                  value={values?.password}
-                  onChange={handleChange}
-                  isValid={!(isValid && dirty)}
-                  placeholder="Enter your Password"
-                />
-              </div>
-              {errors.password && touched.password ? (
-                <div className="text-xs mt-2 text-red-700">
-                  {errors.password}
-                </div>
-              ) : null}
-              <p
-                onClick={() => navigate("/forget-password")}
-                className="text-indigo-600 flex justify-end hover:text-indigo-500 font-sm leading-4 my-4 cursor-pointer"
-              >
-                Forgot Password ?
-              </p>
               <Button
-                title="Sign in"
+                title="Send Link"
                 className="w-full h-[56px] text-center mt-6 rounded-2xl"
                 backgroundColor="bg-primary"
                 type="submit"
@@ -106,13 +87,13 @@ export default function Signin() {
               />
               <div className="w-full flex justify-between">
                 <p className="text-secondary font-sm leading-4 my-4">
-                  Don't have an account?
+                  Remember Password?
                 </p>
                 <p
-                  onClick={() => navigate("/begin-registration")}
+                  onClick={() => navigate("/")}
                   className="text-indigo-600 hover:text-indigo-500 font-sm leading-4 my-4 cursor-pointer hover:border-b hover:border-indigo-600"
                 >
-                  Register
+                  Login
                 </p>
               </div>
             </Form>

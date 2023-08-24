@@ -21,7 +21,7 @@ export default function PasswordField({
       <label
         htmlFor={name}
         className={`text-sm leading-4 mt-4 ${
-          isValid ? "text-grey" : "text-primary"
+          isValid ? "text-secondary" : "text-secondary"
         }`}
       >
         {labelName || "Password"}
@@ -32,7 +32,7 @@ export default function PasswordField({
           name={name || "password"}
           id={name || "password"}
           className={`block w-full h-[56px] text-black text-sm px-4 border ${
-            isValid ? "border-grey" : "border-primary"
+            isValid ? "border-secondary" : "border-secondary"
           } rounded-lg mt-2 outline-none ${className}`}
           placeholder={placeholder}
           {...rest}
@@ -41,14 +41,14 @@ export default function PasswordField({
           {showPassword ? (
             <BsFillEyeSlashFill
               className={`h-5 w-5 text-gray-500 cursor-pointer  ${
-                isValid ? "text-black" : "text-primary"
+                isValid ? "text-secondary" : "text-secondary"
               }`}
               onClick={togglePasswordVisibility}
             />
           ) : (
             <BsFillEyeFill
               className={`h-5 w-5 text-gray-500 cursor-pointer ${
-                isValid ? "text-black" : "text-primary"
+                isValid ? "text-secondary" : "text-secondary"
               }`}
               onClick={togglePasswordVisibility}
             />

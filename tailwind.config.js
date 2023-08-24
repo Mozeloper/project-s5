@@ -5,11 +5,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#bf0a30;",
+        primary: "#bf0a30",
         secondary: "#263238",
         tertiary: "#DCF1F0",
         white: "#FFFFFF",
         dark: "#263238",
+        textDark_200: "#595F69",
         MODAL_BACKGROUND: "rgba(11, 12, 14, 0.77)",
       },
     },
