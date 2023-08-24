@@ -3,11 +3,11 @@ import { Outlet } from "react-router-dom";
 
 export default function Authlayout() {
   return (
-    <div className="w-full flex h-screen">
-      <div className="w-full bg-white h-full md:block hidden">
+    <div className="w-full flex h-screen overflow-hidden">
+      <div className="w-full overflow-scroll bg-white h-full md:block hidden">
         <Outlet />
       </div>
-      <div className="w-full relative h-full bg-[url('assets/images/p5-bg.jpg')] flex-col justify-center items-center bg-no-repeat bg-[100%] p-2 md:hidden flex">
+      <div className="w-full overflow-scroll relative h-full bg-[url('assets/images/p5-bg.jpg')] flex-col justify-center items-center bg-no-repeat bg-[100%] p-2 md:hidden flex">
         <Outlet />
       </div>
       <div className="w-[80%] relative h-full bg-[url('assets/images/p5-bg.jpg')] flex-col justify-center items-center bg-no-repeat bg-[100%] p-2 md:flex hidden">

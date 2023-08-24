@@ -30,14 +30,14 @@ const colourStyles = {
   control: (styles) => ({
     ...styles,
     backgroundColor: "#fff",
-    minHeight: 41,
+    minHeight: 56,
     outline: "none",
   }),
   option: (styles, { isDisabled, isFocused }) => {
     return {
       ...styles,
-      backgroundColor: isFocused ? "#34BCB4" : "#FFF",
-      color: isFocused ? "#FFF" : "#34BCB4",
+      backgroundColor: isFocused ? "#bf0a30" : "#FFF",
+      color: isFocused ? "#FFF" : "#bf0a30",
       cursor: isDisabled ? "not-allowed" : "pointer",
     };
   },
