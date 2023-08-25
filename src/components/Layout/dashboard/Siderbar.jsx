@@ -84,8 +84,8 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
           className="h-[41px] w-[45px]"
         />
       </div>
-      <div className="w-full mb-6">
-        <div className="rounded-tl-lg flex gap-2 flex-col h-full">
+      <div className="w-full mb-6 mt-4">
+        <div className="rounded-tl-lg flex gap-2 gap-y-5 flex-col h-full">
           {navLinks.map((list) => {
             if (!list?.children) {
               return (
@@ -107,7 +107,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
                           isSideBarOpen
                             ? "xl:pl-8 lg:pl-6 md:pl-4 pl-2"
                             : "pl-4"
-                        } items-center text-sm text-white md:h-[56px] h-[48px] hover:bg-white hover:text-[#38404b] font-semibold hover:rounded-tl-[20px] hover:rounded-bl-[20px]`
+                        } items-center text-sm text-white md:h-[56px] h-[48px] hover:bg-white/75  duration-300 ease hover:text-[#38404b] font-semibold hover:rounded-tl-[20px] hover:rounded-bl-[20px]`
                   }
                 >
                   {list?.icon}
@@ -132,7 +132,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
                             isSideBarOpen
                               ? "xl:pl-8 lg:pl-6 md:pl-4 pl-2"
                               : "pl-4"
-                          } items-center text-sm text-white md:h-[56px] h-[48px] hover:bg-[#f5f5f5] hover:text-[#38404b] font-semibold hover:rounded-tl-[20px] hover:rounded-bl-[20px]`
+                          } items-center text-sm text-white md:h-[56px] h-[48px] hover:bg-white/75  duration-300 ease hover:text-[#38404b] font-semibold hover:rounded-tl-[20px] hover:rounded-bl-[20px]`
                     }
                   >
                     <div className="flex gap-4 w-full items-center">
@@ -169,7 +169,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
                                     isSideBarOpen
                                       ? "xl:pl-16 lg:pl-6 md:pl-4 pl-2"
                                       : "pl-4"
-                                  } items-center text-sm text-white md:h-[56px] h-[48px] hover:bg-[#FFFFFF14] hover:text-white font-semibold hover:rounded-tl-[20px] hover:rounded-bl-[20px]`
+                                  } items-center text-sm text-white md:h-[56px] h-[48px] hover:bg-white/75  duration-300 ease hover:text-white font-semibold hover:rounded-tl-[20px] hover:rounded-bl-[20px]`
                             }
                           >
                             <div className="w-[6px] h-[6px] bg-white rounded-full" />
