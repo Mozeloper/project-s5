@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react'
 import Table from './table'
 import PaginationFooter from '../PaginationFooter'
 import Button from '../Button'
+import SearchBox from '../Searchbox/searchbox'
 
 export const SoulsTable = () => {
     const souls = [
@@ -54,26 +55,29 @@ export const SoulsTable = () => {
 
   return (
     <Fragment>
-      <div className="px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="sm:flex sm:items-center">
-          <div className="sm:flex-auto">
-            <h1 className="text-base font-semibold leading-6 text-gray-900">Souls</h1>
-            <p className="mt-2 text-sm text-gray-700">
-              A list of all the souls in your account including their name, email, role and Presence.
-            </p>
+      <div className="bg-white">
+        <SearchBox />
+        <div className="px-4 sm:px-6 lg:px-8 bg-white py-7">
+          <div className="sm:flex sm:items-center">
+            <div className="sm:flex-auto">
+              <h1 className="text-base font-semibold leading-6 text-gray-900">Souls</h1>
+              <p className="mt-2 text-sm text-gray-700">
+                A list of all the souls in your account including their name, email, role and Presence.
+              </p>
+            </div>
+            <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+              <Button
+                // onClick={() => navigate("/sign-up")}
+                title="+ Add Soul"
+                className="block rounded-md px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#38404b] delay-100 ease-in-out duration-300"
+                backgroundColor="bg-primary"
+              />
+            </div>
           </div>
-          <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <Button
-              // onClick={() => navigate("/sign-up")}
-              title="+ Add Soul"
-              className="block rounded-md px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#38404b] delay-100 ease-in-out duration-300"
-              backgroundColor="bg-primary"
-            />
-          </div>
+          <Table array={souls} />
         </div>
-        <Table array={souls} />
+        <PaginationFooter />
       </div>
-      <PaginationFooter />
     </Fragment>
   )
 }

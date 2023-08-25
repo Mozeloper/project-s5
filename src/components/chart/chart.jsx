@@ -1,7 +1,11 @@
 import React from 'react'
 import Chart from "react-apexcharts";
 
-export default function Charts() {
+//Note when working with this component, you can pass (type and data) 
+//if no type is specified then it will render the default which is 'bar'
+//if no datas is provided then it will render the default which is 'series'
+//The datas should be the array of object/data you want to use
+export default function Charts({type, datas}) {
   const options = {
     
     chart: {
@@ -40,6 +44,9 @@ export default function Charts() {
         "Jul",
         "Aug",
         "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
       ],
     },
     responsive: [
@@ -68,6 +75,6 @@ export default function Charts() {
     },
   ];
   return (
-    <Chart options={options} series={series} type="area" height="279" />
+    <Chart options={options} series={datas ?? series} type={type ?? 'bar'} height="279" />
   )
 }
