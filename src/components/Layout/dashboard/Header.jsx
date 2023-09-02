@@ -65,7 +65,7 @@ export default function Header({
           {isMenuOpen && (
             <div className="absolute top-full right-0 w-[290px] h-[240px] bg-white shadow-lg rounded-2xl z-40">
               <div className="flex gap-4 border-b border-borderColor p-6">
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 justify-between">
                   <h3 className="text-textDark_200 font-black text-sm leading-[18px]">
                     {userObj?.FirstName} {userObj?.SurName}
                   </h3>
