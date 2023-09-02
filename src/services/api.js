@@ -29,14 +29,23 @@ const apiResource = () => {
         resolve(response);
       }),
     async (error) => {
-      if (error?.response?.status === 403) {
+      const originalConfig = error.config;
+      // console.log(originalConfig);
+      if (
+        error?.response?.status === 403 ||
+        originalConfig.url !== appUrls.LOGIN_URL ||
+        originalConfig.url !== appUrls.GETSINGLEWORKERDETAILS_URL
+      ) {
         sessionStorage.clear();
-        window.location = "/login";
+        // window.location = "/login";
       } else if (error?.response?.status === 401) {
-        const originalConfig = error.config;
-        if (originalConfig.url !== `${appUrls.LOGIN_URL}` && error?.response) {
+        if (
+          originalConfig.url !== appUrls.LOGIN_URL ||
+          (originalConfig.url !== appUrls.GETSINGLEWORKERDETAILS_URL &&
+            error?.response)
+        ) {
           // call refresh token once accesstoken has expired...
-          if (error.response.status === 401 && !originalConfig._retry) {
+          if (error.response.status === 400 && !originalConfig._retry) {
             originalConfig._retry = true;
             const refreshToken = sessionStorage.getItem("refreshToken");
             const userObj = JSON.parse(sessionStorage.getItem("userObj"));

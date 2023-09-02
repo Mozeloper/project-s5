@@ -60,7 +60,9 @@ export default function Signin() {
         });
       }
     } catch (error) {
-      const errorMessage = error?.data?.message || "Unable to login";
+      const errorMessage =
+        error?.data?.message ||
+        "Unable to login this user is not Approved yet contact system Administrator...";
       toast.error(errorMessage, {
         duration: 5000,
       });
