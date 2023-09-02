@@ -1,20 +1,107 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import Button from "../../../../components/Button";
 import SearchableSelect from "../../../../components/CustomSelect";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../../../services/api";
+import { appUrls } from "../../../../services/urls";
+import { toast } from "react-hot-toast";
+import moment from "moment";
 
 export default function ChurchInformation({
   userValues,
   setUserValues,
-  setCurrentStep,
+  // setCurrentStep,
 }) {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState({
+    getChurchDept: false,
+    register: false,
+  });
+  const [dept, setDept] = useState([]);
   const signupSchema = Yup.object().shape({
-    yearJoined: Yup.number().required("Input Year Joined"),
+    yearJoined: Yup.number().required("Input Year You Joined Church"),
     departmentId: Yup.number().required("Select Department"),
   });
+
+  const handleRegisterUser = async () => {
+    setIsLoading((prev) => ({
+      ...prev,
+      register: true,
+    }));
+    const formattedDate = moment(userValues?.dateOfBirth).format(
+      "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
+    );
+    const payload = {
+      ...userValues,
+      dateOfBirth: formattedDate,
+    };
+    try {
+      const res = await api.post(appUrls.REGISTER, payload);
+      if (res?.status === 201) {
+        toast.success(res?.data?.message, {
+          icon: "👏",
+          duration: 3000,
+        });
+        navigate("/");
+      }
+    } catch (error) {
+      const errorMessage = error?.data?.message || "An Error Occured";
+      toast.error(errorMessage, {
+        duration: 5000,
+      });
+    } finally {
+      setIsLoading((prev) => ({
+        ...prev,
+        register: false,
+      }));
+    }
+  };
+
+  const getChurhDept = async () => {
+    setIsLoading((prev) => ({
+      ...prev,
+      getChurchDept: true,
+    }));
+    try {
+      const res = await api.get(appUrls.GETCHURCHDEPT);
+      if (res?.status === 200) {
+        let data = [];
+        const result = res?.data?.data || [];
+        for (let index = 0; index < result.length; index++) {
+          data.push({
+            label: result[index]?.departmentalNames,
+            value: result[index]?.id,
+          });
+        }
+        setDept((prev) => [...data]);
+      }
+    } catch (error) {
+      toast.error("An Error Occured while getting church dept...", {
+        duration: 3000,
+      });
+      setDept([]);
+    } finally {
+      setIsLoading((prev) => ({
+        ...prev,
+        getChurchDept: false,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    let mounted = false;
+    (async () => {
+      mounted = true;
+      if (mounted) {
+        getChurhDept();
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <div className="w-full h-full">
@@ -29,7 +116,7 @@ export default function ChurchInformation({
         validationSchema={signupSchema}
         onSubmit={(values) => {
           setUserValues((prev) => ({ ...prev, ...values }));
-          navigate("/");
+          handleRegisterUser();
         }}
       >
         {({
@@ -50,12 +137,13 @@ export default function ChurchInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="departmentId"
                 >
-                  Gender <span className="text-primary ml-1">*</span>
+                  Church dept <span className="text-primary ml-1">*</span>
                 </label>
                 <SearchableSelect
-                  options={[{ label: "Chior", value: 1 }]}
+                  options={dept}
                   name="departmentId"
                   id="departmentId"
+                  isLoading={isLoading?.getChurchDept}
                   value={values.departmentId}
                   setFieldValue={(name, value) => setFieldValue(name, value)}
                   className="w-full outline-none"
@@ -76,7 +164,7 @@ export default function ChurchInformation({
                   <span className="text-primary ml-1">*</span>
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   name="yearJoined"
                   id="yearJoined"
                   className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
@@ -98,6 +186,7 @@ export default function ChurchInformation({
                 className="w-[200px] h-[56px] text-center mt-3 md:mb-4 mb-10 rounded-2xl"
                 backgroundColor="bg-primary"
                 type="submit"
+                isLoading={isLoading?.register}
               />
             </div>
           </Form>

@@ -19,6 +19,7 @@ export default function LogoutConfirm({ setLogoutConfirmation }) {
             title="cancel"
             className="w-full h-[56px] text-[#38404b] text-center rounded-2xl border border-[#D0D5DD]"
             backgroundColor="bg-none"
+            textColor="#38404b"
             type="button"
             onClick={() => setLogoutConfirmation(false)}
           />

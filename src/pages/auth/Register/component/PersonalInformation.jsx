@@ -12,8 +12,8 @@ export default function PersonalInformation({
   const signupSchema = Yup.object().shape({
     gender: Yup.number().required("Gender is Required"),
     dateOfBirth: Yup.string().required("Date Of Birth is Required"),
-    employmentStatusId: Yup.number(),
-    maritalStatusId: Yup.number().required("Select Marital status"),
+    employmentStatus: Yup.string(),
+    maritalStatus: Yup.string().required("Select Marital status"),
     countryName: Yup.string().required("Select country"),
     stateName: Yup.string().required("Select country"),
     localGovtName: Yup.string().required("Select LGA"),
@@ -31,8 +31,8 @@ export default function PersonalInformation({
         initialValues={{
           gender: userValues?.gender || "",
           dateOfBirth: userValues?.dateOfBirth || "",
-          employmentStatusId: userValues?.employmentStatusId || "",
-          maritalStatusId: userValues?.maritalStatusId || "",
+          employmentStatus: userValues?.employmentStatus || "",
+          maritalStatus: userValues?.maritalStatus || "",
           countryName: userValues?.countryName || "",
           stateName: userValues?.stateName || "",
           localGovtName: userValues?.localGovtName || "",
@@ -111,44 +111,65 @@ export default function PersonalInformation({
               <div className="w-full mt-2">
                 <label
                   className="text-sm md:text-black text-white leading-4"
-                  htmlFor="employmentStatusId"
+                  htmlFor="employmentStatus"
                 >
                   Employment status
                 </label>
                 <SearchableSelect
-                  options={[{ label: "Employeed", value: 1 }]}
-                  name="employmentStatusId"
-                  id="employmentStatusId"
-                  value={values.employmentStatusId}
+                  options={[
+                    { label: "Employed", value: "Employed" },
+                    { label: "Self-Employed", value: "SelfEmployed" },
+                    { label: "Unemployed ", value: "Unemployed" },
+                  ]}
+                  name="employmentStatus"
+                  id="employmentStatus"
+                  value={values.employmentStatus}
                   setFieldValue={(name, value) => setFieldValue(name, value)}
                   className="w-full outline-none"
                   placeholder="Select Employment status"
                 />
-                {errors.employmentStatusId && touched.employmentStatusId ? (
+                {errors.employmentStatus && touched.employmentStatus ? (
                   <div className="text-xs mt-2 text-red-700">
-                    {errors.employmentStatusId}
+                    {errors.employmentStatus}
                   </div>
                 ) : null}
               </div>
               <div className="w-full mt-2">
                 <label
                   className="text-sm md:text-black text-white leading-4"
-                  htmlFor="maritalStatusId"
+                  htmlFor="maritalStatus"
                 >
                   Marital status <span className="text-primary ml-1">*</span>
                 </label>
                 <SearchableSelect
-                  options={[{ label: "Married", value: 1 }]}
-                  name="maritalStatusId"
-                  id="maritalStatusId"
-                  value={values.maritalStatusId}
+                  options={[
+                    {
+                      label: "Married",
+                      value: "Married",
+                    },
+                    {
+                      label: "Single",
+                      value: "Single",
+                    },
+                    {
+                      label: "Divorced",
+                      value: "Divorced",
+                    },
+                    {
+                      label: "Widowed",
+                      value: "Widowed",
+                    },
+                  ]}
+                  name="maritalStatus"
+                  id="maritalStatus"
+                  value={values.maritalStatus}
                   setFieldValue={(name, value) => setFieldValue(name, value)}
                   className="w-full outline-none"
                   placeholder="Select Marital status"
                 />
-                {errors.maritalStatusId && touched.maritalStatusId ? (
+                {errors.maritalStatus && touched.maritalStatus ? (
                   <div className="text-xs mt-2 text-red-700">
-                    {errors.maritalStatusId}
+                    {errors.maritalStatus}
                   </div>
                 ) : null}
               </div>
@@ -161,14 +182,14 @@ export default function PersonalInformation({
                 >
                   Country<span className="text-primary ml-1">*</span>
                 </label>
-                <SearchableSelect
-                  options={[]}
+                <input
+                  type="text"
                   name="countryName"
                   id="countryName"
-                  value={values.countryName}
-                  setFieldValue={(name, value) => setFieldValue(name, value)}
-                  className="w-full outline-none"
-                  placeholder="Select Country"
+                  className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Enter Organization Name"
+                  onChange={handleChange}
+                  value={values?.countryName}
                 />
                 {errors.countryName && touched.countryName ? (
                   <div className="text-xs mt-2 text-red-700">
@@ -183,14 +204,14 @@ export default function PersonalInformation({
                 >
                   State <span className="text-primary ml-1">*</span>
                 </label>
-                <SearchableSelect
-                  options={[]}
+                <input
+                  type="text"
                   name="stateName"
                   id="stateName"
-                  value={values.stateName}
-                  setFieldValue={(name, value) => setFieldValue(name, value)}
-                  className="w-full outline-none"
-                  placeholder="Select state"
+                  className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Enter Organization Name"
+                  onChange={handleChange}
+                  value={values?.stateName}
                 />
                 {errors.stateName && touched.stateName ? (
                   <div className="text-xs mt-2 text-red-700">
@@ -200,21 +221,21 @@ export default function PersonalInformation({
               </div>
             </div>
             <div className="w-full flex md:flex-row flex-col gap-2 mb-2">
-              <div className="w-full mt-2">
+              <div className="w-full">
                 <label
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="localGovtName"
                 >
                   LGA<span className="text-primary ml-1">*</span>
                 </label>
-                <SearchableSelect
-                  options={[]}
+                <input
+                  type="text"
                   name="localGovtName"
                   id="localGovtName"
-                  value={values.localGovtName}
-                  setFieldValue={(name, value) => setFieldValue(name, value)}
-                  className="w-full outline-none"
-                  placeholder="Select Lga"
+                  className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Enter Organization Name"
+                  onChange={handleChange}
+                  value={values?.localGovtName}
                 />
                 {errors.localGovtName && touched.localGovtName ? (
                   <div className="text-xs mt-2 text-red-700">

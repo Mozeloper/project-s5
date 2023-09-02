@@ -36,3 +36,19 @@ export function formatDate(inputDate) {
   const year = String(date.getUTCFullYear()).padStart(4, "0");
   return `${day}/${month}/${year}`;
 }
+
+export function checkUppercase(str) {
+  for (var i = 0; i < str?.length; i++) {
+    if (
+      str?.charAt(i) == str?.charAt(i)?.toUpperCase() &&
+      str?.charAt(i)?.match(/[a-z]/i)
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function containsNumber(str) {
+  return /\d/.test(str);
+}

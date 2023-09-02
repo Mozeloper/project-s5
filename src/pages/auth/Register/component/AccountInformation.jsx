@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { phoneRegExp } from "../../../../utils";
+import { checkUppercase, containsNumber, phoneRegExp } from "../../../../utils";
 import Button from "../../../../components/Button";
 import PasswordField from "../../../../components/FormInputs/PasswordField";
+import password_correct from "../../../../assets/icons/password_correct.svg";
+import password_initial from "../../../../assets/icons/password_initial.svg";
 
 export default function AccountInformation({
   userValues,
   setUserValues,
   setCurrentStep,
 }) {
+  const [passwordCharacterCheck, setPasswordCharacterCheck] = useState({
+    password_length: false,
+    contains_uppercase: false,
+    contains_number: false,
+    unique_character: false,
+    confirm_password_match: false,
+  });
+
   const signupSchema = Yup.object().shape({
     userName: Yup.string().required("Username is Required"),
     firstName: Yup.string().required("Firstname is Required"),
@@ -22,10 +32,62 @@ export default function AccountInformation({
       .email("Not a proper email")
       .required("Email Address is required"),
     password: Yup.string()
-      .min(7, "Too Short!")
+      .min(8, "Too Short!")
       .max(50, "Too Long!")
-      .required("Password is required"),
-    confirm_password: Yup.string()
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#/$%/^&/*])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      )
+      .required("Password is required")
+      .test("password", null, function (password) {
+        if (password?.trim() !== "") {
+          if (password?.length >= 8) {
+            setPasswordCharacterCheck((prev) => ({
+              ...prev,
+              password_length: true,
+            }));
+          } else {
+            setPasswordCharacterCheck((prev) => ({
+              ...prev,
+              password_length: false,
+            }));
+          }
+          if (checkUppercase(password)) {
+            setPasswordCharacterCheck((prev) => ({
+              ...prev,
+              contains_uppercase: true,
+            }));
+          } else {
+            setPasswordCharacterCheck((prev) => ({
+              ...prev,
+              contains_uppercase: false,
+            }));
+          }
+          if (containsNumber(password)) {
+            setPasswordCharacterCheck((prev) => ({
+              ...prev,
+              contains_number: true,
+            }));
+          } else {
+            setPasswordCharacterCheck((prev) => ({
+              ...prev,
+              contains_number: false,
+            }));
+          }
+          if (password?.match(/\W/)) {
+            setPasswordCharacterCheck((prev) => ({
+              ...prev,
+              unique_character: true,
+            }));
+          } else {
+            setPasswordCharacterCheck((prev) => ({
+              ...prev,
+              unique_character: false,
+            }));
+          }
+        }
+      }),
+    confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Please Confirm your password...."),
   });
@@ -44,6 +106,7 @@ export default function AccountInformation({
           email: userValues?.email || "",
           phoneNumber: userValues?.phoneNumber || "",
           password: userValues?.password || "",
+          confirmPassword: userValues?.confirmPassword || "",
         }}
         validationSchema={signupSchema}
         onSubmit={(values) => {
@@ -218,18 +281,62 @@ export default function AccountInformation({
               <div className="md:w-[400px] w-full">
                 <PasswordField
                   labelName="Confirm Password"
-                  name="confirm_password"
-                  value={values?.confirm_password}
+                  name="confirmPassword"
+                  value={values?.confirmPassword}
                   onChange={handleChange}
                   isValid={!(isValid && dirty)}
                   placeholder="Confirm New password"
                 />
-                {errors.confirm_password && touched.confirm_password ? (
+                {errors.confirmPassword && touched.confirmPassword ? (
                   <div className="text-xs mt-2 text-red-700">
-                    {errors.confirm_password}
+                    {errors.confirmPassword}
                   </div>
                 ) : null}
               </div>
+            </div>
+            <div className="mt-4">
+              <ul className="flex flex-col gap-1">
+                <li className="flex gap-2 md:text-black text-white">
+                  {passwordCharacterCheck?.password_length ? (
+                    <img
+                      src={password_correct}
+                      alt="password_correct"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <img
+                      src={password_initial}
+                      alt="password_initial"
+                      loading="lazy"
+                    />
+                  )}
+                  Minimum of 8 characters
+                </li>
+                <li className="flex gap-2 md:text-black text-white">
+                  {passwordCharacterCheck?.contains_uppercase ? (
+                    <img src={password_correct} alt="password_correct" />
+                  ) : (
+                    <img src={password_initial} alt="password_initial" />
+                  )}
+                  One UPPERCASE character
+                </li>
+                <li className="flex gap-2 md:text-black text-white">
+                  {passwordCharacterCheck?.contains_number ? (
+                    <img src={password_correct} alt="password_correct" />
+                  ) : (
+                    <img src={password_initial} alt="password_initial" />
+                  )}
+                  One number
+                </li>
+                <li className="flex gap-2 md:text-black text-white">
+                  {passwordCharacterCheck?.unique_character ? (
+                    <img src={password_correct} alt="password_correct" />
+                  ) : (
+                    <img src={password_initial} alt="password_initial" />
+                  )}
+                  {`One unique character (e.g !@#$%&*)?>`}
+                </li>
+              </ul>
             </div>
             <div className="flex justify-end w-full">
               <Button
