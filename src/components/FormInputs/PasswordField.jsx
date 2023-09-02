@@ -20,9 +20,7 @@ export default function PasswordField({
     <>
       <label
         htmlFor={name}
-        className={`text-sm leading-4 mt-4 ${
-          isValid ? "md:text-secondary" : "md:text-secondary"
-        }`}
+        className={`text-sm leading-4 mt-4 md:text-secondary text-white`}
       >
         {labelName || "Password"} <span className="text-primary ml-1">*</span>
       </label>

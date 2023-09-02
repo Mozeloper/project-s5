@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -6,19 +6,68 @@ import { toast } from "react-hot-toast";
 import Button from "../../../components/Button";
 import PasswordField from "../../../components/FormInputs/PasswordField";
 import logo from "../../../assets/icons/logo.png";
+import { api } from "../../../services/api";
+import { appUrls } from "../../../services/urls";
 
 export default function Signin() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
+  const [isLoading, setIsLoading] = useState(false);
 
   const loginSchema = Yup.object().shape({
-    userName: Yup.string().required("Username is Required"),
+    userName: Yup.string()
+      .email("Not a proper email")
+      .required("Username is Required"),
     password: Yup.string()
       .min(3, "Too Short!")
       .max(50, "Too Long!")
       .required("Password is Required"),
   });
+
+  const handleLogin = async (values) => {
+    setIsLoading(true);
+    const payload = {
+      email: values?.userName,
+      password: values?.password,
+    };
+    try {
+      const res = await api.post(appUrls.LOGIN_URL, payload);
+      if (res?.status === 200) {
+        sessionStorage.setItem("token", res?.data?.data?.token);
+        sessionStorage.setItem("refreshToken", res?.data?.data?.refreshToken);
+        sessionStorage.setItem("role", JSON.stringify(res?.data?.data?.roles));
+        handleGetUserDetails();
+      }
+    } catch (error) {
+      const errorMessage = error?.data?.message || "Unable to login";
+      toast.error(errorMessage, {
+        duration: 5000,
+      });
+      setIsLoading(false);
+    }
+  };
+
+  const handleGetUserDetails = async () => {
+    try {
+      const res = await api.get(appUrls?.GETSINGLEWORKERDETAILS_URL);
+      if (res?.status === 200) {
+        sessionStorage.setItem("userObj", JSON.stringify(res?.data?.Data));
+        navigate(from);
+        toast.success("Login Successful", {
+          icon: "👏",
+          duration: 2000,
+        });
+      }
+    } catch (error) {
+      const errorMessage = error?.data?.message || "Unable to login";
+      toast.error(errorMessage, {
+        duration: 5000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex min-h-screen h-screen justify-center items-center bg-gray-900 md:p-4 p-0">
@@ -35,13 +84,8 @@ export default function Signin() {
             password: "",
           }}
           validationSchema={loginSchema}
-          onSubmit={(values, actions) => {
-            sessionStorage.setItem("userObj", JSON.stringify(values));
-            navigate(from);
-            toast.success("Login Successful", {
-              icon: "👏",
-              duration: 4000,
-            });
+          onSubmit={(values) => {
+            handleLogin(values);
           }}
         >
           {({
@@ -51,7 +95,6 @@ export default function Signin() {
             touched,
             errors,
             dirty,
-            isSubmitting,
             isValid,
           }) => (
             <Form onSubmit={handleSubmit} className="mt-3 w-full">
@@ -101,7 +144,7 @@ export default function Signin() {
                 className="w-full h-[56px] text-center mt-6 rounded-2xl"
                 backgroundColor="bg-primary"
                 type="submit"
-                isLoading={isSubmitting}
+                isLoading={isLoading}
                 // disabled={!(isValid && dirty)}
               />
               <div className="w-full flex justify-between">

@@ -34,27 +34,30 @@ const apiResource = () => {
         window.location = "/login";
       } else if (error?.response?.status === 401) {
         const originalConfig = error.config;
-        sessionStorage.clear();
-        if (originalConfig.url !== `${appUrls.LOGIN_URL}`) {
-          window.location = "/login";
-        }
         if (originalConfig.url !== `${appUrls.LOGIN_URL}` && error?.response) {
-          // call refresh token
-          // Access Token was expired
-          //   if (error.response.status === 400 && !originalConfig._retry) {
-          //     originalConfig._retry = true;
-          //     const token = sessionStorage.getItem("token");
-          //     try {
-          //       const rs = await api.post([
-          //         `${appUrls.REFRESHTOKEN_URL}?token=${token}`,
-          //       ]);
-          //       const { accessToken } = rs;
-          //       TokenService.setToken(accessToken);
-          //       return api(originalConfig);
-          //     } catch (_error) {
-          //       return Promise.reject(_error);
-          //     }
-          //   }
+          // call refresh token once accesstoken has expired...
+          if (error.response.status === 401 && !originalConfig._retry) {
+            originalConfig._retry = true;
+            const refreshToken = sessionStorage.getItem("refreshToken");
+            const userObj = JSON.parse(sessionStorage.getItem("userObj"));
+            const payload = {
+              userId: userObj?.id,
+              refreshToken,
+            };
+            try {
+              const rs = await api.post(appUrls.REFRESHTOKEN_URL, payload);
+              if (rs?.status === 200) {
+                sessionStorage.setItem("token", rs?.data?.data?.newAccessToken);
+                sessionStorage.setItem(
+                  "refreshToken",
+                  rs?.data?.data?.newRefreshToken
+                );
+              }
+              return api(originalConfig);
+            } catch (_error) {
+              return Promise.reject(_error);
+            }
+          }
         }
       } else {
         return new Promise((resolve, reject) => {
