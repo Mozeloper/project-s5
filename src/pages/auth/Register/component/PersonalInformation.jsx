@@ -13,6 +13,7 @@ export default function PersonalInformation({
     gender: Yup.number().required("Gender is Required"),
     dateOfBirth: Yup.string().required("Date Of Birth is Required"),
     employmentStatus: Yup.string(),
+    qualification: Yup.string(),
     maritalStatus: Yup.string().required("Select Marital status"),
     countryName: Yup.string().required("Select country"),
     stateName: Yup.string().required("Select country"),
@@ -32,6 +33,7 @@ export default function PersonalInformation({
           gender: userValues?.gender || "",
           dateOfBirth: userValues?.dateOfBirth || "",
           employmentStatus: userValues?.employmentStatus || "",
+          qualification: userValues?.qualification || "",
           maritalStatus: userValues?.maritalStatus || "",
           countryName: userValues?.countryName || "",
           stateName: userValues?.stateName || "",
@@ -170,6 +172,45 @@ export default function PersonalInformation({
                 {errors.maritalStatus && touched.maritalStatus ? (
                   <div className="text-xs mt-2 text-red-700">
                     {errors.maritalStatus}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+            <div className="w-full flex md:flex-row flex-col gap-2 mb-2">
+              <div className="w-full mt-2">
+                <label
+                  className="text-sm md:text-black text-white leading-4"
+                  htmlFor="qualification"
+                >
+                  Qualification
+                </label>
+                <SearchableSelect
+                  options={[
+                    {
+                      label: "LeavingSchoolCertificate",
+                      value: "LeavingSchoolCertificate",
+                    },
+                    {
+                      label: "SSCE",
+                      value: "SSCE",
+                    },
+                    { label: "OND", value: "OND" },
+                    { label: "HND", value: "HND" },
+                    { label: "BSc", value: "BSc" },
+                    { label: "MSc", value: "MSc" },
+                    { label: "PhD", value: "PhD" },
+                    { label: "Others", value: "Others" },
+                  ]}
+                  name="qualification"
+                  id="qualification"
+                  value={values.qualification}
+                  setFieldValue={(name, value) => setFieldValue(name, value)}
+                  className="w-full outline-none"
+                  placeholder="Select Employment status"
+                />
+                {errors.qualification && touched.qualification ? (
+                  <div className="text-xs mt-2 text-red-700">
+                    {errors.qualification}
                   </div>
                 ) : null}
               </div>

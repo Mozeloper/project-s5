@@ -21,7 +21,6 @@ export default function AccountInformation({
   });
 
   const signupSchema = Yup.object().shape({
-    userName: Yup.string().required("Username is Required"),
     firstName: Yup.string().required("Firstname is Required"),
     otherNames: Yup.string().required("otherName is Required"),
     surName: Yup.string().required("Surname is Required"),
@@ -99,7 +98,6 @@ export default function AccountInformation({
       </h2>
       <Formik
         initialValues={{
-          userName: userValues?.userName || "",
           firstName: userValues?.firstName || "",
           otherNames: userValues?.otherNames || "",
           surName: userValues?.surName || "",
@@ -127,23 +125,23 @@ export default function AccountInformation({
             <div className="w-full flex md:flex-row flex-col gap-2">
               <div className="mb-1 w-full">
                 <label
-                  htmlFor="userName"
+                  htmlFor="email"
                   className={`text-sm md:text-black text-white leading-4`}
                 >
-                  Username <span className="text-primary ml-1">*</span>
+                  Email <span className="text-primary ml-1">*</span>
                 </label>
                 <input
-                  type="text"
-                  name="userName"
-                  id="userName"
+                  type="email"
+                  name="email"
+                  id="email"
                   className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter Username"
+                  placeholder="Enter Email"
                   onChange={handleChange}
-                  value={values?.userName}
+                  value={values?.email}
                 />
-                {errors.userName && touched.userName ? (
+                {errors.email && touched.email ? (
                   <div className="text-xs mt-2 text-red-700">
-                    {errors.userName}
+                    {errors.email}
                   </div>
                 ) : null}
               </div>
@@ -236,28 +234,6 @@ export default function AccountInformation({
                 {errors.phoneNumber && touched.phoneNumber ? (
                   <div className="text-xs mt-2 text-red-700">
                     {errors.phoneNumber}
-                  </div>
-                ) : null}
-              </div>
-              <div className="mb-1 w-full">
-                <label
-                  htmlFor="email"
-                  className={`text-sm md:text-black text-white leading-4`}
-                >
-                  Email <span className="text-primary ml-1">*</span>
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter Email"
-                  onChange={handleChange}
-                  value={values?.email}
-                />
-                {errors.email && touched.email ? (
-                  <div className="text-xs mt-2 text-red-700">
-                    {errors.email}
                   </div>
                 ) : null}
               </div>

@@ -30,14 +30,16 @@ const apiResource = () => {
       }),
     async (error) => {
       const originalConfig = error.config;
-      // console.log(originalConfig);
-      if (
-        error?.response?.status === 403 ||
-        originalConfig.url !== appUrls.LOGIN_URL ||
-        originalConfig.url !== appUrls.GETSINGLEWORKERDETAILS_URL
-      ) {
+      const urlsLogin = "/api/v1/Authentication/login";
+      const urlsWorkers = "/api/UserServices/get-worker";
+      if (error?.response?.status === 403) {
         sessionStorage.clear();
-        // window.location = "/login";
+        if (
+          originalConfig.url !== urlsLogin ||
+          originalConfig.url !== urlsWorkers
+        ) {
+          window.location = "/login";
+        }
       } else if (error?.response?.status === 401) {
         if (
           originalConfig.url !== appUrls.LOGIN_URL ||
