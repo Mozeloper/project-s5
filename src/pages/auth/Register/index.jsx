@@ -10,7 +10,7 @@ export default function Register() {
     { name: "Personal Information" },
     { name: "Church Information" },
   ]);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
   const [userValues, setUserValues] = useState({});
 
   const current = {
