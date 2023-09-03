@@ -24,11 +24,19 @@ export default function BeginRegistration() {
         <p className="md:text-textDark_200 text-white font-normal text-lg mb-3 leading-7">
           Kindly click the button below to begin the registraion process.
         </p>
-        <div>
+        <div className="flex md:flex-row flex-col gap-3">
           <Button
             onClick={() => navigate("/sign-up")}
             title="Begin Registration"
             backgroundColor="bg-primary"
+          />
+
+          <Button
+            onClick={() => navigate("/")}
+            title="Login"
+            backgroundColor="bg-none"
+            className="md:w-[180px] w-full border border-primary"
+            textColor="md:text-primary text-white"
           />
         </div>
       </div>

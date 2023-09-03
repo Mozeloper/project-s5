@@ -27,6 +27,12 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+input[type="tel"] {
+  background-color: none;
+  color: #263238;
+  outline: none;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

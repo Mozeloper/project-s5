@@ -3,6 +3,7 @@ export const appUrls = {
   REGISTER: "/api/v1/Authentication/register",
   REFRESHTOKEN_URL: "/api/v1/Authentication/refresh-token",
   FORGETPASSWORD_URL: "/api/v1/Authentication/forget-password",
+  RESETPASSWORD_URL: "/api/v1/Authentication/reset-password",
   GETCHURCHDEPT: "/api/Entity/get-church-department",
   GETSINGLEWORKERDETAILS_URL: "/api/UserServices/get-worker",
 };
