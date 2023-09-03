@@ -1,17 +1,41 @@
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-hot-toast";
 import Button from "../../../components/Button";
 import logo from "../../../assets/icons/logo.png";
+import { api } from "../../../services/api";
+import { appUrls } from "../../../services/urls";
 
 export default function ForgetPassword() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/dashboard";
+  const [isLoading, setLoading] = useState(false);
 
-  const loginSchema = Yup.object().shape({
+  const handleForgetPassword = async (email) => {
+    setLoading(true);
+    try {
+      const res = await api.get(
+        appUrls?.FORGETPASSWORD_URL + `?EmailAddress=${email}`
+      );
+      if (res?.status === 200) {
+        navigate("/change-password", { state: email });
+        toast.success(res?.data?.data, {
+          icon: "👏",
+          duration: 4000,
+        });
+      }
+    } catch (error) {
+      const errorMessage = error?.data?.message || "An error Occured";
+      toast.error(errorMessage, {
+        duration: 5000,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const forgetPasswordSchema = Yup.object().shape({
     email: Yup.string()
       .email("Not a proper email")
       .required("Email Address is required"),
@@ -23,37 +47,23 @@ export default function ForgetPassword() {
         <div className="w-full flex justify-center">
           <img src={logo} alt="logo" className="md:w-[100px] w-[70px]" />
         </div>
-        <h3 className="text-gray-900 font-black lg:text-3xl md:text-2xl text-lg mt-4 flex justify-center">
+        <h3 className="text-gray-900 font-black lg:text-3xl md:text-2xl text-lg mt-4 flex md:justify-center justify-start">
           Reset Account Password
         </h3>
-        <p className="text-gray-600 md:px-8 px-4 text-base font-light text-center mt-2">
-          Please enter your Email Address below. We will send you a reset link
+        <p className="text-gray-600 md:px-8 px-4 text-base font-light text-start md:text-center mt-2">
+          Please enter your Email Address below. We will send you a one time otp
           to create a new password.
         </p>
         <Formik
           initialValues={{
             email: "",
-            password: "",
           }}
-          validationSchema={loginSchema}
-          onSubmit={(values, actions) => {
-            navigate(from);
-            toast.success("Link sent Successfully", {
-              icon: "👏",
-              duration: 4000,
-            });
+          validationSchema={forgetPasswordSchema}
+          onSubmit={(values) => {
+            handleForgetPassword(values?.email);
           }}
         >
-          {({
-            handleSubmit,
-            handleChange,
-            values,
-            touched,
-            errors,
-            dirty,
-            isSubmitting,
-            isValid,
-          }) => (
+          {({ handleSubmit, handleChange, values, touched, errors }) => (
             <Form onSubmit={handleSubmit} className="mt-3 w-full">
               <div className="mb-3 w-full">
                 <label
@@ -78,12 +88,11 @@ export default function ForgetPassword() {
                 ) : null}
               </div>
               <Button
-                title="Send Link"
+                title="Submit"
                 className="w-full h-[56px] text-center mt-6 rounded-2xl"
                 backgroundColor="bg-primary"
                 type="submit"
-                isLoading={isSubmitting}
-                // disabled={!(isValid && dirty)}
+                isLoading={isLoading}
               />
               <div className="w-full flex justify-between">
                 <p className="text-secondary font-sm leading-4 my-4">

@@ -10,6 +10,7 @@ import BeginRegistration from "./pages/auth/beginRegistration";
 import ForgetPassword from "./pages/auth/forgetPassword";
 import NotFound from "./pages/notFound";
 import Register from "./pages/auth/Register";
+import ChangePassword from "./pages/auth/changePassword";
 
 export const ProtectRoutes = () => {
   const location = useLocation();
@@ -44,6 +45,7 @@ function App() {
           <Route element={<AuthProtectRoutes />}>
             <Route path="/" element={<Signin />} />
             <Route path="/forget-password" element={<ForgetPassword />} />
+            <Route path="/change-password" element={<ChangePassword />} />
             <Route element={<Authlayout />}>
               <Route
                 path="/begin-registration"

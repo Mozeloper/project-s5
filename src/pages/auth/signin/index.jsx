@@ -16,9 +16,9 @@ export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
 
   const loginSchema = Yup.object().shape({
-    userName: Yup.string()
+    email: Yup.string()
       .email("Not a proper email")
-      .required("Username is Required"),
+      .required("email is Required"),
     password: Yup.string()
       .min(3, "Too Short!")
       .max(50, "Too Long!")
@@ -28,7 +28,7 @@ export default function Signin() {
   const handleLogin = async (values) => {
     setIsLoading(true);
     const payload = {
-      email: values?.userName,
+      email: values?.email,
       password: values?.password,
     };
     try {
@@ -82,7 +82,7 @@ export default function Signin() {
         </h3>
         <Formik
           initialValues={{
-            userName: "",
+            email: "",
             password: "",
           }}
           validationSchema={loginSchema}
@@ -102,23 +102,23 @@ export default function Signin() {
             <Form onSubmit={handleSubmit} className="mt-3 w-full">
               <div className="mb-3 w-full">
                 <label
-                  htmlFor="userName"
+                  htmlFor="email"
                   className={`text-sm text-black leading-4`}
                 >
-                  Username
+                  Email
                 </label>
                 <input
                   type="text"
-                  name="userName"
-                  id="userName"
+                  name="email"
+                  id="email"
                   className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Username"
+                  placeholder="Email"
                   onChange={handleChange}
-                  value={values?.userName}
+                  value={values?.email}
                 />
-                {errors.userName && touched.userName ? (
+                {errors.email && touched.email ? (
                   <div className="text-xs mt-2 text-red-700">
-                    {errors.userName}
+                    {errors.email}
                   </div>
                 ) : null}
               </div>
