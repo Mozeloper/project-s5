@@ -50,7 +50,7 @@ export default function ForgetPassword() {
         <h3 className="text-gray-900 font-black lg:text-3xl md:text-2xl text-lg mt-4 flex md:justify-center justify-start">
           Reset Account Password
         </h3>
-        <p className="text-gray-600 md:px-8 px-4 text-base font-light text-start md:text-center mt-2">
+        <p className="text-gray-600 md:px-8 text-base font-light text-start md:text-center mt-2">
           Please enter your Email Address below. We will send you a one time otp
           to create a new password.
         </p>
