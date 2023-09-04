@@ -6,7 +6,7 @@ import Button from "../../../components/Button";
 export default function BeginRegistration() {
   const navigate = useNavigate();
   return (
-    <div className="w-full h-full flex items-center xl:px-36 lg:px-16 md:px-4 px-2">
+    <div className="w-full h-full flex md:items-center md:pt-0 pt-16  xl:px-36 lg:px-16 md:px-4 px-2">
       <div className="2xl:w-[65%] xl:w-[75%] lg:w-[100%] w-full flex flex-col gap-4 cursor-pointer">
         <img
           onClick={() => navigate("/")}
