@@ -34,10 +34,17 @@ export default function Signin() {
     try {
       const res = await api.post(appUrls.LOGIN_URL, payload);
       if (res?.status === 200) {
+        // if (res?.data?.data?.roles.length > 0) {
         sessionStorage.setItem("token", res?.data?.data?.token);
         sessionStorage.setItem("refreshToken", res?.data?.data?.refreshToken);
         sessionStorage.setItem("role", JSON.stringify(res?.data?.data?.roles));
         handleGetUserDetails();
+        // } else {
+        // toast.error("", {
+        //   duration: 5000,
+        // });
+        // setIsLoading(false);
+        // }
       }
     } catch (error) {
       const errorMessage = error?.data?.message || "Unable to login";
@@ -48,7 +55,7 @@ export default function Signin() {
     }
   };
 
-  const handleGetUserDetails = async () => {
+  const handleGetUserDetails = async (result) => {
     try {
       const res = await api.get(appUrls?.GETSINGLEWORKERDETAILS_URL);
       if (res?.status === 200) {
