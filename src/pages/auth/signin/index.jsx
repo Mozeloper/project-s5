@@ -34,17 +34,10 @@ export default function Signin() {
     try {
       const res = await api.post(appUrls.LOGIN_URL, payload);
       if (res?.status === 200) {
-        // if (res?.data?.data?.roles.length > 0) {
         sessionStorage.setItem("token", res?.data?.data?.token);
         sessionStorage.setItem("refreshToken", res?.data?.data?.refreshToken);
         sessionStorage.setItem("role", JSON.stringify(res?.data?.data?.roles));
         handleGetUserDetails();
-        // } else {
-        // toast.error("", {
-        //   duration: 5000,
-        // });
-        // setIsLoading(false);
-        // }
       }
     } catch (error) {
       const errorMessage = error?.data?.message || "Unable to login";
@@ -55,7 +48,7 @@ export default function Signin() {
     }
   };
 
-  const handleGetUserDetails = async (result) => {
+  const handleGetUserDetails = async () => {
     try {
       const res = await api.get(appUrls?.GETSINGLEWORKERDETAILS_URL);
       if (res?.status === 200) {
@@ -80,7 +73,7 @@ export default function Signin() {
 
   return (
     <div className="flex min-h-screen h-screen justify-center items-center bg-gray-900 md:p-4 p-0">
-      <div className="bg-white md:w-[500px] w-full min-h-[600px] md:h-auto h-full flex flex-col justify-center items-center rounded-lg md:p-6 p-3">
+      <div className="bg-white md:w-[500px] w-full min-h-[600px] md:h-auto h-full flex flex-col md:justify-center md:items-center md:pt-0 pt-24 rounded-lg md:p-6 p-3">
         <div className="w-full flex justify-center">
           <img src={logo} alt="logo" className="md:w-[100px] w-[70px]" />
         </div>
