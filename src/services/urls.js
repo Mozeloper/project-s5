@@ -6,4 +6,8 @@ export const appUrls = {
   RESETPASSWORD_URL: "/api/v1/Authentication/reset-password",
   GETCHURCHDEPT: "/api/Entity/get-church-department",
   GETSINGLEWORKERDETAILS_URL: "/api/UserServices/get-worker",
+  GETALLWORKERS_URL: "/api/UserServices/get-all-workers",
+  GET_ALL_New_Converts_URL: "/api/UserServices/get-all-new-converts",
+  GET_ALL_SOULS_COUNT_URL: "/api/UserServices/get-all-newconvert-count",
+  GET_ALL_WORKERS_COUNT_URL: "/api/UserServices/get-all-worker-count",
 };

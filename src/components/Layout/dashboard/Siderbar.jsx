@@ -2,20 +2,13 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { RxDashboard } from "react-icons/rx";
-import { FaUsers } from "react-icons/fa";
-import { PiUsersBold } from "react-icons/pi";
-import { RiUserStarFill } from "react-icons/ri";
-import { BiTestTube } from "react-icons/bi";
-import { CiDeliveryTruck } from "react-icons/ci";
-import { CiLocationOn } from "react-icons/ci";
+import { FaChalkboardTeacher, FaUsers } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
 import { FiSettings } from "react-icons/fi";
-import { BiMoney } from "react-icons/bi";
-import { MdOutlineCollections } from "react-icons/md";
-import { SiFuturelearn } from "react-icons/si";
-import { ImUsers } from "react-icons/im";
+import { IoIosPeople } from "react-icons/io";
+import { SiConvertio } from 'react-icons/si'
 
 import logo from "../../../assets/icons/TPHOL-LOGO-white.png";
-import logo2 from "../../../assets/icons/logo.png";
 import menuArrow from "../../../assets/icons/arrow-side-down.svg";
 
 export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
@@ -34,13 +27,41 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
     },
     {
       id: 2,
-      name: "Souls",
-      path: "/souls",
-      icon: <FaUsers className="w-[24px] h-[24px]" />,
+      name: "Admin",
+      path: "/admins",
+      icon: <RiAdminFill className="w-[24px] h-[24px]" />,
       hasChildren: false,
     },
     {
       id: 3,
+      name: "DTI",
+      path: "/dti",
+      icon: <FaChalkboardTeacher className="w-[24px] h-[24px]" />,
+      hasChildren: false,
+    },
+    {
+      id: 4,
+      name: "Workers",
+      path: "/workers",
+      icon: <IoIosPeople className="w-[24px] h-[24px]" />,
+      hasChildren: false,
+    },
+    {
+      id: 5,
+      name: "New Convert (Souls)",
+      path: "/newconvert",
+      icon: <SiConvertio className="w-[24px] h-[24px]" />,
+      hasChildren: false,
+    },
+    {
+      id: 6,
+      name: "Ministry",
+      path: "/ministry",
+      icon: <RiAdminFill className="w-[24px] h-[24px]" />,
+      hasChildren: false,
+    },
+    {
+      id: 7,
       name: "Profile",
       path: "/profile",
       icon: <FiSettings className="w-[24px] h-[24px]" />,
