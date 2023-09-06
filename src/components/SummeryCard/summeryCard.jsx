@@ -6,19 +6,19 @@ function classNames(...classes) {
 
 export default function SummeryCard({ stats }) {
   const data = [
-    { name: "Souls", value: "405" },
-    { name: "Average soul last month", value: "32" },
-    { name: "Number of workers", value: "202" },
-    { name: "Success rate", value: "98.5%" },
+    { message: "Souls", data: "405" },
+    { message: "Average soul last month", data: "32" },
+    { message: "Number of workers", data: "202" },
+    { message: "Success rate", data: "98.5%" },
   ];
   return (
     <div className="bg-[#38404b]">
       {/* <div className="h2">{title}</div> */}
       {/* data */}
       <div className="grid grid-cols-1 bg-gray-700/10 sm:grid-cols-2 lg:grid-cols-4">
-        {(data ?? stats)?.map((stat, statIdx) => (
+        {(stats ?? data)?.map((stat, statIdx) => (
           <div
-            key={stat.name}
+            key={stat?.message}
             className={classNames(
               statIdx % 2 === 1
                 ? "sm:border-l"
@@ -29,11 +29,11 @@ export default function SummeryCard({ stats }) {
             )}
           >
             <p className="text-sm font-medium leading-6 text-gray-400">
-              {stat.name}
+              {stat?.message}
             </p>
             <p className="md:mt-2 flex items-baseline gap-x-2">
               <span className="lg:text-4xl text-lg font-semibold lg:tracking-tight text-white">
-                {stat.value}
+                {stat?.data}
               </span>
             </p>
           </div>

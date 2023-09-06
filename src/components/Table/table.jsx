@@ -48,13 +48,13 @@ export default function Table(props) {
                 <tr key={person.email}>
                   <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                     <div className="flex items-center">
-                      <div className="h-11 w-11 flex-shrink-0 bg-gray-100 rounded-full">
+                      {/* <div className="h-11 w-11 flex-shrink-0 bg-gray-100 rounded-full">
                         <img
                           className="h-full w-full rounded-full"
                           src={person.image}
                           alt=""
                         />
-                      </div>
+                      </div> */}
                       <div className="ml-4">
                         <div className="font-medium text-gray-900">
                           {person.name}
