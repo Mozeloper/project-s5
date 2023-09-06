@@ -42,7 +42,7 @@ export default function AdminTables() {
               </button>
             </div>
           </div>
-          <ReusableTable headers={headers} data={data} letter='email' />
+          <ReusableTable headers={headers} data={data} letter='email' filterNumber={11}/>
         </div>
         <PaginationFooter />
       </div>
