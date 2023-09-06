@@ -101,7 +101,7 @@ export const SoulsTable = () => {
               </ButtonBase>
             </div>
           </div>
-          <ReusableTable headers={headers} data={data} />
+          <ReusableTable headers={headers} data={data} filterNumber={9}/>
         </div>
         <PaginationFooter />
       </div>
