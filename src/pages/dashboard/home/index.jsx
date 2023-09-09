@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import Charts from "../../../components/chart/chart";
 import SummeryCard from "../../../components/SummeryCard/summeryCard";
 import AdminTables from "../../../components/Table/admins.table";
-import { getAllSoulsCount, getAllWorkersCount } from "../../../services/souls";
+import { useFetchSoulsCount, useFetchWorkersCount } from "../../../hooks/useFetchAnalytics";
 
 //Todo - 1. Add loading ui to indicate loading state 
 //Todo - 2. Replace useEffect with react query for data fetching
 //Todo - 3. Asking the backend guys to provide all data counts (Analytics data) in one endpoint
 export default function Home() {
   const [dataCount, setDataCount] = useState([]);
+    const { data: WorkersCountData } = useFetchWorkersCount()
+    const { data: SoulsCountData, isError, isLoading } = useFetchSoulsCount()
 
   const datas = [
     {
@@ -23,13 +25,12 @@ export default function Home() {
 
     useEffect(() => {
       const getcounts = async () => {
-      const soulCount = await getAllSoulsCount() //This and the below function should be merged 
-      //together from the backend and return as one endpoint
-      const workersCount = await getAllWorkersCount()
+      const soulCount = await SoulsCountData 
+      const workersCount = await WorkersCountData
       setDataCount([soulCount, workersCount])
     };
     getcounts();
-  }, [dataCount, setDataCount]);
+  }, [SoulsCountData, WorkersCountData]);
 
   const summeryTitle = ["Souls"];
   return (

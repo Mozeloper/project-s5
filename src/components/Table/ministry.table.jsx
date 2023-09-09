@@ -1,33 +1,25 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import Table from './table'
-import PaginationFooter from '../PaginationFooter'
-// import Button from '../Button'
-import SearchBox from '../Searchbox/searchbox'
-import ModalPopup from '../ModalPopup'
+import React, { useState, useEffect, Fragment } from 'react'
 import TransitionsModal from '../ModalPopup/modalTransition'
-import { ButtonBase } from '@mui/material'
 import AddSoulsFormControl from '../UI/Forms/addSoul.form'
-import ReusableTable from './Table.reusable'
-import { getAllNewConvert } from '../../services/souls'
-import { useFetchAllNewConvert } from '../../hooks/useFetchNewConvert'
-// import Button from '@mui/material/Button';
+import SearchBox from '../Searchbox/searchbox';
+import ReusableTable from './Table.reusable';
+import PaginationFooter from '../PaginationFooter';
+import { useFetchMinistry } from '../../hooks/useFetchMinistry';
 
-export const SoulsTable = () => {
-
-
-  const [headers, setHeaders] = useState([]);
+export default function MinstryTable() {
+    const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
-    const { data: adminsData, isError, isLoading } = useFetchAllNewConvert()
+    const { data: MinistryData, isError, isLoading } = useFetchMinistry()
 
     useEffect(() => {
       const getPosts = async () => {
-      const admins = await adminsData
-      setData(await admins);
+      const ministry = await MinistryData
+      setData(ministry?.data);
       //Object.keys returns the property names of/in an object as string of arrays
-      setHeaders(Object.keys(await admins[0]));
+      setHeaders(Object.keys(ministry?.data[0]));
     };
     getPosts();
-  }, [adminsData]);
+  }, [MinistryData]);
 
   return (
     <Fragment>
@@ -36,25 +28,34 @@ export const SoulsTable = () => {
         <div className="px-4 sm:px-6 lg:px-8 bg-white py-7">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
-              <h1 className="text-base font-semibold leading-6 text-gray-900">Souls</h1>
+              <h1 className="text-base font-semibold leading-6 text-gray-900">Ministry</h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all the souls in your account including their name, email, role and Presence.
+                The list of all the Ministers.
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-              <ButtonBase
+              <button
                 className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6"
               > 
                 <TransitionsModal name={'+ Add Soul'} heading={'Add new Soul Form'} width={'max-w-6xl w-[90%]'}>
                   <AddSoulsFormControl />
                 </TransitionsModal>
-              </ButtonBase>
+              </button>
             </div>
           </div>
-          <ReusableTable headers={headers} data={data} filterNumber={9}/>
+          {
+            isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred </div> : 
+        <>
+          {
+            data?.length < 1 ? <div className='flex justify-center items-center h-96'>There's No pending "Unapproved" Account At the moment</div> : 
+              <ReusableTable headers={headers} data={data} filterNumber={9}/>
+          }
+        </>
+        }
         </div>
         <PaginationFooter />
       </div>
     </Fragment>
   )
 }
+

@@ -25,6 +25,7 @@ const NewConvert = React.lazy(() => import('./pages/dashboard/NewConvert'))
 const Ministry = React.lazy(() => import('./pages/dashboard/Ministry'))
 const ChangePassword = React.lazy(() => import('./pages/auth/changePassword'))
 const ForgetPassword = React.lazy(() => import('./pages/auth/forgetPassword'))
+const Reminder = React.lazy(() => import('./pages/dashboard/Reminder'))
 export const ProtectRoutes = () => {
   const location = useLocation();
   const isAuthed = isObjectEmpty(JSON.parse(sessionStorage.getItem("userObj")));
@@ -74,7 +75,7 @@ function App() {
           <Route element={<ProtectRoutes />}>
             <Route path="/dashboard" element={<Home />} />
             {/* <Route path="/souls" element={<React.Suspense fallback={<>...</>} // the fallback should be an error page if any error occurs while working on the component
-             >
+            >
                 <Souls />
               </React.Suspense>} /> */}
             <Route path="/profile" element={<React.Suspense fallback={<>...</>} >
@@ -95,6 +96,9 @@ function App() {
               </React.Suspense>} />
             <Route path="/ministry" element={<React.Suspense fallback={<>...</>} >
                 <Ministry />
+              </React.Suspense>} />
+            <Route path="/reminder" element={<React.Suspense fallback={<>...</>} >
+                <Reminder />
               </React.Suspense>} />
           </Route>
         </Routes>
