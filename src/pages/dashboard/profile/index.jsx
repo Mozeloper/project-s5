@@ -29,6 +29,7 @@ export default function PersonalDetailsSettings() {
   });
 
   const handleChangePassword = async (payload, actions) => {
+    setData({});
     try {
       const res = await api.post(appUrls.CHANGEPASSWORD_URL, payload);
       if (res?.data) {
@@ -45,9 +46,11 @@ export default function PersonalDetailsSettings() {
   };
 
   const handleGetUser = async () => {
+    setData({});
     try {
       const res = await api.get(appUrls.GETSINGLEWORKERDETAILS_URL);
       if (res?.status === 200) {
+        sessionStorage.setItem("userObj", JSON.stringify(res?.data?.Data));
         setData(res?.data?.Data);
       }
     } catch (error) {
