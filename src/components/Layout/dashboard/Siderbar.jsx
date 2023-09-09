@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, json } from "react-router-dom";
 
 import { RxDashboard } from "react-icons/rx";
 import { FaChalkboardTeacher, FaUsers } from "react-icons/fa";
@@ -24,6 +24,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
       path: "/dashboard",
       icon: <RxDashboard className="w-[24px] h-[24px]" />,
       hasChildren: false,
+      onlySuperAdmin: false,
     },
     {
       id: 2,
@@ -31,6 +32,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
       path: "/admins",
       icon: <RiAdminFill className="w-[24px] h-[24px]" />,
       hasChildren: false,
+      onlySuperAdmin: true,
     },
     {
       id: 3,
@@ -38,6 +40,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
       path: "/dti",
       icon: <FaChalkboardTeacher className="w-[24px] h-[24px]" />,
       hasChildren: false,
+      onlySuperAdmin: true,
     },
     {
       id: 4,
@@ -45,6 +48,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
       path: "/workers",
       icon: <IoIosPeople className="w-[24px] h-[24px]" />,
       hasChildren: false,
+      onlySuperAdmin: false,
     },
     {
       id: 5,
@@ -52,6 +56,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
       path: "/newconvert",
       icon: <SiConvertio className="w-[24px] h-[24px]" />,
       hasChildren: false,
+      onlySuperAdmin: false,
     },
     {
       id: 6,
@@ -59,6 +64,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
       path: "/ministry",
       icon: <RiAdminFill className="w-[24px] h-[24px]" />,
       hasChildren: false,
+      onlySuperAdmin: true,
     },
     {
       id: 7,
@@ -66,6 +72,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
       path: "/profile",
       icon: <FiSettings className="w-[24px] h-[24px]" />,
       hasChildren: false,
+      onlySuperAdmin: false,
     },
   ];
 
@@ -91,6 +98,34 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
     }));
   };
 
+  //Todo dynamically render the navigation paths/route based on the current logged in user/admin role
+  const currentLoggedAdmin = JSON.parse(sessionStorage.getItem("role"));
+  const currentAdmin = currentLoggedAdmin.includes('SuperAdmin')
+  const currentDTI = currentLoggedAdmin.includes('DTIAdmin')
+  const currentMinistry = currentLoggedAdmin.includes('MinistryAdmin')
+  const currentNewConvert = currentLoggedAdmin.includes('NewConvertAdmin')
+
+  //why do we have worker probably we'll remove it or not
+  const currentWorker = currentLoggedAdmin.includes('SuperAdmin')
+
+  //The methods below is used to filter all the navs based on the current logged in user
+  let superAdminNav = navLinks.filter(value => currentAdmin && value.name );
+  
+  const NewConvertNav = navLinks.filter(value => currentNewConvert && value.path === '/newconvert' || value.path === '/dashboard' || value.path === '/profile');
+  
+  const DtiAdminNav = navLinks.filter(value => currentDTI && value.path === '/dti' || value.path === '/dashboard' || value.path === '/profile');
+
+  const MinistryAdminNav = navLinks.filter(value => currentMinistry && value.path === '/ministry' || value.path === '/dashboard' || value.path === '/profile');
+  
+  const unknownAdmin = navLinks.filter(value => !currentAdmin || value.path === '/dashboard' || value.path === '/profile');
+
+  //Spread operator to add all the filtered arrays into one array
+  const adminsNav = [...superAdminNav, ...NewConvertNav, ...DtiAdminNav, ...MinistryAdminNav, ...unknownAdmin]
+
+  //The method below is just remove every duplicated value in the spread array of adminsNav
+  const UniqueNavData = [...new Set(adminsNav)];
+
+
   return (
     <>
       <div
@@ -106,8 +141,8 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
         />
       </div>
       <div className="w-full mb-6 mt-4">
-        <div className="rounded-tl-lg flex gap-2 gap-y-5 flex-col h-full">
-          {navLinks.map((list) => {
+          <div className="rounded-tl-lg flex gap-2 gap-y-5 flex-col h-full">
+          {UniqueNavData.map((list) => {
             if (!list?.children) {
               return (
                 <NavLink
@@ -128,11 +163,22 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
                           isSideBarOpen
                             ? "xl:pl-8 lg:pl-6 md:pl-4 pl-2"
                             : "pl-4"
-                        } items-center text-sm text-white md:h-[56px] h-[48px] hover:bg-white/75  duration-300 ease hover:text-[#38404b] font-semibold hover:rounded-tl-[20px] hover:rounded-bl-[20px]`
+                        } items-center text-sm text-white md:h-[56px] h-[48px] hover:bg-white/75  duration-300 ease hover:text-[#38404b] font-semibold hover:rounded-tl-[20px] hover:rounded-bl-[20px]
+                        `
                   }
                 >
-                  {list?.icon}
-                  {isSideBarOpen ? list?.name : null}
+                  {
+                    !currentAdmin ? 
+                    <>
+                      {list?.icon}
+                      {isSideBarOpen ? list?.name : null}
+                    </>
+                    :
+                    <>
+                      {list?.icon}
+                      {isSideBarOpen ? list?.name: null} 
+                    </>
+                  }
                 </NavLink>
               );
             } else {
@@ -204,7 +250,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
               );
             }
           })}
-        </div>
+          </div>
       </div>
     </>
   );
