@@ -1,24 +1,25 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import TransitionsModal from '../ModalPopup/modalTransition'
 import AddSoulsFormControl from '../UI/Forms/addSoul.form'
-import { getAllAdmins } from '../../services/admins.api';
 import SearchBox from '../Searchbox/searchbox';
 import ReusableTable from './Table.reusable';
 import PaginationFooter from '../PaginationFooter';
+import { useFetchAdmins } from '../../hooks/useFetchAdmins';
 
 export default function AdminTables() {
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
+    const { data: AdminsData, isError, isLoading } = useFetchAdmins()
 
     useEffect(() => {
       const getPosts = async () => {
-      const admins = await getAllAdmins()
+      const admins = await AdminsData
       setData(admins.Data);
       //Object.keys returns the property names of/in an object as string of arrays
       setHeaders(Object.keys(admins.Data[0]));
     };
     getPosts();
-  }, [data, headers, getAllAdmins]);
+  }, [AdminsData]);
 
   return (
     <Fragment>
@@ -42,7 +43,15 @@ export default function AdminTables() {
               </button>
             </div>
           </div>
-          <ReusableTable headers={headers} data={data} letter='email' filterNumber={11}/>
+          {
+            isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred </div> : 
+        <>
+          {
+            data?.length < 1 ? <div className='flex justify-center items-center h-96'>There's No pending "Unapproved" Account At the moment</div> : 
+              <ReusableTable headers={headers} data={data} filterNumber={11}/>
+          }
+        </>
+        }
         </div>
         <PaginationFooter />
       </div>

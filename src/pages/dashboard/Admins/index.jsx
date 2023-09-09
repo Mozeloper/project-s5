@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import Charts from "../../../components/chart/chart";
 import SummeryCard from "../../../components/SummeryCard/summeryCard";
 import AdminTables from "../../../components/Table/admins.table";
-import { getAllSoulsCount, getAllWorkersCount } from "../../../services/souls";
+import { useFetchSoulsCount, useFetchWorkersCount } from "../../../hooks/useFetchAnalytics";
 
 //Todo - 1. Add loading ui to indicate loading state 
 //Todo - 2. Replace useEffect with react query for data fetching
 export default function Admins() {
   const [dataCount, setDataCount] = useState([]);
-  // const [workersCount, setWorkersCount] = useState([]);
+    const { data: WorkersCountData } = useFetchWorkersCount()
+    const { data: SoulsCountData, isError, isLoading } = useFetchSoulsCount()
 
   const datas = [
     {
@@ -21,14 +22,14 @@ export default function Admins() {
     },
   ];
 
-  useEffect(() => {
+    useEffect(() => {
       const getcounts = async () => {
-      const soulCount = await getAllSoulsCount()
-      const workersCount = await getAllWorkersCount()
+      const soulCount = await SoulsCountData 
+      const workersCount = await WorkersCountData
       setDataCount([soulCount, workersCount])
     };
     getcounts();
-  }, [dataCount, setDataCount]);
+  }, [SoulsCountData, WorkersCountData]);
 
   return (
     <div className="flex flex-col gap-y-6">
