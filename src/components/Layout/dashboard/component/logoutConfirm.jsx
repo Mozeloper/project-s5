@@ -11,7 +11,7 @@ export default function LogoutConfirm({ setLogoutConfirmation }) {
   };
   return (
     <>
-      <div className="bg-white p-8 w-[400px] h-[220px] rounded-md flex flex-col gap-4 items-center justify-center">
+      <div className="bg-white p-8 w-[400px] h-[220px] rounded-md flex flex-col gap-4 md:mt-0 mt-48 items-center justify-center">
         <GiConfirmed className="w-[48px] h-[48px] text-[#38404b]" />
         <h4 className="text-grey900 font-bold text-lg">Are you sure ?</h4>
         <div className="w-full flex gap-2">
