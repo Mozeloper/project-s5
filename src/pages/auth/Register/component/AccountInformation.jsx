@@ -22,7 +22,7 @@ export default function AccountInformation({
 
   const signupSchema = Yup.object().shape({
     firstName: Yup.string().required("Firstname is Required"),
-    otherNames: Yup.string().required("otherName is Required"),
+    otherNames: Yup.string(),
     surName: Yup.string().required("Surname is Required"),
     phoneNumber: Yup.string()
       .matches(phoneRegExp, "Phone number is not valid")
@@ -121,8 +121,8 @@ export default function AccountInformation({
           dirty,
           isValid,
         }) => (
-          <Form onSubmit={handleSubmit} className="mt-3 w-full">
-            <div className="w-full flex md:flex-row flex-col gap-2">
+          <Form onSubmit={handleSubmit} className="mt-6 w-full">
+            <div className="w-full flex md:flex-row flex-col gap-2 mb-6">
               <div className="mb-1 w-full">
                 <label
                   htmlFor="email"
@@ -168,7 +168,7 @@ export default function AccountInformation({
                 ) : null}
               </div>
             </div>
-            <div className="w-full flex md:flex-row flex-col gap-2">
+            <div className="w-full flex md:flex-row flex-col gap-2 mb-6">
               <div className="mb-1 w-full">
                 <label
                   htmlFor="otherNames"
@@ -214,7 +214,7 @@ export default function AccountInformation({
                 ) : null}
               </div>
             </div>
-            <div className="w-full flex md:flex-row flex-col gap-2">
+            <div className="w-full flex md:flex-row flex-col gap-2 mb-6">
               <div className="mb-1 w-full">
                 <label
                   htmlFor="otherNames"
@@ -238,7 +238,7 @@ export default function AccountInformation({
                 ) : null}
               </div>
             </div>
-            <div className="w-full flex md:flex-row flex-col gap-4">
+            <div className="w-full flex md:flex-row flex-col gap-4 mb-6">
               <div className="md:w-[400px] w-full">
                 <PasswordField
                   labelName="Password"
