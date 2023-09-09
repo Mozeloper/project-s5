@@ -6,12 +6,13 @@ import ProfileImg from "../../../assets/images/profile-img.svg";
 import PasswordField from "../../../components/FormInputs/PasswordField";
 import { api } from "../../../services/api";
 import { appUrls } from "../../../services/urls";
+import ModalPopup from "../../../components/ModalPopup";
 import { toast } from "react-hot-toast";
+import Update from "./components/Update";
 
 export default function PersonalDetailsSettings() {
   const [data, setData] = useState({});
-
-  console.log(data);
+  const [openModal, setOpenModal] = useState(false);
 
   const changePassowordSchema = Yup.object().shape({
     current_password: Yup.string()
@@ -70,17 +71,24 @@ export default function PersonalDetailsSettings() {
 
   return (
     <>
+      <ModalPopup isOpen={openModal}>
+        <Update
+          handleGetUser={handleGetUser}
+          data={data}
+          setOpenModal={setOpenModal}
+        />
+      </ModalPopup>
       <div className="overflow-hidden">
         <div className="w-full rounded-md relative h-[240px] bg-gradient-to-b from-[#232931] to-[#38404b] p-4">
-          {/* <div className="w-full flex justify-end">
+          <div className="w-full flex justify-end">
             <Button
               title="Edit"
               className="w-[126px] text-sm rounded-md"
               backgroundColor="bg-white"
               textColor="text-secondary"
-              // onClick={() => setOpenModal((prev) => ({ ...prev, edit: true }))}
+              onClick={() => setOpenModal(true)}
             />
-          </div> */}
+          </div>
           <div className="absolute -bottom-24 flex md:gap-16 gap-2 md:left-[30px] md:right-[30px] right-0 left-0 bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
             <div className="flex gap-4">
               <img

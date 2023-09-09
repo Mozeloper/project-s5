@@ -46,7 +46,7 @@ const apiResource = () => {
             const refreshToken = sessionStorage.getItem("refreshToken");
             const userObj = JSON.parse(sessionStorage.getItem("userObj"));
             const payload = {
-              userId: userObj?.id,
+              userId: userObj?.Id,
               refreshToken,
             };
             try {
