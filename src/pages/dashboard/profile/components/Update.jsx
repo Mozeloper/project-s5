@@ -21,14 +21,16 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
     OtherNames: Yup.string(),
   });
 
-  console.log(data);
-
   const handleUpdateUser = async (payload, actions) => {
     try {
       const res = await api.post(appUrls.UPDATEUSER_URL, payload);
       if (res?.status === 200) {
         handleGetUser();
         setOpenModal(false);
+        toast.success("Updated Successful", {
+          icon: "👏",
+          duration: 2000,
+        });
       }
     } catch (error) {
       toast.error(error?.data?.message, 4);
