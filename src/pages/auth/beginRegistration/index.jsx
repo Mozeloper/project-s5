@@ -15,7 +15,7 @@ export default function BeginRegistration() {
           className="w-[100px] h-[100px]"
         />
         <h2 className="text-4xl font-black md:text-secondary text-white leading-9">
-          Welcome to Project 5s portal
+          Welcome to Operation Project 5s portal
         </h2>
         <p className="md:text-textDark_200 text-white font-normal text-lg leading-7">
           Please be informed that to successfully create an account, you need to
