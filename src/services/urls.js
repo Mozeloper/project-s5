@@ -37,4 +37,5 @@ export const appUrls = {
 
   // Profile
   CHANGEPASSWORD_URL: "/api/v1/Authentication/change-password",
+  UPDATEUSER_URL: "/api/Worker/update-worker-profile",
 };

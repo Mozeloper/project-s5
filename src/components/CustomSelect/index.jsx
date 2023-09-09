@@ -30,7 +30,7 @@ const colourStyles = {
   control: (styles) => ({
     ...styles,
     backgroundColor: "#fff",
-    minHeight: 56,
+    minHeight: 41,
     outline: "none",
   }),
   option: (styles, { isDisabled, isFocused }) => {
