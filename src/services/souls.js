@@ -36,7 +36,7 @@ export async function getAllNewConvert() {
             headers: {Authorization: `Bearer ${token}`},
         })
         const fetchNewConvert =  await NewConvert.json().then(data => data)
-        const res = await fetchNewConvert
+        const res = await fetchNewConvert?.data
 
         return res
 

@@ -10,6 +10,7 @@ import { SiConvertio } from 'react-icons/si'
 
 import logo from "../../../assets/icons/TPHOL-LOGO-white.png";
 import menuArrow from "../../../assets/icons/arrow-side-down.svg";
+import { MdNotificationsActive } from "react-icons/md";
 
 export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState({
@@ -68,6 +69,14 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
     },
     {
       id: 7,
+      name: "Reminder",
+      path: "/reminder",
+      icon: <MdNotificationsActive className="w-[24px] h-[24px]" />,
+      hasChildren: false,
+      onlySuperAdmin: true,
+    },
+    {
+      id: 8,
       name: "Profile",
       path: "/profile",
       icon: <FiSettings className="w-[24px] h-[24px]" />,

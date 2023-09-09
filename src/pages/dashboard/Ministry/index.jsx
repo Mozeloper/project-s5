@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SummeryCard from "../../../components/SummeryCard/summeryCard";
 import Charts from "../../../components/chart/chart";
 import { getAllAdmins } from "../../../services/admins.api";
-import WorkersTable from "../../../components/Table/worker.table";
+import MinstryTable from "../../../components/Table/ministry.table";
 
 
 //Todo - 1. Add loading ui to indicate loading state 
@@ -30,7 +30,6 @@ export default function Ministry() {
       setData(admins.Data);
       //Object.keys returns the property names of/in an object as string of arrays
       setHeaders(Object.keys(admins.Data[0]));
-      console.log('data', admins.Data);
     };
     getPosts();
   }, []);
@@ -43,7 +42,7 @@ export default function Ministry() {
       <div className="bg-white">
         <Charts type={"scatter"} datas={datas} />
       </div>
-      <WorkersTable />
+      <MinstryTable />
     </div>
   );
 }
