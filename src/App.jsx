@@ -96,6 +96,14 @@ function App() {
               }
             /> */}
             <Route
+              path="/souls"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <NewConvert />
+                </React.Suspense>
+              }
+            />
+            <Route
               path="/profile"
               element={
                 <React.Suspense fallback={<>...</>}>

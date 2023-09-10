@@ -4,9 +4,13 @@ import { NavLink, json } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
 import { FaChalkboardTeacher, FaUsers } from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
-import { FiSettings } from "react-icons/fi";
 import { IoIosPeople } from "react-icons/io";
-import { SiConvertio } from 'react-icons/si'
+import { MdAdminPanelSettings } from "react-icons/md";
+import { MdSunny } from "react-icons/md";
+import { MdChurch } from "react-icons/md";
+import { MdLocalFireDepartment } from "react-icons/md";
+import { MdOutlineTravelExplore } from "react-icons/md";
+import { MdOutlineSettings } from "react-icons/md";
 
 import logo from "../../../assets/icons/Operation-5S-logo.png";
 import menuArrow from "../../../assets/icons/arrow-side-down.svg";
@@ -28,20 +32,12 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
       onlySuperAdmin: false,
     },
     {
-      id: 2,
-      name: "Admin",
-      path: "/admins",
-      icon: <RiAdminFill className="w-[24px] h-[24px]" />,
+      id: 9,
+      name: "Souls",
+      path: "/souls",
+      icon: <MdOutlineTravelExplore className="w-[24px] h-[24px]" />,
       hasChildren: false,
-      onlySuperAdmin: true,
-    },
-    {
-      id: 3,
-      name: "DTI",
-      path: "/dti",
-      icon: <FaChalkboardTeacher className="w-[24px] h-[24px]" />,
-      hasChildren: false,
-      onlySuperAdmin: true,
+      onlySuperAdmin: false,
     },
     {
       id: 4,
@@ -52,18 +48,34 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
       onlySuperAdmin: false,
     },
     {
+      id: 2,
+      name: "Admins",
+      path: "/admins",
+      icon: <MdAdminPanelSettings className="w-[24px] h-[24px]" />,
+      hasChildren: false,
+      onlySuperAdmin: true,
+    },
+    {
       id: 5,
-      name: "New Convert (Souls)",
+      name: "New Converts",
       path: "/newconvert",
-      icon: <SiConvertio className="w-[24px] h-[24px]" />,
+      icon: <MdSunny className="w-[24px] h-[24px]" />,
       hasChildren: false,
       onlySuperAdmin: false,
+    },
+    {
+      id: 3,
+      name: "DTI",
+      path: "/dti",
+      icon: <MdChurch className="w-[24px] h-[24px]" />,
+      hasChildren: false,
+      onlySuperAdmin: true,
     },
     {
       id: 6,
       name: "Ministry",
       path: "/ministry",
-      icon: <RiAdminFill className="w-[24px] h-[24px]" />,
+      icon: <MdLocalFireDepartment className="w-[24px] h-[24px]" />,
       hasChildren: false,
       onlySuperAdmin: true,
     },
@@ -79,7 +91,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
       id: 8,
       name: "Profile",
       path: "/profile",
-      icon: <FiSettings className="w-[24px] h-[24px]" />,
+      icon: <MdOutlineSettings className="w-[24px] h-[24px]" />,
       hasChildren: false,
       onlySuperAdmin: false,
     },
@@ -150,7 +162,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
         />
       </div>
       <div className="w-full mb-6 mt-4">
-          <div className="rounded-tl-lg flex gap-2 gap-y-5 flex-col h-full">
+          <div className="rounded-tl-lg flex flex-col h-full">
           {UniqueNavData.map((list) => {
             if (!list?.children) {
               return (
