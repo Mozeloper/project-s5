@@ -57,7 +57,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
     },
     {
       id: 5,
-      name: "New Converts",
+      name: "New Believers",
       path: "/newconvert",
       icon: <MdSunny className="w-[24px] h-[24px]" />,
       hasChildren: false,
