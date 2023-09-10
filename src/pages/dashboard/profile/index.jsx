@@ -13,6 +13,7 @@ import Update from "./components/Update";
 export default function PersonalDetailsSettings() {
   const [data, setData] = useState({});
   const [openModal, setOpenModal] = useState(false);
+  const [showPasswordFields, setShowPasswordFields] = useState(false);
 
   const changePassowordSchema = Yup.object().shape({
     current_password: Yup.string()
@@ -103,15 +104,15 @@ export default function PersonalDetailsSettings() {
             </div>
             <div className="grid md:grid-cols-2 grid-cols-2 md:gap-8 gap-2">
               <div className="flex flex-col gap-1 md:mr-20 mr-4">
-                <h2 className="text-grey600 md:text-sm text-xs font-medium leading-5">
+                <h2 className="text-grey600 md:text-sm text-xs font-bold leading-5">
                   Firstname
                 </h2>
-                <h4 className="text-grey500 md:text-sm text-xs font-medium leading-4">
+                <h4 className="text-grey500 font-medium md:text-sm text-xs  leading-4">
                   {data?.FirstName || "...."}
                 </h4>
               </div>
               <div className="flex flex-col gap-1">
-                <h2 className="text-grey600 md:text-sm text-xs font-medium leading-5">
+                <h2 className="text-grey600 md:text-sm text-xs font-bold leading-5">
                   Lastname
                 </h2>
                 <h4 className="text-grey500 md:text-sm text-xs font-medium leading-4">
@@ -119,7 +120,7 @@ export default function PersonalDetailsSettings() {
                 </h4>
               </div>
               <div className="flex flex-col gap-1 mr-20">
-                <h2 className="text-grey600 md:text-sm text-xs font-medium leading-5">
+                <h2 className="text-grey600 md:text-sm text-xs font-bold leading-5">
                   Othername
                 </h2>
                 <h4 className="text-grey500 md:text-sm text-xs font-medium leading-4">
@@ -127,18 +128,81 @@ export default function PersonalDetailsSettings() {
                 </h4>
               </div>
               <div className="flex flex-col gap-1">
-                <h2 className="text-grey600 md:text-sm text-xs font-medium leading-5">
-                  Marital status
+                <h2 className="text-grey600 md:text-sm text-xs font-bold leading-5">
+                  Phone
                 </h2>
-                <h4 className="text-grey500 md:text-sm text-xs font-medium leading-4">
-                  {data?.MaritalStatus || "..."}
+                <h4 className="text-grey500 font-bold md:text-sm text-xs font-medium leading-4">
+                  {data?.PhoneNumber || "..."}
                 </h4>
               </div>
             </div>
           </div>
         </div>
-        <div className="bg-white h-[399px] mt-28 rounded-lg md:mx-[30px] mx-0 md:p-8 p-2">
-          <Formik
+        <div className="bg-white mt-28 rounded-lg md:mx-[30px] mx-0 p-8">
+          <div className="text-primary font-bold mb-3"><h2>Basic Information</h2></div>
+          <hr />    
+          <div className="flex flex-col gap-y-6 mt-6">
+            <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">Gender</h3> <span>{data?.Gender || "..."}</span>
+            </div>
+            <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">Date of Birth</h3> <span>{data?.DateOfBirth || "..."}</span>
+            </div>
+            <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">Marital Status</h3> <span>{data?.MaritalStatus || "..."}</span>
+            </div>
+            <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">Member Since</h3> <span>{data?.YearJoined || "..."}</span>
+            </div>
+          </div>
+        </div>   
+        <div className="bg-white mt-5 rounded-lg md:mx-[30px] mx-0 p-8">
+          <div className="text-primary font-bold mb-3"><h2>Contact Information</h2></div>
+          <hr />    
+          <div className="flex flex-col gap-y-6 mt-6">
+            <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">Phone</h3> <span>{data?.PhoneNumber || "..."}</span>
+            </div>
+            <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">Email</h3> <span>{data?.Email || "..."}</span>
+            </div>
+            <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">Address</h3> <span>{data?.HomeAddress || "..."}</span>
+            </div>
+            <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">Nearest Bus Stop</h3> <span>{data?.NearestBusStop || "..."}</span>
+            </div>
+            <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">State</h3> <span>{data?.StateName || "..."}</span>
+            </div>
+            <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">L.G.A.</h3> <span>{data?.LocalGovtName || "..."}</span>
+            </div>
+            <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">Country</h3> <span>{data?.CountryName || "..."}</span>
+            </div>
+          </div>
+        </div>   
+        <div className="bg-white min-h-[150px] mt-5 rounded-lg md:mx-[30px] mx-0 p-8 mb-10">
+        <div className="text-primary font-bold mb-3"><h2>Account Management</h2></div>
+          <hr />   
+          <div>
+          <div className="my-6">
+            <h3 className="font-bold mb-2">Password</h3>
+            <div className="md:flex justify-between items-center">
+              <p>A secure password helps protect your Account. <br /> Always ensure your passords are 8 characters long <br /> and are a combination of alphabets, numbers and symbols.</p>
+              <div> <Button
+                    onClick={()=>setShowPasswordFields(!showPasswordFields)}
+                    title={!showPasswordFields ? "Set New Password" : "Cancel"}
+                    className="text-sm rounded-md mt-5 md:mt-0"
+                    backgroundColor="bg-primary"
+                    type="submit"
+                    isLoading={false}
+                  /></div>
+            </div>
+          </div> 
+          
+          {showPasswordFields && <div className="border p-5 rounded"><Formik
             initialValues={{
               current_password: "",
               new_password: "",
@@ -164,16 +228,8 @@ export default function PersonalDetailsSettings() {
               isSubmitting,
               isValid,
             }) => (
-              <Form onSubmit={handleSubmit}>
-                <div className="w-full flex justify-end">
-                  <Button
-                    title="Change Password"
-                    className="text-sm rounded-md"
-                    backgroundColor="bg-[#38404b]"
-                    type="submit"
-                    isLoading={isSubmitting}
-                  />
-                </div>
+              <Form onSubmit={handleSubmit} class="flex flex-col gap-y-6">
+               
                 <div className="md:w-[400px] w-full">
                   <PasswordField
                     labelName="Current Password"
@@ -189,7 +245,6 @@ export default function PersonalDetailsSettings() {
                     {errors.current_password}
                   </div>
                 ) : null}
-                <div className="md:w-[85%] w-full flex md:flex-row flex-col gap-4">
                   <div className="md:w-[400px] w-full">
                     <PasswordField
                       labelName="New Password"
@@ -220,10 +275,20 @@ export default function PersonalDetailsSettings() {
                       </div>
                     ) : null}
                   </div>
+                <div className="">
+                  <Button
+                    title="Change Password"
+                    className="text-sm rounded-md"
+                    backgroundColor="bg-[#38404b]"
+                    type="submit"
+                    isLoading={isSubmitting}
+                  />
                 </div>
               </Form>
             )}
-          </Formik>
+          </Formik></div>}
+          
+          </div>
         </div>
       </div>
     </>
