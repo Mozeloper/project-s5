@@ -30,7 +30,7 @@ export default function AdminTables() {
             <div className="sm:flex-auto">
               <h1 className="text-base font-semibold leading-6 text-gray-900">Admins</h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all the [souls/workers] in your account.
+                A list of all the souls in your account.
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
