@@ -8,7 +8,7 @@ import { FiSettings } from "react-icons/fi";
 import { IoIosPeople } from "react-icons/io";
 import { SiConvertio } from 'react-icons/si'
 
-import logo from "../../../assets/icons/TPHOL-LOGO-white.png";
+import logo from "../../../assets/icons/Operation-5S-logo.png";
 import menuArrow from "../../../assets/icons/arrow-side-down.svg";
 import { MdNotificationsActive } from "react-icons/md";
 
@@ -138,7 +138,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
   return (
     <>
       <div
-        className={`w-full h-[65px] flex items-center ${
+        className={`w-full h-[65px] flex items-center pr-3 ${
           isSideBarOpen ? "pl-6" : "pl-3"
         }`}
       >
@@ -146,7 +146,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
           src={logo}
           alt="tphol logo"
           loading="lazy"
-          className="h-[41px] w-[45px]"
+          className="w-[100%]"
         />
       </div>
       <div className="w-full mb-6 mt-4">

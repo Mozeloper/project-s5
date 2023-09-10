@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { toast } from "react-hot-toast";
 import Button from "../../../components/Button";
 import PasswordField from "../../../components/FormInputs/PasswordField";
-import logo from "../../../assets/icons/logo.png";
+import logo from "../../../assets/icons/Operation-5S-logo.png";
 import { api } from "../../../services/api";
 import { appUrls } from "../../../services/urls";
 
@@ -73,12 +73,12 @@ export default function Signin() {
 
   return (
     <div className="flex min-h-screen h-screen justify-center items-center bg-gray-900 md:p-4 p-0">
-      <div className="bg-white md:w-[500px] w-full min-h-[600px] md:h-auto h-full flex flex-col md:justify-center md:items-center md:pt-0 pt-16 rounded-lg md:p-6 p-3">
+      <div className="bg-white md:w-[500px] w-full min-h-[600px] md:h-auto h-full flex flex-col justify-between md:items-center pt-16 rounded-lg md:p-6 p-3">
         <div className="w-full flex justify-center">
-          <img src={logo} alt="logo" className="md:w-[100px] w-[70px]" />
+          <img src={logo} alt="logo" className="md:w-[300px] w-[200px]" />
         </div>
         <h3 className="text-gray-900 font-black lg:text-3xl md:text-2xl text-lg mt-4 flex justify-center">
-          Sign in to your Account
+          Account Sign In
         </h3>
         <Formik
           initialValues={{
@@ -163,6 +163,7 @@ export default function Signin() {
             </Form>
           )}
         </Formik>
+        <div className="text-center"><small className="text-primary font-bold">Powered by The Potters House of Lagos</small></div>
       </div>
     </div>
   );

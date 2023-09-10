@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../../assets/icons/logo.png";
+import logo from "../../../assets/icons/Operation-5S-logo.png";
 import Button from "../../../components/Button";
 
 export default function BeginRegistration() {
@@ -12,7 +12,7 @@ export default function BeginRegistration() {
           onClick={() => navigate("/")}
           src={logo}
           alt="logo"
-          className="w-[100px] h-[100px]"
+          className="w-[300px]"
         />
         <h2 className="text-4xl font-black md:text-secondary text-white leading-9">
           Welcome to Operation 5 <span className="text-primary">S</span> portal
@@ -22,7 +22,7 @@ export default function BeginRegistration() {
           be a member of the TPHOL'S workforce.
         </p>
         <p className="md:text-textDark_200 text-white font-normal text-lg mb-3 leading-7">
-          Kindly click the button below to begin the registraion process.
+          Kindly click the button below to begin the registration process.
         </p>
         <div className="flex md:flex-row flex-col gap-3">
           <Button
