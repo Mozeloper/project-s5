@@ -73,11 +73,11 @@ export default function Signin() {
 
   return (
     <div className="flex min-h-screen h-screen justify-center items-center bg-gray-900 md:p-4 p-5">
-      <div className="bg-white md:w-[500px] w-full min-h-[400px] md:h-auto h-full flex flex-col justify-between md:items-center md:pt-16 rounded-lg md:p-6 p-5">
+      <div className="bg-white md:w-[500px] w-full min-h-[300px] md:h-auto h-full flex flex-col justify-between md:items-center md:pt-16 rounded-lg md:p-6 p-5">
         <div className="w-full flex justify-center">
           <img src={logo} alt="logo" className="md:w-[300px] w-[200px]" />
         </div>
-        <h3 className="text-gray-900 font-black lg:text-3xl md:text-2xl text-lg mt-4 flex justify-center">
+        <h3 className="text-gray-900 font-black lg:text-3xl md:text-2xl text-lg md:mt-4 flex justify-center">
           Account Sign In
         </h3>
         <Formik
@@ -99,7 +99,7 @@ export default function Signin() {
             dirty,
             isValid,
           }) => (
-            <Form onSubmit={handleSubmit} className="mt-3 w-full">
+            <Form onSubmit={handleSubmit} className="md:mt-3 w-full">
               <div className="mb-3 w-full">
                 <label
                   htmlFor="email"
