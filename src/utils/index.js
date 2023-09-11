@@ -52,3 +52,14 @@ export function checkUppercase(str) {
 export function containsNumber(str) {
   return /\d/.test(str);
 }
+
+export function userFullName() {
+  const userObj = JSON.parse(sessionStorage.getItem("userObj"));
+  
+  // Check if userObj exists and has both FirstName and SurName properties
+  if (userObj && userObj.FirstName && userObj.SurName) {
+    return `${userObj.FirstName} ${userObj.SurName}`;
+  } else {
+    return "User Name Not Found"; // Provide a default value or message
+  }
+}
