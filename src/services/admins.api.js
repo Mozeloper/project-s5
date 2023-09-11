@@ -3,15 +3,18 @@ import { appUrls } from "./urls";
 const baseUrl = import.meta.env.VITE_BASE_URL
 
 const token = sessionStorage.getItem('token');
+
+// const token = setTimeout(function() {
+//     return sessionStorage.getItem('token');
+// }, 50);
+
 export async function getAllAdmins() {
     try {
-        const admins = await fetch(`${baseUrl}${appUrls.GETALLWORKERS_URL}`, {
-            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        const admins = await axios.get(`${baseUrl}${appUrls.GETALLWORKERS_URL}`, {
+            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         })
-        const fetchAdmins =  await admins.json().then(data => data)
-        const res = await fetchAdmins
-        
-        return res
+        const fetchAdmins =  await admins?.data
+        return await fetchAdmins
     } catch (error) {
         throw new Error(error.message || error)
     }
@@ -19,13 +22,11 @@ export async function getAllAdmins() {
 
 export async function getAllMinistryAdmins() {
     try {
-        const Ministryadmins = await fetch(`${baseUrl}${appUrls.GET_ALL_MINISTRY_URL}`, {
-            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        const Ministryadmins = await axios.get(`${baseUrl}${appUrls.GET_ALL_MINISTRY_URL}`, {
+            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         })
-        const fetchMinistryAdmins =  await Ministryadmins.json().then(data => data)
-        const res = await fetchMinistryAdmins
-        
-        return res
+        const fetchMinistryAdmins =  await Ministryadmins?.data
+        return await fetchMinistryAdmins
     } catch (error) {
         throw new Error(error.message || error)
     }
@@ -33,13 +34,11 @@ export async function getAllMinistryAdmins() {
 
 export async function getAllDtiAdmins() {
     try {
-        const Dtiadmins = await fetch(`${baseUrl}${appUrls.GET_ALL_DTIAdmin_URL}`, {
-            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        const Dtiadmins = await axios.get(`${baseUrl}${appUrls.GET_ALL_DTIAdmin_URL}`, {
+            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         })
-        const fetchDtiAdmins =  await Dtiadmins.json().then(data => data)
-        const res = await fetchDtiAdmins
-        
-        return res
+        const fetchDtiAdmins =  await Dtiadmins?.data
+        return await fetchDtiAdmins
     } catch (error) {
         throw new Error(error.message || error)
     }

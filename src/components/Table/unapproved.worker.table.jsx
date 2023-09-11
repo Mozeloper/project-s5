@@ -5,7 +5,7 @@ import { HiMiniViewfinderCircle } from 'react-icons/hi2'
 import { MdDeleteSweep } from 'react-icons/md'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
 import { GrConnect, GrDocumentUpdate } from 'react-icons/gr'
-import { useFetchAllUnapproved } from '../../hooks/useFetchUnapproved';
+import { useFetchAllUnapproved, usePostApproveWorker } from '../../hooks/useFetchUnapproved';
 import { GiConfirmed } from 'react-icons/gi'
 import ConfirmDeactivate from '../UI/confirmation screen'
 
@@ -13,7 +13,10 @@ export default function UnapprovedWorkerTable() {
     const [displayUi, setDisplayUi] = React.useState(null)
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
+    const [userId, setUserId] = useState('1');
     const { data: PendingData, isLoading, isError } = useFetchAllUnapproved()
+    const { mutateAsync, data: ApproveUser, isLoading: isLoadingApproval, isError: isErrorRender } = usePostApproveWorker(userId)
+    
 
     useEffect(() => {
       const getPosts = async () => {
@@ -30,20 +33,28 @@ export default function UnapprovedWorkerTable() {
     ];
 
   const handleApprovedConfirmation = useCallback(
-    (id) => {
-      //Todo add login/function to confirm a worker here
+    async (id) => {
+      setUserId(await id)
+      console.log('user', userId);
+      mutateAsync()
       console.log(`you just confirmed the worker with id ${id} `);
-    },
-    [],
+    }, [],
   );
 
   const handleApprovedSuspend = useCallback(
     (id) => {
-      //Todo add login/function to confirm a worker here
+      //Todo add logic/function to suspend a worker here
       console.log(`you just supended the worker with id ${id} `);
-    },
-    [],
+    }, [],
   );
+
+  if (isLoadingApproval) {
+    return <div>Loading.......</div>
+  }
+
+    if (isErrorRender) {
+    return <div>Error.......</div>
+  }
 
   const handleClick = (event) => {
     const innerText = event.currentTarget.innerText

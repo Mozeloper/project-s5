@@ -150,7 +150,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
   return (
     <>
       <div
-        className={`w-full h-[65px] flex items-center pr-3 ${
+        className={`w-full h-[65px] flex items-center pr-3 max-w-xs ${
           isSideBarOpen ? "pl-6" : "pl-3"
         }`}
       >

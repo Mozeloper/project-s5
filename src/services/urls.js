@@ -34,6 +34,10 @@ export const appUrls = {
   //Approvals
   GET_ALL_UNAPPROVED_WORKERS: "/api/SuperAdmin/get-all-unapproved-workers",
   GET_ALL_DEACTIVATED_WORKERS: "/api/SuperAdmin/get-all-deactivated-workers",
+  APPROVE_A_WORKER: "/api/SuperAdmin/approve-new-worker", //This api takes in an {id}
+  SUSPEND_A_WORKER: "api/SuperAdmin/deactivate-worker-account", //This api takes in an {id}
+  DELETE_A_WORKER: "/api/SuperAdmin/delete-worker-account", //This api takes in an {id}
+  REACTIVATE_A_WORKER: "/api/SuperAdmin/reactivate-worker-account", //This api takes in an {id}
 
   // Profile
   CHANGEPASSWORD_URL: "/api/v1/Authentication/change-password",

@@ -8,7 +8,7 @@ import { useQuery } from "react-query"
 import { getAllAdmins } from "../services/admins.api";
 
 export function useFetchAdmins() {
-    const admins = useQuery([`admins`], async () => await getAllAdmins(), {
+    const admins = useQuery([`admins`], async () => await getAllAdmins, {
         staleTime: 360000,
     });
     return admins
