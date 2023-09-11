@@ -134,7 +134,7 @@ export default function AccountInformation({
                   type="email"
                   name="email"
                   id="email"
-                  className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter Email"
                   onChange={handleChange}
                   value={values?.email}
@@ -156,7 +156,7 @@ export default function AccountInformation({
                   type="text"
                   name="firstName"
                   id="firstName"
-                  className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter Firstname"
                   onChange={handleChange}
                   value={values?.firstName}
@@ -180,7 +180,7 @@ export default function AccountInformation({
                   type="text"
                   name="otherNames"
                   id="otherNames"
-                  className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter otherNames"
                   onChange={handleChange}
                   value={values?.otherNames}
@@ -202,7 +202,7 @@ export default function AccountInformation({
                   type="surName"
                   name="surName"
                   id="surName"
-                  className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter Surname"
                   onChange={handleChange}
                   value={values?.surName}
@@ -226,7 +226,7 @@ export default function AccountInformation({
                   type="tel"
                   name="phoneNumber"
                   id="phoneNumber"
-                  className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter phone number"
                   onChange={handleChange}
                   value={values?.phoneNumber}
