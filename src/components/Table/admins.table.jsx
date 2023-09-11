@@ -11,15 +11,18 @@ export default function AdminTables() {
     const [data, setData] = useState([]);
     const { data: AdminsData, isError, isLoading } = useFetchAdmins()
 
+    console.log('just loaded outside', AdminsData);
+
     useEffect(() => {
       const getPosts = async () => {
       const admins = await AdminsData
-      setData(admins.Data);
+      setData(await admins?.Data);
       //Object.keys returns the property names of/in an object as string of arrays
-      setHeaders(Object.keys(admins.Data[0]));
+      setHeaders(Object.keys(admins?.Data[0]));
+      console.log('just loaded Effect', admins);
     };
     getPosts();
-  }, [AdminsData]);
+  }, [useFetchAdmins, AdminsData, setData]);
 
   return (
     <Fragment>
@@ -47,7 +50,7 @@ export default function AdminTables() {
             isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred </div> : 
         <>
           {
-            data?.length < 1 ? <div className='flex justify-center items-center h-96'>There's No pending "Unapproved" Account At the moment</div> : 
+            data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 
               <ReusableTable headers={headers} data={data} filterNumber={11}/>
           }
         </>

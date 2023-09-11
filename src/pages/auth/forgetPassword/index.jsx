@@ -81,7 +81,7 @@ export default function ForgetPassword() {
                   type="text"
                   name="email"
                   id="email"
-                  className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter Your Email"
                   onChange={handleChange}
                   value={values?.email}

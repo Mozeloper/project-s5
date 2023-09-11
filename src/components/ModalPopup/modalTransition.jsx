@@ -6,6 +6,7 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
+import { ListItemIcon } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -20,15 +21,20 @@ const style = {
   p: 4,
 };
 
-export default function TransitionsModal({ name, heading, width, children }) {
+export default function TransitionsModal({ name, heading, width, children, icon, isOpen }) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(isOpen || true)
+  };
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <div className="z-20 text-white" onClick={handleOpen}>
-        {name ?? "Open modal"}
+      <div className="z-20 flex !justify-center items-center" onClick={handleOpen}>
+        <ListItemIcon>
+            {icon}
+        </ListItemIcon>
+        {name}
       </div>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -42,14 +48,14 @@ export default function TransitionsModal({ name, heading, width, children }) {
             timeout: 500,
           },
         }}
-        className="bg-[rgba(0,_0,_0,_0.7)]"
+        // className="bg-[rgba(0,_0,_0,_0.7)]"
       >
         <Fade in={open}>
           <Box sx={style} className={`${width}`}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
+            <Typography id="transition-modal-title">
               {heading}
             </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+            <Typography id="transition-modal-description" component={'div'} sx={{ mt: 2 }}>
               {children}
             </Typography>
           </Box>

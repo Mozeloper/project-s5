@@ -167,7 +167,7 @@ export default function ChurchInformation({
                   type="number"
                   name="yearJoined"
                   id="yearJoined"
-                  className={`w-full h-[56px] border border-secondary text-sm px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter yearJoined"
                   onChange={handleChange}
                   value={values?.yearJoined}
