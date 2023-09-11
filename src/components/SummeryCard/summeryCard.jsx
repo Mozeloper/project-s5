@@ -12,7 +12,7 @@ export default function SummeryCard({ stats }) {
     { message: "Success rate", data: "98.5%" },
   ];
   return (
-    <div className="bg-[#38404b]">
+    <div className="bg-[#38404b] rounded-md">
       {/* <div className="h2">{title}</div> */}
       {/* data */}
       <div className="grid grid-cols-1 bg-gray-700/10 sm:grid-cols-2 lg:grid-cols-4">

@@ -1,0 +1,22 @@
+/* NotificationIcon.css */
+@keyframes vibrate {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-1px);
+  }
+  50% {
+    transform: translateX(1px);
+  }
+  75% {
+    transform: translateX(-1px);
+  }
+  100% {
+    transform: translateX(1px);
+  }
+}
+
+.vibrate-icon {
+  animation: vibrate 0.5s infinite; /* Adjust the duration and animation properties as needed */
+}
