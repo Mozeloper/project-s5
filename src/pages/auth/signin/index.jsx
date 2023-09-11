@@ -72,8 +72,8 @@ export default function Signin() {
   };
 
   return (
-    <div className="flex min-h-screen h-screen justify-center items-center bg-gray-900 md:p-4 p-0">
-      <div className="bg-white md:w-[500px] w-full min-h-[600px] md:h-auto h-full flex flex-col justify-between md:items-center pt-16 rounded-lg md:p-6 p-3">
+    <div className="flex min-h-screen h-screen justify-center items-center bg-gray-900 md:p-4 p-5">
+      <div className="bg-white md:w-[500px] w-full min-h-[400px] md:h-auto h-full flex flex-col justify-between md:items-center md:pt-16 rounded-lg md:p-6 p-5">
         <div className="w-full flex justify-center">
           <img src={logo} alt="logo" className="md:w-[300px] w-[200px]" />
         </div>
