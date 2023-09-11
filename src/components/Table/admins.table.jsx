@@ -14,12 +14,12 @@ export default function AdminTables() {
     useEffect(() => {
       const getPosts = async () => {
       const admins = await AdminsData
-      setData(admins.Data);
+      setData(admins?.Data);
       //Object.keys returns the property names of/in an object as string of arrays
-      setHeaders(Object.keys(admins.Data[0]));
+      setHeaders(Object.keys(admins?.Data[0]));
     };
     getPosts();
-  }, [AdminsData]);
+  }, [AdminsData, setData, setHeaders]);
 
   return (
     <Fragment>

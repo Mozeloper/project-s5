@@ -31,3 +31,62 @@ export async function getAllDeactivatedWorker() {
         throw new Error(error.message || error)
     }
 }
+
+
+export async function approveAWorker(id) {
+    try {
+        const Deactivated = await fetch(`${baseUrl}${appUrls.APPROVE_A_WORKER}/${id}`, {
+            method: 'POST',
+            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        })
+        const fetchDeactivated =  await Deactivated.json().then(data => data)
+        const res = await fetchDeactivated
+        return res
+    } catch (error) {
+        throw new Error(error.message || error)
+    }
+}
+
+
+export async function deactivateAWorker() {
+    try {
+        const Deactivated = await fetch(`${baseUrl}${appUrls.SUSPEND_A_WORKER}`, {
+            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        })
+        const fetchDeactivated =  await Deactivated.json().then(data => data)
+        const res = await fetchDeactivated
+
+        return res
+    } catch (error) {
+        throw new Error(error.message || error)
+    }
+}
+
+export async function deleteAWorker() {
+    try {
+        const Deactivated = await fetch(`${baseUrl}${appUrls.DELETE_A_WORKER}`, {
+            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        })
+        const fetchDeactivated =  await Deactivated.json().then(data => data)
+        const res = await fetchDeactivated
+
+        return res
+    } catch (error) {
+        throw new Error(error.message || error)
+    }
+}
+
+
+export async function reactivateWorker() {
+    try {
+        const Deactivated = await fetch(`${baseUrl}${appUrls.REACTIVATE_A_WORKER}`, {
+            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        })
+        const fetchDeactivated =  await Deactivated.json().then(data => data)
+        const res = await fetchDeactivated
+
+        return res
+    } catch (error) {
+        throw new Error(error.message || error)
+    }
+}

@@ -33,7 +33,6 @@ export default function DeactivatedWorkerTable() {
     const innerText = event.currentTarget.innerText
     // popupState.close 
     // setAnchorEl(event.currentTarget);
-    console.log('working');
     if (innerText.toLowerCase() === 'view') {
         // setDisplayUi(<ConfirmDeactivate />)
     }else {
