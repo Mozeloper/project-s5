@@ -137,7 +137,7 @@ export default function Signin() {
               ) : null}
               <p
                 onClick={() => navigate("/forget-password")}
-                className="text-indigo-600 flex justify-end hover:text-indigo-500 font-sm leading-4 my-4 cursor-pointer"
+                className="text-[#0562cc] flex justify-end hover:text-indigo-500 font-sm leading-4 my-4 cursor-pointer"
               >
                 Forgot Password ?
               </p>
@@ -155,7 +155,7 @@ export default function Signin() {
                 </p>
                 <p
                   onClick={() => navigate("/begin-registration")}
-                  className="text-indigo-600 hover:text-indigo-500 font-sm leading-4 my-4 cursor-pointer hover:border-b hover:border-indigo-600"
+                  className="text-[#0562cc] hover:text-indigo-500 font-sm leading-4 my-4 cursor-pointer hover:border-b hover:border-indigo-600"
                 >
                   Register
                 </p>
