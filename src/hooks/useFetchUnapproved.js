@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from "react-query"
 import { approveAWorker, getAllDeactivatedWorker, getAllUnApproval } from "../services/approval.api";
+import { QueryClient } from "@tanstack/react-query";
 
+const queryClient = new QueryClient()
 export function useFetchAllUnapproved() {
     const UnApproval = useQuery([`UnApproval`], async () => await getAllUnApproval(), {
         staleTime: 360000,
@@ -19,12 +21,10 @@ export function useFetchAllDeactivatedWorker() {
 
 export function usePostApproveWorker(userId) {
     const approval = useMutation({
-   mutationFn: async (newTodo) => await approveAWorker(userId),
+   mutationFn: async () => await approveAWorker(userId),
    onSuccess: async (data) => {
-    console.log('userId', userId);
-    console.log('data', await data);
+    queryClient.invalidateQueries('UnApproval')
    }
  })
-
     return approval
 }

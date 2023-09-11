@@ -15,7 +15,7 @@ export default function UnapprovedWorkerTable() {
     const [data, setData] = useState([]);
     const [userId, setUserId] = useState('1');
     const { data: PendingData, isLoading, isError } = useFetchAllUnapproved()
-    const { mutate, data: ApproveUser, isLoading: isLoadingApproval, isError: isErrorRender } = usePostApproveWorker(userId)
+    const { mutateAsync, data: ApproveUser, isLoading: isLoadingApproval, isError: isErrorRender } = usePostApproveWorker(userId)
     
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export default function UnapprovedWorkerTable() {
     async (id) => {
       setUserId(await id)
       console.log('user', userId);
-      mutate()
+      mutateAsync()
       console.log(`you just confirmed the worker with id ${id} `);
     }, [],
   );

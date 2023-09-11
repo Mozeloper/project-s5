@@ -5,13 +5,11 @@ const baseUrl = import.meta.env.VITE_BASE_URL
 const token = sessionStorage.getItem('token');
 export async function getAllUnApproval() {
     try {
-        const UnApproval = await fetch(`${baseUrl}${appUrls.GET_ALL_UNAPPROVED_WORKERS}`, {
-            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        const UnApproval = await axios.get(`${baseUrl}${appUrls.GET_ALL_UNAPPROVED_WORKERS}`, {
+            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         })
-        const fetchUnApproval =  await UnApproval.json().then(data => data)
-        const res = await fetchUnApproval?.Data
-        
-        return res
+        const fetchUnApproval =  await UnApproval?.data
+        return await fetchUnApproval?.Data
     } catch (error) {
         throw new Error(error.message || error)
     }
@@ -20,13 +18,11 @@ export async function getAllUnApproval() {
 
 export async function getAllDeactivatedWorker() {
     try {
-        const Deactivated = await fetch(`${baseUrl}${appUrls.GET_ALL_DEACTIVATED_WORKERS}`, {
-            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        const DeactivatedWorker =  await axios.get(`${baseUrl}${appUrls.GET_ALL_DEACTIVATED_WORKERS}`, {
+            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         })
-        const fetchDeactivated =  await Deactivated.json().then(data => data)
-        const res = await fetchDeactivated
-
-        return res
+        const AllDeactivatedWorker =  await DeactivatedWorker?.data
+        return await AllDeactivatedWorker
     } catch (error) {
         throw new Error(error.message || error)
     }
@@ -35,13 +31,11 @@ export async function getAllDeactivatedWorker() {
 
 export async function approveAWorker(id) {
     try {
-        const Deactivated = await fetch(`${baseUrl}${appUrls.APPROVE_A_WORKER}/${id}`, {
-            method: 'POST',
-            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        const approveAWorker = await axios.post(`${baseUrl}${appUrls.APPROVE_A_WORKER}/${id}`, {
+            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         })
-        const fetchDeactivated =  await Deactivated.json().then(data => data)
-        const res = await fetchDeactivated
-        return res
+        const postAWorker =  await approveAWorker?.data
+        return await postAWorker
     } catch (error) {
         throw new Error(error.message || error)
     }
@@ -50,13 +44,11 @@ export async function approveAWorker(id) {
 
 export async function deactivateAWorker() {
     try {
-        const Deactivated = await fetch(`${baseUrl}${appUrls.SUSPEND_A_WORKER}`, {
-            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        const deactivateAWorker = await axios.post(`${baseUrl}${appUrls.SUSPEND_A_WORKER}`, {
+            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         })
-        const fetchDeactivated =  await Deactivated.json().then(data => data)
-        const res = await fetchDeactivated
-
-        return res
+        const postDeactivated =  await deactivateAWorker?.data
+        return await postDeactivated
     } catch (error) {
         throw new Error(error.message || error)
     }
@@ -64,13 +56,11 @@ export async function deactivateAWorker() {
 
 export async function deleteAWorker() {
     try {
-        const Deactivated = await fetch(`${baseUrl}${appUrls.DELETE_A_WORKER}`, {
-            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        const deleteAWorker = await axios.post(`${baseUrl}${appUrls.DELETE_A_WORKER}`, {
+            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         })
-        const fetchDeactivated =  await Deactivated.json().then(data => data)
-        const res = await fetchDeactivated
-
-        return res
+        const postDeleteAWorker =  await deleteAWorker?.data
+        return await postDeleteAWorker
     } catch (error) {
         throw new Error(error.message || error)
     }
@@ -79,13 +69,11 @@ export async function deleteAWorker() {
 
 export async function reactivateWorker() {
     try {
-        const Deactivated = await fetch(`${baseUrl}${appUrls.REACTIVATE_A_WORKER}`, {
-            headers: {Authorization: `Bearer ${token}`}, cache: 'force-cache',
+        const ReactivateWorker = await axios.post(`${baseUrl}${appUrls.REACTIVATE_A_WORKER}`, {
+            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         })
-        const fetchDeactivated =  await Deactivated.json().then(data => data)
-        const res = await fetchDeactivated
-
-        return res
+        const postReactivateWorker =  await ReactivateWorker?.data
+        return await postReactivateWorker
     } catch (error) {
         throw new Error(error.message || error)
     }
