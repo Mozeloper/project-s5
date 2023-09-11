@@ -29,7 +29,7 @@ export default function PasswordField({
           type={showPassword ? "text" : "password"}
           name={name || "password"}
           id={name || "password"}
-          className={`block w-full h-[56px] text-black text-sm px-4 border ${
+          className={`block w-full h-[56px] text-black text-base px-4 border ${
             isValid ? "border-secondary" : "border-secondary"
           } rounded-lg mt-2 outline-none ${className}`}
           placeholder={placeholder}
