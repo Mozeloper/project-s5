@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { SlOptionsVertical } from 'react-icons/sl'
-import Options from "../UI/Options";
+import TableOptions  from "../UI/Options";
 import EditIcon from '@mui/icons-material/Edit';
 
 //This table is reuseable and can be use to render/display any data/apis as in (tabular form)/(table data)
-const ReusableTable = ({ headers, data, filterNumber, children }) => {
+const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHandleClick, optionModal }) => {
     const filteredNumber = filterNumber ?? 20;
+
   return (
     <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -49,9 +50,10 @@ const ReusableTable = ({ headers, data, filterNumber, children }) => {
                                 ))}
                                 <td> 
                                 { (headers && headers.length > 1 ) &&
-                                    <Options linkId={`/${row['Id']}`}>
-                                        <SlOptionsVertical />
-                                    </Options> 
+                                 <TableOptions displayModalUi={optionModal} optionsList={optionArrayList} handleClick={optionsHandleClick} id={`${row['Id']}`}/>
+                                    // <Options linkId={`/${row['Id']}`}>
+                                    //     <SlOptionsVertical />
+                                    // </Options> 
                                 }
                                 </td>
                             </tr>

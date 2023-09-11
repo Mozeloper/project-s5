@@ -23,10 +23,10 @@ export default function Reminder() {
             <Tab label="Suspended Workers" value="2" />
           </TabList>
         </Box>
-        <TabPanel value="1">
+        <TabPanel value="1" className='!px-2'>
             <UnapprovedWorkerTable />
         </TabPanel>
-        <TabPanel value="2">
+        <TabPanel value="2" className='!px-2'>
             <DeactivatedWorkerTable />
         </TabPanel>
       </TabContext>
