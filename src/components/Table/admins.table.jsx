@@ -5,11 +5,24 @@ import SearchBox from '../Searchbox/searchbox';
 import ReusableTable from './Table.reusable';
 import PaginationFooter from '../PaginationFooter';
 import { useFetchAdmins } from '../../hooks/useFetchAdmins';
+import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { AiFillDelete } from "react-icons/ai";
+import { GiConfirmed } from 'react-icons/gi'
+import { GrView } from 'react-icons/gr'
+import ConfirmDeactivate from '../UI/confirmation screen'
+
 
 export default function AdminTables() {
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
+    const [displayUi, setDisplayUi] = React.useState(null)
     const { data: AdminsData, isError, isLoading } = useFetchAdmins()
+
+    const optionList = [ 
+      { icon: <GrView className='text-blue-500' />, name: 'View' },
+      { icon: <GiConfirmed className='text-green-500' />, name: 'Mordify' },
+      { icon: <IoRemoveCircleSharp className='text-yellow-500' />, name: 'Suspend' },
+    ];
 
     console.log('just loaded outside', AdminsData);
 
@@ -24,6 +37,27 @@ export default function AdminTables() {
     getPosts();
   }, [useFetchAdmins, AdminsData, setData]);
 
+  const handleViewAdmin = (id) =>{
+    console.log('id')
+  }
+  const handleMordifyAdmin = (id) =>{
+    console.log(`modifying admin with ${id}`)
+  }
+  const handleSuspendAdmin = (id) =>{
+    console.log(`suspend admin with id of ${id}`)
+  }
+
+  const handleClick = (event) => {
+    const innerText = event.currentTarget.innerText
+    const id = event.currentTarget.id
+    if (innerText.toLowerCase() === 'view') {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleViewAdmin.bind(null, id)} screenName={innerText}/>)
+    } else if (innerText.toLowerCase() === 'mordify') {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleMordifyAdmin.bind(null, id)} screenName={innerText}/>)
+    } else {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleSuspendAdmin.bind(null, id)} screenName={innerText}/>)
+    }
+  }
   return (
     <Fragment>
       <div className="bg-white">
@@ -51,7 +85,7 @@ export default function AdminTables() {
         <>
           {
             data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 
-              <ReusableTable headers={headers} data={data} filterNumber={11}/>
+              <ReusableTable optionModal={displayUi}  headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleClick} />
           }
         </>
         }
