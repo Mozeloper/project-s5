@@ -49,6 +49,7 @@ export default function WorkersTable() {
 
     const souls = [
         {
+            id: 'vevedf54-rge5-v4bfve-5bed',
             name: 'David Walton',
             title: 'Pastor',
             department: 'Ministry',
@@ -60,6 +61,7 @@ export default function WorkersTable() {
             'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
         {
+          id: 'vevedf54-rge5-v4bfve-5aed',
             name: 'Best chinney',
             title: 'Worker',
             department: 'Enginnering (I.T)',
@@ -71,6 +73,7 @@ export default function WorkersTable() {
             'https://media.springernature.com/lw703/springer-static/image/art%3A10.1038%2F528452a/MediaObjects/41586_2015_Article_BF528452a_Figg_HTML.jpg',
         },
         {
+          id: 'bevedf54-rge5-v4bfve-5bed',
             name: 'Moses Walton',
             title: 'Worker',
             department: 'Ushering',
@@ -82,6 +85,7 @@ export default function WorkersTable() {
             'https://www.lifewire.com/thmb/nABgUWcLKd6QW8g-0mRjYl2Vjeo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-fix-it-when-whatsapp-images-and-videos-arent-showing-in-gallery-cd3fbdebb44d4e659b7f867ac0541884.jpg',
         },
         {
+            id: 'cevedf54-rge5-v4bfve-5bed',
             name: 'Kufre Call',
             title: 'Worker',
             department: 'Choir',
@@ -97,24 +101,17 @@ export default function WorkersTable() {
 
   return (
     <Fragment>
-      <div className="bg-white">
+      <div className="bg-white rounded-md">
         <SearchBox />
         <div className="px-4 sm:px-6 lg:px-8 bg-white py-7">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
-              <h1 className="text-base font-semibold leading-6 text-gray-900">Souls</h1>
+              <h1 className="text-2xl font-semibold leading-6 text-gray-900">Workers</h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all the souls in your account including their name, email, role and Presence.
+              Here is a list of the workers at The Potter's House of Lagos, including their name, email address, role, and presence status.
               </p>
             </div>
-            <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-              <Button
-                // onClick={() => navigate("/sign-up")}
-                title="+ Add Soul"
-                className="block rounded-md px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#38404b] delay-100 ease-in-out duration-300"
-                backgroundColor="bg-primary"
-              />
-            </div>
+
           </div>
           <Table array={souls} />
         </div>
