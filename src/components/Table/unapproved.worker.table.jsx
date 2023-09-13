@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useRef } from 'react'
 import PaginationFooter from '../PaginationFooter'
 import ReusableTable from './Table.reusable'
 import { HiMiniViewfinderCircle } from 'react-icons/hi2'
 import { MdDeleteSweep } from 'react-icons/md'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { AiFillDelete } from "react-icons/ai";
 import { GrConnect, GrDocumentUpdate } from 'react-icons/gr'
 import { useFetchAllUnapproved, usePostApproveWorker, usePostDeleteWorker } from '../../hooks/useFetchUnapproved';
 import { GiConfirmed } from 'react-icons/gi'
@@ -29,6 +30,12 @@ export default function UnapprovedWorkerTable() {
     };
     getPosts();
   }, [PendingData]);
+
+    const optionList = [
+      { icon: <GiConfirmed className='text-green-500' />, name: 'Approve' },
+      { icon: <IoRemoveCircleSharp className='text-yellow-500' />, name: 'Reject' },
+      { icon: <AiFillDelete className='text-primary' />, name: 'Delete' },
+    ];
 
   const handleApprovedConfirmation = useCallback(
     async (id) => {
@@ -74,8 +81,10 @@ export default function UnapprovedWorkerTable() {
     const innerText = event.currentTarget.innerText
     const id = event.currentTarget.id
     if (innerText.toLowerCase() === 'approve') {
-        setDisplayUi(<ConfirmDeactivate setDeactivateConfirmation={setModalConfirmation} handleDeactivate={handleApprovedConfirmation.bind(null, id)} screenName={innerText}/>)
-    }else {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleApprovedConfirmation.bind(null, id)} screenName={innerText}/>)
+    } else if (innerText.toLowerCase() === 'delete') {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleDelete.bind(null, id)} screenName={innerText}/>)
+    } else {
         setDisplayUi(<ConfirmDeactivate handleDeactivate={handleApprovedSuspend.bind(null, id)} screenName={innerText}/>)
     }
   };
