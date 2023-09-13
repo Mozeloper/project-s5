@@ -54,10 +54,10 @@ export async function deactivateAWorker() {
     }
 }
 
-export async function deleteAWorker() {
+export async function deleteAWorker(id) {
     try {
-        const deleteAWorker = await axios.post(`${baseUrl}${appUrls.DELETE_A_WORKER}`, {
-            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
+        const deleteAWorker = await axios.post(`${baseUrl}${appUrls.DELETE_A_WORKER}?workerId=${id}`, {
+            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: false,
         })
         const postDeleteAWorker =  await deleteAWorker?.data
         return await postDeleteAWorker
@@ -65,6 +65,8 @@ export async function deleteAWorker() {
         throw new Error(error.message || error)
     }
 }
+
+
 
 
 export async function reactivateWorker() {
