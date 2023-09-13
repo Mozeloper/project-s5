@@ -5,22 +5,12 @@ import SearchBox from '../Searchbox/searchbox';
 import ReusableTable from './Table.reusable';
 import PaginationFooter from '../PaginationFooter';
 import { useFetchAdmins } from '../../hooks/useFetchAdmins';
-import { HiMiniViewfinderCircle } from 'react-icons/hi2'
-import { VscGitPullRequestGoToChanges } from 'react-icons/vsc'
-import { MdPublishedWithChanges } from 'react-icons/md'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
-import { GrView } from 'react-icons/gr';
-import { GiConfirmed } from 'react-icons/gi';
-import ConfirmDeactivate from '../UI/confirmation screen';
-import AddSoulsFormControl from '../UI/Forms/addSoul.form';
+import { AiFillDelete } from "react-icons/ai";
+import { GiConfirmed } from 'react-icons/gi'
+import { GrView } from 'react-icons/gr'
+import ConfirmDeactivate from '../UI/confirmation screen'
 
-// export default function AdminTables({tableDataLimit}) {
-//    const [pageNumber, setPageNumber] = useState(1);
-//    const [totalPerPage, setTotalPerPage] = useState(7);
-//   const [headers, setHeaders] = useState([]);
-//   const [data, setData] = useState([]);
-  
-//   const { data: AdminsData, isError, isLoading, isFetching, error } = useFetchAdmins({ pageNumber, totalPerPage })
 
 export default function AdminTables() {
     const [headers, setHeaders] = useState([]);
@@ -49,11 +39,17 @@ export default function AdminTables() {
     getPosts();
   }, [useFetchAdmins, AdminsData, setData]);
 
-  // const handleChange = (event, value) => {
-  //   setPageNumber(value);
-  // };
+  const handleViewAdmin = (id) =>{
+    console.log('id')
+  }
+  const handleMordifyAdmin = (id) =>{
+    console.log(`modifying admin with ${id}`)
+  }
+  const handleSuspendAdmin = (id) =>{
+    console.log(`suspend admin with id of ${id}`)
+  }
 
-  const handleOptionsClick = (event) => {
+  const handleClick = (event) => {
     const innerText = event.currentTarget.innerText
     const id = event.currentTarget.id
     if (innerText.toLowerCase() === 'view') {
@@ -93,8 +89,8 @@ export default function AdminTables() {
               <button
                 className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6"
               > 
-                <TransitionsModal name={'+ Add Soul'} heading={'Add New Soul Form'} width={'max-w-6xl w-[90%]'}>
-                  <AddSoulsFormControl />
+                <TransitionsModal name={'+ Add Admin'} heading={'Add a new admin'} width={'max-w-6xl w-[90%]'}>
+                  <AddAdminFormControl />
                 </TransitionsModal>
               </button>
             </div>

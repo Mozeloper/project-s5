@@ -185,6 +185,14 @@ const col = headers.map(head => {
     setPageNumber(value);
   };
 
+  const handleClick = (event) => {
+    const innerText = event.currentTarget.innerText
+    const id = event.currentTarget.id
+    if ( innerText.toLowerCase() === 'view') {
+      navigate(`/souls/${id}`);
+    }
+  };
+
   return (
     <Fragment>
       <div className="bg-white">
