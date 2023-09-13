@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
+import { FaSpinner } from "react-icons/fa6";
 
 const Button = ({
   backgroundColor,
@@ -38,7 +39,12 @@ const Button = ({
       disabled={disabled || isLoading}
     >
       {showPlus ? <AiOutlinePlus /> : null}
-      {isLoading ? loadingText : title}
+      {isLoading ? 
+      <div className="flex items-center gap-3">
+        <FaSpinner className="animate-spin" />
+        {loadingText}
+      </div> : 
+      title}
     </button>
   );
 };
