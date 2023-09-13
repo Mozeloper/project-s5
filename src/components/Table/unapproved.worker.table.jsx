@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useRef } from 'react'
 import PaginationFooter from '../PaginationFooter'
 import ReusableTable from './Table.reusable'
 import { HiMiniViewfinderCircle } from 'react-icons/hi2'
 import { MdDeleteSweep } from 'react-icons/md'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { AiFillDelete } from "react-icons/ai";
 import { GrConnect, GrDocumentUpdate } from 'react-icons/gr'
-import { useFetchAllUnapproved, usePostApproveWorker } from '../../hooks/useFetchUnapproved';
+import { useFetchAllUnapproved, usePostApproveWorker, usePostDeleteWorker } from '../../hooks/useFetchUnapproved';
 import { GiConfirmed } from 'react-icons/gi'
 import ConfirmDeactivate from '../UI/confirmation screen'
 
@@ -13,9 +14,10 @@ export default function UnapprovedWorkerTable() {
     const [displayUi, setDisplayUi] = React.useState(null)
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
-    const [userId, setUserId] = useState('1');
+    const [userId, setUserId] = useState();
     const { data: PendingData, isLoading, isError } = useFetchAllUnapproved()
-    const { mutateAsync, data: ApproveUser, isLoading: isLoadingApproval, isError: isErrorRender } = usePostApproveWorker(userId)
+    const { mutateAsync: approveUserAsync, data: ApproveUser, isLoading: isLoadingApproval, isError: isErrorRender } = usePostApproveWorker(userId)
+    const { mutateAsync: deleteUserAsync, isLoading: isLoadingDeletion, isError: isErrorDeletion } = usePostDeleteWorker(userId)
     
 
     useEffect(() => {
@@ -28,8 +30,9 @@ export default function UnapprovedWorkerTable() {
   }, [PendingData]);
 
     const optionList = [
-      { icon: <GiConfirmed />, name: 'Confirm' },
-      { icon: <IoRemoveCircleSharp />, name: 'Suspend' },
+      { icon: <GiConfirmed className='text-green-500' />, name: 'Approve' },
+      { icon: <IoRemoveCircleSharp className='text-yellow-500' />, name: 'Reject' },
+      { icon: <AiFillDelete className='text-primary' />, name: 'Delete' },
     ];
 
   const handleApprovedConfirmation = useCallback(
@@ -38,7 +41,7 @@ export default function UnapprovedWorkerTable() {
       console.log('user', userId);
       mutateAsync()
       console.log(`you just confirmed the worker with id ${id} `);
-    }, [],
+    }, [approveUserAsync, userId],
   );
 
   const handleApprovedSuspend = useCallback(
@@ -46,6 +49,17 @@ export default function UnapprovedWorkerTable() {
       //Todo add logic/function to suspend a worker here
       console.log(`you just supended the worker with id ${id} `);
     }, [],
+  );
+
+ 
+  const handleDelete = useCallback(
+    async (id) => {
+      //Todo add logic/function to suspend a worker 
+      setUserId(id)
+      console.log('user', userId);
+      deleteUserAsync();
+      console.log(`you just deleted the worker with id ${id} `);
+    }, [deleteUserAsync, userId],
   );
 
   if (isLoadingApproval) {
@@ -59,9 +73,11 @@ export default function UnapprovedWorkerTable() {
   const handleClick = (event) => {
     const innerText = event.currentTarget.innerText
     const id = event.currentTarget.id
-    if (innerText.toLowerCase() === 'confirm') {
+    if (innerText.toLowerCase() === 'approve') {
         setDisplayUi(<ConfirmDeactivate handleDeactivate={handleApprovedConfirmation.bind(null, id)} screenName={innerText}/>)
-    }else {
+    } else if (innerText.toLowerCase() === 'delete') {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleDelete.bind(null, id)} screenName={innerText}/>)
+    } else {
         setDisplayUi(<ConfirmDeactivate handleDeactivate={handleApprovedSuspend.bind(null, id)} screenName={innerText}/>)
     }
   };
