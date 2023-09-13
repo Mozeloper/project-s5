@@ -13,13 +13,22 @@ import { useFetchAllNewConvert } from "../../hooks/useFetchNewConvert";
 import PaginationDataGrid from "../PaginationFooter/pagination";
 import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
 import { toPascalCase } from "../../Helper/toPascalCase";
+import { GrView } from 'react-icons/gr'
 // import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom";
 
 export const SoulsTable = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [headers, setHeaders] = useState([] || undefined || null);
   const [data, setData] = useState([]);
+  const [displayUi, setDisplayUi] = React.useState(null)
   const { data: adminsData, isError, isLoading } = useFetchAllNewConvert();
+
+  const navigate = useNavigate();
+
+  const optionList = [
+    { icon: <GrView className='text-blue-500' />, name: 'View' }      
+  ];
 
   useEffect(() => {
     const getPosts = async () => {
@@ -159,6 +168,14 @@ const col = headers.map(head => {
     width: 150 
   }
 })
+
+  const handleClick = (event) => {
+    const innerText = event.currentTarget.innerText
+    const id = event.currentTarget.id
+    if ( innerText.toLowerCase() === 'view') {
+      navigate(`/souls/${id}`);
+    }
+  };
 
   return (
     <Fragment>

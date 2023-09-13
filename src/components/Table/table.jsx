@@ -1,6 +1,69 @@
-import React from "react";
+import React, {useCallback} from "react";
+import TableOptions  from "../UI/Options";
+import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { AiFillDelete } from "react-icons/ai";
+import { GiConfirmed } from 'react-icons/gi'
+import { GrView } from 'react-icons/gr'
+import { usePostApproveWorker, usePostDeleteWorker } from '../../hooks/useFetchUnapproved';
+import ConfirmDeactivate from '../UI/confirmation screen'
+import { useNavigate } from "react-router-dom";
 
 export default function Table(props) {
+  const navigate = useNavigate();
+
+
+  const [displayUi, setDisplayUi] = React.useState(null)
+  const optionList = [
+    { icon: <GrView className='text-blue-500' />, name: 'View' },
+    { icon: <GiConfirmed className='text-green-500' />, name: 'Promote' },
+    { icon: <IoRemoveCircleSharp className='text-yellow-500' />, name: 'Deactivate' },
+    { icon: <AiFillDelete className='text-primary' />, name: 'Delete' },
+  ];
+
+const handleApprovedConfirmation = useCallback(
+  async (id) => {
+    
+    console.log('user', id);
+    mutateAsync()
+    console.log(`you just confirmed the worker with id ${id} `);
+  }, [],
+);
+
+const handleApprovedSuspend = useCallback(
+  (id) => {
+    //Todo add logic/function to suspend a worker here
+    console.log(`you just supended the worker with id ${id} `);
+  }, [],
+);
+
+
+const handleDelete = useCallback(
+  async (id) => {
+    //Todo add logic/function to suspend a worker 
+    
+    console.log('user', id);
+    
+    console.log(`you just deleted the worker with id ${id} `);
+  }, [],
+);
+
+
+const handleClick = (event) => {
+  const innerText = event.currentTarget.innerText
+  const id = event.currentTarget.id
+  if ( innerText.toLowerCase() === 'view') {
+    navigate(`/workers/${id}`);
+  }
+  else if (innerText.toLowerCase() === 'promote') {
+      setDisplayUi(<ConfirmDeactivate handleDeactivate={handleApprovedConfirmation.bind(null, id)} screenName={innerText}/>)
+  } else if (innerText.toLowerCase() === 'delete') {
+      setDisplayUi(<ConfirmDeactivate handleDeactivate={handleDelete.bind(null, id)} screenName={innerText}/>)
+  } else {
+      setDisplayUi(<ConfirmDeactivate handleDeactivate={handleApprovedSuspend.bind(null, id)} screenName={innerText}/>)
+  }
+};
+
+
   return (
     <div className="mt-8 flow-root">
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -32,14 +95,8 @@ export default function Table(props) {
                 >
                   Presence
                 </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                >
-                  M/Status
-                </th>
                 <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                  <span className="sr-only">Edit</span>
+                  <span className="">Edit</span>
                 </th>
               </tr>
             </thead>
@@ -84,16 +141,18 @@ export default function Table(props) {
                       {person.isActive == 1 ? "Active" : "Not Active"}
                     </span>
                   </td>
-                  <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                  {/*<td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                     {person.role}
-                  </td>
+                    </td> */}
                   <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                    <a
-                      href="#"
+                   {/* <a
+                      href={`/workers/${person.id}`}
                       className="text-indigo-600 hover:text-indigo-900"
                     >
                       Edit<span className="sr-only">, {person.name}</span>
-                    </a>
+                    </a> */}
+                    <TableOptions displayModalUi={displayUi} optionsList={optionList} handleClick={handleClick} id={`${person.id}`}/>
+
                   </td>
                 </tr>
               ))}

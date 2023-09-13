@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import TransitionsModal from '../ModalPopup/modalTransition'
-import AddSoulsFormControl from '../UI/Forms/addSoul.form'
+import AddAdminFormControl from '../UI/Forms/addAdmin.form'
 import SearchBox from '../Searchbox/searchbox';
 import ReusableTable from './Table.reusable';
 import PaginationFooter from '../PaginationFooter';
@@ -58,9 +58,9 @@ export default function AdminTables({tableDataLimit}) {
         <div className="px-4 sm:px-6 lg:px-8 bg-white py-7">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
-              <h1 className="text-base font-semibold leading-6 text-gray-900">Admins</h1>
+              <h1 className="text-2xl font-semibold leading-6 text-gray-900">Admins</h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all the souls in your account.
+                A list of all Opeation 5s admins .
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
