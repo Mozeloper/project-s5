@@ -32,7 +32,7 @@ export default function DashboardLayout() {
           isSideBarOpen ? "xl:w-[82%]" : "xl:w-[97%]"
         } w-full h-full transition-none`}
       >
-        <header className="sticky top-0 border-none shadow h-[65px] z-50 bg-[#232931] xl:px-6 lg:px-4 md:px-2 px-2">
+        <header className="sticky top-0 border-none shadow h-[65px] z-50 bg-[#38404b] xl:px-6 lg:px-4 md:px-2 px-2">
           <Header
             setIsSideBarOpen={setIsSideBarOpen}
             isSideBarOpen={isSideBarOpen}
