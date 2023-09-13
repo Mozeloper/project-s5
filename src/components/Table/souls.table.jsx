@@ -10,12 +10,21 @@ import AddSoulsFormControl from "../UI/Forms/addSoul.form";
 import ReusableTable from "./Table.reusable";
 import { getAllNewConvert } from "../../services/souls";
 import { useFetchAllNewConvert } from "../../hooks/useFetchNewConvert";
+import { GrView } from 'react-icons/gr'
 // import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom";
 
 export const SoulsTable = () => {
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
+  const [displayUi, setDisplayUi] = React.useState(null)
   const { data: adminsData, isError, isLoading } = useFetchAllNewConvert();
+
+  const navigate = useNavigate();
+
+  const optionList = [
+    { icon: <GrView className='text-blue-500' />, name: 'View' }      
+  ];
 
   useEffect(() => {
     const getPosts = async () => {
@@ -26,6 +35,14 @@ export const SoulsTable = () => {
     };
     getPosts();
   }, [adminsData]);
+
+  const handleClick = (event) => {
+    const innerText = event.currentTarget.innerText
+    const id = event.currentTarget.id
+    if ( innerText.toLowerCase() === 'view') {
+      navigate(`/souls/${id}`);
+    }
+  };
 
   return (
     <Fragment>
@@ -54,7 +71,7 @@ export const SoulsTable = () => {
               </ButtonBase>
             </div>
           </div>
-          <ReusableTable headers={headers} data={data} filterNumber={9} />
+          <ReusableTable optionModal={displayUi} headers={headers} data={data} filterNumber={9} optionArrayList={optionList} optionsHandleClick={handleClick} />
         </div>
         <PaginationFooter />
       </div>
