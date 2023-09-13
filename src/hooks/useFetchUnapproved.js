@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "react-query"
-import { approveAWorker, getAllDeactivatedWorker, getAllUnApproval } from "../services/approval.api";
+import { approveAWorker, getAllDeactivatedWorker, getAllUnApproval, deleteAWorker } from "../services/approval.api";
 import { QueryClient } from "@tanstack/react-query";
 
 const queryClient = new QueryClient()
@@ -29,4 +29,14 @@ export function usePostApproveWorker(workerId) {
    }
  })
     return approval
+}
+
+export function usePostDeleteWorker(userId) {
+    const deletion = useMutation({
+   mutationFn: async () => await deleteAWorker(userId),
+   onSuccess: async (data) => {
+    queryClient.invalidateQueries('UnApproval')
+   }
+ })
+    return deletion
 }
