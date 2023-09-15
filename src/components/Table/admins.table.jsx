@@ -6,10 +6,10 @@ import ReusableTable from './Table.reusable';
 import PaginationFooter from '../PaginationFooter';
 import { useFetchAdmins } from '../../hooks/useFetchAdmins';
 import { IoRemoveCircleSharp } from 'react-icons/io5'
-import { AiFillDelete } from "react-icons/ai";
-import { GiConfirmed } from 'react-icons/gi'
-import { GrView } from 'react-icons/gr'
-import ConfirmDeactivate from '../UI/confirmation screen'
+import { GrView } from 'react-icons/gr';
+import { GiConfirmed } from 'react-icons/gi';
+import ConfirmDeactivate from '../UI/confirmation screen';
+import AddSoulsFormControl from '../UI/Forms/addSoul.form';
 
 
 export default function AdminTables() {
