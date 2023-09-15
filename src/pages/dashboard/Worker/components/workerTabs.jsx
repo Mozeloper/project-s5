@@ -14,7 +14,6 @@ export default function WorkerTabs() {
     setValue(newValue);
   };
 
-
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
