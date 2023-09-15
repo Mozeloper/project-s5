@@ -79,7 +79,7 @@ export default function MinstryTable() {
               {
                 data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 
                 <>
-                  <ReusableTable optionModal={displayUi}  headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} />
+                  <ReusableTable optionModal={displayUi}  headers={headers} data={data} filterNumber={10} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} />
                   
                   <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / totalPerPage)} totalCount={Math.ceil(data?.length)} handleChange={handleChange}/> 
                 </>

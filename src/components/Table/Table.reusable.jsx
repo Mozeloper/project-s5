@@ -17,7 +17,7 @@ const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHa
                     <thead>
                     <tr>
                         {( headers || undefined)?.slice(0, +filteredNumber).map(head => (
-                        <th key={head} scope="col" className={`pr-3 py-3.5 text-left uppercase text-sm font-semibold text-gray-900 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'dateofbirth' ? 'hidden' : '' }`}>
+                        <th key={head} scope="col" className={`pr-3 py-3.5 text-left uppercase text-sm font-semibold text-gray-900 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' ? 'hidden' : '' }`}>
                             {head.toLowerCase() === 'firstname' ? 'Name' : 
                           camelCaseToSingleWords(head)}
                         </th>
@@ -29,7 +29,7 @@ const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHa
                         {data?.slice(0, +filteredNumber).map((row, index) => (
                             <tr key={index}>
                                 {headers?.slice(0, +filteredNumber).map(head => (
-                                    <td key={head} className={`whitespace-nowrap py-5 pr-3 text-sm sm:pl-0 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'dateofbirth' ? 'hidden' : '' }`}>
+                                    <td key={head} className={`whitespace-nowrap py-5 pr-3 text-sm sm:pl-0 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' ? 'hidden' : '' }`}>
                                         {head.toLowerCase() === 'firstname' ?
                                             <Link to={`/${row['Id']}`}>
                                                 <div className="flex items-center">

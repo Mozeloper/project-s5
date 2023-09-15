@@ -9,6 +9,10 @@ import { HiMiniViewfinderCircle } from 'react-icons/hi2'
 import { VscGitPullRequestGoToChanges } from 'react-icons/vsc'
 import { MdPublishedWithChanges } from 'react-icons/md'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { GrView } from 'react-icons/gr';
+import { GiConfirmed } from 'react-icons/gi';
+import ConfirmDeactivate from '../UI/confirmation screen';
+import AddSoulsFormControl from '../UI/Forms/addSoul.form';
 
 // export default function AdminTables({tableDataLimit}) {
 //    const [pageNumber, setPageNumber] = useState(1);

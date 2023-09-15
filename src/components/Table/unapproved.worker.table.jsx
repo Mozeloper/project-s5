@@ -5,7 +5,7 @@ import { HiMiniViewfinderCircle } from 'react-icons/hi2'
 import { MdDeleteSweep } from 'react-icons/md'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
 import { GrConnect, GrDocumentUpdate } from 'react-icons/gr'
-import { useFetchAllUnapproved, usePostApproveWorker } from '../../hooks/useFetchUnapproved';
+import { useFetchAllUnapproved, usePostApproveWorker, usePostDeleteWorker } from '../../hooks/useFetchUnapproved';
 import { GiConfirmed } from 'react-icons/gi'
 import ConfirmDeactivate from '../UI/confirmation screen'
 
