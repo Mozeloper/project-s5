@@ -4,7 +4,7 @@ export function isArrayEmpty(array) {
 }
 
 export function isObjectEmpty(obj) {
-  if (typeof obj !== "object" || obj === null) {
+  if (typeof obj !== 'object' || obj === null) {
     return false;
   }
   for (let key in obj) {
@@ -23,7 +23,7 @@ export function shortenString(str, maxLength = 20) {
   if (str.length <= maxLength) {
     return str;
   }
-  return str.substring(0, maxLength) + "...";
+  return str.substring(0, maxLength) + '...';
 }
 
 export const phoneRegExp =
@@ -31,9 +31,9 @@ export const phoneRegExp =
 
 export function formatDate(inputDate) {
   const date = new Date(inputDate);
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const year = String(date.getUTCFullYear()).padStart(4, "0");
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const year = String(date.getUTCFullYear()).padStart(4, '0');
   return `${day}/${month}/${year}`;
 }
 
@@ -53,13 +53,22 @@ export function containsNumber(str) {
   return /\d/.test(str);
 }
 
+const userObj = JSON.parse(sessionStorage.getItem('userObj'));
 export function userFullName() {
-  const userObj = JSON.parse(sessionStorage.getItem("userObj"));
-  
+
   // Check if userObj exists and has both FirstName and SurName properties
   if (userObj && userObj.FirstName && userObj.SurName) {
     return `${userObj.FirstName} ${userObj.SurName}`;
   } else {
-    return "User Name Not Found"; // Provide a default value or message
+    return 'User Name Not Found'; // Provide a default value or message
+  }
+}
+export function userInitials() {
+
+  // Check if userObj exists and has both FirstName and SurName properties
+  if (userObj && userObj.FirstName && userObj.SurName) {
+    return `${userObj.FirstName.charAt(0)}${userObj.SurName.charAt(0)}`;
+  } else {
+    return 'User Name Not Found'; // Provide a default value or message
   }
 }
