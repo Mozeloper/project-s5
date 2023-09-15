@@ -91,7 +91,7 @@ const WorkerDetails = ({ workerId }) => {
                         : 'bg-pink-700'
                     } w-[160px] h-[160px] flex items-center justify-center text-6xl relative rounded-full text-white`}
                   >
-                    {data?.FirstName.charAt(0)}{data?.SurName.charAt(0)}
+                    {data?.FirstName?.charAt(0)}{data?.SurName?.charAt(0)}
                   </div>
                 )}
               </div>
