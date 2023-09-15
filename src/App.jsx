@@ -20,6 +20,7 @@ import Register from "./pages/auth/Register";
 const Profile = React.lazy(() => import("./pages/dashboard/profile"));
 const Admins = React.lazy(() => import("./pages/dashboard/Admins"));
 const Workers = React.lazy(() => import("./pages/dashboard/Workers"));
+const Worker = React.lazy(() => import("./pages/dashboard/Worker"));
 const DTI = React.lazy(() => import("./pages/dashboard/DTI"));
 const NewConvert = React.lazy(() => import("./pages/dashboard/NewConvert"));
 const Ministry = React.lazy(() => import("./pages/dashboard/Ministry"));
@@ -111,11 +112,21 @@ function App() {
                 </React.Suspense>
               }
             />
+           
             <Route
               path="/workers"
               element={
                 <React.Suspense fallback={<>...</>}>
                   <Workers />
+                </React.Suspense>
+              }
+            />
+
+            <Route
+              path="/workers/:workerId"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <Worker />
                 </React.Suspense>
               }
             />
