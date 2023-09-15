@@ -15,9 +15,11 @@ export default function UnapprovedWorkerTable() {
     const [displayUi, setDisplayUi] = React.useState(null)
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
+
     const [workerId, setWorkerId] = useState('');
     const { data: PendingData, isLoading, isError } = useFetchAllUnapproved()
-    const { mutate, isLoading: isLoadingApproval, isError: isErrorRender, isSuccess } = usePostApproveWorker(workerId && workerId)
+    const { mutateAsync: deleteUserAsync, isLoading: isLoadingDeletion, isError: isErrorDeletion } = usePostDeleteWorker(workerId)
+    const { mutateAsync: approveUserAsync, data: ApproveUser, isLoading: isLoadingApproval, isError: isErrorRender, isSuccess } = usePostApproveWorker(workerId && workerId)
 
     useEffect(() => {
       const getPosts = async () => {
@@ -31,9 +33,10 @@ export default function UnapprovedWorkerTable() {
   const handleApprovedConfirmation = useCallback(
     async (id) => {
       setWorkerId(prev => prev = id)
-       mutate()
-      // console.log(`you just confirmed the worker with id ${id} `);
-    }, [workerId, setWorkerId],
+      console.log('user', workerId);
+      mutateAsync()
+      console.log(`you just confirmed the worker with id ${id} `);
+    }, [approveUserAsync, workerId],
   );
 
   const handleApprovedSuspend = useCallback(
@@ -41,6 +44,17 @@ export default function UnapprovedWorkerTable() {
       //Todo add logic/function to suspend a worker here
       console.log(`you just supended the worker with id ${id} `);
     }, [],
+  );
+
+ 
+  const handleDelete = useCallback(
+    async (id) => {
+      //Todo add logic/function to suspend a worker 
+      setWorkerId(id)
+      console.log('user', workerId);
+      deleteUserAsync();
+      console.log(`you just deleted the worker with id ${id} `);
+    }, [deleteUserAsync, workerId],
   );
 
   if (isLoadingApproval) {
@@ -51,10 +65,10 @@ export default function UnapprovedWorkerTable() {
   //   return <div>Error.......</div>
   // }
 
-  const optionList = [
-      { icon: <GiConfirmed />, name: 'Approve' },
-      { icon: <IoRemoveCircleSharp />, name: 'Suspend' },
-  ];
+  // const optionList = [
+  //     { icon: <GiConfirmed />, name: 'Approve' },
+  //     { icon: <IoRemoveCircleSharp />, name: 'Suspend' },
+  // ];
 
   const handleOptionsClick = (event) => {
     const innerText = event.currentTarget.innerText

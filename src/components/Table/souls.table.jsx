@@ -14,14 +14,18 @@ import PaginationDataGrid from "../PaginationFooter/pagination";
 import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
 import { toPascalCase } from "../../Helper/toPascalCase";
 import { GrView } from 'react-icons/gr'
+import PaginationDataGrid from "../PaginationFooter/pagination";
+import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
+import { toPascalCase } from "../../Helper/toPascalCase";
 // import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 
 export const SoulsTable = () => {
-  const [pageNumber, setPageNumber] = useState(1);
   const [headers, setHeaders] = useState([] || undefined || null);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null)
+  const [pageNumber, setPageNumber] = useState(1);
+  const [totalPerPage, setTotalPerPage] = useState(7);
   const { data: adminsData, isError, isLoading } = useFetchAllNewConvert();
 
   const navigate = useNavigate();
@@ -169,12 +173,16 @@ const col = headers.map(head => {
   }
 })
 
-  const handleClick = (event) => {
+  const handleOptionsClick = (event) => {
     const innerText = event.currentTarget.innerText
     const id = event.currentTarget.id
     if ( innerText.toLowerCase() === 'view') {
       navigate(`/souls/${id}`);
     }
+  };
+  
+  const handleChange = (event, value) => {
+    setPageNumber(value);
   };
 
   return (
@@ -207,8 +215,9 @@ const col = headers.map(head => {
           {
             data?.length < 1 ? <div className='flex justify-center text-center items-center h-96'>There's No data available for this table at the moment</div> : 
             <>
-              <ReusableTable headers={headers} data={data} filterNumber={9} />
-              <paginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / 10)} totalCount={data?.length} />
+              <ReusableTable optionModal={displayUi} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} headers={headers} data={data} filterNumber={9} />
+
+              <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / totalPerPage)} totalCount={Math.ceil(data?.length)} handleChange={handleChange}/> 
             </>
           }
         </div>

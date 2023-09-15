@@ -31,9 +31,9 @@ export function usePostApproveWorker(workerId) {
     return approval
 }
 
-export function usePostDeleteWorker(userId) {
+export function usePostDeleteWorker(workerId) {
     const deletion = useMutation({
-   mutationFn: async () => await deleteAWorker(userId),
+   mutationFn: async () => await deleteAWorker(workerId),
    onSuccess: async (data) => {
     queryClient.invalidateQueries('UnApproval')
    }

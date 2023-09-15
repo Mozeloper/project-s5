@@ -10,15 +10,31 @@ import { VscGitPullRequestGoToChanges } from 'react-icons/vsc'
 import { MdPublishedWithChanges } from 'react-icons/md'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
 
-export default function AdminTables({tableDataLimit}) {
-   const [pageNumber, setPageNumber] = useState(1);
-   const [totalPerPage, setTotalPerPage] = useState(7);
-  const [headers, setHeaders] = useState([]);
-  const [data, setData] = useState([]);
+// export default function AdminTables({tableDataLimit}) {
+//    const [pageNumber, setPageNumber] = useState(1);
+//    const [totalPerPage, setTotalPerPage] = useState(7);
+//   const [headers, setHeaders] = useState([]);
+//   const [data, setData] = useState([]);
   
-  const { data: AdminsData, isError, isLoading, isFetching, error } = useFetchAdmins({ pageNumber, totalPerPage })
+//   const { data: AdminsData, isError, isLoading, isFetching, error } = useFetchAdmins({ pageNumber, totalPerPage })
 
-  useEffect(() => {
+export default function AdminTables() {
+    const [headers, setHeaders] = useState([]);
+    const [data, setData] = useState([]);
+    const [displayUi, setDisplayUi] = React.useState(null)
+    const [pageNumber, setPageNumber] = useState(1);
+    const [totalPerPage, setTotalPerPage] = useState(7);
+  
+  const { data: AdminsData, isError, isLoading, isFetching, error } = useFetchAdmins({ pageNumber })
+
+    const optionList = [ 
+      { icon: <GrView className='text-blue-500' />, name: 'View' },
+      { icon: <GiConfirmed className='text-green-500' />, name: 'Mordify' },
+      { icon: <IoRemoveCircleSharp className='text-yellow-500' />, name: 'Suspend' },
+    ];
+
+
+    useEffect(() => {
       const getPosts = async () => {
         // make sure you add await to the return data from react query (hook)
       const admins = await AdminsData
@@ -29,27 +45,33 @@ export default function AdminTables({tableDataLimit}) {
     getPosts();
   }, [useFetchAdmins, AdminsData, setData]);
 
+  // const handleChange = (event, value) => {
+  //   setPageNumber(value);
+  // };
+
+  const handleOptionsClick = (event) => {
+    const innerText = event.currentTarget.innerText
+    const id = event.currentTarget.id
+    if (innerText.toLowerCase() === 'view') {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleViewAdmin.bind(null, id)} screenName={innerText}/>)
+    } else if (innerText.toLowerCase() === 'mordify') {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleMordifyAdmin.bind(null, id)} screenName={innerText}/>)
+    } else {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleSuspendAdmin.bind(null, id)} screenName={innerText}/>)
+    }
+  }
+  
   const handleChange = (event, value) => {
     setPageNumber(value);
   };
 
-  const optionList = [
-    // suspend, change department, promote
-    { icon: <HiMiniViewfinderCircle />, name: 'View' },
-    { icon: <VscGitPullRequestGoToChanges />, name: 'Promote' },
-    { icon: <MdPublishedWithChanges />, name: 'Change Department' },
-    { icon: <IoRemoveCircleSharp />, name: 'Suspend' },
-  ];
-
-  const handleClickOptions = (event) => {
-    const innerText = event.currentTarget.innerText
-    const id = event.currentTarget.id
-    // if (innerText.toLowerCase() === 'confirm') {
-    //     setDisplayUi(<ConfirmDeactivate handleDeactivate={handleApprovedConfirmation.bind(null, id)} screenName={innerText}/>)
-    // }else {
-    // }
-    console.log('clicked ', innerText, ' user with id', id);
-  };
+  // const optionList = [
+  //   // suspend, change department, promote
+  //   { icon: <HiMiniViewfinderCircle />, name: 'View' },
+  //   { icon: <VscGitPullRequestGoToChanges />, name: 'Promote' },
+  //   { icon: <MdPublishedWithChanges />, name: 'Change Department' },
+  //   { icon: <IoRemoveCircleSharp />, name: 'Suspend' },
+  // ];
 
   return (
     <Fragment>
@@ -75,20 +97,21 @@ export default function AdminTables({tableDataLimit}) {
           </div>
           {
             isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred: {error.message} </div> : 
-        <>
-          {
-            data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 
-              <ReusableTable headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleClickOptions} />
-          }
-        </>
-        }
-        { 
-          data?.length > 1 && 
-          <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(2)} totalCount={Math.ceil(data?.length)} handleChange={handleChange}/> 
-        }
-        <div className="flex justify-center items-center">
-          {!isLoading && isFetching && 'Loading...'}
-        </div>
+            <>
+              {
+                data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 
+                <>
+                  <ReusableTable optionModal={displayUi}  headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} />
+                  
+                  <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / totalPerPage)} totalCount={Math.ceil(data?.length)} handleChange={handleChange}/> 
+                </>
+              }
+            </>
+
+            }
+            <div className="flex justify-center items-center">
+              {!isLoading && isFetching && 'Loading...'}
+            </div>
         </div>
       </div>
     </Fragment>

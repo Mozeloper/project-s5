@@ -15,7 +15,7 @@ export const appUrls = {
   GET_WORKER_DETAILS: "api/SuperAdmin/get-new-converts-by-worker-id", //get worker by id
 
   //Worker
-  GETSINGLEWORKERDETAILS_URL: "/api/Worker/get-worker", //worker
+  GETSINGLEWORKERDETAILS_URL: "/api/SuperAdmin/get-all-workers", //worker
 
   //New converts (soul)
   GET_ALL_New_Convert:

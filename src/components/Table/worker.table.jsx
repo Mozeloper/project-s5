@@ -1,52 +1,17 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import Table from './table'
 import PaginationFooter from '../PaginationFooter'
 import Button from '../Button'
 import SearchBox from '../Searchbox/searchbox'
+import ReusableTable from './Table.reusable'
+import { useWorkersAdmins } from '../../hooks/useWorkers'
 
 export default function WorkersTable() {
-   const [pageNumber, setPageNumber] = useState(1);
-      const results = [
-      {
-        _id: 1,
-        firstname: "Robert",
-        lastname: "Redfort",
-        city: "New York",
-        zip: 1233,
-        street: "Mahn Street",
-        street_number: "24A",
-        favoriteKebab: "cow"
-      },
-      {
-        _id: 2,
-        firstname: "Patty",
-        lastname: "Koulou",
-        city: "Los Angeles",
-        zip: 5654,
-        street: "Av 5th Central",
-        street_number: 12
-      },
-      {
-        _id: 3,
-        firstname: "Matt",
-        lastname: "Michiolo",
-        city: "Chicago",
-        zip: 43452,
-        street: "Saint Usk St",
-        street_number: 65,
-        phoneNumber: "0321454545"
-      },
-      {
-        _id: 4,
-        firstname: "Sonia",
-        lastname: "Remontada",
-        city: "Buenos Aires",
-        zip: "43N95D",
-        street: "Viva la Revolution Paso",
-        street_number: 5446,
-        country: "Argentina"
-      }
-  ]
+    const [headers, setHeaders] = useState([]);
+    const [data, setData] = useState([]);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [totalPerPage, setTotalPerPage] = useState(7);
+    const { data: AdminsData, isError, isLoading, isFetching, error } = useWorkersAdmins({ pageNumber })
 
     const souls = [
         {
@@ -100,6 +65,21 @@ export default function WorkersTable() {
         // More souls...
     ]
 
+    useEffect(() => {
+      const getPosts = async () => {
+        // make sure you add await to the return data from react query (hook)
+      const admins = await AdminsData
+      setData(await admins?.Data);
+      //Object.keys returns the property names of/in an object as string of arrays
+      setHeaders(Object.keys(await admins?.Data?.[0] || []));
+    };
+    getPosts();
+  }, [AdminsData, setData]);
+
+  const handleChange = (event, value) => {
+    setPageNumber(value);
+  };
+
   return (
     <Fragment>
       <div className="bg-white rounded-md">
@@ -114,15 +94,25 @@ export default function WorkersTable() {
             </div>
 
           </div>
-          <Table array={souls} />
-        </div>
+          {/* <Table array={souls} /> */}
           {
-            data?.length < 1 ? <div className='flex justify-center text-center items-center h-96'>There's No data available for this table at the moment</div> : 
+            isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred: {error.message} </div> : 
             <>
-              <ReusableTable headers={headers} data={data} filterNumber={9} />
-              <paginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / 10)} totalCount={data?.length} />
+              {
+                data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 
+                <>
+                  <ReusableTable headers={headers} data={data} filterNumber={11} />
+                  
+                  <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / totalPerPage)} totalCount={Math.ceil(data?.length)} handleChange={handleChange}/> 
+                </>
+              }
             </>
-          }
+
+            }
+            <div className="flex justify-center items-center">
+              {!isLoading && isFetching && 'Loading...'}
+            </div>
+        </div>
       </div>
     </Fragment>
   )

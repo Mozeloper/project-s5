@@ -8,9 +8,9 @@ const token = sessionStorage.getItem('token');
 //     return sessionStorage.getItem('token');
 // }, 50);
 
-export async function getAllAdmins({ pageNumber, totalPerPage }) {
+export async function getAllAdmins({ pageNumber }) {
     try {
-        const admins = await axios.get(`${baseUrl}${appUrls.GETALLWORKERS_URL}?page=${pageNumber}&pageSize=${totalPerPage}`, {
+        const admins = await axios.get(`${baseUrl}${appUrls.GETALLWORKERS_URL}?page=${pageNumber}`, {
             headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         })
         const fetchAdmins =  await admins?.data
@@ -32,13 +32,26 @@ export async function getAllMinistryAdmins() {
     }
 }
 
-export async function getAllDtiAdmins() {
+// export async function getAllWorkersAdmins({ pageNumber }) {
+//     try {
+//         const Workersadmins = await axios.get(`${baseUrl}${appUrls.GET_ALL_WORKERSAdmin_URL}?page=${pageNumber}`, {
+//             headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
+//         })
+//         const fetchWorkersAdmins =  await Workersadmins?.data
+//         return await fetchWorkersAdmins
+//     } catch (error) {
+//         throw new Error(error.message || error)
+//     }
+// }
+
+
+export async function getAllWorkersAdmins({ pageNumber }) {
     try {
-        const Dtiadmins = await axios.get(`${baseUrl}${appUrls.GET_ALL_DTIAdmin_URL}`, {
+        const Workersadmins = await axios.get(`${baseUrl}${appUrls.GETSINGLEWORKERDETAILS_URL}?page=${pageNumber}`, {
             headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         })
-        const fetchDtiAdmins =  await Dtiadmins?.data
-        return await fetchDtiAdmins
+        const fetchWorkersAdmins =  await Workersadmins?.data
+        return await fetchWorkersAdmins
     } catch (error) {
         throw new Error(error.message || error)
     }
