@@ -6,9 +6,15 @@ import SearchBox from '../Searchbox/searchbox';
 import { appUrls } from '../../services/urls';
 import { api } from '../../services/api';
 import { toast } from 'react-hot-toast';
+import ReusableTable from './Table.reusable'
+import { useWorkersAdmins } from '../../hooks/useWorkers'
 
 export default function WorkersTable() {
-  const [data, setData] = useState([]);
+    const [headers, setHeaders] = useState([]);
+    const [data, setData] = useState([]);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [totalPerPage, setTotalPerPage] = useState(7);
+    const { data: AdminsData, isError, isLoading, isFetching, error } = useWorkersAdmins({ pageNumber })
 
   const handleGetAllWorkers = async () => {
     setData([]);

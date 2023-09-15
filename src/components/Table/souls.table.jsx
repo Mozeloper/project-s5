@@ -18,6 +18,9 @@ import PaginationDataGrid from "../PaginationFooter/pagination";
 import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
 import { toPascalCase } from "../../Helper/toPascalCase";
 import { GrView } from 'react-icons/gr'
+import PaginationDataGrid from "../PaginationFooter/pagination";
+import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
+import { toPascalCase } from "../../Helper/toPascalCase";
 // import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 
@@ -184,14 +187,6 @@ const col = headers.map(head => {
   
   const handleChange = (event, value) => {
     setPageNumber(value);
-  };
-
-  const handleClick = (event) => {
-    const innerText = event.currentTarget.innerText
-    const id = event.currentTarget.id
-    if ( innerText.toLowerCase() === 'view') {
-      navigate(`/souls/${id}`);
-    }
   };
 
   return (

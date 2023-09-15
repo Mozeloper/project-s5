@@ -60,6 +60,21 @@ export default function AdminTables() {
         setDisplayUi(<ConfirmDeactivate handleDeactivate={handleSuspendAdmin.bind(null, id)} screenName={innerText}/>)
     }
   }
+  // const handleChange = (event, value) => {
+  //   setPageNumber(value);
+  // };
+
+  const handleOptionsClick = (event) => {
+    const innerText = event.currentTarget.innerText
+    const id = event.currentTarget.id
+    if (innerText.toLowerCase() === 'view') {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleViewAdmin.bind(null, id)} screenName={innerText}/>)
+    } else if (innerText.toLowerCase() === 'mordify') {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleMordifyAdmin.bind(null, id)} screenName={innerText}/>)
+    } else {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleSuspendAdmin.bind(null, id)} screenName={innerText}/>)
+    }
+  }
   
   const handleChange = (event, value) => {
     setPageNumber(value);
