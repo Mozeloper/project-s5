@@ -11,8 +11,7 @@ import { api } from '../../../services/api';
 import { appUrls } from '../../../services/urls';
 import { toast } from 'react-hot-toast';
 import ReturnToPrevious from '../../../components/ReturnToPrevious';
-
-import NotFoundImg from '../../../assets/not-found.jpg';
+import ResultNotFound from '../../../components/ResultNotFound';
 
 const WorkerDetails = ({ workerId }) => {
   // Reminder!!! Fetch worker details based on the workerId from your data source
@@ -26,9 +25,13 @@ const WorkerDetails = ({ workerId }) => {
   const handleGetWorker = async () => {
     setData({});
     try {
-      const res = await api.get(`${appUrls.GET_WORKER_DETAILS}/${workerId}`);
+        // endpoint to be refactored since backend made mistake
+      const res = await api.get(
+        `${appUrls.GET_WORKER_DETAILS}/${workerId}?workerId=${workerId}`
+      );
       if (res?.status === 200) {
         setData(res?.data?.Data);
+        console.log(res?.data?.Data)
       }
     } catch (error) {
       toast.error(error?.data?.message, 4);
@@ -67,7 +70,7 @@ const WorkerDetails = ({ workerId }) => {
                 />
               </div>
             </div>
-            <div className="md:absolute -bottom-24 flex md:gap-5 gap-2 md:left-[30px] md:right-[30px] bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
+            <div className="md:absolute md:-bottom-24 flex flex-col md:flex-row md:gap-5 gap-2 md:left-[30px] md:right-[30px] bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
               <div className="flex gap-4">
                 {/* <img
                 src={ProfileImg}
@@ -77,13 +80,13 @@ const WorkerDetails = ({ workerId }) => {
               /> */}
                 <div className="w-[160px] h-[160px] relative rounded-full bg-black text-white"></div>
               </div>
-              <div className="grid md:grid-cols-2 grid-cols-2 md:gap-8 gap-2">
+              <div className="grid grid-cols-1 md:gap-8 gap-2">
                 <div className="flex flex-col gap-3 p-5">
-                  <div className="flex flex-col md:flex-row gap-6">
-                    <h4 className="text-grey500 font-medium md:text-sm text-xs  leading-4">
+                  <div className="flex gap-6 items-center">
+                    <h4 className="text-grey500 font-bold md:text-lg text-base  leading-4 capitalize">
                       {data?.FirstName || workerId} {data?.SurName || '....'}
                     </h4>
-                    <div className="bg-green-800 rounded-md text-white p-2 w-16 h-8 flex text-center justify-center items-center">
+                    <div className="bg-green-800 rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center">
                       <small>ACTIVE</small>
                     </div>
                   </div>
@@ -91,19 +94,19 @@ const WorkerDetails = ({ workerId }) => {
                     <small>{data?.Department || "Worker's Department"}</small> |{' '}
                     <small>Limited Access</small>
                   </div>
-                  <div className="flex gap-5">
-                    <Email className="h-8" />
+                  <div className="flex items-center gap-5 text-sm">
+                    <Email className="h-5" />
                     <h4>{data?.Email || '...'}</h4>
                   </div>
-                  <div className="flex gap-5">
-                    <Phone className="h-8" />
+                  <div className="flex items-center gap-5 text-sm">
+                    <Phone className="h-5" />
                     <h4>{data?.PhoneNumber || '...'}</h4>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <section className="mt-28 m-auto md:mx-[30px]">
+          <section className="mt-[180px] md:mt-28 m-auto md:mx-[30px] p-5 md:p-0">
             <Box sx={{ typography: 'body1' }}>
               <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -123,20 +126,20 @@ const WorkerDetails = ({ workerId }) => {
                     </div>
                     <hr />
                     <div className="flex flex-col gap-y-6 mt-6">
-                      <div className="flex gap-x-16">
-                        <h3 className="font-bold w-[20%]">Gender</h3>{' '}
+                      <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                        <h3 className="font-bold md:w-[20%]">Gender</h3>{' '}
                         <span>{data?.Gender || '...'}</span>
                       </div>
-                      <div className="flex gap-x-16">
-                        <h3 className="font-bold w-[20%]">Date of Birth</h3>{' '}
+                      <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                        <h3 className="font-bold md:w-[20%]">Date of Birth</h3>{' '}
                         <span>{data?.DateOfBirth || '...'}</span>
                       </div>
-                      <div className="flex gap-x-16">
-                        <h3 className="font-bold w-[20%]">Marital Status</h3>{' '}
+                      <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                        <h3 className="font-bold md:w-[20%]">Marital Status</h3>{' '}
                         <span>{data?.MaritalStatus || '...'}</span>
                       </div>
-                      <div className="flex gap-x-16">
-                        <h3 className="font-bold w-[20%]">Member Since</h3>{' '}
+                      <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                        <h3 className="font-bold md:w-[20%]">Member Since</h3>{' '}
                         <span>{data?.YearJoined || '...'}</span>
                       </div>
                     </div>
@@ -147,31 +150,32 @@ const WorkerDetails = ({ workerId }) => {
                     </div>
                     <hr />
                     <div className="flex flex-col gap-y-6 mt-6">
-                      <div className="flex gap-x-16">
-                        <h3 className="font-bold w-[20%]">Phone</h3>{' '}
+                      <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                        <h3 className="font-bold md:w-[20%]">Phone</h3>{' '}
                         <span>{data?.PhoneNumber || '...'}</span>
                       </div>
-                      <div className="flex gap-x-16">
-                        <h3 className="font-bold w-[20%]">Email</h3>{' '}
+                      <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                        <h3 className="font-bold md:w-[20%]">Email</h3>{' '}
+                        <span>{data?.Email || '...'}</span>
                       </div>
-                      <div className="flex gap-x-16">
-                        <h3 className="font-bold w-[20%]">Address</h3>{' '}
+                      <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                        <h3 className="font-bold md:w-[20%]">Address</h3>{' '}
                         <span>{data?.HomeAddress || '...'}</span>
                       </div>
-                      <div className="flex gap-x-16">
-                        <h3 className="font-bold w-[20%]">Nearest Bus Stop</h3>{' '}
+                      <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                        <h3 className="font-bold md:w-[20%]">Nearest Bus Stop</h3>{' '}
                         <span>{data?.NearestBusStop || '...'}</span>
                       </div>
-                      <div className="flex gap-x-16">
-                        <h3 className="font-bold w-[20%]">State</h3>{' '}
+                      <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                        <h3 className="font-bold md:w-[20%]">State</h3>{' '}
                         <span>{data?.StateName || '...'}</span>
                       </div>
-                      <div className="flex gap-x-16">
-                        <h3 className="font-bold w-[20%]">L.G.A.</h3>{' '}
+                      <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                        <h3 className="font-bold md:w-[20%]">L.G.A.</h3>{' '}
                         <span>{data?.LocalGovtName || '...'}</span>
                       </div>
-                      <div className="flex gap-x-16">
-                        <h3 className="font-bold w-[20%]">Country</h3>{' '}
+                      <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                        <h3 className="font-bold md:w-[20%]">Country</h3>{' '}
                         <span>{data?.CountryName || '...'}</span>
                       </div>
                     </div>
@@ -189,16 +193,8 @@ const WorkerDetails = ({ workerId }) => {
           </section>
         </div>
       ) : (
-        <div className=" bg-white p-5">
-          <ReturnToPrevious />
-          <div className="flex flex-col items-center justify-center h-[70vh] text-center">
-            <img src={NotFoundImg} className="w-[200px]" />
-            <h1 className="text-3xl mt-4"> Record Not Found</h1>
-            {/* <p className="text-xl text-primary mb-8">No record was found.</p> */}
-          </div>
-        </div>
+        <ResultNotFound />
       )}
-      {/* Render worker information based on the workerId */}
     </div>
   );
 };
