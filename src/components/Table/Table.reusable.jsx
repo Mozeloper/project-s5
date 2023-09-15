@@ -7,7 +7,7 @@ import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
 
 //This table is reuseable and can be use to render/display any data/apis as in (tabular form)/(table data)
 const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHandleClick, optionModal }) => {
-    const filteredNumber = filterNumber ?? 20;
+    const filteredNumber = +filterNumber ?? +data?.length;
 
   return (
     <div className="mt-8 flow-root">
