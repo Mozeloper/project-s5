@@ -12,6 +12,7 @@ export const appUrls = {
   //Super Admins
   GETALLWORKERS_URL: "/api/SuperAdmin/get-all-workers", //super
   GET_ALL_New_Converts_URL: "/api/SuperAdmin/get-all-new-converts",
+  GET_WORKER_DETAILS: "api/SuperAdmin/get-new-converts-by-worker-id", //get worker by id
 
   //Worker
   GETSINGLEWORKERDETAILS_URL: "/api/Worker/get-worker", //worker
