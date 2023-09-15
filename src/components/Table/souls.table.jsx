@@ -10,22 +10,155 @@ import AddSoulsFormControl from "../UI/Forms/addSoul.form";
 import ReusableTable from "./Table.reusable";
 import { getAllNewConvert } from "../../services/souls";
 import { useFetchAllNewConvert } from "../../hooks/useFetchNewConvert";
+import PaginationDataGrid from "../PaginationFooter/pagination";
+import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
+import { toPascalCase } from "../../Helper/toPascalCase";
 // import Button from '@mui/material/Button';
 
 export const SoulsTable = () => {
-  const [headers, setHeaders] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [headers, setHeaders] = useState([] || undefined || null);
   const [data, setData] = useState([]);
   const { data: adminsData, isError, isLoading } = useFetchAllNewConvert();
 
   useEffect(() => {
     const getPosts = async () => {
       const admins = await adminsData;
-      setData(await admins);
+      await setData(await admins);
       //Object.keys returns the property names of/in an object as string of arrays
-      setHeaders(Object.keys(await admins[0]));
+      setHeaders(Object?.keys(await admins[0] || undefined || null));
     };
     getPosts();
-  }, [adminsData]);
+  }, [adminsData]); 
+
+
+  ///
+  const rows = [
+  {
+    jobTitle: 'Head of Human Resources',
+    recruitmentDate: new Date(2020, 8, 12),
+    contract: 'full time',
+    id: 0,
+  },
+  {
+    jobTitle: 'Head of Sales',
+    recruitmentDate: new Date(2017, 3, 4),
+    contract: 'full time',
+    id: 1,
+  },
+  {
+    jobTitle: 'Sales Person',
+    recruitmentDate: new Date(2020, 11, 20),
+    contract: 'full time',
+    id: 2,
+  },
+  {
+    jobTitle: 'Sales Person',
+    recruitmentDate: new Date(2020, 10, 14),
+    contract: 'part time',
+    id: 3,
+  },
+  {
+    jobTitle: 'Sales Person',
+    recruitmentDate: new Date(2017, 10, 29),
+    contract: 'part time',
+    id: 4,
+  },
+  {
+    jobTitle: 'Sales Person',
+    recruitmentDate: new Date(2020, 7, 21),
+    contract: 'full time',
+    id: 5,
+  },
+  {
+    jobTitle: 'Sales Person',
+    recruitmentDate: new Date(2020, 7, 20),
+    contract: 'intern',
+    id: 6,
+  },
+  {
+    jobTitle: 'Sales Person',
+    recruitmentDate: new Date(2019, 6, 28),
+    contract: 'full time',
+    id: 7,
+  },
+  {
+    jobTitle: 'Head of Engineering',
+    recruitmentDate: new Date(2016, 3, 14),
+    contract: 'full time',
+    id: 8,
+  },
+  {
+    jobTitle: 'Tech lead front',
+    recruitmentDate: new Date(2016, 5, 17),
+    contract: 'full time',
+    id: 9,
+  },
+  {
+    jobTitle: 'Front-end developer',
+    recruitmentDate: new Date(2019, 11, 7),
+    contract: 'full time',
+    id: 10,
+  },
+  {
+    jobTitle: 'Tech lead devops',
+    recruitmentDate: new Date(2021, 7, 1),
+    contract: 'full time',
+    id: 11,
+  },
+  {
+    jobTitle: 'Tech lead back',
+    recruitmentDate: new Date(2017, 0, 12),
+    contract: 'full time',
+    id: 12,
+  },
+  {
+    jobTitle: 'Back-end developer',
+    recruitmentDate: new Date(2019, 2, 22),
+    contract: 'intern',
+    id: 13,
+  },
+  {
+    jobTitle: 'Back-end developer',
+    recruitmentDate: new Date(2018, 4, 19),
+    contract: 'part time',
+    id: 14,
+  },
+];
+
+const columns = [
+  { 
+    field: 'firstName', 
+    headerName: 'First Name', 
+    width: 200 
+  },
+  // { 
+  //   field: 'surname', 
+  //   headerName: 'Surname', 
+  //   width: 200,
+  // },
+  // {
+  //   field: 'email',
+  //   headerName: 'Email',
+  //   // type: 'date',
+  //   width: 150,
+  // },
+  // {
+  //   field: 'edit',
+  //   headerName: 'Edit',
+  //   type: 'singleSelect',
+  //   valueOptions: ['full time', 'part time', 'intern'],
+  //   width: 150,
+  // },
+];
+
+const col = headers.map(head => {
+  return   { 
+    field: head, 
+    headerName: camelCaseToSingleWords(head), 
+    width: 150 
+  }
+})
 
   return (
     <Fragment>
@@ -46,7 +179,7 @@ export const SoulsTable = () => {
               <ButtonBase className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6">
                 <TransitionsModal
                   name={"+ Add Soul"}
-                  heading={"Add new Soul Form"}
+                  heading={"Add New Soul Form"}
                   width={"max-w-6xl w-[90%]"}
                 >
                   <AddSoulsFormControl />
@@ -54,9 +187,15 @@ export const SoulsTable = () => {
               </ButtonBase>
             </div>
           </div>
-          <ReusableTable headers={headers} data={data} filterNumber={9} />
+          {
+            data?.length < 1 ? <div className='flex justify-center text-center items-center h-96'>There's No data available for this table at the moment</div> : 
+            <>
+              <ReusableTable headers={headers} data={data} filterNumber={9} />
+              <paginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / 10)} totalCount={data?.length} />
+            </>
+          }
         </div>
-        <PaginationFooter />
+        {/* <PaginationDataGrid headers={col} data={data} isLoading={isLoading} /> */}
       </div>
     </Fragment>
   );

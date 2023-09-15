@@ -8,9 +8,9 @@ const token = sessionStorage.getItem('token');
 //     return sessionStorage.getItem('token');
 // }, 50);
 
-export async function getAllAdmins() {
+export async function getAllAdmins({ pageNumber, totalPerPage }) {
     try {
-        const admins = await axios.get(`${baseUrl}${appUrls.GETALLWORKERS_URL}`, {
+        const admins = await axios.get(`${baseUrl}${appUrls.GETALLWORKERS_URL}?page=${pageNumber}&pageSize=${totalPerPage}`, {
             headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         })
         const fetchAdmins =  await admins?.data

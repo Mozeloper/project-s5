@@ -5,24 +5,51 @@ import SearchBox from '../Searchbox/searchbox';
 import ReusableTable from './Table.reusable';
 import PaginationFooter from '../PaginationFooter';
 import { useFetchAdmins } from '../../hooks/useFetchAdmins';
+import { HiMiniViewfinderCircle } from 'react-icons/hi2'
+import { VscGitPullRequestGoToChanges } from 'react-icons/vsc'
+import { MdPublishedWithChanges } from 'react-icons/md'
+import { IoRemoveCircleSharp } from 'react-icons/io5'
 
-export default function AdminTables() {
-    const [headers, setHeaders] = useState([]);
-    const [data, setData] = useState([]);
-    const { data: AdminsData, isError, isLoading } = useFetchAdmins()
+export default function AdminTables({tableDataLimit}) {
+   const [pageNumber, setPageNumber] = useState(1);
+   const [totalPerPage, setTotalPerPage] = useState(7);
+  const [headers, setHeaders] = useState([]);
+  const [data, setData] = useState([]);
+  
+  const { data: AdminsData, isError, isLoading, isFetching, error } = useFetchAdmins({ pageNumber, totalPerPage })
 
-    console.log('just loaded outside', AdminsData);
-
-    useEffect(() => {
+  useEffect(() => {
       const getPosts = async () => {
+        // make sure you add await to the return data from react query (hook)
       const admins = await AdminsData
       setData(await admins?.Data);
       //Object.keys returns the property names of/in an object as string of arrays
-      setHeaders(Object.keys(admins?.Data[0]));
-      console.log('just loaded Effect', admins);
+      setHeaders(Object.keys(await admins?.Data?.[0] || []));
     };
     getPosts();
   }, [useFetchAdmins, AdminsData, setData]);
+
+  const handleChange = (event, value) => {
+    setPageNumber(value);
+  };
+
+  const optionList = [
+    // suspend, change department, promote
+    { icon: <HiMiniViewfinderCircle />, name: 'View' },
+    { icon: <VscGitPullRequestGoToChanges />, name: 'Promote' },
+    { icon: <MdPublishedWithChanges />, name: 'Change Department' },
+    { icon: <IoRemoveCircleSharp />, name: 'Suspend' },
+  ];
+
+  const handleClickOptions = (event) => {
+    const innerText = event.currentTarget.innerText
+    const id = event.currentTarget.id
+    // if (innerText.toLowerCase() === 'confirm') {
+    //     setDisplayUi(<ConfirmDeactivate handleDeactivate={handleApprovedConfirmation.bind(null, id)} screenName={innerText}/>)
+    // }else {
+    // }
+    console.log('clicked ', innerText, ' user with id', id);
+  };
 
   return (
     <Fragment>
@@ -40,23 +67,29 @@ export default function AdminTables() {
               <button
                 className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6"
               > 
-                <TransitionsModal name={'+ Add Soul'} heading={'Add new Soul Form'} width={'max-w-6xl w-[90%]'}>
+                <TransitionsModal name={'+ Add Soul'} heading={'Add New Soul Form'} width={'max-w-6xl w-[90%]'}>
                   <AddSoulsFormControl />
                 </TransitionsModal>
               </button>
             </div>
           </div>
           {
-            isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred </div> : 
+            isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred: {error.message} </div> : 
         <>
           {
             data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 
-              <ReusableTable headers={headers} data={data} filterNumber={11}/>
+              <ReusableTable headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleClickOptions} />
           }
         </>
         }
+        { 
+          data?.length > 1 && 
+          <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(2)} totalCount={Math.ceil(data?.length)} handleChange={handleChange}/> 
+        }
+        <div className="flex justify-center items-center">
+          {!isLoading && isFetching && 'Loading...'}
         </div>
-        <PaginationFooter />
+        </div>
       </div>
     </Fragment>
   )

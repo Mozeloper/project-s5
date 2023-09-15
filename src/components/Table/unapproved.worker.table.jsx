@@ -10,35 +10,30 @@ import { GiConfirmed } from 'react-icons/gi'
 import ConfirmDeactivate from '../UI/confirmation screen'
 
 export default function UnapprovedWorkerTable() {
+    const [pageNumber, setPageNumber] = useState(1);
+    const [modalConfirmation, setModalConfirmation] = useState(false);
     const [displayUi, setDisplayUi] = React.useState(null)
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
-    const [userId, setUserId] = useState('1');
+    const [workerId, setWorkerId] = useState('');
     const { data: PendingData, isLoading, isError } = useFetchAllUnapproved()
-    const { mutateAsync, data: ApproveUser, isLoading: isLoadingApproval, isError: isErrorRender } = usePostApproveWorker(userId)
-    
+    const { mutate, isLoading: isLoadingApproval, isError: isErrorRender, isSuccess } = usePostApproveWorker(workerId && workerId)
 
     useEffect(() => {
       const getPosts = async () => {
-      const admins = await PendingData
+      const admins = await PendingData?.Data
       setData(admins);
-      setHeaders(Object.keys(await admins[0]));
+      setHeaders(Object.keys(await admins?.[0]));
     };
     getPosts();
   }, [PendingData]);
 
-    const optionList = [
-      { icon: <GiConfirmed />, name: 'Confirm' },
-      { icon: <IoRemoveCircleSharp />, name: 'Suspend' },
-    ];
-
   const handleApprovedConfirmation = useCallback(
     async (id) => {
-      setUserId(await id)
-      console.log('user', userId);
-      mutateAsync()
-      console.log(`you just confirmed the worker with id ${id} `);
-    }, [],
+      setWorkerId(prev => prev = id)
+       mutate()
+      // console.log(`you just confirmed the worker with id ${id} `);
+    }, [workerId, setWorkerId],
   );
 
   const handleApprovedSuspend = useCallback(
@@ -52,15 +47,20 @@ export default function UnapprovedWorkerTable() {
     return <div>Loading.......</div>
   }
 
-    if (isErrorRender) {
-    return <div>Error.......</div>
-  }
+  //   if (isErrorRender && !isSuccess) {
+  //   return <div>Error.......</div>
+  // }
 
-  const handleClick = (event) => {
+  const optionList = [
+      { icon: <GiConfirmed />, name: 'Approve' },
+      { icon: <IoRemoveCircleSharp />, name: 'Suspend' },
+  ];
+
+  const handleOptionsClick = (event) => {
     const innerText = event.currentTarget.innerText
     const id = event.currentTarget.id
-    if (innerText.toLowerCase() === 'confirm') {
-        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleApprovedConfirmation.bind(null, id)} screenName={innerText}/>)
+    if (innerText.toLowerCase() === 'approve') {
+        setDisplayUi(<ConfirmDeactivate setDeactivateConfirmation={setModalConfirmation} handleDeactivate={handleApprovedConfirmation.bind(null, id)} screenName={innerText}/>)
     }else {
         setDisplayUi(<ConfirmDeactivate handleDeactivate={handleApprovedSuspend.bind(null, id)} screenName={innerText}/>)
     }
@@ -73,10 +73,11 @@ export default function UnapprovedWorkerTable() {
             isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred </div> : 
         <>
           {
-            data?.length < 1 ? <div className='flex justify-center text-center items-center h-96'>There's No pending "Unapproved" Account At the moment</div> : 
-              <ReusableTable optionModal={displayUi} headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleClick}/>
+            data?.length < 1 || !data  ? <div className='flex justify-center text-center items-center h-96'>There's No pending "Unapproved" Account At the moment</div> : <>
+              <ReusableTable optionModal={displayUi} headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleOptionsClick}/>
+              <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / 10)} totalCount={data?.length}/>
+            </>
           }
-          <PaginationFooter />
         </>
         }
     </div>

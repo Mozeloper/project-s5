@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <HashRouter>
       <QueryClientProvider client={queryClient} contextSharing={true}>
         <App />
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right"/>
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-left"/>
       </QueryClientProvider>
       <Toaster />
     </HashRouter>

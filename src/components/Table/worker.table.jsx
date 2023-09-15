@@ -5,6 +5,7 @@ import Button from '../Button'
 import SearchBox from '../Searchbox/searchbox'
 
 export default function WorkersTable() {
+   const [pageNumber, setPageNumber] = useState(1);
       const results = [
       {
         _id: 1,
@@ -118,7 +119,13 @@ export default function WorkersTable() {
           </div>
           <Table array={souls} />
         </div>
-        <PaginationFooter />
+          {
+            data?.length < 1 ? <div className='flex justify-center text-center items-center h-96'>There's No data available for this table at the moment</div> : 
+            <>
+              <ReusableTable headers={headers} data={data} filterNumber={9} />
+              <paginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / 10)} totalCount={data?.length} />
+            </>
+          }
       </div>
     </Fragment>
   )

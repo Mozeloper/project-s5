@@ -8,6 +8,7 @@ import { GrConnect, GrDocumentUpdate } from 'react-icons/gr'
 import { useFetchAllDeactivatedWorker } from '../../hooks/useFetchUnapproved';
 
 export default function DeactivatedWorkerTable() {
+     const [pageNumber, setPageNumber] = useState(1);
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
     const { data: PendingData, isLoading, isError } = useFetchAllDeactivatedWorker()
@@ -51,7 +52,7 @@ export default function DeactivatedWorkerTable() {
           data?.length < 1 || !data ? <div className='flex text-center justify-center items-center h-96'>There's No Deactivated Account At the moment</div> : 
             <ReusableTable headers={headers} data={data} filterNumber={11}/>
         }
-            <PaginationFooter />
+            <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / 10)} totalCount={data?.length}/>
         </>
         }
     </div>

@@ -22,7 +22,7 @@ export default function ConfirmDeactivate({ setDeactivateConfirmation, handleDea
             backgroundColor="bg-none"
             textColor="#38404b"
             type="button"
-            onClick={() => setDeactivateConfirmation}
+            onClick={() => setDeactivateConfirmation(false)}
           />
           <Button
             title={screenName}

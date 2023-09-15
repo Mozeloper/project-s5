@@ -7,11 +7,12 @@ import PaginationFooter from '../PaginationFooter';
 import { useFetchMinistry } from '../../hooks/useFetchMinistry';
 
 export default function MinstryTable() {
-    const [headers, setHeaders] = useState([]);
-    const [data, setData] = useState([]);
-    const { data: MinistryData, isError, isLoading } = useFetchMinistry()
+  const [pageNumber, setPageNumber] = useState(1);
+  const [headers, setHeaders] = useState([]);
+  const [data, setData] = useState([]);
+  const { data: MinistryData, isError, isLoading } = useFetchMinistry()
 
-    useEffect(() => {
+  useEffect(() => {
       const getPosts = async () => {
       const ministry = await MinistryData
       setData(ministry?.data);
@@ -37,7 +38,7 @@ export default function MinstryTable() {
               <button
                 className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6"
               > 
-                <TransitionsModal name={'+ Add Soul'} heading={'Add new Soul Form'} width={'max-w-6xl w-[90%]'}>
+                <TransitionsModal name={'+ Add Soul'} heading={'Add New Soul Form'} width={'max-w-6xl w-[90%]'}>
                   <AddSoulsFormControl />
                 </TransitionsModal>
               </button>
@@ -47,13 +48,16 @@ export default function MinstryTable() {
             isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred </div> : 
         <>
           {
-            data?.length < 1 ? <div className='flex justify-center items-center h-96'>There's No pending "Unapproved" Account At the moment</div> : 
-              <ReusableTable headers={headers} data={data} filterNumber={9}/>
+            data?.length < 1 ? <div className='flex justify-center text-center items-center h-96'>There's No data available for this table at the moment</div> : 
+            <>
+              <ReusableTable headers={headers} data={data} filterNumber={9} />
+              <paginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / 10)} totalCount={data?.length} />
+            </>
           }
         </>
         }
         </div>
-        <PaginationFooter />
+        <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / 10)} totalCount={data?.length}/>
       </div>
     </Fragment>
   )

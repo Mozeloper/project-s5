@@ -7,9 +7,11 @@
 import { useQuery } from "react-query"
 import { getAllAdmins } from "../services/admins.api";
 
-export function useFetchAdmins() {
-    const admins = useQuery([`admins`], async () => await getAllAdmins, {
+export function useFetchAdmins({ pageNumber, totalPerPage }) {
+    const admins = useQuery([`admins page `, pageNumber, ' total of ', totalPerPage], async () => await getAllAdmins({ pageNumber, totalPerPage }), {
         staleTime: 360000,
+        enabled: !!pageNumber,  //The enabled property allows only a boolean, then wait till id is not undefined or null
+        keepPreviousData: true
     });
     return admins
 }
