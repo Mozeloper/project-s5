@@ -8,7 +8,7 @@ import { usePostApproveWorker, usePostDeleteWorker } from '../../hooks/useFetchU
 import ConfirmDeactivate from '../UI/confirmation screen'
 import { useNavigate } from "react-router-dom";
 
-export default function Table(props) {
+export default function Table({ tableDataArray }) {
   const navigate = useNavigate();
 
 
@@ -101,7 +101,7 @@ const handleClick = (event) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              {props.array?.map((person) => (
+              {tableDataArray?.map((person) => (
                 <tr key={person.Id}>
                   <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                     <div className="flex items-center">
