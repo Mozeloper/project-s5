@@ -1,29 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
-import Table from "./table";
 import PaginationFooter from "../PaginationFooter";
-// import Button from '../Button'
 import SearchBox from "../Searchbox/searchbox";
-import ModalPopup from "../ModalPopup";
 import TransitionsModal from "../ModalPopup/modalTransition";
 import { ButtonBase } from "@mui/material";
 import AddSoulsFormControl from "../UI/Forms/addSoul.form";
 import ReusableTable from "./Table.reusable";
-import { getAllNewConvert } from "../../services/souls";
 import { useFetchAllNewConvert } from "../../hooks/useFetchNewConvert";
-
-import PaginationDataGrid from "../PaginationFooter/pagination";
 import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
-import { toPascalCase } from "../../Helper/toPascalCase";
 import { GrView } from 'react-icons/gr'
-// import PaginationDataGrid from "../PaginationFooter/pagination";
-// import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
-// import { toPascalCase } from "../../Helper/toPascalCase";
-// import { GrView } from 'react-icons/gr'
-// import PaginationDataGrid from "../PaginationFooter/pagination";
-// import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
-// import { toPascalCase } from "../../Helper/toPascalCase";
-
-// import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 
 export const SoulsTable = () => {
@@ -32,24 +16,23 @@ export const SoulsTable = () => {
   const [displayUi, setDisplayUi] = React.useState(null)
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPerPage, setTotalPerPage] = useState(7);
-  const { data: adminsData, isError, isLoading } = useFetchAllNewConvert();
+  const { data: adminsData, isError, isLoading } = useFetchAllNewConvert({ pageNumber });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const getPosts = async () => {
+      const admins = await adminsData?.data;
+      setData(!isError && admins);
+      //Object.keys returns the property names of/in an object as string of arrays
+      setHeaders(Object?.keys(!isError && admins[0]));
+    };
+    getPosts();
+  }, [adminsData, useFetchAllNewConvert, data]); 
 
   const optionList = [
     { icon: <GrView className='text-blue-500' />, name: 'View' }      
   ];
-
-  useEffect(() => {
-    const getPosts = async () => {
-      const admins = await adminsData;
-      await setData(await admins);
-      //Object.keys returns the property names of/in an object as string of arrays
-      setHeaders(Object?.keys(await admins[0] || undefined || null));
-    };
-    getPosts();
-  }, [adminsData]); 
-
 
   ///
   const rows = [
@@ -191,14 +174,6 @@ const col = headers.map(head => {
     setPageNumber(value);
   };
 
-  const handleClick = (event) => {
-    const innerText = event.currentTarget.innerText
-    const id = event.currentTarget.id
-    if ( innerText.toLowerCase() === 'view') {
-      navigate(`/souls/${id}`);
-    }
-  };
-
   return (
     <Fragment>
       <div className="bg-white">
@@ -227,15 +202,14 @@ const col = headers.map(head => {
             </div>
           </div>
           {
-            data?.length < 1 ? <div className='flex justify-center text-center items-center h-96'>There's No data available for this table at the moment</div> : 
+            !isError && data?.length < 1 ? <div className='flex justify-center text-center items-center h-96'>There's No data available for this table at the moment</div> : 
             <>
-              <ReusableTable optionModal={displayUi} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} headers={headers} data={data} filterNumber={9} />
+              <ReusableTable optionModal={displayUi} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} headers={headers} data={!isError && data} filterNumber={9} />
 
-              <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / totalPerPage)} totalCount={Math.ceil(data?.length)} handleChange={handleChange}/> 
+              <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(!isError && data?.length / totalPerPage)} totalCount={Math.ceil(adminsData?.totalDataCount)} handleChange={handleChange}/> 
             </>
           }
         </div>
-        {/* <PaginationDataGrid headers={col} data={data} isLoading={isLoading} /> */}
       </div>
     </Fragment>
   );

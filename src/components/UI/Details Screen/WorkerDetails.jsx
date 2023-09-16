@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Button from '@/components/Button';
 import { Email, Phone } from '@mui/icons-material';
 import Box from '@mui/material/Box';
@@ -7,20 +7,16 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { Skeleton } from '@mui/material';
-import { api } from '@/services/api';
-import { appUrls } from '@/services/urls';
-import { toast } from 'react-hot-toast';
 import ReturnToPrevious from '@/components/ReturnToPrevious';
 import ResultNotFound from '@/components/ResultNotFound';
-import { userInitials } from '@/utils';
-import { userFullName } from '@/utils';
 
-const WorkerDetails = ({ data }) => {
+
+const WorkerDetails = ({ data, loading, notFound }) => {
   // Reminder!!! Fetch worker details based on the workerId from your data source
-  // const [data, setData] = useState({});
   const [value, setValue] = React.useState('1');
-  const [loading, setLoading] = React.useState(false);
-  const [notFound, setNotFound] = React.useState(false);
+  // const [data, setData] = useState({});
+  // const [loading, setLoading] = React.useState(false);
+  // const [notFound, setNotFound] = React.useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -59,7 +55,7 @@ const WorkerDetails = ({ data }) => {
   //     // handleGetWorker().finally(() => setLoading(false));
   //  }, [workerId]);
 
-console.log('details Worker', data);
+// console.log('details Worker', data);
 
   return (
     <div>

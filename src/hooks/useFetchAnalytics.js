@@ -1,5 +1,5 @@
 import { useQuery } from "react-query"
-import { getAllSoulsCount, getAllWorkersCount } from "../services/souls";
+import { getAllSoulsCount, getAllWorkersCount } from "../services/analytics.api";
 
 export function useFetchWorkersCount() {
     const workersCount = useQuery([`workersCount`], async () => await getAllWorkersCount(), {
