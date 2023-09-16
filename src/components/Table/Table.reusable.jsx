@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { SlOptionsVertical } from 'react-icons/sl'
 import TableOptions  from "../UI/Options";
 import EditIcon from '@mui/icons-material/Edit';
+import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
 
 //This table is reuseable and can be use to render/display any data/apis as in (tabular form)/(table data)
 const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHandleClick, optionModal }) => {
-    const filteredNumber = filterNumber ?? 20;
+    const filteredNumber = +filterNumber ?? +data?.length;
 
   return (
     <div className="mt-8 flow-root">
@@ -15,20 +16,20 @@ const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHa
                 <table className="min-w-full divide-y divide-gray-300">
                     <thead>
                     <tr>
-                        { headers?.slice(0, +filteredNumber).map(head => (
-                        <th key={head} scope="col" className={`pr-3 py-3.5 text-left text-sm font-semibold text-gray-900 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'dateofbirth' ? 'hidden' : '' }`}>
+                        {( headers || undefined)?.slice(0, +filteredNumber).map(head => (
+                        <th key={head} scope="col" className={`pr-3 py-3.5 text-left uppercase text-sm font-semibold text-gray-900 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' ? 'hidden' : '' }`}>
                             {head.toLowerCase() === 'firstname' ? 'Name' : 
-                           head}
+                          camelCaseToSingleWords(head)}
                         </th>
                         ))}
                         <th>{ (headers && headers.length > 1 ) && 'Edit' }</th>
                     </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                        {data?.slice(0, +filteredNumber).map((row, index) => (
+                        {data && data?.slice(0, +filteredNumber)?.map((row, index) => (
                             <tr key={index}>
                                 {headers?.slice(0, +filteredNumber).map(head => (
-                                    <td key={head} className={`whitespace-nowrap py-5 pr-3 text-sm sm:pl-0 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'dateofbirth' ? 'hidden' : '' }`}>
+                                    <td key={head} className={`whitespace-nowrap py-5 pr-3 text-sm sm:pl-0 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' ? 'hidden' : '' }`}>
                                         {head.toLowerCase() === 'firstname' ?
                                             <Link to={`/${row['Id']}`}>
                                                 <div className="flex items-center">

@@ -61,7 +61,7 @@ const SearchableSelect = ({
     if (multipleOptions) {
       const selectedOptions = [];
       Array.isArray(value) &&
-        value.forEach((val) => {
+        value?.forEach((val) => {
           const option = options
             ? options.find((option) => option?.value === val)
             : "";

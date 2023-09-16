@@ -36,7 +36,7 @@ export default function Home() {
     getcounts();
   }, [SoulsCountData, WorkersCountData]);
 
-  const summeryTitle = ["Souls"];
+
   return (
     <div className="flex flex-col gap-y-6">
       <div className="rounded-md bg-white py-12 px-5 md:px-6 md:flex md:justify-between gap-5">
@@ -55,7 +55,11 @@ export default function Home() {
       <div className="bg-white rounded-md">
         <Charts type={"area"} datas={datas} />
       </div>
-      <AdminTables />
+      {/* 
+      The tableDataLimit is not fully implemented yet
+      Todo - Renders all the table datas on the admins page dashboard and
+      */}
+      <AdminTables tableDataLimit={11} />
     </div>
   );
 }
