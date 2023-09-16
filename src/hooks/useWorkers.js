@@ -5,10 +5,12 @@
 //Todo - 3. when building also make provision for pagination
 
 import { useQuery } from "react-query"
-import { getAllWorkersAdmins } from "../services/admins.api";
+import { getAWorkerAdmin, getAllWorkersAdmins } from "../services/admins.api";
+import { api } from '../services/api'
+import { appUrls } from "../services/urls";
 
 export function useWorkersAdmins({ pageNumber }) {
-    const admins = useQuery([`admins page `, pageNumber], async () => await getAllWorkersAdmins({ pageNumber }), {
+    const admins = useQuery([`workers page `, pageNumber], async () => await getAllWorkersAdmins({ pageNumber }), {
         staleTime: 360000,
         enabled: !!pageNumber,  //The enabled property allows only a boolean, then wait till id is not undefined or null
         keepPreviousData: true
@@ -16,3 +18,20 @@ export function useWorkersAdmins({ pageNumber }) {
     return admins
 }
 
+
+
+export async function useWorkerDetails({ workerId }) {
+    // console.log('singleWorker workerId', workerId);
+    const singleWorker = useQuery({
+        queryKey: ['worker', workerId],
+        queryFn: async () => {
+            const data = await getAWorkerAdmin(workerId)
+            return data
+        },
+        staleTime: 360000,
+        enabled: !!workerId, //Only run this function if workerId is available
+    })
+
+    // console.log('singleWorker', singleWorker.data);
+    return singleWorker;
+}

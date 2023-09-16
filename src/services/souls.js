@@ -36,7 +36,7 @@ export async function getAllNewConvert() {
             headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`},
         })
         const fetchNewConvert =  await NewConvert.json().then(data => data)
-        const res = await fetchNewConvert?.data
+        const res = await fetchNewConvert?.data?.data
 
         return res
 

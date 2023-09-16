@@ -13,6 +13,7 @@ export function useFetchAdmins({ pageNumber }) {
         enabled: !!pageNumber,  //The enabled property allows only a boolean, then wait till id is not undefined or null
         keepPreviousData: true
     });
+    console.log('admin.data', admins?.data);
     return admins
 }
 

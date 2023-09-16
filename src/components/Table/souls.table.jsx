@@ -14,10 +14,10 @@ import PaginationDataGrid from "../PaginationFooter/pagination";
 import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
 import { toPascalCase } from "../../Helper/toPascalCase";
 import { GrView } from 'react-icons/gr'
-import PaginationDataGrid from "../PaginationFooter/pagination";
-import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
-import { toPascalCase } from "../../Helper/toPascalCase";
-import { GrView } from 'react-icons/gr'
+// import PaginationDataGrid from "../PaginationFooter/pagination";
+// import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
+// import { toPascalCase } from "../../Helper/toPascalCase";
+// import { GrView } from 'react-icons/gr'
 // import PaginationDataGrid from "../PaginationFooter/pagination";
 // import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
 // import { toPascalCase } from "../../Helper/toPascalCase";

@@ -26,7 +26,7 @@ const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHa
                     </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                        {data?.slice(0, +filteredNumber).map((row, index) => (
+                        {data && data?.slice(0, +filteredNumber)?.map((row, index) => (
                             <tr key={index}>
                                 {headers?.slice(0, +filteredNumber).map(head => (
                                     <td key={head} className={`whitespace-nowrap py-5 pr-3 text-sm sm:pl-0 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' ? 'hidden' : '' }`}>

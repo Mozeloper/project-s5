@@ -15,9 +15,9 @@ import ResultNotFound from '@/components/ResultNotFound';
 import { userInitials } from '@/utils';
 import { userFullName } from '@/utils';
 
-const WorkerDetails = ({ workerId }) => {
+const WorkerDetails = ({ data }) => {
   // Reminder!!! Fetch worker details based on the workerId from your data source
-  const [data, setData] = useState({});
+  // const [data, setData] = useState({});
   const [value, setValue] = React.useState('1');
   const [loading, setLoading] = React.useState(false);
   const [notFound, setNotFound] = React.useState(false);
@@ -25,35 +25,41 @@ const WorkerDetails = ({ workerId }) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  
+  // console.log('workerData ', workerData && workerData && data?.data && data?.Data);
+  
+  // const handleGetWorker = async () => {
+    //   try {
+      //     // endpoint to be refactored since backend made mistake
+      //     const res = await api.get(
+        //       `${appUrls.GET_WORKER_DETAILS}/${workerId}?workerId=${workerId}`
+        //     );
+        
+        //     if (res?.status === 200) {
+          //       setData(res?.data && data?.Data);
+  //       console.log(res?.data && data?.Data);
+  //       if (res?.data && data?.StatusCode === 404) {
+  //         setNotFound(true);
+  //       }
+  //     } else {
+  //       toast.error(res?.data && data?.message, 4);
+  //     }
+  //   } catch (error) {
+  //     toast.error(error?.message, 4);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const handleGetWorker = async () => {
-    try {
-      // endpoint to be refactored since backend made mistake
-      const res = await api.get(
-        `${appUrls.GET_WORKER_DETAILS}/${workerId}?workerId=${workerId}`
-      );
+  // useEffect(() => {
 
-      if (res?.status === 200) {
-        setData(res?.data?.Data);
-        console.log(res?.data?.Data);
-        if (res?.data?.StatusCode === 404) {
-          setNotFound(true);
-        }
-      } else {
-        toast.error(res?.data?.message, 4);
-      }
-    } catch (error) {
-      toast.error(error?.message, 4);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  useEffect(() => {
-      setLoading(true);
-      handleGetWorker().finally(() => setLoading(false));
-   }, [workerId]);
+  //     setData(workerData && workerData && data?.data && data?.Data);
+  //     // setLoading(true);
+  //     // handleGetWorker().finally(() => setLoading(false));
+  //  }, [workerId]);
 
+console.log('details Worker', data);
 
   return (
     <div>
@@ -86,12 +92,12 @@ const WorkerDetails = ({ workerId }) => {
                 ) : (
                   <div
                     className={`${
-                      data?.Gender?.toLowerCase() === 'male'
+                      data && data?.Gender?.toLowerCase() === 'male'
                         ? 'bg-blue-900'
                         : 'bg-pink-700'
                     } w-[160px] h-[160px] flex items-center justify-center text-6xl relative rounded-full text-white`}
                   >
-                    {data?.FirstName.charAt(0)}{data?.SurName.charAt(0)}
+                    {data && data?.FirstName?.charAt(0)}{data && data?.SurName?.charAt(0)}
                   </div>
                 )}
               </div>
@@ -105,7 +111,7 @@ const WorkerDetails = ({ workerId }) => {
                       />
                     ) : (
                       <h4 className="text-grey-500 font-bold md:text-lg text-base  leading-4 capitalize">
-                        {data?.FirstName} {data?.SurName}
+                        {data && data?.FirstName} {data && data?.SurName}
                       </h4>
                     )}
                     {loading ? (
@@ -125,7 +131,7 @@ const WorkerDetails = ({ workerId }) => {
                     ) : (
                       <>
                         <small>
-                          {data?.Department || "Worker's Department"}
+                          {data && data?.Department || "Worker's Department"}
                         </small>{' '}
                         | <small>Limited Access</small>
                       </>
@@ -133,11 +139,11 @@ const WorkerDetails = ({ workerId }) => {
                   </div>
                   <div className="flex items-center gap-5 text-sm">
                     <Email className="h-5" />
-                    <h4>{data?.Email || '...'}</h4>
+                    <h4>{data && data?.Email || '...'}</h4>
                   </div>
                   <div className="flex items-center gap-5 text-sm">
                     <Phone className="h-5" />
-                    <h4>{data?.PhoneNumber || '...'}</h4>
+                    <h4>{data && data?.PhoneNumber || '...'}</h4>
                   </div>
                 </div>
               </div>
@@ -168,23 +174,23 @@ const WorkerDetails = ({ workerId }) => {
                       <div className="flex flex-col gap-y-6 mt-6">
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Gender</h3>{' '}
-                          <span>{data?.Gender || '...'}</span>
+                          <span>{data && data?.Gender || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
                             Date of Birth
                           </h3>{' '}
-                          <span>{data?.DateOfBirth || '...'}</span>
+                          <span>{data && data?.DateOfBirth || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
                             Marital Status
                           </h3>{' '}
-                          <span>{data?.MaritalStatus || '...'}</span>
+                          <span>{data && data?.MaritalStatus || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Member Since</h3>{' '}
-                          <span>{data?.YearJoined || '...'}</span>
+                          <span>{data && data?.YearJoined || '...'}</span>
                         </div>
                       </div>
                     </div>
@@ -200,33 +206,33 @@ const WorkerDetails = ({ workerId }) => {
                       <div className="flex flex-col gap-y-6 mt-6">
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Phone</h3>{' '}
-                          <span>{data?.PhoneNumber || '...'}</span>
+                          <span>{data && data?.PhoneNumber || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Email</h3>{' '}
-                          <span>{data?.Email || '...'}</span>
+                          <span>{data && data?.Email || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Address</h3>{' '}
-                          <span>{data?.HomeAddress || '...'}</span>
+                          <span>{data && data?.HomeAddress || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
                             Nearest Bus Stop
                           </h3>{' '}
-                          <span>{data?.NearestBusStop || '...'}</span>
+                          <span>{data && data?.NearestBusStop || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">State</h3>{' '}
-                          <span>{data?.StateName || '...'}</span>
+                          <span>{data && data?.StateName || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">L.G.A.</h3>{' '}
-                          <span>{data?.LocalGovtName || '...'}</span>
+                          <span>{data && data?.LocalGovtName || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Country</h3>{' '}
-                          <span>{data?.CountryName || '...'}</span>
+                          <span>{data && data?.CountryName || '...'}</span>
                         </div>
                       </div>
                     </div>
