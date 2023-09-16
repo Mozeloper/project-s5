@@ -27,7 +27,6 @@ export default function AdminTables() {
       { icon: <IoRemoveCircleSharp className='text-yellow-500' />, name: 'Suspend' },
     ];
 
-
     useEffect(() => {
       const getPosts = async () => {
         // make sure you add await to the return data from react query (hook)
@@ -60,6 +59,7 @@ export default function AdminTables() {
         setDisplayUi(<ConfirmDeactivate handleDeactivate={handleSuspendAdmin.bind(null, id)} screenName={innerText}/>)
     }
   }
+
   // const handleChange = (event, value) => {
   //   setPageNumber(value);
   // };
@@ -87,6 +87,7 @@ export default function AdminTables() {
   //   { icon: <MdPublishedWithChanges />, name: 'Change Department' },
   //   { icon: <IoRemoveCircleSharp />, name: 'Suspend' },
   // ];
+
 
   return (
     <Fragment>
