@@ -1,10 +1,12 @@
 import { useQuery } from "react-query"
 import { getAllMinistryAdmins } from "../services/admins.api";
 
-// todo - add getAllMinistry fetch call function
-export function useFetchMinistry() {
-    const Ministry = useQuery([`Ministry`], async () => await getAllMinistryAdmins(), {
+export function useFetchMinistry({ pageNumber }) {
+    const Ministry = useQuery([`Ministry`, pageNumber], async () => await getAllMinistryAdmins({ pageNumber }), {
         staleTime: 360000,
+        enabled: !!pageNumber,
+        keepPreviousData: true
     });
+
     return Ministry
 }

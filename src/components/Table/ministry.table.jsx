@@ -16,7 +16,7 @@ export default function MinstryTable() {
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
     const [displayUi, setDisplayUi] = React.useState(null)
-    const { data: MinistryData, isError, isLoading, isFetching, error } = useFetchMinistry()
+    const { data: MinistryData, isError, isLoading, isFetching, error } = useFetchMinistry({ pageNumber })
 
   useEffect(() => {
       const getPosts = async () => {

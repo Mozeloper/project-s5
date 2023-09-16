@@ -10,12 +10,13 @@ export const appUrls = {
   GETCHURCHDEPT: '/api/Entity/get-church-department',
 
   //Super Admins
-  GETALLWORKERS: '/api/SuperAdmin/get-all-workers', //super
+  GETALLWORKERS: '/api/SuperAdmin/get-all-workers', // 
+  GET_ALL_SUPERADMINS: '/api/SuperAdmin/get-all-admin',
   GET_ALL_New_Converts_URL: '/api/SuperAdmin/get-all-new-converts',
-  GET_WORKER_DETAILS: 'api/SuperAdmin/get-worker', //get worker by id
+  GET_WORKER_DETAILS: '/api/SuperAdmin/get-worker', //get worker by id
 
   //Worker
-  GETSINGLEWORKERDETAILS_URL: '/api/Worker/get-worker', //worker
+  GETSINGLEWORKERDETAILS_URL: '/api/Worker/get-worker-profile', //worker
 
   //New converts (soul)
   GET_ALL_New_Convert:
