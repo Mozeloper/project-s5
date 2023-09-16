@@ -13,7 +13,7 @@ export default function Forbidden() {
       </p>
       <div className="mt-8">
         <div
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(-2)}
           className="inline-block cursor-pointer px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
         >
           Go back
