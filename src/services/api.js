@@ -1,6 +1,7 @@
 // Api configurations here * * connects directly with the backend....
 import axios from "axios";
 import { appUrls } from "./urls";
+import toast from "react-hot-toast";
 
 let URL = import.meta.env.VITE_BASE_URL;
 
@@ -31,17 +32,22 @@ const apiResource = () => {
     async (error) => {
       const originalConfig = error.config;
       if (error?.response?.status === 403) {
-        sessionStorage.clear();
         if (
           originalConfig.url !== appUrls.LOGIN_URL &&
           originalConfig.url !== appUrls.GETSINGLEWORKERDETAILS_URL
-        ) {
-          window.location = "/login";
+          ) {
+            toast.error('Forbidden Page');
+            window.location = '#/forbidden';
+          } else {   
+            toast.error('An Error Occurred');
+            sessionStorage.clear();
+            window.location = "/login";
         }
       } else if (error?.response?.status === 401) {
         if (originalConfig.url !== appUrls.LOGIN_URL) {
           // call refresh token once accesstoken has expired...
           if (error.response.status === 401 && !originalConfig._retry) {
+            toast.error('Unauthorized');
             originalConfig._retry = true;
             const refreshToken = sessionStorage.getItem("refreshToken");
             const userObj = JSON.parse(sessionStorage.getItem("userObj"));
@@ -52,6 +58,7 @@ const apiResource = () => {
             try {
               const rs = await api.post(appUrls.REFRESHTOKEN_URL, payload);
               if (rs?.status === 200) {
+                toast.success('Request Succesful');
                 sessionStorage.setItem("token", rs?.data?.data?.newAccessToken);
                 sessionStorage.setItem(
                   "refreshToken",
