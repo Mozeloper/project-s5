@@ -10,14 +10,28 @@ import AddSoulsFormControl from "../UI/Forms/addSoul.form";
 import ReusableTable from "./Table.reusable";
 import { getAllNewConvert } from "../../services/souls";
 import { useFetchAllNewConvert } from "../../hooks/useFetchNewConvert";
+
+import PaginationDataGrid from "../PaginationFooter/pagination";
+import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
+import { toPascalCase } from "../../Helper/toPascalCase";
 import { GrView } from 'react-icons/gr'
+// import PaginationDataGrid from "../PaginationFooter/pagination";
+// import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
+// import { toPascalCase } from "../../Helper/toPascalCase";
+// import { GrView } from 'react-icons/gr'
+// import PaginationDataGrid from "../PaginationFooter/pagination";
+// import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
+// import { toPascalCase } from "../../Helper/toPascalCase";
+
 // import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 
 export const SoulsTable = () => {
-  const [headers, setHeaders] = useState([]);
+  const [headers, setHeaders] = useState([] || undefined || null);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null)
+  const [pageNumber, setPageNumber] = useState(1);
+  const [totalPerPage, setTotalPerPage] = useState(7);
   const { data: adminsData, isError, isLoading } = useFetchAllNewConvert();
 
   const navigate = useNavigate();
@@ -29,12 +43,153 @@ export const SoulsTable = () => {
   useEffect(() => {
     const getPosts = async () => {
       const admins = await adminsData;
-      setData(await admins);
+      await setData(await admins);
       //Object.keys returns the property names of/in an object as string of arrays
-      setHeaders(Object.keys(await admins[0]));
+      setHeaders(Object?.keys(await admins[0] || undefined || null));
     };
     getPosts();
-  }, [adminsData]);
+  }, [adminsData]); 
+
+
+  ///
+  const rows = [
+  {
+    jobTitle: 'Head of Human Resources',
+    recruitmentDate: new Date(2020, 8, 12),
+    contract: 'full time',
+    id: 0,
+  },
+  {
+    jobTitle: 'Head of Sales',
+    recruitmentDate: new Date(2017, 3, 4),
+    contract: 'full time',
+    id: 1,
+  },
+  {
+    jobTitle: 'Sales Person',
+    recruitmentDate: new Date(2020, 11, 20),
+    contract: 'full time',
+    id: 2,
+  },
+  {
+    jobTitle: 'Sales Person',
+    recruitmentDate: new Date(2020, 10, 14),
+    contract: 'part time',
+    id: 3,
+  },
+  {
+    jobTitle: 'Sales Person',
+    recruitmentDate: new Date(2017, 10, 29),
+    contract: 'part time',
+    id: 4,
+  },
+  {
+    jobTitle: 'Sales Person',
+    recruitmentDate: new Date(2020, 7, 21),
+    contract: 'full time',
+    id: 5,
+  },
+  {
+    jobTitle: 'Sales Person',
+    recruitmentDate: new Date(2020, 7, 20),
+    contract: 'intern',
+    id: 6,
+  },
+  {
+    jobTitle: 'Sales Person',
+    recruitmentDate: new Date(2019, 6, 28),
+    contract: 'full time',
+    id: 7,
+  },
+  {
+    jobTitle: 'Head of Engineering',
+    recruitmentDate: new Date(2016, 3, 14),
+    contract: 'full time',
+    id: 8,
+  },
+  {
+    jobTitle: 'Tech lead front',
+    recruitmentDate: new Date(2016, 5, 17),
+    contract: 'full time',
+    id: 9,
+  },
+  {
+    jobTitle: 'Front-end developer',
+    recruitmentDate: new Date(2019, 11, 7),
+    contract: 'full time',
+    id: 10,
+  },
+  {
+    jobTitle: 'Tech lead devops',
+    recruitmentDate: new Date(2021, 7, 1),
+    contract: 'full time',
+    id: 11,
+  },
+  {
+    jobTitle: 'Tech lead back',
+    recruitmentDate: new Date(2017, 0, 12),
+    contract: 'full time',
+    id: 12,
+  },
+  {
+    jobTitle: 'Back-end developer',
+    recruitmentDate: new Date(2019, 2, 22),
+    contract: 'intern',
+    id: 13,
+  },
+  {
+    jobTitle: 'Back-end developer',
+    recruitmentDate: new Date(2018, 4, 19),
+    contract: 'part time',
+    id: 14,
+  },
+];
+
+const columns = [
+  { 
+    field: 'firstName', 
+    headerName: 'First Name', 
+    width: 200 
+  },
+  // { 
+  //   field: 'surname', 
+  //   headerName: 'Surname', 
+  //   width: 200,
+  // },
+  // {
+  //   field: 'email',
+  //   headerName: 'Email',
+  //   // type: 'date',
+  //   width: 150,
+  // },
+  // {
+  //   field: 'edit',
+  //   headerName: 'Edit',
+  //   type: 'singleSelect',
+  //   valueOptions: ['full time', 'part time', 'intern'],
+  //   width: 150,
+  // },
+];
+
+const col = headers.map(head => {
+  return   { 
+    field: head, 
+    headerName: camelCaseToSingleWords(head), 
+    width: 150 
+  }
+})
+
+  const handleOptionsClick = (event) => {
+    const innerText = event.currentTarget.innerText
+    const id = event.currentTarget.id
+    if ( innerText.toLowerCase() === 'view') {
+      navigate(`/souls/${id}`);
+    }
+  };
+  
+  const handleChange = (event, value) => {
+    setPageNumber(value);
+  };
 
   const handleClick = (event) => {
     const innerText = event.currentTarget.innerText
@@ -63,7 +218,7 @@ export const SoulsTable = () => {
               <ButtonBase className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6">
                 <TransitionsModal
                   name={"+ Add Soul"}
-                  heading={"Add new Soul Form"}
+                  heading={"Add New Soul Form"}
                   width={"max-w-6xl w-[90%]"}
                 >
                   <AddSoulsFormControl />
@@ -71,9 +226,16 @@ export const SoulsTable = () => {
               </ButtonBase>
             </div>
           </div>
-          <ReusableTable optionModal={displayUi} headers={headers} data={data} filterNumber={9} optionArrayList={optionList} optionsHandleClick={handleClick} />
+          {
+            data?.length < 1 ? <div className='flex justify-center text-center items-center h-96'>There's No data available for this table at the moment</div> : 
+            <>
+              <ReusableTable optionModal={displayUi} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} headers={headers} data={data} filterNumber={9} />
+
+              <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / totalPerPage)} totalCount={Math.ceil(data?.length)} handleChange={handleChange}/> 
+            </>
+          }
         </div>
-        <PaginationFooter />
+        {/* <PaginationDataGrid headers={col} data={data} isLoading={isLoading} /> */}
       </div>
     </Fragment>
   );

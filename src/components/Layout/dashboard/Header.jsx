@@ -6,6 +6,7 @@ import { FiLogOut } from "react-icons/fi";
 
 import ArrowDown from "../../../assets/icons/arrow-down.svg";
 import profile from "../../../assets/icons/profile.svg";
+import { toPascalCase } from "../../../Helper/toPascalCase";
 
 export default function Header({
   setIsSideBarOpen,
@@ -25,13 +26,7 @@ export default function Header({
     setIsMenuOpen(false);
   };
 
-  //Convert a string to be Capitalized
-  const toPascalCase =  function camelSentence(str) {
-    return  (" " + str).toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, function(match, chr)
-    {
-        return chr.toUpperCase();
-    });
-}
+
 
   return (
     <div className="w-full h-full text-white flex items-center justify-between">

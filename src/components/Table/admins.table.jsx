@@ -6,17 +6,20 @@ import ReusableTable from './Table.reusable';
 import PaginationFooter from '../PaginationFooter';
 import { useFetchAdmins } from '../../hooks/useFetchAdmins';
 import { IoRemoveCircleSharp } from 'react-icons/io5'
-import { AiFillDelete } from "react-icons/ai";
-import { GiConfirmed } from 'react-icons/gi'
-import { GrView } from 'react-icons/gr'
-import ConfirmDeactivate from '../UI/confirmation screen'
+import { GrView } from 'react-icons/gr';
+import { GiConfirmed } from 'react-icons/gi';
+import ConfirmDeactivate from '../UI/confirmation screen';
+import AddSoulsFormControl from '../UI/Forms/addSoul.form';
 
 
 export default function AdminTables() {
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
     const [displayUi, setDisplayUi] = React.useState(null)
-    const { data: AdminsData, isError, isLoading } = useFetchAdmins()
+    const [pageNumber, setPageNumber] = useState(1);
+    const [totalPerPage, setTotalPerPage] = useState(7);
+  
+  const { data: AdminsData, isError, isLoading, isFetching, error } = useFetchAdmins({ pageNumber })
 
     const optionList = [ 
       { icon: <GrView className='text-blue-500' />, name: 'View' },
@@ -24,15 +27,13 @@ export default function AdminTables() {
       { icon: <IoRemoveCircleSharp className='text-yellow-500' />, name: 'Suspend' },
     ];
 
-    console.log('just loaded outside', AdminsData);
-
     useEffect(() => {
       const getPosts = async () => {
+        // make sure you add await to the return data from react query (hook)
       const admins = await AdminsData
       setData(await admins?.Data);
       //Object.keys returns the property names of/in an object as string of arrays
-      setHeaders(Object.keys(admins?.Data[0]));
-      console.log('just loaded Effect', admins);
+      setHeaders(Object.keys(await admins?.Data?.[0] || []));
     };
     getPosts();
   }, [useFetchAdmins, AdminsData, setData]);
@@ -58,6 +59,36 @@ export default function AdminTables() {
         setDisplayUi(<ConfirmDeactivate handleDeactivate={handleSuspendAdmin.bind(null, id)} screenName={innerText}/>)
     }
   }
+
+  // const handleChange = (event, value) => {
+  //   setPageNumber(value);
+  // };
+
+  const handleOptionsClick = (event) => {
+    const innerText = event.currentTarget.innerText
+    const id = event.currentTarget.id
+    if (innerText.toLowerCase() === 'view') {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleViewAdmin.bind(null, id)} screenName={innerText}/>)
+    } else if (innerText.toLowerCase() === 'mordify') {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleMordifyAdmin.bind(null, id)} screenName={innerText}/>)
+    } else {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleSuspendAdmin.bind(null, id)} screenName={innerText}/>)
+    }
+  }
+  
+  const handleChange = (event, value) => {
+    setPageNumber(value);
+  };
+
+  // const optionList = [
+  //   // suspend, change department, promote
+  //   { icon: <HiMiniViewfinderCircle />, name: 'View' },
+  //   { icon: <VscGitPullRequestGoToChanges />, name: 'Promote' },
+  //   { icon: <MdPublishedWithChanges />, name: 'Change Department' },
+  //   { icon: <IoRemoveCircleSharp />, name: 'Suspend' },
+  // ];
+
+
   return (
     <Fragment>
       <div className="bg-white">
@@ -81,16 +112,23 @@ export default function AdminTables() {
             </div>
           </div>
           {
-            isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred </div> : 
-        <>
-          {
-            data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 
-              <ReusableTable optionModal={displayUi}  headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleClick} />
-          }
-        </>
-        }
+            isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred: {error.message} </div> : 
+            <>
+              {
+                data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 
+                <>
+                  <ReusableTable optionModal={displayUi}  headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} />
+                  
+                  <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / totalPerPage)} totalCount={Math.ceil(data?.length)} handleChange={handleChange}/> 
+                </>
+              }
+            </>
+
+            }
+            <div className="flex justify-center items-center">
+              {!isLoading && isFetching && 'Loading...'}
+            </div>
         </div>
-        <PaginationFooter />
       </div>
     </Fragment>
   )

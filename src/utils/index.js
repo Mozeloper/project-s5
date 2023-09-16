@@ -1,3 +1,5 @@
+import { toPascalCase } from "../Helper/toPascalCase";
+
 // All reuseable helper functions helpers here **
 export function isArrayEmpty(array) {
   return Array.isArray(array) && array.length > 0;
@@ -58,7 +60,7 @@ export function userFullName() {
 
   // Check if userObj exists and has both FirstName and SurName properties
   if (userObj && userObj.FirstName && userObj.SurName) {
-    return `${userObj.FirstName} ${userObj.SurName}`;
+    return `${toPascalCase(userObj.FirstName)} ${toPascalCase(userObj.SurName)}`;
   } else {
     return 'User Name Not Found'; // Provide a default value or message
   }

@@ -16,9 +16,9 @@ export default function SummeryCard({ stats }) {
       {/* <div className="h2">{title}</div> */}
       {/* data */}
       <div className="grid grid-cols-1 bg-gray-700/10 sm:grid-cols-2 lg:grid-cols-4">
-        {(stats ?? data)?.map((stat, statIdx) => (
+        {(stats ?? data)?.map((stat, statIdx) =>
           <div
-            key={stat?.data}
+            key={statIdx}
             className={classNames(
               statIdx % 2 === 1
                 ? "sm:border-l"
@@ -37,7 +37,7 @@ export default function SummeryCard({ stats }) {
               </span>
             </p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

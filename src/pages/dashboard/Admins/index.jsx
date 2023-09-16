@@ -4,8 +4,6 @@ import SummeryCard from "../../../components/SummeryCard/summeryCard";
 import AdminTables from "../../../components/Table/admins.table";
 import { useFetchSoulsCount, useFetchWorkersCount } from "../../../hooks/useFetchAnalytics";
 
-//Todo - 1. Add loading ui to indicate loading state 
-//Todo - 2. Replace useEffect with react query for data fetching
 export default function Admins() {
   const [dataCount, setDataCount] = useState([]);
     const { data: WorkersCountData } = useFetchWorkersCount()
@@ -39,7 +37,12 @@ export default function Admins() {
       <div className="bg-white">
         <Charts type={"area"} datas={datas} />
       </div>
-      <AdminTables />
+      {/* 
+      The tableDataLimit is not fully implemented yet
+      Todo - Only render max of 5 table data on the landing page dashboard and
+      Todo - A button to navigate to admins page to view all dashboard datas 
+      */}
+      <AdminTables tableDataLimit={5} />
     </div>
   );
 }
