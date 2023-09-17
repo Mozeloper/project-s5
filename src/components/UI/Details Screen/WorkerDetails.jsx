@@ -112,13 +112,20 @@ const WorkerDetails = ({ data, loading, notFound }) => {
                     {loading ? (
                       <Skeleton variant="rounded" className=" w-16 h-6 " />
                     ) : (
-                      <>{data && !data?.IsActive ? 
-                      <div className="bg-green-800 rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center">
-                        <small>Active</small>
-                      </div> : <div className="bg-red-800 rounded-md text-white p-2 w-18 h-6 flex text-center justify-center items-center">
-                        <small>Inactive</small>
-                      </div>
-                      }</>)}
+                      <>
+                        {data?.IsActive && (
+                          <div
+                            className={`${
+                              data?.IsActive ? 'bg-green-800' : 'bg-red-800'
+                            } rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center`}
+                          >
+                            <small>
+                              {data?.IsActive ? 'Active' : 'Inactive'}
+                            </small>
+                          </div>
+                        )}
+                      </>
+                    )}
                   </div>
                   <div className="text-gray-400 font-semibold">
                     {loading ? (
@@ -138,8 +145,8 @@ const WorkerDetails = ({ data, loading, notFound }) => {
                   <div className="flex items-center gap-5 text-sm">
                     <Email className="h-5" />
                     {data && data?.Email ? (
-                      <h4>
-                        <a hef={`mailto:${data?.Email}`}>
+                      <h4 className="hover:underline">
+                        <a href={`mailto:${data?.Email}`}>
                           {data && data?.Email}
                         </a>
                       </h4>
@@ -149,7 +156,7 @@ const WorkerDetails = ({ data, loading, notFound }) => {
                   </div>
                   <div className="flex items-center gap-5 text-sm">
                     <Phone className="h-5" />
-                    <h4>
+                    <h4 className="hover:underline">
                       {data && data?.PhoneNumber ? (
                         <a href={`tel:${data?.PhoneNumber}`}>
                           {data && data?.PhoneNumber}
