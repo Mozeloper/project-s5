@@ -204,7 +204,7 @@ const col = headers.map(head => {
           {
             !isError && data?.length < 1 ? <div className='flex justify-center text-center items-center h-96'>There's No data available for this table at the moment</div> : 
             <>
-              <ReusableTable optionModal={displayUi} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} headers={headers} data={!isError && data} filterNumber={9} />
+              <ReusableTable pageLink={'soul'} optionModal={displayUi} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} headers={headers} data={!isError && data} filterNumber={9} />
 
               <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(!isError && data?.length / totalPerPage)} totalCount={Math.ceil(adminsData?.totalDataCount)} handleChange={handleChange}/> 
             </>

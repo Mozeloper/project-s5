@@ -50,7 +50,7 @@ export default function DeactivatedWorkerTable() {
         <>
         {
           data?.length < 1 || !data ? <div className='flex text-center justify-center items-center h-96'>There's No Deactivated Account At the moment</div> : 
-            <ReusableTable headers={headers} data={data} filterNumber={11}/>
+            <ReusableTable pageLink={'deactivatedWorker'} headers={headers} data={data} filterNumber={11}/>
         }
             <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / 10)} totalCount={data?.length}/>
         </>

@@ -10,3 +10,23 @@ export async function getAWorkerAdmin(workerId) {
         throw new Error(error.message || error)
     }
 }
+
+export async function getASoulAdmin(soulId) {
+    try {
+        const soulsadmins = await api.get(`${appUrls.GET_ALL_New_Converts_URL}/${soulId}`)
+        const fetchsoulsAdmins =  await soulsadmins?.data?.Data
+        return await fetchsoulsAdmins
+    } catch (error) {
+        throw new Error(error.message || error)
+    }
+}
+
+export async function getAAdmin(adminId) {
+    try {
+        const admins = await api.get(`${appUrls.GET_ALL_SUPERADMINS}/${adminId}`)
+        const fetchadmins =  await admins?.data?.Data
+        return await fetchadmins
+    } catch (error) {
+        throw new Error(error.message || error)
+    }
+}
