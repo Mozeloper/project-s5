@@ -20,18 +20,18 @@ const DetailsByIdScreen = ({ data, loading, notFound }) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  
+
   // console.log('workerData ', workerData && workerData && data?.data && data?.Data);
-  
+
   // const handleGetWorker = async () => {
-    //   try {
-      //     // endpoint to be refactored since backend made mistake
-      //     const res = await api.get(
-        //       `${appUrls.GET_WORKER_DETAILS}/${workerId}?workerId=${workerId}`
-        //     );
-        
-        //     if (res?.status === 200) {
-          //       setData(res?.data && data?.Data);
+  //   try {
+  //     // endpoint to be refactored since backend made mistake
+  //     const res = await api.get(
+  //       `${appUrls.GET_WORKER_DETAILS}/${workerId}?workerId=${workerId}`
+  //     );
+
+  //     if (res?.status === 200) {
+  //       setData(res?.data && data?.Data);
   //       console.log(res?.data && data?.Data);
   //       if (res?.data && data?.StatusCode === 404) {
   //         setNotFound(true);
@@ -54,7 +54,7 @@ const DetailsByIdScreen = ({ data, loading, notFound }) => {
   //     // handleGetWorker().finally(() => setLoading(false));
   //  }, [workerId]);
 
-// console.log('details Worker', data);
+  // console.log('details Worker', data);
 
   return (
     <div>
@@ -92,7 +92,8 @@ const DetailsByIdScreen = ({ data, loading, notFound }) => {
                         : 'bg-pink-700'
                     } w-[160px] h-[160px] flex items-center justify-center text-6xl relative rounded-full text-white uppercase`}
                   >
-                    {data && data?.FirstName?.charAt(0)}{data && data?.SurName?.charAt(0)}
+                    {data && data?.FirstName?.charAt(0)}
+                    {data && data?.SurName?.charAt(0)}
                   </div>
                 )}
               </div>
