@@ -11,9 +11,20 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 //third
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import Tooltip from '@mui/material/Tooltip';
+import { useNavigate } from "react-router-dom";
 
+export default function TableOptions({ optionsList, handleClick, displayModalUi, id, pageLink }) {
+  const navigate = useNavigate();
 
-export default function TableOptions({ optionsList, handleClick, displayModalUi, id }) {
+  const handleView = (event) => {
+    const innerText = event.currentTarget.innerText
+    const id = event.currentTarget.id
+    if ( innerText.toLowerCase() === 'view') {
+      navigate(`/${pageLink}/${id}`);
+    } else {
+      handleClick(event)
+    }
+  };
 
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">
@@ -33,7 +44,7 @@ export default function TableOptions({ optionsList, handleClick, displayModalUi,
             <Menu {...bindMenu(popupState)}>
             {
               optionsList?.map((option) =>
-                <MenuItem key={option.name} id={id} onClick={handleClick} value={option.name} className='flex justify-between text-slate-700'>
+                <MenuItem key={option.name} id={id} onClick={handleView} value={option.name} className='flex justify-between text-slate-700'>
                     <TransitionsModal isOpen={true} name={option.name} icon={option.icon} heading={`${option.name} Screen`} width={'max-w-max w-[90%]'}>
                       {displayModalUi}
                     </TransitionsModal>

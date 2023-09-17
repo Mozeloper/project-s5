@@ -4,11 +4,11 @@ import { IoRemoveCircleSharp } from 'react-icons/io5'
 import { AiFillDelete } from "react-icons/ai";
 import { GiConfirmed } from 'react-icons/gi'
 import { GrView } from 'react-icons/gr'
-import { usePostApproveWorker, usePostDeleteWorker } from '../../hooks/useFetchUnapproved';
 import ConfirmDeactivate from '../UI/confirmation screen'
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function Table({ tableDataArray }) {
+export default function Table({ tableDataArray, pageLink }) {
   const navigate = useNavigate();
 
 
@@ -112,12 +112,12 @@ const handleClick = (event) => {
                           alt=""
                         />
                       </div> */}
-                      <div className="ml-4">
+                      <Link to={`/${pageLink}/${person.Id}`} className="ml-4">
                         <div className="font-medium text-gray-900 capitalize">
                           {person.FirstName}{" "}{person.SurName}
                         </div>
                         <div className="mt-1 text-gray-500">{person.Email}</div>
-                      </div>
+                      </Link>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
@@ -152,6 +152,7 @@ const handleClick = (event) => {
                       Edit<span className="sr-only">, {person.name}</span>
                     </a> */}
                     <TableOptions
+                      pageLink={'workers'}
                       displayModalUi={displayUi}
                       optionsList={optionList}
                       handleClick={handleClick}
