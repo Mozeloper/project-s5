@@ -16,7 +16,7 @@ export default function MinstryTable() {
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
     const [displayUi, setDisplayUi] = React.useState(null)
-    const { data: MinistryData, isError, isLoading, isFetching, error } = useFetchMinistry()
+    const { data: MinistryData, isError, isLoading, isFetching, error } = useFetchMinistry({ pageNumber })
 
   useEffect(() => {
       const getPosts = async () => {
@@ -30,7 +30,7 @@ export default function MinstryTable() {
 
     const optionList = [ 
       { icon: <GrView className='text-blue-500' />, name: 'View' },
-      { icon: <GiConfirmed className='text-green-500' />, name: 'Mordify' },
+      { icon: <GiConfirmed className='text-green-500' />, name: 'Modify' },
       { icon: <IoRemoveCircleSharp className='text-yellow-500' />, name: 'Suspend' },
     ];
 
@@ -40,8 +40,8 @@ export default function MinstryTable() {
     const id = event.currentTarget.id
     if (innerText.toLowerCase() === 'view') {
         setDisplayUi(<ConfirmDeactivate handleDeactivate={handleViewAdmin.bind(null, id)} screenName={innerText}/>)
-    } else if (innerText.toLowerCase() === 'mordify') {
-        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleMordifyAdmin.bind(null, id)} screenName={innerText}/>)
+    } else if (innerText.toLowerCase() === 'modify') {
+        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleModifyAdmin.bind(null, id)} screenName={innerText}/>)
     } else {
         setDisplayUi(<ConfirmDeactivate handleDeactivate={handleSuspendAdmin.bind(null, id)} screenName={innerText}/>)
     }
@@ -79,7 +79,7 @@ export default function MinstryTable() {
               {
                 data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 
                 <>
-                  <ReusableTable optionModal={displayUi}  headers={headers} data={data} filterNumber={10} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} />
+                  <ReusableTable pageLink={'ministry'} optionModal={displayUi}  headers={headers} data={data} filterNumber={10} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} />
                   
                   <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / totalPerPage)} totalCount={Math.ceil(data?.length)} handleChange={handleChange}/> 
                 </>

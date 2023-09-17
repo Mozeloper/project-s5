@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Charts from "../../../components/chart/chart";
 import SummeryCard from "../../../components/SummeryCard/summeryCard";
 import AdminTables from "../../../components/Table/admins.table";
-import { useFetchSoulsCount, useFetchWorkersCount } from "../../../hooks/useFetchAnalytics";
+import { useFetchAdminDashboardAnalytics } from "../../../hooks/useFetchAnalytics";
 
 export default function Admins() {
-  const [dataCount, setDataCount] = useState([]);
-    const { data: WorkersCountData } = useFetchWorkersCount()
-    const { data: SoulsCountData, isError, isLoading } = useFetchSoulsCount()
+  const { data: AdminDashboardAnalytics, isError, isLoading } = useFetchAdminDashboardAnalytics()
 
-  const datas = [
+  const ChartDatas = [
     {
       name: "2022",
       data: [20, 90, 50, 30, 40, 50, 70, 30, 60, 33, 52, 89],
@@ -20,22 +18,22 @@ export default function Admins() {
     },
   ];
 
-    useEffect(() => {
-      const getcounts = async () => {
-      const soulCount = await SoulsCountData 
-      const workersCount = await WorkersCountData
-      setDataCount([soulCount, workersCount])
-    };
-    getcounts();
-  }, [SoulsCountData, WorkersCountData]);
+  //   useEffect(() => {
+  //     const getcounts = async () => {
+  //     const soulCount = await SoulsCountData 
+  //     const workersCount = await WorkersCountData
+  //     setDataCount([soulCount, workersCount])
+  //   };
+  //   getcounts();
+  // }, [SoulsCountData, WorkersCountData]);
 
   return (
     <div className="flex flex-col gap-y-6">
       <div className="">
-        <SummeryCard title={'Admins'} stats={dataCount} />
+        <SummeryCard data={AdminDashboardAnalytics && AdminDashboardAnalytics?.data} loading={isLoading} error={isError} />
       </div>
       <div className="bg-white">
-        <Charts type={"area"} datas={datas} />
+        <Charts type={"area"} datas={ChartDatas} />
       </div>
       {/* 
       The tableDataLimit is not fully implemented yet

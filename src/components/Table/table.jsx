@@ -4,11 +4,11 @@ import { IoRemoveCircleSharp } from 'react-icons/io5'
 import { AiFillDelete } from "react-icons/ai";
 import { GiConfirmed } from 'react-icons/gi'
 import { GrView } from 'react-icons/gr'
-import { usePostApproveWorker, usePostDeleteWorker } from '../../hooks/useFetchUnapproved';
 import ConfirmDeactivate from '../UI/confirmation screen'
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function Table(props) {
+export default function Table({ tableDataArray, pageLink }) {
   const navigate = useNavigate();
 
 
@@ -96,12 +96,12 @@ const handleClick = (event) => {
                   Presence
                 </th>
                 <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                  <span className="">Edit</span>
+                  <span className="">Actions</span>
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              {props.array?.map((person) => (
+              {tableDataArray?.map((person) => (
                 <tr key={person.Id}>
                   <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                     <div className="flex items-center">
@@ -112,12 +112,12 @@ const handleClick = (event) => {
                           alt=""
                         />
                       </div> */}
-                      <div className="ml-4">
+                      <Link to={`/${pageLink}/${person.Id}`} className="ml-4">
                         <div className="font-medium text-gray-900 capitalize">
                           {person.FirstName}{" "}{person.SurName}
                         </div>
                         <div className="mt-1 text-gray-500">{person.Email}</div>
-                      </div>
+                      </Link>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
@@ -133,12 +133,12 @@ const handleClick = (event) => {
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                     <span
                       className={`inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium ${
-                        person.isActive == 1
+                        person.IsActive == 1
                           ? 'text-green-700 bg-green-50 '
                           : 'text-red-700 bg-red-50'
                       }  ring-1 ring-inset ring-green-600/20`}
                     >
-                      {person.isActive == 1 ? 'Active' : 'Not Active'}
+                      {person.IsActive == 1 ? 'Active' : 'Not Active'}
                     </span>
                   </td>
                   {/*<td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
@@ -152,6 +152,7 @@ const handleClick = (event) => {
                       Edit<span className="sr-only">, {person.name}</span>
                     </a> */}
                     <TableOptions
+                      pageLink={'workers'}
                       displayModalUi={displayUi}
                       optionsList={optionList}
                       handleClick={handleClick}

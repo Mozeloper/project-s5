@@ -14,7 +14,7 @@ export default function WorkersTable() {
     const [data, setData] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
     const [totalPerPage, setTotalPerPage] = useState(7);
-    const { data: AdminsData, isError, isLoading, isFetching, error, isSuccess } = useWorkersAdmins({ pageNumber })
+    const { data: WorkersData, isError, isLoading, isFetching, error, isSuccess } = useWorkersAdmins({ pageNumber })
 
   // const handleGetAllWorkers = async () => {
   //   setData([]);
@@ -137,23 +137,23 @@ export default function WorkersTable() {
   //   },
   // ];
 
-    useEffect(() => {
-      const getPosts = async () => {
-        // make sure you add await to the return data from react query (hook)
-      const admins = await AdminsData
-      setData(await admins);
-      // console.log('admins', admins);
-      //Object.keys returns the property names of/in an object as string of arrays
-      // setHeaders(Object.keys(await admins?.Data?.[0] || []));
-    };
-    getPosts();
-  }, [data, AdminsData]);
+  //   useEffect(() => {
+  //     const getPosts = async () => {
+  //       // make sure you add await to the return data from react query (hook)
+  //     const admins = await AdminsData
+  //     setData(await admins);
+  //     // console.log('admins', admins);
+  //     //Object.keys returns the property names of/in an object as string of arrays
+  //     // setHeaders(Object.keys(await admins?.Data?.[0] || []));
+  //   };
+  //   getPosts();
+  // }, [data, AdminsData]);
 
-        console.log('worker', data);
+  //       console.log('worker', data);
 
-  const handleChange = (event, value) => {
-    setPageNumber(value);
-  };
+  // const handleChange = (event, value) => {
+  //   setPageNumber(value);
+  // };
 
   return (
     <Fragment>
@@ -174,7 +174,7 @@ export default function WorkersTable() {
           {
             isLoading ? 'Loading...' : isError ? toast.error(error?.message) :
             <>
-              <Table array={data?.Data} />
+              <Table pageLink={'workers'} tableDataArray={WorkersData && WorkersData?.Data} />
               {/* Pagination will be here */}
             </>
           }

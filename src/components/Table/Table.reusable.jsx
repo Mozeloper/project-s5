@@ -6,9 +6,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
 
 //This table is reuseable and can be use to render/display any data/apis as in (tabular form)/(table data)
-const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHandleClick, optionModal }) => {
+const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHandleClick, optionModal, pageLink }) => {
     const filteredNumber = +filterNumber ?? +data?.length;
-
+    
   return (
     <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -17,7 +17,7 @@ const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHa
                     <thead>
                     <tr>
                         {( headers || undefined)?.slice(0, +filteredNumber).map(head => (
-                        <th key={head} scope="col" className={`pr-3 py-3.5 text-left uppercase text-sm font-semibold text-gray-900 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' ? 'hidden' : '' }`}>
+                        <th key={head} scope="col" className={`pr-3 py-3.5 text-left uppercase text-sm font-semibold text-gray-900 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' || head === 'fullName' ? 'hidden' : '' }`}>
                             {head.toLowerCase() === 'firstname' ? 'Name' : 
                           camelCaseToSingleWords(head)}
                         </th>
@@ -26,19 +26,19 @@ const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHa
                     </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                        {data && data?.slice(0, +filteredNumber)?.map((row, index) => (
+                        {(data && data?.slice(0, +filteredNumber))?.map((row, index) => (
                             <tr key={index}>
                                 {headers?.slice(0, +filteredNumber).map(head => (
-                                    <td key={head} className={`whitespace-nowrap py-5 pr-3 text-sm sm:pl-0 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' ? 'hidden' : '' }`}>
+                                    <td key={head} className={`whitespace-nowrap py-5 pr-3 text-sm sm:pl-0 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' || head === 'fullName'  ? 'hidden' : '' }`}>
                                         {head.toLowerCase() === 'firstname' ?
-                                            <Link to={`/${row['Id']}`}>
+                                            <Link to={`/${pageLink}/${row['Id']}`}>
                                                 <div className="flex items-center">
                                                     <div>
                                                         <div className="font-medium text-gray-900">
                                                             {row['SurName'] || row['surname']} {row['FirstName'] || row['firstName']}
                                                         </div>
                                                         {/* This condition renders the email under name of the user */}
-                                                        <div className="mt-1 text-gray-500">{row['Email'] || row['email']}</div>
+                                                        <div className="mt-1 text-gray-500">{row['Email'] || row['email'] || 'no email'}</div>
                                                     </div>
                                                 </div>
                                             </Link>
@@ -51,7 +51,7 @@ const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHa
                                 ))}
                                 <td> 
                                 { (headers && headers.length > 1 ) &&
-                                 <TableOptions displayModalUi={optionModal} optionsList={optionArrayList} handleClick={optionsHandleClick} id={`${row['Id']}`}/>
+                                 <TableOptions displayModalUi={optionModal} optionsList={optionArrayList} handleClick={optionsHandleClick} id={`${row['Id']}`} pageLink={pageLink}/>
                                     // <Options linkId={`/${row['Id']}`}>
                                     //     <SlOptionsVertical />
                                     // </Options> 

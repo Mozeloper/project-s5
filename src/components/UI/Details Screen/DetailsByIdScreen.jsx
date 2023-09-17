@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Button from '@/components/Button';
 import { Email, Phone } from '@mui/icons-material';
 import Box from '@mui/material/Box';
@@ -7,53 +7,18 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { Skeleton } from '@mui/material';
-import { api } from '@/services/api';
-import { appUrls } from '@/services/urls';
-import { toast } from 'react-hot-toast';
 import ReturnToPrevious from '@/components/ReturnToPrevious';
 import ResultNotFound from '@/components/ResultNotFound';
-import { userInitials } from '@/utils';
-import { userFullName } from '@/utils';
+import SummeryCard from '../../SummeryCard/summeryCard';
+import { toPascalCase } from '../../../Helper/toPascalCase'
 
-const WorkerDetails = ({ workerId }) => {
+const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) => {
   // Reminder!!! Fetch worker details based on the workerId from your data source
-  const [data, setData] = useState({});
   const [value, setValue] = React.useState('1');
-  const [loading, setLoading] = React.useState(false);
-  const [notFound, setNotFound] = React.useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const handleGetWorker = async () => {
-    try {
-      // endpoint to be refactored since backend made mistake
-      const res = await api.get(
-        `${appUrls.GET_WORKER_DETAILS}/${workerId}?workerId=${workerId}`
-      );
-
-      if (res?.status === 200) {
-        setData(res?.data?.Data);
-        console.log(res?.data?.Data);
-        if (res?.data?.StatusCode === 404) {
-          setNotFound(true);
-        }
-      } else {
-        toast.error(res?.data?.message, 4);
-      }
-    } catch (error) {
-      toast.error(error?.message, 4);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-      setLoading(true);
-      handleGetWorker().finally(() => setLoading(false));
-   }, [workerId]);
-
 
   return (
     <div>
@@ -63,7 +28,8 @@ const WorkerDetails = ({ workerId }) => {
             <div className="flex justify-between items-center mb-5">
               <ReturnToPrevious />
 
-              <div className="">
+              {/* I had to comment the edit button since we're not using it now */}
+              {/* <div className="">
                 <Button
                   title="Edit"
                   className="w-[126px] text-sm rounded-md"
@@ -71,7 +37,7 @@ const WorkerDetails = ({ workerId }) => {
                   textColor="text-secondary"
                   onClick={() => console.log('Hello')}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="md:absolute md:-bottom-24 flex flex-col md:flex-row md:gap-5 gap-2 md:left-[30px] md:right-[30px] bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
               <div className="flex gap-4">
@@ -86,12 +52,13 @@ const WorkerDetails = ({ workerId }) => {
                 ) : (
                   <div
                     className={`${
-                      data?.Gender?.toLowerCase() === 'male'
+                      (data && data?.Gender)?.toLowerCase() === 'male'
                         ? 'bg-blue-900'
                         : 'bg-pink-700'
-                    } w-[160px] h-[160px] flex items-center justify-center text-6xl relative rounded-full text-white`}
+                    } w-[160px] h-[160px] flex items-center justify-center text-6xl relative rounded-full text-white uppercase`}
                   >
-                    {data?.FirstName?.charAt(0)}{data?.SurName?.charAt(0)}
+                    {data && data?.FirstName?.charAt(0)}
+                    {data && data?.SurName?.charAt(0)}
                   </div>
                 )}
               </div>
@@ -105,14 +72,28 @@ const WorkerDetails = ({ workerId }) => {
                       />
                     ) : (
                       <h4 className="text-grey-500 font-bold md:text-lg text-base  leading-4 capitalize">
-                        {data?.FirstName} {data?.SurName}
+                        {/* {data && data?.FirstName} {data && data?.SurName} */}
+                        {data && data?.FullName}
                       </h4>
                     )}
                     {loading ? (
                       <Skeleton variant="rounded" className=" w-16 h-6 " />
                     ) : (
                       <div className="bg-green-800 rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center">
-                        <small>ACTIVE</small>
+                        {/* <small>ACTIVE</small> */}
+                      <>
+                        {data?.IsActive && (
+                          <div
+                            className={`${
+                              data?.IsActive ? 'bg-green-800' : 'bg-red-800'
+                            } rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center`}
+                          >
+                            <small>
+                              {data?.IsActive ? 'Active' : 'Inactive'}
+                            </small>
+                          </div>
+                        )}
+                      </>
                       </div>
                     )}
                   </div>
@@ -125,7 +106,7 @@ const WorkerDetails = ({ workerId }) => {
                     ) : (
                       <>
                         <small>
-                          {data?.Department || "Worker's Department"}
+                          {(data && data?.Department) || "Worker's Department"}
                         </small>{' '}
                         | <small>Limited Access</small>
                       </>
@@ -133,11 +114,29 @@ const WorkerDetails = ({ workerId }) => {
                   </div>
                   <div className="flex items-center gap-5 text-sm">
                     <Email className="h-5" />
-                    <h4>{data?.Email || '...'}</h4>
+                    {/* <h4>{(data && data?.Email) || '...'}</h4> */}
+                    {(data && data?.Email) ? (
+                      <h4 className="hover:underline">
+                        <a href={`mailto:${data?.Email}`}>
+                          {(data && data?.Email)}
+                        </a>
+                      </h4>
+                    ) : (
+                      '...'
+                    )}
                   </div>
                   <div className="flex items-center gap-5 text-sm">
                     <Phone className="h-5" />
-                    <h4>{data?.PhoneNumber || '...'}</h4>
+                    {/* <h4>{(data && data?.PhoneNumber) || '...'}</h4> */}
+                    <h4 className="hover:underline">
+                      {(data && data?.PhoneNumber) ? (
+                        <a href={`tel:${data?.PhoneNumber}`}>
+                          {(data && data?.PhoneNumber)}
+                        </a>
+                      ) : (
+                        '...'
+                      )}
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -153,7 +152,8 @@ const WorkerDetails = ({ workerId }) => {
                       value="1"
                       className="!p-0 !mr-[50px]"
                     />
-                    <Tab label="Permissions" value="2" className="!p-0" />
+                    <Tab label="Permissions" value="2" className="!p-0 !mr-[50px]" />
+                    <Tab label="Analytics Report" value="Analytics" className="!p-0" />
                   </TabList>
                 </Box>
                 <TabPanel value="1" className="!px-0">
@@ -168,23 +168,23 @@ const WorkerDetails = ({ workerId }) => {
                       <div className="flex flex-col gap-y-6 mt-6">
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Gender</h3>{' '}
-                          <span>{data?.Gender || '...'}</span>
+                          <span>{(data && data?.Gender) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
                             Date of Birth
                           </h3>{' '}
-                          <span>{data?.DateOfBirth || '...'}</span>
+                          <span>{(data && data?.DateOfBirth) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
                             Marital Status
                           </h3>{' '}
-                          <span>{data?.MaritalStatus || '...'}</span>
+                          <span>{(data && data?.MaritalStatus) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Member Since</h3>{' '}
-                          <span>{data?.YearJoined || '...'}</span>
+                          <span>{(data && data?.YearJoined) || '...'}</span>
                         </div>
                       </div>
                     </div>
@@ -200,33 +200,33 @@ const WorkerDetails = ({ workerId }) => {
                       <div className="flex flex-col gap-y-6 mt-6">
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Phone</h3>{' '}
-                          <span>{data?.PhoneNumber || '...'}</span>
+                          <span>{(data && data?.PhoneNumber) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Email</h3>{' '}
-                          <span>{data?.Email || '...'}</span>
+                          <span>{(data && data?.Email) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Address</h3>{' '}
-                          <span>{data?.HomeAddress || '...'}</span>
+                          <span>{(data && data?.HomeAddress) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
                             Nearest Bus Stop
                           </h3>{' '}
-                          <span>{data?.NearestBusStop || '...'}</span>
+                          <span>{(data && data?.NearestBusStop) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">State</h3>{' '}
-                          <span>{data?.StateName || '...'}</span>
+                          <span>{(data && data?.StateName) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">L.G.A.</h3>{' '}
-                          <span>{data?.LocalGovtName || '...'}</span>
+                          <span>{(data && data?.LocalGovtName) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Country</h3>{' '}
-                          <span>{data?.CountryName || '...'}</span>
+                          <span>{(data && data?.CountryName) || '...'}</span>
                         </div>
                       </div>
                     </div>
@@ -237,6 +237,14 @@ const WorkerDetails = ({ workerId }) => {
                     <div className="text-primary font-bold mb-3">
                       <h2>Permissions</h2>
                     </div>
+                  </div>
+                </TabPanel>
+                <TabPanel value="Analytics" className="!px-0">
+                  <div className="bg-white rounded-lg p-8 w-full min-h-[400px] flex flex-col gap-y-12">
+                    <div className="text-[#111827] font-bold mb-3">
+                      <h2>Analytics Report For Souls Under {data && toPascalCase(data?.FirstName)} {data && toPascalCase(data?.SurName)}</h2>
+                    </div>
+                      <SummeryCard data={personalAnalyticsDatas && personalAnalyticsDatas} loading={loading} error={notFound} />
                   </div>
                 </TabPanel>
               </TabContext>
@@ -250,4 +258,4 @@ const WorkerDetails = ({ workerId }) => {
   );
 };
 
-export default WorkerDetails;
+export default DetailsByIdScreen;

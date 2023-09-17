@@ -7,22 +7,19 @@ import { isObjectEmpty } from "./utils";
 import Home from "./pages/dashboard/home";
 import BeginRegistration from "./pages/auth/beginRegistration";
 import NotFound from "./pages/notFound";
+import Forbidden from './pages/forbidden';
 import Register from "./pages/auth/Register";
-// import Souls from "./pages/dashboard/souls";
-// import Profile from "./pages/dashboard/profile";
-// import Workers from "./pages/dashboard/Workers";
-// import Admins from "./pages/dashboard/Admins";
-// import ForgetPassword from "./pages/auth/forgetPassword";
-// import ChangePassword from "./pages/auth/changePassword";
 
 //This is for code splitting/ Lazy loading of page for faster routing
 // const Souls = React.lazy(() => import('./pages/dashboard/souls'))
 const Profile = React.lazy(() => import("./pages/dashboard/profile"));
 const Admins = React.lazy(() => import("./pages/dashboard/Admins"));
+const AdminDetailsById = React.lazy(() => import("./pages/dashboard/Admins/[Admin-id]"));
 const Workers = React.lazy(() => import("./pages/dashboard/Workers"));
-const Worker = React.lazy(() => import("./pages/dashboard/Worker"));
+const WorkerDetailsById = React.lazy(() => import("./pages/dashboard/Workers/[Worker-id]"));
 const DTI = React.lazy(() => import("./pages/dashboard/DTI"));
 const NewConvert = React.lazy(() => import("./pages/dashboard/NewConvert"));
+const NewConvertDetailsById = React.lazy(() => import("./pages/dashboard/NewConvert/[NewConvert-id]"));
 const Ministry = React.lazy(() => import("./pages/dashboard/Ministry"));
 const ChangePassword = React.lazy(() => import("./pages/auth/changePassword"));
 const ForgetPassword = React.lazy(() => import("./pages/auth/forgetPassword"));
@@ -30,7 +27,7 @@ const Reminder = React.lazy(() => import("./pages/dashboard/Reminder"));
 
 export const ProtectRoutes = () => {
   const location = useLocation();
-  const isAuthed = isObjectEmpty(JSON.parse(sessionStorage.getItem("userObj")));
+  const isAuthed = isObjectEmpty(JSON.parse(sessionStorage.getItem('userObj')));
   return isAuthed ? (
     <DashboardLayout>
       <Outlet />
@@ -42,7 +39,7 @@ export const ProtectRoutes = () => {
 
 export const AuthProtectRoutes = () => {
   const location = useLocation();
-  const isAuthed = isObjectEmpty(JSON.parse(sessionStorage.getItem("userObj")));
+  const isAuthed = isObjectEmpty(JSON.parse(sessionStorage.getItem('userObj')));
   return !isAuthed ? (
     <>
       <Outlet />
@@ -58,6 +55,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/*" element={<NotFound />} />
+          <Route path="/forbidden" element={<Forbidden />} />
           <Route element={<AuthProtectRoutes />}>
             <Route path="/" element={<Signin />} />
             <Route
@@ -97,6 +95,15 @@ function App() {
               }
             /> */}
             <Route
+              path="/souls/:soulId"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <NewConvertDetailsById />
+                </React.Suspense>
+              }
+            />
+
+            <Route
               path="/souls"
               element={
                 <React.Suspense fallback={<>...</>}>
@@ -112,7 +119,7 @@ function App() {
                 </React.Suspense>
               }
             />
-           
+
             <Route
               path="/workers"
               element={
@@ -126,7 +133,7 @@ function App() {
               path="/workers/:workerId"
               element={
                 <React.Suspense fallback={<>...</>}>
-                  <Worker />
+                  <WorkerDetailsById />
                 </React.Suspense>
               }
             />
@@ -139,6 +146,15 @@ function App() {
                 </React.Suspense>
               }
             />
+            <Route
+              path="/admins/:adminId"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <AdminDetailsById />
+                </React.Suspense>
+              }
+            />
+
             <Route
               path="/dti"
               element={

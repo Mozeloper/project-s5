@@ -10,12 +10,13 @@ export const appUrls = {
   GETCHURCHDEPT: '/api/Entity/get-church-department',
 
   //Super Admins
-  GETALLWORKERS: '/api/SuperAdmin/get-all-workers', //super
+  GETALLWORKERS: '/api/SuperAdmin/get-all-workers', // 
+  GET_ALL_SUPERADMINS: '/api/SuperAdmin/get-all-admin',
   GET_ALL_New_Converts_URL: '/api/SuperAdmin/get-all-new-converts',
-  GET_WORKER_DETAILS: 'api/SuperAdmin/get-worker', //get worker by id
+  GET_WORKER_DETAILS: '/api/SuperAdmin/get-worker', //get worker by id
 
   //Worker
-  GETSINGLEWORKERDETAILS_URL: '/api/Worker/get-worker', //worker
+  GETSINGLEWORKERDETAILS_URL: '/api/Worker/get-worker-profile', //worker
 
   //New converts (soul)
   GET_ALL_New_Convert:
@@ -31,7 +32,11 @@ export const appUrls = {
   //Analytics Count
   GET_ALL_SOULS_COUNT_URL: '/api/SuperAdmin/get-all-newconvert-count',
   GET_ALL_WORKERS_COUNT_URL: '/api/SuperAdmin/get-all-worker-count',
-
+  ADMINS_DASHBOARD_ANALYTICS: '/api/Analytics/Admin-dashboard/retrieve-newconverts-analytics',
+  NEWCONVERT_DASHBOARD_ANALYTICS: '/api/Analytics/newconvertAdmin-dashboard/retrieve-newconverts-analytics',
+  DTI_ADMINS_DASHBOARD_ANALYTICS: '/api/Analytics/dtiadmin-dashboard/retrieve-newconverts-analytics',
+  MINISTRY_ADMINS_DASHBOARD_ANALYTICS: '/api/Analytics/mininstryadmin-dashboard/retrieve-newconverts-analytics',
+  PERSONAL_ANALYTICS_BY_ID: '/api/Analytics/worker-dashboard/retrieve-newconverts-analytics',
   //Approvals
   GET_ALL_UNAPPROVED_WORKERS: '/api/SuperAdmin/get-all-unapproved-workers',
   GET_ALL_DEACTIVATED_WORKERS: '/api/SuperAdmin/get-all-deactivated-workers',
