@@ -96,7 +96,7 @@ const handleClick = (event) => {
                   Presence
                 </th>
                 <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                  <span className="">Edit</span>
+                  <span className="">Actions</span>
                 </th>
               </tr>
             </thead>
@@ -133,12 +133,12 @@ const handleClick = (event) => {
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                     <span
                       className={`inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium ${
-                        person.isActive == 1
+                        person.IsActive == 1
                           ? 'text-green-700 bg-green-50 '
                           : 'text-red-700 bg-red-50'
                       }  ring-1 ring-inset ring-green-600/20`}
                     >
-                      {person.isActive == 1 ? 'Active' : 'Not Active'}
+                      {person.IsActive == 1 ? 'Active' : 'Not Active'}
                     </span>
                   </td>
                   {/*<td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">

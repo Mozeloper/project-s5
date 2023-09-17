@@ -10,7 +10,6 @@ import { Skeleton } from '@mui/material';
 import ReturnToPrevious from '@/components/ReturnToPrevious';
 import ResultNotFound from '@/components/ResultNotFound';
 
-
 const WorkerDetails = ({ data, loading, notFound }) => {
   // Reminder!!! Fetch worker details based on the workerId from your data source
   const [value, setValue] = React.useState('1');
@@ -21,18 +20,18 @@ const WorkerDetails = ({ data, loading, notFound }) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  
+
   // console.log('workerData ', workerData && workerData && data?.data && data?.Data);
-  
+
   // const handleGetWorker = async () => {
-    //   try {
-      //     // endpoint to be refactored since backend made mistake
-      //     const res = await api.get(
-        //       `${appUrls.GET_WORKER_DETAILS}/${workerId}?workerId=${workerId}`
-        //     );
-        
-        //     if (res?.status === 200) {
-          //       setData(res?.data && data?.Data);
+  //   try {
+  //     // endpoint to be refactored since backend made mistake
+  //     const res = await api.get(
+  //       `${appUrls.GET_WORKER_DETAILS}/${workerId}?workerId=${workerId}`
+  //     );
+
+  //     if (res?.status === 200) {
+  //       setData(res?.data && data?.Data);
   //       console.log(res?.data && data?.Data);
   //       if (res?.data && data?.StatusCode === 404) {
   //         setNotFound(true);
@@ -49,13 +48,12 @@ const WorkerDetails = ({ data, loading, notFound }) => {
 
   // useEffect(() => {
 
-
   //     setData(workerData && workerData && data?.data && data?.Data);
   //     // setLoading(true);
   //     // handleGetWorker().finally(() => setLoading(false));
   //  }, [workerId]);
 
-// console.log('details Worker', data);
+  // console.log('details Worker', data);
 
   return (
     <div>
@@ -91,9 +89,10 @@ const WorkerDetails = ({ data, loading, notFound }) => {
                       data && data?.Gender?.toLowerCase() === 'male'
                         ? 'bg-blue-900'
                         : 'bg-pink-700'
-                    } w-[160px] h-[160px] flex items-center justify-center text-6xl relative rounded-full text-white`}
+                    } w-[160px] h-[160px] flex items-center justify-center text-6xl relative rounded-full text-white uppercase`}
                   >
-                    {data && data?.FirstName?.charAt(0)}{data && data?.SurName?.charAt(0)}
+                    {data && data?.FirstName?.charAt(0)}
+                    {data && data?.SurName?.charAt(0)}
                   </div>
                 )}
               </div>
@@ -107,15 +106,25 @@ const WorkerDetails = ({ data, loading, notFound }) => {
                       />
                     ) : (
                       <h4 className="text-grey-500 font-bold md:text-lg text-base  leading-4 capitalize">
-                        {data && data?.FirstName} {data && data?.SurName}
+                        {data && data?.FullName}
                       </h4>
                     )}
                     {loading ? (
                       <Skeleton variant="rounded" className=" w-16 h-6 " />
                     ) : (
-                      <div className="bg-green-800 rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center">
-                        <small>ACTIVE</small>
-                      </div>
+                      <>
+                        {data?.IsActive && (
+                          <div
+                            className={`${
+                              data?.IsActive ? 'bg-green-800' : 'bg-red-800'
+                            } rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center`}
+                          >
+                            <small>
+                              {data?.IsActive ? 'Active' : 'Inactive'}
+                            </small>
+                          </div>
+                        )}
+                      </>
                     )}
                   </div>
                   <div className="text-gray-400 font-semibold">
@@ -127,7 +136,7 @@ const WorkerDetails = ({ data, loading, notFound }) => {
                     ) : (
                       <>
                         <small>
-                          {data && data?.Department || "Worker's Department"}
+                          {(data && data?.Department) || "Worker's Department"}
                         </small>{' '}
                         | <small>Limited Access</small>
                       </>
@@ -135,11 +144,27 @@ const WorkerDetails = ({ data, loading, notFound }) => {
                   </div>
                   <div className="flex items-center gap-5 text-sm">
                     <Email className="h-5" />
-                    <h4>{data && data?.Email || '...'}</h4>
+                    {data && data?.Email ? (
+                      <h4 className="hover:underline">
+                        <a href={`mailto:${data?.Email}`}>
+                          {data && data?.Email}
+                        </a>
+                      </h4>
+                    ) : (
+                      '...'
+                    )}
                   </div>
                   <div className="flex items-center gap-5 text-sm">
                     <Phone className="h-5" />
-                    <h4>{data && data?.PhoneNumber || '...'}</h4>
+                    <h4 className="hover:underline">
+                      {data && data?.PhoneNumber ? (
+                        <a href={`tel:${data?.PhoneNumber}`}>
+                          {data && data?.PhoneNumber}
+                        </a>
+                      ) : (
+                        '...'
+                      )}
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -170,23 +195,23 @@ const WorkerDetails = ({ data, loading, notFound }) => {
                       <div className="flex flex-col gap-y-6 mt-6">
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Gender</h3>{' '}
-                          <span>{data && data?.Gender || '...'}</span>
+                          <span>{(data && data?.Gender) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
                             Date of Birth
                           </h3>{' '}
-                          <span>{data && data?.DateOfBirth || '...'}</span>
+                          <span>{(data && data?.DateOfBirth) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
                             Marital Status
                           </h3>{' '}
-                          <span>{data && data?.MaritalStatus || '...'}</span>
+                          <span>{(data && data?.MaritalStatus) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Member Since</h3>{' '}
-                          <span>{data && data?.YearJoined || '...'}</span>
+                          <span>{(data && data?.YearJoined) || '...'}</span>
                         </div>
                       </div>
                     </div>
@@ -202,33 +227,33 @@ const WorkerDetails = ({ data, loading, notFound }) => {
                       <div className="flex flex-col gap-y-6 mt-6">
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Phone</h3>{' '}
-                          <span>{data && data?.PhoneNumber || '...'}</span>
+                          <span>{(data && data?.PhoneNumber) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Email</h3>{' '}
-                          <span>{data && data?.Email || '...'}</span>
+                          <span>{(data && data?.Email) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Address</h3>{' '}
-                          <span>{data && data?.HomeAddress || '...'}</span>
+                          <span>{(data && data?.HomeAddress) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
                             Nearest Bus Stop
                           </h3>{' '}
-                          <span>{data && data?.NearestBusStop || '...'}</span>
+                          <span>{(data && data?.NearestBusStop) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">State</h3>{' '}
-                          <span>{data && data?.StateName || '...'}</span>
+                          <span>{(data && data?.StateName) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">L.G.A.</h3>{' '}
-                          <span>{data && data?.LocalGovtName || '...'}</span>
+                          <span>{(data && data?.LocalGovtName) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Country</h3>{' '}
-                          <span>{data && data?.CountryName || '...'}</span>
+                          <span>{(data && data?.CountryName) || '...'}</span>
                         </div>
                       </div>
                     </div>
