@@ -10,7 +10,7 @@ import { Skeleton } from '@mui/material';
 import ReturnToPrevious from '@/components/ReturnToPrevious';
 import ResultNotFound from '@/components/ResultNotFound';
 
-const WorkerDetails = ({ data, loading, notFound }) => {
+const DetailsByIdScreen = ({ data, loading, notFound }) => {
   // Reminder!!! Fetch worker details based on the workerId from your data source
   const [value, setValue] = React.useState('1');
   // const [data, setData] = useState({});
@@ -277,4 +277,4 @@ const WorkerDetails = ({ data, loading, notFound }) => {
   );
 };
 
-export default WorkerDetails;
+export default DetailsByIdScreen;

@@ -174,7 +174,7 @@ export default function WorkersTable() {
           {
             isLoading ? 'Loading...' : isError ? toast.error(error?.message) :
             <>
-              <Table tableDataArray={WorkersData && WorkersData?.Data} />
+              <Table pageLink={'workers'} tableDataArray={WorkersData && WorkersData?.Data} />
               {/* Pagination will be here */}
             </>
           }
