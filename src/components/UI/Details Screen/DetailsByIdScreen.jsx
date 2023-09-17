@@ -86,7 +86,7 @@ const DetailsByIdScreen = ({ data, loading, notFound }) => {
                 ) : (
                   <div
                     className={`${
-                      data && data?.Gender?.toLowerCase() === 'male'
+                      (data && data?.Gender)?.toLowerCase() === 'male'
                         ? 'bg-blue-900'
                         : 'bg-pink-700'
                     } w-[160px] h-[160px] flex items-center justify-center text-6xl relative rounded-full text-white uppercase`}
@@ -106,12 +106,15 @@ const DetailsByIdScreen = ({ data, loading, notFound }) => {
                       />
                     ) : (
                       <h4 className="text-grey-500 font-bold md:text-lg text-base  leading-4 capitalize">
+                        {/* {data && data?.FirstName} {data && data?.SurName} */}
                         {data && data?.FullName}
                       </h4>
                     )}
                     {loading ? (
                       <Skeleton variant="rounded" className=" w-16 h-6 " />
                     ) : (
+                      <div className="bg-green-800 rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center">
+                        <small>ACTIVE</small>
                       <>
                         {data?.IsActive && (
                           <div
@@ -125,6 +128,7 @@ const DetailsByIdScreen = ({ data, loading, notFound }) => {
                           </div>
                         )}
                       </>
+                      </div>
                     )}
                   </div>
                   <div className="text-gray-400 font-semibold">
@@ -144,10 +148,11 @@ const DetailsByIdScreen = ({ data, loading, notFound }) => {
                   </div>
                   <div className="flex items-center gap-5 text-sm">
                     <Email className="h-5" />
-                    {data && data?.Email ? (
+                    {/* <h4>{(data && data?.Email) || '...'}</h4> */}
+                    {(data && data?.Email) ? (
                       <h4 className="hover:underline">
                         <a href={`mailto:${data?.Email}`}>
-                          {data && data?.Email}
+                          {(data && data?.Email)}
                         </a>
                       </h4>
                     ) : (
@@ -156,10 +161,11 @@ const DetailsByIdScreen = ({ data, loading, notFound }) => {
                   </div>
                   <div className="flex items-center gap-5 text-sm">
                     <Phone className="h-5" />
+                    {/* <h4>{(data && data?.PhoneNumber) || '...'}</h4> */}
                     <h4 className="hover:underline">
-                      {data && data?.PhoneNumber ? (
+                      {(data && data?.PhoneNumber) ? (
                         <a href={`tel:${data?.PhoneNumber}`}>
-                          {data && data?.PhoneNumber}
+                          {(data && data?.PhoneNumber)}
                         </a>
                       ) : (
                         '...'
