@@ -9,51 +9,16 @@ import TabPanel from '@mui/lab/TabPanel';
 import { Skeleton } from '@mui/material';
 import ReturnToPrevious from '@/components/ReturnToPrevious';
 import ResultNotFound from '@/components/ResultNotFound';
+import SummeryCard from '../../SummeryCard/summeryCard';
+import { toPascalCase } from '../../../Helper/toPascalCase'
 
-const DetailsByIdScreen = ({ data, loading, notFound }) => {
+const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) => {
   // Reminder!!! Fetch worker details based on the workerId from your data source
   const [value, setValue] = React.useState('1');
-  // const [data, setData] = useState({});
-  // const [loading, setLoading] = React.useState(false);
-  // const [notFound, setNotFound] = React.useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  // console.log('workerData ', workerData && workerData && data?.data && data?.Data);
-
-  // const handleGetWorker = async () => {
-  //   try {
-  //     // endpoint to be refactored since backend made mistake
-  //     const res = await api.get(
-  //       `${appUrls.GET_WORKER_DETAILS}/${workerId}?workerId=${workerId}`
-  //     );
-
-  //     if (res?.status === 200) {
-  //       setData(res?.data && data?.Data);
-  //       console.log(res?.data && data?.Data);
-  //       if (res?.data && data?.StatusCode === 404) {
-  //         setNotFound(true);
-  //       }
-  //     } else {
-  //       toast.error(res?.data && data?.message, 4);
-  //     }
-  //   } catch (error) {
-  //     toast.error(error?.message, 4);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-
-  //     setData(workerData && workerData && data?.data && data?.Data);
-  //     // setLoading(true);
-  //     // handleGetWorker().finally(() => setLoading(false));
-  //  }, [workerId]);
-
-  // console.log('details Worker', data);
 
   return (
     <div>
@@ -186,7 +151,8 @@ const DetailsByIdScreen = ({ data, loading, notFound }) => {
                       value="1"
                       className="!p-0 !mr-[50px]"
                     />
-                    <Tab label="Permissions" value="2" className="!p-0" />
+                    <Tab label="Permissions" value="2" className="!p-0 !mr-[50px]" />
+                    <Tab label="Analytics Report" value="Analytics" className="!p-0" />
                   </TabList>
                 </Box>
                 <TabPanel value="1" className="!px-0">
@@ -270,6 +236,14 @@ const DetailsByIdScreen = ({ data, loading, notFound }) => {
                     <div className="text-primary font-bold mb-3">
                       <h2>Permissions</h2>
                     </div>
+                  </div>
+                </TabPanel>
+                <TabPanel value="Analytics" className="!px-0">
+                  <div className="bg-white rounded-lg p-8 w-full min-h-[400px] flex flex-col gap-y-12">
+                    <div className="text-[#111827] font-bold mb-3">
+                      <h2>Analytics Report For Souls Under {data && toPascalCase(data?.FirstName)} {data && toPascalCase(data?.SurName)}</h2>
+                    </div>
+                      <SummeryCard data={personalAnalyticsDatas && personalAnalyticsDatas} loading={loading} error={notFound} />
                   </div>
                 </TabPanel>
               </TabContext>
