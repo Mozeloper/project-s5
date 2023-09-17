@@ -32,7 +32,11 @@ export const appUrls = {
   //Analytics Count
   GET_ALL_SOULS_COUNT_URL: '/api/SuperAdmin/get-all-newconvert-count',
   GET_ALL_WORKERS_COUNT_URL: '/api/SuperAdmin/get-all-worker-count',
-
+  ADMINS_DASHBOARD_ANALYTICS: '/api/Analytics/Admin-dashboard/retrieve-newconverts-analytics',
+  NEWCONVERT_DASHBOARD_ANALYTICS: '/api/Analytics/newconvertAdmin-dashboard/retrieve-newconverts-analytics',
+  DTI_ADMINS_DASHBOARD_ANALYTICS: '/api/Analytics/dtiadmin-dashboard/retrieve-newconverts-analytics',
+  MINISTRY_ADMINS_DASHBOARD_ANALYTICS: '/api/Analytics/mininstryadmin-dashboard/retrieve-newconverts-analytics',
+  PERSONAL_ANALYTICS_BY_ID: '/api/Analytics/worker-dashboard/retrieve-newconverts-analytics',
   //Approvals
   GET_ALL_UNAPPROVED_WORKERS: '/api/SuperAdmin/get-all-unapproved-workers',
   GET_ALL_DEACTIVATED_WORKERS: '/api/SuperAdmin/get-all-deactivated-workers',

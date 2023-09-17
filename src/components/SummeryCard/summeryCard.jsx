@@ -4,19 +4,33 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function SummeryCard({ stats }) {
-  const data = [
-    { message: "Souls", data: "405" },
-    { message: "Average soul last month", data: "32" },
-    { message: "Number of workers", data: "202" },
-    { message: "Success rate", data: "98.5%" },
+export default function SummeryCard({ data, error, loading }) {
+  
+  //Diagram of the analytics api response
+  // const dataResponse = {
+  //   soulsCountThisWeek: 0,
+  //   soulsCountThisMonth: 2,
+  //   soulsCountThisYear: 2,
+  //   soulsCountLastWeek: 2,
+  //   soulsCountLastMonth: 2,
+  //   soulsCountLastYear: 0,
+  //   totalSoulsCountSinceInception: 2
+  // }
+
+  const stats = [
+    { message: "Souls Last Week", data: data && data.soulsCountLastWeek },
+    { message: "Souls This month", data: data && data.soulsCountThisMonth },
+    { message: "Souls Last month", data: data && data.soulsCountLastMonth },
+    { message: "Total Souls", data: data && data.totalSoulsCountSinceInception },
+    // { message: "Success rate", data: "98.5%" },
   ];
+
   return (
     <div className="bg-[#38404b] rounded-md">
       {/* <div className="h2">{title}</div> */}
       {/* data */}
       <div className="grid grid-cols-1 bg-gray-700/10 sm:grid-cols-2 lg:grid-cols-4">
-        {(stats ?? data)?.map((stat, statIdx) =>
+        {(stats)?.map((stat, statIdx) =>
           <div
             key={statIdx}
             className={classNames(
@@ -33,7 +47,7 @@ export default function SummeryCard({ stats }) {
             </p>
             <p className="md:mt-2 flex items-baseline gap-x-2">
               <span className="lg:text-4xl text-lg font-semibold lg:tracking-tight text-white">
-                {stat?.data}
+                {loading ? 'Loading...' : error ? 'Not-Avaliable' : stat?.data ? stat?.data : 'null'}
               </span>
             </p>
           </div>
