@@ -28,7 +28,8 @@ const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) 
             <div className="flex justify-between items-center mb-5">
               <ReturnToPrevious />
 
-              <div className="">
+              {/* I had to comment the edit button since we're not using it now */}
+              {/* <div className="">
                 <Button
                   title="Edit"
                   className="w-[126px] text-sm rounded-md"
@@ -36,7 +37,7 @@ const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) 
                   textColor="text-secondary"
                   onClick={() => console.log('Hello')}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="md:absolute md:-bottom-24 flex flex-col md:flex-row md:gap-5 gap-2 md:left-[30px] md:right-[30px] bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
               <div className="flex gap-4">
@@ -79,7 +80,7 @@ const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) 
                       <Skeleton variant="rounded" className=" w-16 h-6 " />
                     ) : (
                       <div className="bg-green-800 rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center">
-                        <small>ACTIVE</small>
+                        {/* <small>ACTIVE</small> */}
                       <>
                         {data?.IsActive && (
                           <div
