@@ -15,6 +15,7 @@ export default function Home() {
     const { data: WorkersCountData } = useFetchWorkersCount()
     const { data: SoulsCountData, isError, isLoading } = useFetchSoulsCount()
     const fullName = userFullName();
+    const userObj = JSON.parse(sessionStorage.getItem('userObj'));
 
   const datas = [
     {
@@ -41,19 +42,26 @@ export default function Home() {
     <div className="flex flex-col gap-y-6">
       <div className="rounded-md bg-white py-12 px-5 md:px-6 md:flex md:justify-between gap-5">
         <div>
-          <h2 className="font-bold text-3xl">Welcome back, {fullName}!</h2>
-          <small className="text-gray-500">You have 0 pending notifications</small>
-          </div>
-          <Link to="/reminder" className="bg-primary h-11 text-white py-3 px-5 rounded-full flex justify-center max-w-[145px] mt-5 md:mt-0">
-            <MdNotificationsActive className="w-[18px] h-[18px] mr-2 vibrate-icon" /> 
-            <small>Notifications</small>
-          </Link>
+          <h2 className="font-bold text-3xl">
+            Welcome back, {userObj?.FullName}!
+          </h2>
+          <small className="text-gray-500">
+            You have 0 pending notifications
+          </small>
+        </div>
+        <Link
+          to="/reminder"
+          className="bg-primary h-11 text-white py-3 px-5 rounded-full flex justify-center max-w-[145px] mt-5 md:mt-0"
+        >
+          <MdNotificationsActive className="w-[18px] h-[18px] mr-2 vibrate-icon" />
+          <small>Notifications</small>
+        </Link>
       </div>
       <div className="">
         <SummeryCard title={'Admins'} stats={dataCount} />
       </div>
       <div className="bg-white rounded-md">
-        <Charts type={"area"} datas={datas} />
+        <Charts type={'area'} datas={datas} />
       </div>
       {/* 
       The tableDataLimit is not fully implemented yet
