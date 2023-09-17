@@ -7,6 +7,7 @@ import { isObjectEmpty } from "./utils";
 import Home from "./pages/dashboard/home";
 import BeginRegistration from "./pages/auth/beginRegistration";
 import NotFound from "./pages/notFound";
+import Forbidden from './pages/forbidden';
 import Register from "./pages/auth/Register";
 
 //This is for code splitting/ Lazy loading of page for faster routing
