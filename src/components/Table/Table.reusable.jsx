@@ -43,7 +43,7 @@ const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHa
                                                 </div>
                                             </Link>
                                         : <div className="font-medium text-gray-900">
-                                                {row[head] ? row[head] : 'null' }
+                                                {row[head] ? row[head] : '-' }
                                             </div> 
                                         } 
                                         
