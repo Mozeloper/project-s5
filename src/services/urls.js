@@ -12,7 +12,7 @@ export const appUrls = {
   //Super Admins
   GETALLWORKERS: '/api/SuperAdmin/get-all-workers', //
   GET_ALL_SUPERADMINS: '/api/SuperAdmin/get-all-admin',
-  GET_ADMIN_DETAILS: '/api/SuperAdmin/get-admin-by/', //get worker by id
+  GET_ADMIN_DETAILS: '/api/SuperAdmin/get-admin-by', //get worker by id
   GET_ALL_New_Converts_URL: '/api/SuperAdmin/get-all-new-converts',
   GET_WORKER_DETAILS: '/api/SuperAdmin/get-worker', //get worker by id
   ADD_ROLE_TO_USER: '/api/SuperAdmin/Add-user-role', //accepts id & role as query  eg ?userId=1&roles=User
@@ -52,6 +52,7 @@ export const appUrls = {
     '/api/Analytics/worker-dashboard/retrieve-newconverts-analytics',
   //Approvals
   GET_ALL_UNAPPROVED_WORKERS: '/api/Approval/get-all-unapproved-workers',
+  GET_UNAPPROVED_WORKERDETAILS: '/api/Approval/get-unapproved-worker', //This api takes in an {workerId}
   GET_ALL_DEACTIVATED_WORKERS: '/api/SuperAdmin/get-all-deactivated-workers',
   APPROVE_A_WORKER: '/api/SuperAdmin/approve-new-worker', //This api takes in an {id}
   SUSPEND_A_WORKER: 'api/SuperAdmin/deactivate-worker-account', //This api takes in an {id}
