@@ -24,9 +24,9 @@ export default function UnapprovedWorkerTable() {
 
     useEffect(() => {
       const getPosts = async () => {
-      const admins = await PendingData?.Data
-      setData(admins);
-      setHeaders(Object.keys(await admins?.[0]));
+      const unapprovedWorkers = await PendingData?.Data?.Data;
+      setData(!isError && unapprovedWorkers);
+      setHeaders(Object.keys(!isError && unapprovedWorkers[0]));
     };
     getPosts();
   }, [PendingData]);
