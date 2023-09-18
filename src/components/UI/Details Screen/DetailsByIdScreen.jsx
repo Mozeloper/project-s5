@@ -15,6 +15,7 @@ import { toPascalCase } from '../../../Helper/toPascalCase'
 const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) => {
   // Reminder!!! Fetch worker details based on the workerId from your data source
   const [value, setValue] = React.useState('1');
+  console.log(`data : ${data}`)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
