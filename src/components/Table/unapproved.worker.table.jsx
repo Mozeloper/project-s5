@@ -97,7 +97,7 @@ export default function UnapprovedWorkerTable() {
         <>
           {
             data?.length < 1 || !data  ? <div className='flex justify-center text-center items-center h-96'>There's No pending "Unapproved" Account At the moment</div> : <>
-              <ReusableTable pageLink={'unapprovedWorker'} optionModal={displayUi} headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleOptionsClick}/>
+              <ReusableTable pageLink={'reminder/unapproved-worker'} optionModal={displayUi} headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleOptionsClick}/>
               <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / 10)} totalCount={data?.length}/>
             </>
           }

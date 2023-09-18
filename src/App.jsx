@@ -17,6 +17,7 @@ const Admins = React.lazy(() => import("./pages/dashboard/Admins"));
 const AdminDetailsById = React.lazy(() => import("./pages/dashboard/Admins/[Admin-id]"));
 const Workers = React.lazy(() => import("./pages/dashboard/Workers"));
 const WorkerDetailsById = React.lazy(() => import("./pages/dashboard/Workers/[Worker-id]"));
+const UnapprovedWorkerDetailsById = React.lazy(() => import("./pages/dashboard/UnapprovedWorkers/[Worker-id]"));
 const DTI = React.lazy(() => import("./pages/dashboard/DTI"));
 const NewConvert = React.lazy(() => import("./pages/dashboard/NewConvert"));
 const NewConvertDetailsById = React.lazy(() => import("./pages/dashboard/NewConvert/[NewConvert-id]"));
@@ -184,6 +185,14 @@ function App() {
               element={
                 <React.Suspense fallback={<>...</>}>
                   <Reminder />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/reminder/unapproved-worker/:workerId"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <UnapprovedWorkerDetailsById />
                 </React.Suspense>
               }
             />
