@@ -50,6 +50,7 @@ export const appUrls = {
     '/api/Analytics/mininstryadmin-dashboard/retrieve-newconverts-analytics',
   PERSONAL_ANALYTICS_BY_ID:
     '/api/Analytics/worker-dashboard/retrieve-newconverts-analytics',
+    
   //Approvals
   GET_ALL_UNAPPROVED_WORKERS: '/api/Approval/get-all-unapproved-workers',
   GET_UNAPPROVED_WORKERDETAILS: '/api/Approval/get-unapproved-worker', //This api takes in an {workerId}

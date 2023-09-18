@@ -22,11 +22,15 @@ export function useFetchAdminDashboardAnalytics() {
     return AdminsAnalytics
 }
 
-export function useFetchNewConvertDashboardAnalytics() {
-    const newConvertAnalytics = useQuery([`NewConvertCountAnalytics`], async () => await getAllNewConvertDashboardAnalytics(), {
-        staleTime: 360000,
-    });
-    return newConvertAnalytics
+export function useFetchNewConvertDashboardAnalytics({ workerId }) {
+  const newConvertAnalytics = useQuery(
+    [`NewConvertCountAnalytics`],
+    async () => await getPersonalAnalytics(workerId),
+    {
+      staleTime: 360000,
+    }
+  );
+  return newConvertAnalytics;
 }
 
 export function useFetchDtiDashboardAnalytics() {
