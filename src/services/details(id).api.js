@@ -13,6 +13,18 @@ export async function getAWorkerAdmin(workerId) {
   }
 }
 
+export async function getUnapprovedWorker(workerId) {
+  try {
+    const unapprovedWorker = await api.get(
+      `${appUrls.GET_UNAPPROVED_WORKERDETAILS}/${workerId}`
+    );
+    const fetchUnapprovedWorker = await unapprovedWorker?.data?.Data;
+    return await fetchUnapprovedWorker;
+  } catch (error) {
+    throw new Error(error.message || error);
+  }
+}
+
 export async function getASoul(soulId) {
   try {
     const souls = await api.get(
@@ -27,7 +39,7 @@ export async function getASoul(soulId) {
 
 export async function getAAdmin(adminId) {
   try {
-    const admins = await api.get(`${appUrls.GET_ALL_SUPERADMINS}/${adminId}`);
+    const admins = await api.get(`${appUrls.GET_ADMIN_DETAILS}/${adminId}`);
     const fetchadmins = await admins?.data?.Data;
     return await fetchadmins;
   } catch (error) {

@@ -1,5 +1,13 @@
 import { useMutation, useQuery } from "react-query"
-import { approveAWorker, getAllDeactivatedWorker, getAllUnApproval, deleteAWorker } from "../services/approval.api";
+import {
+  approveAWorker,
+  getAllDeactivatedWorker,
+  getAllUnApproval,
+  deleteAWorker,
+} from '../services/approval.api';
+import {
+  getUnapprovedWorker,
+} from '../services/details(id).api';
 import { QueryClient } from "@tanstack/react-query";
 
 const queryClient = new QueryClient()
@@ -29,6 +37,18 @@ export function usePostApproveWorker(workerId) {
    }
  })
     return approval
+}
+
+
+export function useFetchUnapprovedWorkerDetails({ workerId }) {
+  // console.log('singleWorker workerId', workerId);
+  const unapprovedWorker = useQuery({
+    queryKey: ['UnapprovedWorker', workerId],
+    queryFn: async () => await getUnapprovedWorker(workerId),
+    staleTime: 360000,
+    enabled: !!workerId, //Only run this function if workerId is available
+  });
+  return unapprovedWorker;
 }
 
 
