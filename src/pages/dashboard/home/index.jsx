@@ -33,7 +33,7 @@ export default function Home() {
       <div className="rounded-md bg-white py-12 px-5 md:px-6 md:flex md:justify-between gap-5">
         <div>
           <h2 className="font-bold text-3xl">
-            Welcome back, {userObj?.FullName}!
+            Welcome back, <span className="capitalize">{userObj?.FirstName}!</span>
           </h2>
           <small className="text-gray-500">
             You have 0 pending notifications
