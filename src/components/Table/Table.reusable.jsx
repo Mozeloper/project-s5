@@ -39,19 +39,20 @@ const ReusableTable = ({
                         head.toLowerCase() === 'othernames' ||
                         head.toLowerCase() === 'workerid' ||
                         head.toLowerCase() === 'dateofbirth' ||
+                        head.toLowerCase() === 'address' ||
                         head.toLowerCase() === 'datecreated'
                           ? 'hidden'
                           : ''
                       }`}
                     >
-                      {
-                          head.toLowerCase() === 'firstname' || head.toLowerCase() === 'fullname' || head === 'fullName' 
-                          ? 'Name' : 
-                          camelCaseToSingleWords(head)
-                       }
+                      {head.toLowerCase() === 'firstname' ||
+                      head.toLowerCase() === 'fullname' ||
+                      head === 'fullName'
+                        ? 'Name'
+                        : camelCaseToSingleWords(head)}
                     </th>
                   ))}
-                <th>{headers && headers.length > 1 && 'Edit'}</th>
+                <th>{headers && headers.length > 1 && 'Actions'}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
@@ -68,12 +69,14 @@ const ReusableTable = ({
                         head.toLowerCase() === 'othernames' ||
                         head.toLowerCase() === 'workerid' ||
                         head.toLowerCase() === 'dateofbirth' ||
+                        head.toLowerCase() === 'address' ||
                         head.toLowerCase() === 'datecreated'
                           ? 'hidden'
                           : ''
                       }`}
                     >
-                      {head.toLowerCase() === 'firstname' || head.toLowerCase() === 'fullname' ? (
+                      {head.toLowerCase() === 'firstname' ||
+                      head.toLowerCase() === 'fullname' ? (
                         <Link to={`/${pageLink}/${row['id'] ?? row['Id']}`}>
                           <div className="flex items-center">
                             <div>
