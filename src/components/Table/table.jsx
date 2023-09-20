@@ -87,7 +87,7 @@ const handleClick = (event) => {
                   scope="col"
                   className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                 >
-                  Joined
+                  Year Joined
                 </th>
                 <th
                   scope="col"
@@ -104,7 +104,7 @@ const handleClick = (event) => {
               {tableDataArray?.map((person) => (
                 <tr key={person.Id}>
                   <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
-                    <div className="flex items-center">
+                    {/* <div className="flex items-center"> */}
                       {/* <div className="h-11 w-11 flex-shrink-0 bg-gray-100 rounded-full">
                         <img
                           className="h-full w-full rounded-full"
@@ -118,7 +118,7 @@ const handleClick = (event) => {
                         </div>
                         <div className="mt-1 text-gray-500">{person.Email}</div>
                       </Link>
-                    </div>
+                    {/* </div> */}
                   </td>
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                     <div className="text-gray-900">{person.title}</div>

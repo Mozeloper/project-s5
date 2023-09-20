@@ -39,14 +39,16 @@ const ReusableTable = ({
                         head.toLowerCase() === 'othernames' ||
                         head.toLowerCase() === 'workerid' ||
                         head.toLowerCase() === 'dateofbirth' ||
-                        head === 'fullName'
+                        head.toLowerCase() === 'datecreated'
                           ? 'hidden'
                           : ''
                       }`}
                     >
-                      {head.toLowerCase() === 'firstname'
-                        ? 'Name'
-                        : camelCaseToSingleWords(head)}
+                      {
+                          head.toLowerCase() === 'firstname' || head.toLowerCase() === 'fullname' || head === 'fullName' 
+                          ? 'Name' : 
+                          camelCaseToSingleWords(head)
+                       }
                     </th>
                   ))}
                 <th>{headers && headers.length > 1 && 'Edit'}</th>
@@ -66,18 +68,19 @@ const ReusableTable = ({
                         head.toLowerCase() === 'othernames' ||
                         head.toLowerCase() === 'workerid' ||
                         head.toLowerCase() === 'dateofbirth' ||
-                        head === 'fullName'
+                        head.toLowerCase() === 'datecreated'
                           ? 'hidden'
                           : ''
                       }`}
                     >
-                      {head.toLowerCase() === 'firstname' ? (
+                      {head.toLowerCase() === 'firstname' || head.toLowerCase() === 'fullname' ? (
                         <Link to={`/${pageLink}/${row['id'] ?? row['Id']}`}>
                           <div className="flex items-center">
                             <div>
                               <div className="font-medium text-gray-900 !capitalize">
                                 {row['SurName'] || row['surname']}{' '}
                                 {row['FirstName'] || row['firstName']}
+                                {row['FullName'] ?? row['fullName']}
                               </div>
                               {/* This condition renders the email under name of the user */}
                               <div className="mt-1 text-gray-500">

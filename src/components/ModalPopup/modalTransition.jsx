@@ -30,8 +30,8 @@ export default function TransitionsModal({ name, heading, width, children, icon,
 
   return (
     <div>
-      <div className="z-20 flex !justify-center items-center" onClick={handleOpen}>
-        <ListItemIcon>
+      <div className="z-20 flex !justify-center items-center py-1" onClick={handleOpen}>
+        <ListItemIcon className="w-max min-w-max">
             {icon}
         </ListItemIcon>
         {name}

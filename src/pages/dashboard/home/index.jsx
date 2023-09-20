@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Charts from "../../../components/chart/chart";
 import SummeryCard from "../../../components/SummeryCard/summeryCard";
-import AdminTables from "../../../components/Table/admins.table";
-import { useFetchAdminDashboardAnalytics, useFetchSoulsCount, useFetchWorkersCount } from "../../../hooks/useFetchAnalytics";
+import { useFetchAdminDashboardAnalytics } from "../../../hooks/useFetchAnalytics";
 import { userFullName } from '../../../utils/index'
 import { MdNotificationsActive } from "react-icons/md";
 import { Link } from "react-router-dom";
 import './vibration.css'
-//Todo - 1. Add loading ui to indicate loading state 
-//Todo - 2. Replace useEffect with react query for data fetching
-//Todo - 3. Asking the backend guys to provide all data counts (Analytics data) in one endpoint
+import { SoulsTable } from "../../../components/Table/souls.table";
+
 export default function Home() {
   const { data: AdminDashboardAnalytics, isError, isLoading } = useFetchAdminDashboardAnalytics()
 
@@ -24,7 +22,6 @@ export default function Home() {
     },
   ];
 
-  const fullName = userFullName();
   const userObj = JSON.parse(sessionStorage.getItem('userObj'));
 
 
@@ -53,11 +50,7 @@ export default function Home() {
       <div className="bg-white rounded-md">
         <Charts type={'area'} datas={ChartDatas} />
       </div>
-      {/* 
-      The tableDataLimit is not fully implemented yet
-      Todo - Renders all the table datas on the admins page dashboard and
-      */}
-      <AdminTables tableDataLimit={11} />
+      <SoulsTable />
     </div>
   );
 }

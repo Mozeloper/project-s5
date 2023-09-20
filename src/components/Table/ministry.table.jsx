@@ -12,11 +12,11 @@ import { IoRemoveCircleSharp } from 'react-icons/io5';
 
 export default function MinstryTable() {
     const [pageNumber, setPageNumber] = useState(1);
-    const [totalPerPage, setTotalPerPage] = useState(7);
+    const [pageSize, setPageSize] = useState(2);
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
     const [displayUi, setDisplayUi] = React.useState(null)
-    const { data: MinistryData, isError, isLoading, isFetching, error } = useFetchMinistry({ pageNumber })
+    const { data: MinistryData, isError, isLoading, isFetching, error } = useFetchMinistry({ pageNumber, pageSize })
 
   useEffect(() => {
       const getPosts = async () => {
@@ -47,7 +47,7 @@ export default function MinstryTable() {
     }
   }
   
-  const handleChange = (event, value) => {
+  const handlePaginationChange = (event, value) => {
     setPageNumber(value);
   };
 
@@ -81,7 +81,7 @@ export default function MinstryTable() {
                 <>
                   <ReusableTable pageLink={'ministry'} optionModal={displayUi}  headers={headers} data={data} filterNumber={10} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} />
                   
-                  <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / totalPerPage)} totalCount={Math.ceil(data?.length)} handleChange={handleChange}/> 
+                  <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(MinistryData?.totalDataCount / pageSize)} totalCount={Math.ceil(MinistryData?.totalDataCount)} handlePaginationChange={handlePaginationChange}/> 
                 </>
               }
             </>

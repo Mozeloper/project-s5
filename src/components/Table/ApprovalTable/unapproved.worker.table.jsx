@@ -1,24 +1,22 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react'
-import PaginationFooter from '../PaginationFooter'
-import ReusableTable from './Table.reusable'
-import { HiMiniViewfinderCircle } from 'react-icons/hi2'
-import { MdDeleteSweep } from 'react-icons/md'
+import React, { useCallback, useEffect, useState } from 'react'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
 import { AiFillDelete } from "react-icons/ai";
-import { GrConnect, GrDocumentUpdate } from 'react-icons/gr'
-import { useFetchAllUnapproved, usePostApproveWorker, usePostDeleteWorker } from '../../hooks/useFetchUnapproved';
 import { GiConfirmed } from 'react-icons/gi'
-import ConfirmDeactivate from '../UI/confirmation screen'
+import ReusableTable from '../Table.reusable';
+import PaginationFooter from '../../PaginationFooter';
+import { useFetchAllUnapproved, usePostApproveWorker, usePostDeleteWorker } from '@/hooks/useFetchUnapproved';
+import ConfirmDeactivate from '../../UI/confirmation screen';
 
 export default function UnapprovedWorkerTable() {
     const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(2);
     const [modalConfirmation, setModalConfirmation] = useState(false);
     const [displayUi, setDisplayUi] = React.useState(null)
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
 
     const [workerId, setWorkerId] = useState('');
-    const { data: PendingData, isLoading, isError } = useFetchAllUnapproved()
+    const { data: PendingData, isLoading, isError } = useFetchAllUnapproved({ pageNumber, pageSize })
     const { mutateAsync: deleteUserAsync, isLoading: isLoadingDeletion, isError: isErrorDeletion } = usePostDeleteWorker(workerId)
     const { mutateAsync: approveUserAsync, data: ApproveUser, isLoading: isLoadingApproval, isError: isErrorRender, isSuccess } = usePostApproveWorker(workerId && workerId)
 
@@ -68,15 +66,6 @@ export default function UnapprovedWorkerTable() {
     return <div>Loading.......</div>
   }
 
-  //   if (isErrorRender && !isSuccess) {
-  //   return <div>Error.......</div>
-  // }
-
-  // const optionList = [
-  //     { icon: <GiConfirmed />, name: 'Approve' },
-  //     { icon: <IoRemoveCircleSharp />, name: 'Suspend' },
-  // ];
-
   const handleOptionsClick = (event) => {
     const innerText = event.currentTarget.innerText
     const id = event.currentTarget.id
@@ -89,6 +78,10 @@ export default function UnapprovedWorkerTable() {
     }
   };
 
+  const handlePaginationChange = (event, value) => {
+    setPageNumber(value);
+  };
+
   return (
     <div className="px-8 bg-white pt-7 grid grid-cols-1 gap-y-2">
       <h3 className='sm:text-left text-center'>The List of all pending / Unapproved workers</h3>
@@ -96,9 +89,22 @@ export default function UnapprovedWorkerTable() {
             isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred </div> : 
         <>
           {
-            data?.length < 1 || !data  ? <div className='flex justify-center text-center items-center h-96'>There's No pending "Unapproved" Account At the moment</div> : <>
-              <ReusableTable pageLink={'reminder/unapproved-worker'} optionModal={displayUi} headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleOptionsClick}/>
-              <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / 10)} totalCount={data?.length}/>
+            data?.length < 1 || !data  ? 
+            <div className='flex justify-center text-center items-center h-96'>There's No pending "Unapproved" Account At the moment</div> : 
+            <>
+              <ReusableTable 
+                pageLink={'reminder/unapproved-worker'} 
+                optionModal={displayUi} 
+                headers={headers} 
+                data={data} 
+                filterNumber={11} 
+                optionArrayList={optionList} 
+                optionsHandleClick={handleOptionsClick}
+              />
+              
+              <PaginationFooter 
+                pageNumber={pageNumber} totalPerCount={Math.ceil(PendingData?.TotalDataCount / pageSize)} totalCount={Math.ceil(PendingData?.TotalDataCount)} handlePaginationChange={handlePaginationChange}
+              />
             </>
           }
         </>
