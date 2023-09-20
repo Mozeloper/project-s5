@@ -79,7 +79,7 @@ export default function Home() {
             <TabList onChange={handleChange} aria-label="">
               <Tab label="Analytics" value="1" />
               <Tab label="Lastest Souls" value="2" />
-              <Tab label="Top Performers" value="3" />
+              {isSuperAdmin && <Tab label="Top Performers" value="3" />}
             </TabList>
           </Box>
           <TabPanel value="1" className="!px-2">
@@ -92,7 +92,7 @@ export default function Home() {
                 error={isError}
               />
             </div>
-            <div className='p-2'></div>
+            <div className="p-2"></div>
             <div className="bg-white rounded-md">
               <Charts type={'area'} datas={ChartDatas} />
             </div>
@@ -104,6 +104,13 @@ export default function Home() {
             */}
             <SoulsTable isAdmin={isSuperAdmin} tableDataLimit={11} />
           </TabPanel>
+          {isSuperAdmin && (
+            <TabPanel value="3" className="!px-2">
+              <div className="rounded-md bg-white flex justify-center items-center min-h-[50vh]">
+                <h4 className="font-bold">Coming Soon</h4>
+              </div>
+            </TabPanel>
+          )}
         </TabContext>
       </Box>
     </div>
