@@ -13,3 +13,16 @@ export async function getAllNewConvert({ pageNumber }) {
         throw new Error(error.message || error)
     }
 }
+
+
+export async function getSoulsUnderWorker({ workerId, pageNumber }) {
+  try {
+    const NewConvert = await api.get(
+      `${baseUrl}${appUrls.GET_ALL_SOULS_UNDER_A_WORKER}/${workerId}/?page=${pageNumber}`
+    );
+    const NewConvertRes = await NewConvert?.data?.data;
+    return NewConvertRes;
+  } catch (error) {
+    throw new Error(error.message || error);
+  }
+}
