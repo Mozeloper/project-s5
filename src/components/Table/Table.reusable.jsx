@@ -17,8 +17,8 @@ const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHa
                     <thead>
                     <tr>
                         {( headers || undefined)?.slice(0, +filteredNumber).map(head => (
-                        <th key={head} scope="col" className={`pr-3 py-3.5 text-left uppercase text-sm font-semibold text-gray-900 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' || head === 'fullName' ? 'hidden' : '' }`}>
-                            {head.toLowerCase() === 'firstname' ? 'Name' : 
+                        <th key={head} scope="col" className={`pr-3 py-3.5 text-left uppercase text-sm font-semibold text-gray-900 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' || head.toLowerCase() === 'datecreated' ? 'hidden' : '' }`}>
+                            {head.toLowerCase() === 'firstname' || head.toLowerCase() === 'fullname' || head === 'fullName' ? 'Name' : 
                           camelCaseToSingleWords(head)}
                         </th>
                         ))}
@@ -29,13 +29,15 @@ const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHa
                         {(data && data?.slice(0, +filteredNumber))?.map((row, index) => (
                             <tr key={index}>
                                 {headers?.slice(0, +filteredNumber).map(head => (
-                                    <td key={head} className={`whitespace-nowrap py-5 pr-3 text-sm sm:pl-0 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' || head === 'fullName'  ? 'hidden' : '' }`}>
-                                        {head.toLowerCase() === 'firstname' ?
-                                            <Link to={`/${pageLink}/${row['Id']}`}>
+                                    <td key={head} className={`whitespace-nowrap py-5 pr-3 text-sm sm:pl-0 ${head.toLowerCase() === 'email' || head.toLowerCase() === 'id' || head.toLowerCase() === 'username' || head.toLowerCase() === 'surname' || head.toLowerCase() === 'othernames' || head.toLowerCase() === 'workerid' || head.toLowerCase() === 'dateofbirth' || head.toLowerCase() === 'datecreated' ? 'hidden' : '' }`}>
+                                        {head.toLowerCase() === 'firstname' || head.toLowerCase() === 'fullname'  ?
+                                            <Link to={`/${pageLink}/${row['Id'] || row['id']}`}>
                                                 <div className="flex items-center">
                                                     <div>
                                                         <div className="font-medium text-gray-900">
-                                                            {row['SurName'] || row['surname']} {row['FirstName'] || row['firstName']}
+                                                            {row['SurName'] || row['surname']} 
+                                                            {row['FirstName'] || row['firstName']}
+                                                            {row['FullName'] ?? row['fullName']}
                                                         </div>
                                                         {/* This condition renders the email under name of the user */}
                                                         <div className="mt-1 text-gray-500">{row['Email'] || row['email'] || 'no email'}</div>
@@ -43,7 +45,9 @@ const ReusableTable = ({ headers, data, filterNumber, optionArrayList, optionsHa
                                                 </div>
                                             </Link>
                                         : <div className="font-medium text-gray-900">
-                                                {row[head] ? row[head] : '-' }
+                                            {
+                                                row[head] ? row[head] : '-' 
+                                            }
                                             </div> 
                                         } 
                                         

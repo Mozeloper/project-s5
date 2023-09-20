@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import PaginationFooter from '../PaginationFooter'
-import ReusableTable from './Table.reusable'
-import { HiMiniViewfinderCircle } from 'react-icons/hi2'
 import { MdDeleteSweep } from 'react-icons/md'
-import { IoRemoveCircleSharp } from 'react-icons/io5'
-import { GrConnect, GrDocumentUpdate } from 'react-icons/gr'
-import { useFetchAllDeactivatedWorker } from '../../hooks/useFetchUnapproved';
+import { GrConnect } from 'react-icons/gr'
+import { useFetchAllDeactivatedWorker } from '../../../hooks/useFetchUnapproved';
+import ReusableTable from '../Table.reusable';
+import PaginationFooter from '../../PaginationFooter';
+
 
 export default function DeactivatedWorkerTable() {
-     const [pageNumber, setPageNumber] = useState(1);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(2);
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
-    const { data: PendingData, isLoading, isError } = useFetchAllDeactivatedWorker()
+    const [displayUi, setDisplayUi] = React.useState(null)
+    const { data: DeactivatedWorkerData, isLoading, isError } = useFetchAllDeactivatedWorker({ pageNumber, pageSize })
 
     useEffect(() => {
       const getPosts = async () => {
-      const admins = await PendingData?.Data
+      const admins = await DeactivatedWorkerData?.Data
       setData(admins || []);
       setHeaders(Object.keys(await admins[0] || []));
     };
     getPosts();
-  }, [PendingData]);
+  }, [DeactivatedWorkerData]);
 
       const optionList = [
       // { icon: <HiMiniViewfinderCircle />, name: 'View' },
@@ -48,11 +49,19 @@ export default function DeactivatedWorkerTable() {
         {
             isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred </div> : 
         <>
-        {
-          data?.length < 1 || !data ? <div className='flex text-center justify-center items-center h-96'>There's No Deactivated Account At the moment</div> : 
-            <ReusableTable pageLink={'deactivatedWorker'} headers={headers} data={data} filterNumber={11}/>
-        }
-            <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / 10)} totalCount={data?.length}/>
+          <ReusableTable 
+            pageLink={'reminder/deactivatedWorker'} 
+            optionModal={displayUi} 
+            headers={headers} 
+            data={data} 
+            filterNumber={11} 
+            optionArrayList={optionList} 
+            optionsHandleClick={handleOptionsClick}
+          />
+          
+          <PaginationFooter 
+            pageNumber={pageNumber} totalPerCount={Math.ceil(DeactivatedWorkerData?.TotalDataCount / pageSize)} totalCount={Math.ceil(DeactivatedWorkerData?.TotalDataCount)} handlePaginationChange={handlePaginationChange}
+          />
         </>
         }
     </div>

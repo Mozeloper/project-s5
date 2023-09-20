@@ -38,11 +38,11 @@ interface PaginationProps {
   totalPageCount: number;
   totalPerCount: number;
   totalCount: number;
-  handleChange: () => void
+  handlePaginationChange: () => void
 }
-export default function PaginationFooter({pageNumber, totalPerCount, totalCount, handleChange}: PaginationProps) {
+export default function PaginationFooter({pageNumber, totalPerCount, totalCount, handlePaginationChange}: PaginationProps) {
   // const [page, setPage] = React.useState<number>(pageNumber || 1);
-  // const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  // const handlePaginationChange = (event: React.ChangeEvent<unknown>, value: number) => {
   //   setPage(value);
   // };
 
@@ -57,7 +57,13 @@ export default function PaginationFooter({pageNumber, totalPerCount, totalCount,
               <span className="font-medium">10</span> of{" "} */}
               <span className="font-medium"> {" "} {totalCount}</span> results
             </p>
-            <Pagination count={+totalPerCount || 10} page={pageNumber} onChange={handleChange} />
+            <Pagination 
+              count={+totalPerCount}
+              variant="outlined"
+              shape="rounded"
+              page={pageNumber}
+              onChange={handlePaginationChange}
+            />
           </div>
       </Stack>
     </div>

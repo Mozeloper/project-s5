@@ -4,8 +4,8 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import UnapprovedWorkerTable from '../../../../components/Table/unapproved.worker.table';
-import DeactivatedWorkerTable from '../../../../components/Table/deactivated.worker.table';
+import UnapprovedWorkerTable from '@/components/Table/ApprovalTable/unapproved.worker.table';
+import DeactivatedWorkerTable from '@/components/Table/ApprovalTable/deactivated.worker.table';
 
 export default function WorkerTabs() {
   const [value, setValue] = React.useState('1');
