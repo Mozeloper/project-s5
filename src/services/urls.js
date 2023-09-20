@@ -7,7 +7,7 @@ export const appUrls = {
   RESETPASSWORD_URL: '/api/v1/Authentication/reset-password',
 
   //Department
-  GETCHURCHDEPT: '/api/Entity/get-church-department',
+  GETCHURCHDEPT: '/api/v1/Entity/get-church-department',
 
   //Super Admins
   GETALLWORKERS: '/api/v1/SuperAdmin/get-all-workers', //
@@ -50,6 +50,7 @@ export const appUrls = {
     '/api/v1/Analytics/mininstryadmin-dashboard/retrieve-newconverts-analytics',
   PERSONAL_ANALYTICS_BY_ID:
     '/api/v1/Analytics/worker-dashboard/retrieve-newconverts-analytics',
+
   //Approvals
   GET_ALL_UNAPPROVED_WORKERS: '/api/v1/Approval/get-all-unapproved-workers',
   GET_UNAPPROVED_WORKERDETAILS: '/api/v1/Approval/get-unapproved-worker', //This api takes in an {workerId}
@@ -59,6 +60,7 @@ export const appUrls = {
   DELETE_A_WORKER: '/api/v1/SuperAdmin/delete-worker-account', //This api takes in an {id}
   REACTIVATE_A_WORKER: '/api/v1/SuperAdmin/reactivate-worker-account', //This api takes in an {id}
   GET_ALL_DEACTIVATED_NEWCONVERTS: '/api/v1/SuperAdmin/get-all-deactivated-newconverts',
+
 
   // Profile
   CHANGEPASSWORD_URL: '/api/v1/Authentication/change-password',

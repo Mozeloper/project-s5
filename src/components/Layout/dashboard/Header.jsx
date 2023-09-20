@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { BiMenuAltLeft } from "react-icons/bi";
-import { FiLogOut } from "react-icons/fi";
+import { BiMenuAltLeft } from 'react-icons/bi';
+import { FiLogOut } from 'react-icons/fi';
 
-import ArrowDown from "../../../assets/icons/arrow-down.svg";
-import profile from "../../../assets/icons/profile.svg";
-import { toPascalCase } from "../../../Helper/toPascalCase";
+import ArrowDown from '../../../assets/icons/arrow-down.svg';
+import profile from '../../../assets/icons/profile.svg';
+import { toPascalCase } from '../../../Helper/toPascalCase';
 
 export default function Header({
   setIsSideBarOpen,
@@ -16,7 +16,7 @@ export default function Header({
 }) {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const userObj = JSON.parse(sessionStorage.getItem("userObj"));
+  const userObj = JSON.parse(sessionStorage.getItem('userObj'));
 
   const handleIconHover = () => {
     setIsMenuOpen(true);
@@ -25,8 +25,6 @@ export default function Header({
   const handleIconLeave = () => {
     setIsMenuOpen(false);
   };
-
-
 
   return (
     <div className="w-full h-full text-white flex items-center justify-between">
@@ -56,7 +54,7 @@ export default function Header({
           onMouseLeave={handleIconLeave}
           className="relative flex items-center cursor-pointer"
         >
-          <div className="w-auto h-auto min-w-[40px] min-h-[40px] font-medium text-xl flex justify-center items-center rounded-full bg-MODAL_BACKGROUND p-2">
+          <div className="w-auto h-auto min-w-[40px] min-h-[40px] font-medium text-xl flex justify-center items-center rounded-full bg-primary p-2">
             {`${userObj?.FirstName + userObj?.SurName}`
               ?.charAt(0)
               .toUpperCase() +
@@ -70,7 +68,9 @@ export default function Header({
             src={ArrowDown}
             alt="icon"
             loading="lazy"
-            className="h-[29px] w-[29px]"
+            className={`h-[25px] w-[25px] transition duration-200 ease-in-out ${
+              isMenuOpen === true ? 'rotate-180' : ''
+            }`}
           />
           {isMenuOpen && (
             <div className="absolute top-full right-0 w-[290px] h-[240px] bg-white shadow-lg rounded-2xl z-40">
@@ -78,17 +78,9 @@ export default function Header({
                 className="flex gap-4 border-b border-borderColor p-6 cursor-pointer hover:bg-slate-100 rounded-2xl duration-300 ease-in-out"
                 onClick={() => navigate('/profile')}
               >
-                <div className="w-auto h-auto text-white min-w-[40px] min-h-[40px] font-medium text-xl flex justify-center items-center  rounded-full bg-[#38404b] p-2">
-                  {`${userObj?.FirstName + userObj?.SurName}`
-                    ?.charAt(0)
-                    .toUpperCase() +
-                    `${userObj?.SurName + userObj?.FirstName}`
-                      ?.charAt(
-                        `${userObj?.FirstName + userObj?.SurName}`?.indexOf(
-                          ' '
-                        ) + 1
-                      )
-                      .toUpperCase()}
+                <div className="w-auto h-auto text-white min-w-[40px] min-h-[40px] font-medium text-xl flex justify-center items-center  rounded-full bg-primary p-2">
+                  {`${userObj?.FirstName}`?.charAt(0).toUpperCase() +
+                    `${userObj?.SurName}`?.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex flex-col gap-1 justify-between">
                   <h3 className="text-textDark_200 font-black text-sm leading-[18px] capitalize">

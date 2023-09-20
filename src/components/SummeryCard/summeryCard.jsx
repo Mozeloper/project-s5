@@ -47,7 +47,7 @@ export default function SummeryCard({ data, error, loading }) {
             </p>
             <p className="md:mt-2 flex items-baseline gap-x-2">
               <span className="lg:text-4xl text-lg font-semibold lg:tracking-tight text-white">
-                {loading ? 'Loading...' : error ? 'Not-Avaliable' : stat?.data ? stat?.data : 'null'}
+                {loading ? 'Loading...' : error ? 'Not-Avaliable' : stat?.data ? stat?.data : '0'}
               </span>
             </p>
           </div>
