@@ -50,15 +50,17 @@ export const appUrls = {
     '/api/v1/Analytics/mininstryadmin-dashboard/retrieve-newconverts-analytics',
   PERSONAL_ANALYTICS_BY_ID:
     '/api/v1/Analytics/worker-dashboard/retrieve-newconverts-analytics',
-    
+
   //Approvals
   GET_ALL_UNAPPROVED_WORKERS: '/api/v1/Approval/get-all-unapproved-workers',
   GET_UNAPPROVED_WORKERDETAILS: '/api/v1/Approval/get-unapproved-worker', //This api takes in an {workerId}
   GET_ALL_DEACTIVATED_WORKERS: '/api/v1/SuperAdmin/get-all-deactivated-workers',
   APPROVE_A_WORKER: '/api/v1/SuperAdmin/approve-new-worker', //This api takes in an {id}
-  SUSPEND_A_WORKER: 'api/SuperAdmin/deactivate-worker-account', //This api takes in an {id}
+  SUSPEND_A_WORKER: 'api/v1/SuperAdmin/deactivate-worker-account', //This api takes in an {id}
   DELETE_A_WORKER: '/api/v1/SuperAdmin/delete-worker-account', //This api takes in an {id}
   REACTIVATE_A_WORKER: '/api/v1/SuperAdmin/reactivate-worker-account', //This api takes in an {id}
+  GET_ALL_DEACTIVATED_NEWCONVERTS: '/api/v1/SuperAdmin/get-all-deactivated-newconverts',
+
 
   // Profile
   CHANGEPASSWORD_URL: '/api/v1/Authentication/change-password',

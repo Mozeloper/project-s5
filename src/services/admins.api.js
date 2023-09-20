@@ -4,9 +4,9 @@ import { api } from "./api";
 
 const baseUrl = import.meta.env.VITE_BASE_URL
 
-export async function getAllAdmins({ pageNumber }) {
+export async function getAllAdmins({ pageNumber, pageSize }) {
     try {
-        const admins = await api.get(`${baseUrl}${appUrls.GET_ALL_SUPERADMINS}?page=${pageNumber}`)
+        const admins = await api.get(`${baseUrl}${appUrls.GET_ALL_SUPERADMINS}?page=${pageNumber}&pageSize=${pageSize}`)
         const fetchAdmins =  await admins?.data?.Data
         return await fetchAdmins
     } catch (error) {
@@ -14,9 +14,9 @@ export async function getAllAdmins({ pageNumber }) {
     }
 }
 
-export async function getAllMinistryAdmins({ pageNumber }) {
+export async function getAllMinistryAdmins({ pageNumber, pageSize }) {
     try {
-        const Ministryadmins = await api.get(`${baseUrl}${appUrls.GET_ALL_MINISTRY_URL}?page=${pageNumber}`)
+        const Ministryadmins = await api.get(`${baseUrl}${appUrls.GET_ALL_MINISTRY_URL}?page=${pageNumber}&pageSize=${pageSize}`)
         const fetchMinistryAdmins =  await Ministryadmins?.data?.Data
         return await fetchMinistryAdmins
     } catch (error) {
@@ -24,9 +24,9 @@ export async function getAllMinistryAdmins({ pageNumber }) {
     }
 }
 
-export async function getAllWorkersAdmins({ pageNumber }) {
+export async function getAllWorkersAdmins({ pageNumber, pageSize }) {
     try {
-        const Workersadmins = await api.get(`${baseUrl}${appUrls.GETALLWORKERS}?page=${pageNumber}`)
+        const Workersadmins = await api.get(`${baseUrl}${appUrls.GETALLWORKERS}?page=${pageNumber}&pageSize=${pageSize}`)
         const fetchWorkersAdmins =  await Workersadmins?.data?.Data
         return await fetchWorkersAdmins
     } catch (error) {

@@ -4,8 +4,9 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import UnapprovedWorkerTable from '../../../components/Table/unapproved.worker.table';
-import DeactivatedWorkerTable from '../../../components/Table/deactivated.worker.table';
+import UnapprovedWorkerTable from '@/components/Table/ApprovalTable/unapproved.worker.table';
+import DeactivatedWorkerTable from '@/components/Table/ApprovalTable/deactivated.worker.table';
+import DeactivatedNewConvertTable from '@/components/Table/ApprovalTable/deactivated.newConvert.table';
 
 export default function Reminder() {
   const [value, setValue] = React.useState('1');
@@ -21,6 +22,7 @@ export default function Reminder() {
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="Unapproved Workers" value="1" />
             <Tab label="Suspended Workers" value="2" />
+            <Tab label="Deactivated New-Convert" value="3" />
           </TabList>
         </Box>
         <TabPanel value="1" className='!px-2'>
@@ -28,6 +30,9 @@ export default function Reminder() {
         </TabPanel>
         <TabPanel value="2" className='!px-2'>
             <DeactivatedWorkerTable />
+        </TabPanel>
+        <TabPanel value="3" className='!px-2'>
+            <DeactivatedNewConvertTable />
         </TabPanel>
       </TabContext>
     </Box>

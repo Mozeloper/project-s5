@@ -9,17 +9,15 @@ import { IoRemoveCircleSharp } from 'react-icons/io5'
 import { GrView } from 'react-icons/gr';
 import { GiConfirmed } from 'react-icons/gi';
 import ConfirmDeactivate from '../UI/confirmation screen';
-import AddSoulsFormControl from '../UI/Forms/addSoul.form';
 
 
 export default function AdminTables() {
-    const [headers, setHeaders] = useState([]);
-    const [data, setData] = useState([]);
-    const [displayUi, setDisplayUi] = React.useState(null)
-    const [pageNumber, setPageNumber] = useState(1);
-    const [totalPerPage, setTotalPerPage] = useState(7);
-  
-  const { data: AdminsData, isError, isLoading, isFetching, error } = useFetchAdmins({ pageNumber })
+  const [headers, setHeaders] = useState([]);
+  const [data, setData] = useState([]);
+  const [displayUi, setDisplayUi] = React.useState(null)
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(2);
+  const { data: AdminsData, isError, isLoading, isFetching, error } = useFetchAdmins({ pageNumber, pageSize })
 
     const optionList = [ 
       { icon: <GrView className='text-blue-500' />, name: 'View' },
@@ -31,6 +29,7 @@ export default function AdminTables() {
       const getPosts = async () => {
         // make sure you add await to the return data from react query (hook)
       const admins = await AdminsData
+      console.log('admins', admins);
       setData(await admins?.Data);
       //Object.keys returns the property names of/in an object as string of arrays
       setHeaders(Object.keys(await admins?.Data?.[0] || []));
@@ -60,7 +59,7 @@ export default function AdminTables() {
     }
   }
 
-  // const handleChange = (event, value) => {
+  // const handlePaginationChange = (event, value) => {
   //   setPageNumber(value);
   // };
 
@@ -76,7 +75,7 @@ export default function AdminTables() {
     }
   }
   
-  const handleChange = (event, value) => {
+  const handlePaginationChange = (event, value) => {
     setPageNumber(value);
   };
 
@@ -105,7 +104,7 @@ export default function AdminTables() {
               <button
                 className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6"
               > 
-                <TransitionsModal name={'+ Add Admin'} heading={'Add a new admin'} width={'max-w-6xl w-[90%]'}>
+                <TransitionsModal name={'+ Add Admin'} heading={'Add a new admin'} width={'max-w-2xl w-[90%]'}>
                   <AddAdminFormControl />
                 </TransitionsModal>
               </button>
@@ -119,7 +118,7 @@ export default function AdminTables() {
                 <>
                   <ReusableTable pageLink={'admins'} optionModal={displayUi}  headers={headers} data={data} filterNumber={11} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} />
                   
-                  <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(data?.length / totalPerPage)} totalCount={Math.ceil(data?.length)} handleChange={handleChange}/> 
+                  <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(AdminsData?.TotalDataCount / pageSize)} totalCount={Math.ceil(AdminsData?.TotalDataCount)} handlePaginationChange={handlePaginationChange}/> 
                 </>
               }
             </>
