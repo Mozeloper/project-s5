@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PaginationFooter from '../PaginationFooter';
 import SearchBox from '../Searchbox/searchbox';
+import Loader from '../Loader';
 import TransitionsModal from '../ModalPopup/modalTransition';
 import { ButtonBase } from '@mui/material';
 import AddSoulsFormControl from '../UI/Forms/addSoul.form';
@@ -40,7 +41,7 @@ export const SoulsTable = ({ isAdmin = false }) => {
       setHeaders(Object?.keys(!isError && admins[0]));
     };
     getPosts();
-    console.log(data)
+    console.log(data);
   }, [adminsData, useFetchAllNewConvertDynamic, data]);
 
   const optionList = [
@@ -182,7 +183,7 @@ export const SoulsTable = ({ isAdmin = false }) => {
       navigate(`/souls/${id}`);
     }
   };
-  
+
   const handlePaginationChange = (event, value) => {
     setPageNumber(value);
   };
@@ -200,7 +201,7 @@ export const SoulsTable = ({ isAdmin = false }) => {
               <p className="mt-2 text-sm text-gray-700">
                 {!isAdmin
                   ? 'Here are the list of all the souls in you have won.'
-                  : 'Lastest list of souls added to the portal'}
+                  : 'Lastest list of souls added to Opeation 5 S portal.'}
               </p>
             </div>
             {/* <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -214,41 +215,44 @@ export const SoulsTable = ({ isAdmin = false }) => {
                 </TransitionsModal>
               </ButtonBase>
             </div> */}
-                      
+
             <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-              <button
-                className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6 min-w-max"
-              > 
-                <TransitionsModal name={'+ Add Soul'} heading={'Add a new Soul'} width={'w-[90%]'}>
+              <button className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6 min-w-max">
+                <TransitionsModal
+                  name={'+ Add Soul'}
+                  heading={'Add a new Soul'}
+                  width={'w-[90%]'}
+                >
                   <AddSoulsFormControl />
                 </TransitionsModal>
               </button>
             </div>
-
           </div>
-          {(!isError && data?.length < 0) ||
-          data === null ||
-          data == undefined ? (
+          {isLoading ? (
+            <Loader />
+          ) : !isError &&
+            (data?.length < 0 || data === null || data == undefined) ? (
             <div className="flex justify-center text-center bg-gray-200 items-center h-96 mt-12">
               No data available at the moment
             </div>
           ) : (
             <>
-              <ReusableTable 
-                pageLink={'souls'} 
-                optionModal={displayUi} 
-                optionArrayList={optionList} 
-                optionsHandleClick={handleOptionsClick} 
-                headers={headers} data={!isError && data} 
-                filterNumber={9} 
+              <ReusableTable
+                pageLink={'souls'}
+                optionModal={displayUi}
+                optionArrayList={optionList}
+                optionsHandleClick={handleOptionsClick}
+                headers={headers}
+                data={!isError && data}
+                filterNumber={9}
               />
 
-              <PaginationFooter 
-                pageNumber={pageNumber} 
-                totalPerCount={Math.ceil(adminsData?.totalDataCount / pageSize)} 
-                totalCount={Math.ceil(adminsData?.totalDataCount)} 
+              <PaginationFooter
+                pageNumber={pageNumber}
+                totalPerCount={Math.ceil(adminsData?.totalDataCount / pageSize)}
+                totalCount={Math.ceil(adminsData?.totalDataCount)}
                 handlePaginationChange={handlePaginationChange}
-              /> 
+              />
             </>
           )}
         </div>

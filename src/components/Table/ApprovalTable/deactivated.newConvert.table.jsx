@@ -5,6 +5,7 @@ import ReusableTable from '../Table.reusable';
 import PaginationFooter from '../../PaginationFooter';
 import { useFetchAllDeactivatedNewConvert } from '../../../hooks/useFetchUnapproved';
 import ConfirmDeactivate from '../../UI/confirmation screen';
+import Loader from '../../Loader';
 
 export default function DeactivatedNewConvertTable() {
     const [pageNumber, setPageNumber] = useState(1);
@@ -56,7 +57,7 @@ export default function DeactivatedNewConvertTable() {
     <div className="px-8 bg-white pt-7 grid grid-cols-1 gap-y-8">
       <h3 className='sm:text-left text-center'>The List of all Deactivated newconvert</h3>
         {
-            isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred </div> : 
+            isLoading ? <Loader /> : isError ? <div>An Error occurred </div> : 
         <>
 
         {

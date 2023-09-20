@@ -9,6 +9,7 @@ import ConfirmDeactivate from '../UI/confirmation screen';
 import { GrView } from 'react-icons/gr';
 import { GiConfirmed } from 'react-icons/gi';
 import { IoRemoveCircleSharp } from 'react-icons/io5';
+import Loader from '../Loader';
 
 export default function MinstryTable() {
     const [pageNumber, setPageNumber] = useState(1);
@@ -74,7 +75,7 @@ export default function MinstryTable() {
             </div>
           </div>
          {
-            isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred: {error.message} </div> : 
+            isLoading ? <Loader /> : isError ? <div>An Error occurred: {error.message} </div> : 
             <>
               {
                 data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 
