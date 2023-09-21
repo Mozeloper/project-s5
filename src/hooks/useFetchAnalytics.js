@@ -81,11 +81,15 @@ export function useFetchMinistryDashboardAnalytics() {
 }
 
 export function useFetchPersonalAnalytics({ AnalyticsId }) {
-    const singleAnalytics = useQuery({
-        queryKey: ['Analytics', AnalyticsId],
-        queryFn: async () => await getPersonalAnalytics(AnalyticsId),
-        staleTime: 360000,
-        enabled: !!AnalyticsId, //Only run this function if Id is available
-    })
-    return singleAnalytics;
+  const singleAnalytics = useQuery(
+    ['PersonalAnalytics', AnalyticsId],
+    async () => await getPersonalAnalytics(AnalyticsId),
+    {
+      staleTime: 360000,
+      enabled: !!AnalyticsId, //Only run this function if Id is available
+      keepPreviousData: true,
+    }
+  );
+  return singleAnalytics;
 }
+
