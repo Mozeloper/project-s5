@@ -26,6 +26,7 @@ export const appUrls = {
     '/api/v1/NewConvertAdmin/get-all-new-convants-for-newconvertadmin',
   GET_CONVERT_DETAILS: '/api/v1/NewConvert/get-new-converts', //get soul by id
   GET_ALL_SOULS_UNDER_A_WORKER: '/api/v1/NewConvert/get-new-converts-by-worker', //accepts worker's id
+  ADD_NEW_CONVERT: 'api/v1/NewConvert/register-new-convert',
   DELETE_A_CONVERT: '/api/v1/NewConvert/delete-new-convert', //delete soul by id
   SUSPEND_A_CONVERT: '/api/v1/NewConvert/deactivate-new-convert', //suspend soul by id
   REACTIVATE_A_CONVERT: '/api/v1/NewConvert/reactivate-new-convert', //reactivate soul by id
@@ -36,6 +37,7 @@ export const appUrls = {
 
   //DTI Admins
   GET_ALL_DTIAdmin_URL: '/api/v1/DTIAdmin/get-new-convant-for-dtiadmin',
+  PROMOTE_CONVERT_TO_MINISTRY: '/api/v1/DTIAdmin/promote-new-convert-to-ministry',
 
   //Analytics Count
   GET_ALL_SOULS_COUNT_URL: '/api/v1/SuperAdmin/get-all-newconvert-count',
@@ -59,10 +61,11 @@ export const appUrls = {
   SUSPEND_A_WORKER: 'api/v1/SuperAdmin/deactivate-worker-account', //This api takes in an {id}
   DELETE_A_WORKER: '/api/v1/SuperAdmin/delete-worker-account', //This api takes in an {id}
   REACTIVATE_A_WORKER: '/api/v1/SuperAdmin/reactivate-worker-account', //This api takes in an {id}
-  GET_ALL_DEACTIVATED_NEWCONVERTS: '/api/v1/SuperAdmin/get-all-deactivated-newconverts',
-
+  GET_ALL_DEACTIVATED_NEWCONVERTS:
+    '/api/v1/SuperAdmin/get-all-deactivated-newconverts',
 
   // Profile
   CHANGEPASSWORD_URL: '/api/v1/Authentication/change-password',
   UPDATEUSER_URL: '/api/v1/Worker/update-worker-profile',
+  GET_SOULS_UNDER_ME: '/api/v1/Worker/get-new-converts-by-worker-id', //makes the user to get souls they registered
 };
