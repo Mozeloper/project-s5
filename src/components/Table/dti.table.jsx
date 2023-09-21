@@ -37,7 +37,7 @@ export default function DtiTable() {
     };
     // console.log(data);
     getPosts();
-  }, [useFetchDti, DtiConverts, data]);
+  }, [DtiConverts]);
 
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
