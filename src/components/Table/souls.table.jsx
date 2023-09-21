@@ -222,6 +222,7 @@ export const SoulsTable = ({ isAdmin = false }) => {
                   name={'+ Add Soul'}
                   heading={'Add a new Soul'}
                   width={'w-[90%]'}
+                  isModalOpen={true}
                 >
                   <AddSoulsFormControl />
                 </TransitionsModal>
@@ -230,12 +231,13 @@ export const SoulsTable = ({ isAdmin = false }) => {
           </div>
           {isLoading ? (
             <Loader />
-          ) : !isError &&
-            data?.length <= 0 ? (
+          ) : !isError && data?.length <= 0 ? (
             <div className="flex justify-center text-center bg-gray-200 items-center h-96 mt-12">
               No data available at the moment
             </div>
-          ) : isError || !data ? <div>An error occured</div> : (
+          ) : isError || !data ? (
+            <div>An error occured</div>
+          ) : (
             <>
               <ReusableTable
                 pageLink={'souls'}
