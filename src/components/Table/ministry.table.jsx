@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react'
-import TransitionsModal from '../ModalPopup/modalTransition'
-import AddSoulsFormControl from '../UI/Forms/addSoul.form'
+import React, { useState, useEffect, Fragment } from 'react';
+import TransitionsModal from '../ModalPopup/modalTransition';
+import AddSoulsFormControl from '../UI/Forms/addSoul.form';
 import SearchBox from '../Searchbox/searchbox';
 import ReusableTable from './Table.reusable';
 import PaginationFooter from '../PaginationFooter';
@@ -12,42 +12,65 @@ import { IoRemoveCircleSharp } from 'react-icons/io5';
 import Loader from '../Loader';
 
 export default function MinstryTable() {
-    const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize, setPageSize] = useState(2);
-    const [headers, setHeaders] = useState([]);
-    const [data, setData] = useState([]);
-    const [displayUi, setDisplayUi] = React.useState(null)
-    const { data: MinistryData, isError, isLoading, isFetching, error } = useFetchMinistry({ pageNumber, pageSize })
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(2);
+  const [headers, setHeaders] = useState([]);
+  const [data, setData] = useState([]);
+  const [displayUi, setDisplayUi] = React.useState(null);
+  const {
+    data: MinistryData,
+    isError,
+    isLoading,
+    isFetching,
+    error,
+  } = useFetchMinistry({ pageNumber, pageSize });
 
   useEffect(() => {
-      const getPosts = async () => {
-      const ministry = await MinistryData
-      setData(ministry?.data);
+    const getPosts = async () => {
+      const ministry = (await MinistryData?.Data) || [];
+      setData(ministry);
       //Object.keys returns the property names of/in an object as string of arrays
-      setHeaders(Object.keys(ministry?.data[0]));
+      setHeaders(Object.keys(ministry[0] || []));
     };
     getPosts();
-  }, [MinistryData, data, setData]);
+  }, [useFetchMinistry, MinistryData, data]);
 
-    const optionList = [ 
-      { icon: <GrView className='text-blue-500' />, name: 'View' },
-      { icon: <GiConfirmed className='text-green-500' />, name: 'Modify' },
-      { icon: <IoRemoveCircleSharp className='text-yellow-500' />, name: 'Suspend' },
-    ];
-
+  const optionList = [
+    { icon: <GrView className="text-blue-500" />, name: 'View' },
+    { icon: <GiConfirmed className="text-green-500" />, name: 'Modify' },
+    {
+      icon: <IoRemoveCircleSharp className="text-yellow-500" />,
+      name: 'Suspend',
+    },
+  ];
 
   const handleOptionsClick = (event) => {
-    const innerText = event.currentTarget.innerText
-    const id = event.currentTarget.id
+    const innerText = event.currentTarget.innerText;
+    const id = event.currentTarget.id;
     if (innerText.toLowerCase() === 'view') {
-        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleViewAdmin.bind(null, id)} screenName={innerText}/>)
+      setDisplayUi(
+        <ConfirmDeactivate
+          handleDeactivate={handleViewAdmin.bind(null, id)}
+          screenName={innerText}
+        />
+      );
     } else if (innerText.toLowerCase() === 'modify') {
-        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleModifyAdmin.bind(null, id)} screenName={innerText}/>)
+      setDisplayUi(
+        <ConfirmDeactivate
+          handleDeactivate={handleModifyAdmin.bind(null, id)}
+          screenName={innerText}
+        />
+      );
     } else {
-        setDisplayUi(<ConfirmDeactivate handleDeactivate={handleSuspendAdmin.bind(null, id)} screenName={innerText}/>)
+      setDisplayUi(
+        <ConfirmDeactivate
+          handleDeactivate={handleSuspendAdmin.bind(null, id)}
+          screenName={innerText}
+        />
+      );
     }
-  }
-  
+  };
+
   const handlePaginationChange = (event, value) => {
     setPageNumber(value);
   };
@@ -59,7 +82,9 @@ export default function MinstryTable() {
         <div className="px-4 sm:px-6 lg:px-8 bg-white py-7">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
-              <h1 className="text-base font-semibold leading-6 text-gray-900">Ministry</h1>
+              <h1 className="text-base font-semibold leading-6 text-gray-900">
+                Ministry
+              </h1>
               <p className="mt-2 text-sm text-gray-700">
                 The list of all the Ministers.
               </p>
@@ -74,26 +99,45 @@ export default function MinstryTable() {
               </button>
             </div> */}
           </div>
-         {
-            isLoading ? <Loader /> : isError ? <div>An Error occurred: {error.message} </div> : 
+          {isLoading ? (
+            <Loader />
+          ) : isError ? (
+            <div>An Error occurred: {error.message} </div>
+          ) : (
             <>
-              {
-                data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 
+              {data?.length < 1 ? (
+                <div className="flex justify-center items-center h-96">
+                  Sorry! An error occurred, refresh and try again
+                </div>
+              ) : (
                 <>
-                  <ReusableTable pageLink={'ministry'} optionModal={displayUi}  headers={headers} data={data} filterNumber={10} optionArrayList={optionList} optionsHandleClick={handleOptionsClick} />
-                  
-                  <PaginationFooter pageNumber={pageNumber} totalPerCount={Math.ceil(MinistryData?.totalDataCount / pageSize)} totalCount={Math.ceil(MinistryData?.totalDataCount)} handlePaginationChange={handlePaginationChange}/> 
-                </>
-              }
-            </>
+                  <ReusableTable
+                    pageLink={'ministry'}
+                    optionModal={displayUi}
+                    headers={headers}
+                    data={data}
+                    filterNumber={10}
+                    optionArrayList={optionList}
+                    optionsHandleClick={handleOptionsClick}
+                  />
 
-            }
-            <div className="flex justify-center items-center">
-              {!isLoading && isFetching && 'Loading...'}
-            </div>
+                  <PaginationFooter
+                    pageNumber={pageNumber}
+                    totalPerCount={Math.ceil(
+                      MinistryData?.TotalDataCount / pageSize
+                    )}
+                    totalCount={Math.ceil(MinistryData?.TotalDataCount)}
+                    handlePaginationChange={handlePaginationChange}
+                  />
+                </>
+              )}
+            </>
+          )}
+          <div className="flex justify-center items-center">
+            {!isLoading && isFetching && 'Loading...'}
+          </div>
         </div>
       </div>
     </Fragment>
-  )
+  );
 }
-

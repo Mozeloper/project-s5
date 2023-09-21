@@ -51,7 +51,7 @@ export async function promoteConvertToMinistry(convertId, departmentId) {
       `${baseUrl}${appUrls.PROMOTE_CONVERT_TO_MINISTRY}`,
       payload
     );
-    const PromotedConvertRes = await promotedConvert?.data?.data;
+    const PromotedConvertRes = await promotedConvert?.data?.Data;
     return PromotedConvertRes;
   } catch (error) {
     throw new Error(error.message || error);

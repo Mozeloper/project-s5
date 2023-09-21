@@ -23,7 +23,7 @@ export const SoulsTable = ({ isAdmin = false }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(2);
   const {
-    data: adminsData,
+    data: soulsData,
     isError,
     isLoading,
   } = useFetchAllNewConvertDynamic({ workerId, isAdmin, pageNumber, pageSize });
@@ -32,17 +32,16 @@ export const SoulsTable = ({ isAdmin = false }) => {
 
   useEffect(() => {
     const getPosts = async () => {
-      const admins = (await adminsData?.data);
-      if (admins == null || admins == undefined) {
+      const SoulsData = (await soulsData?.Data) || [];
+      if (SoulsData == null || SoulsData == undefined) {
         setData([]);
       }
-      setData(!isError && admins);
-      //Object.keys returns the property names of/in an object as string of arrays
-      setHeaders(Object?.keys(!isError && admins[0]));
+      setData(SoulsData);
+      setHeaders(Object.keys(SoulsData[0] || []));
     };
     getPosts();
     // console.log(data);
-  }, [adminsData, useFetchAllNewConvertDynamic, data]);
+  }, [soulsData, useFetchAllNewConvertDynamic, data]);
 
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
@@ -251,8 +250,8 @@ export const SoulsTable = ({ isAdmin = false }) => {
 
               <PaginationFooter
                 pageNumber={pageNumber}
-                totalPerCount={Math.ceil(adminsData?.totalDataCount / pageSize)}
-                totalCount={Math.ceil(adminsData?.totalDataCount)}
+                totalPerCount={Math.ceil(soulsData?.TotalDataCount / pageSize)}
+                totalCount={Math.ceil(soulsData?.TotalDataCount)}
                 handlePaginationChange={handlePaginationChange}
               />
             </>

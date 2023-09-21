@@ -28,14 +28,14 @@ export default function DtiTable() {
 
   useEffect(() => {
     const getPosts = async () => {
-      const dtiRes = await DtiConverts?.Data;
+      const dtiRes = await DtiConverts?.Data || [];
       if (dtiRes == null || dtiRes == undefined) {
         setData([]);
       }
       setData(!isError && dtiRes);
-      setHeaders(Object.keys(dtiRes[0]));
+      setHeaders(Object.keys(dtiRes[0] || []));
     };
-    console.log(data);
+    // console.log(data);
     getPosts();
   }, [useFetchDti, DtiConverts, data]);
 
