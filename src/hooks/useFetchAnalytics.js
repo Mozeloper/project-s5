@@ -22,7 +22,7 @@ export function useFetchAdminDashboardAnalytics() {
     return AdminsAnalytics
 }
 export function useFetchDynamicDashboardAnalytics({ roles, userId }) {
-  console.log(`this is the role ${roles}`);
+  // console.log(`this is the role ${roles.includes('SuperAdmin')}`);
   if (roles.includes('SuperAdmin')) {
     const Analytics = useQuery(
       [`CountAnalytics`],
