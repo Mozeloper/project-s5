@@ -165,6 +165,14 @@ function App() {
               }
             />
             <Route
+              path="/dti/:dtiId"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <NewConvertDetailsById />
+                </React.Suspense>
+              }
+            />
+            <Route
               path="/newconvert"
               element={
                 <React.Suspense fallback={<>...</>}>
