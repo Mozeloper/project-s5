@@ -27,6 +27,13 @@ const ReusableTable = ({
               <tr>
                 {(headers || undefined)
                   ?.slice(0, +filteredNumber)
+                  .filter((head) => {
+                    return (
+                      (head.toLowerCase() !== 'surname' &&
+                        head.toLowerCase() !== 'firstname') ||
+                      head.toLowerCase() === 'fullname'
+                    );
+                  })
                   .map((head) => (
                     <th
                       key={head}
@@ -45,7 +52,8 @@ const ReusableTable = ({
                           : ''
                       }`}
                     >
-                      {head.toLowerCase() === 'firstname' ||
+                      {(head.toLowerCase() === 'firstname' &&
+                        head.toLowerCase() === 'surname') ||
                       head.toLowerCase() === 'fullname' ||
                       head === 'fullName'
                         ? 'Name'
@@ -58,75 +66,88 @@ const ReusableTable = ({
             <tbody className="divide-y divide-gray-200 bg-white">
               {(data && data?.slice(0, +filteredNumber))?.map((row, index) => (
                 <tr key={index}>
-                  {headers?.slice(0, +filteredNumber).map((head) => (
-                    <td
-                      key={head}
-                      className={`whitespace-nowrap py-5 pr-3 text-sm sm:pl-0 ${
-                        head.toLowerCase() === 'email' ||
-                        head.toLowerCase() === 'id' ||
-                        head.toLowerCase() === 'username' ||
-                        head.toLowerCase() === 'surname' ||
-                        head.toLowerCase() === 'othernames' ||
-                        head.toLowerCase() === 'workerid' ||
-                        head.toLowerCase() === 'dateofbirth' ||
-                        head.toLowerCase() === 'address' ||
-                        head.toLowerCase() === 'datecreated'
-                          ? 'hidden'
-                          : ''
-                      }`}
-                    >
-                      {head.toLowerCase() === 'firstname' ||
-                      head.toLowerCase() === 'fullname' ? (
-                        <Link to={`/${pageLink}/${row['id'] ?? row['Id']}`}>
-                          <div className="flex items-center">
-                            <div>
-                              <div className="font-medium text-gray-900 !capitalize">
-                                {row['SurName'] || row['surname']}{' '}
+                  {headers
+                    ?.slice(0, +filteredNumber)
+                    .filter((head) => {
+                      return (
+                        (head.toLowerCase() !== 'surname' &&
+                          head.toLowerCase() !== 'firstname') ||
+                        head.toLowerCase() === 'fullname'
+                      );
+                    })
+                    .map((head) => (
+                      <td
+                        key={head}
+                        className={`whitespace-nowrap py-5 pr-3 text-sm sm:pl-0 ${
+                          head.toLowerCase() === 'email' ||
+                          head.toLowerCase() === 'id' ||
+                          head.toLowerCase() === 'username' ||
+                          head.toLowerCase() === 'surname' ||
+                          head.toLowerCase() === 'othernames' ||
+                          head.toLowerCase() === 'workerid' ||
+                          head.toLowerCase() === 'dateofbirth' ||
+                          head.toLowerCase() === 'address' ||
+                          head.toLowerCase() === 'datecreated'
+                            ? 'hidden'
+                            : ''
+                        }`}
+                      >
+                        {(head.toLowerCase() === 'firstname' &&
+                          head.toLowerCase() === 'surname') ||
+                        head.toLowerCase() === 'fullname' ? (
+                          <Link to={`/${pageLink}/${row['id'] ?? row['Id']}`}>
+                            <div className="flex items-center">
+                              <div>
+                                <div className="font-medium text-gray-900 !capitalize">
+                                  {/* {row['SurName'] || row['surname']}{' '}
                                 {row['FirstName'] || row['firstName']}
-                                {row['FullName'] ?? row['fullName']}
-                              </div>
-                              {/* This condition renders the email under name of the user */}
-                              <div className="mt-1 text-gray-500">
-                                {row['Email'] || row['email'] || ''}
+                                {row['FullName'] ?? row['fullName']} */}
+                                  {row['SurName'] && row['FirstName']
+                                    ? `${row['FirstName']} ${row['SurName']}`
+                                    : row['FullName'] || row['fullName']}
+                                </div>
+                                {/* This condition renders the email under name of the user */}
+                                <div className="mt-1 text-gray-500">
+                                  {row['Email'] || row['email'] || ''}
+                                </div>
                               </div>
                             </div>
+                          </Link>
+                        ) : head.toLowerCase() === 'roles' ? (
+                          <div>
+                            <div className="font-semibold text-gray-900">
+                              {(row['ROLES'] ?? row['Roles']).map((role) => (
+                                <Chip
+                                  key={role}
+                                  label={
+                                    role.toLowerCase() === 'superadmin'
+                                      ? 'Admin'
+                                      : role.toLowerCase() === 'newconvertadmin'
+                                      ? 'Believers'
+                                      : role.toLowerCase() === 'dtiadmin'
+                                      ? 'DTI'
+                                      : 'Ministry'
+                                  }
+                                  className={`${
+                                    role.toLowerCase() === 'superadmin'
+                                      ? '!bg-primary !text-white'
+                                      : role.toLowerCase() === 'newconvertadmin'
+                                      ? '!bg-yellow-300'
+                                      : role.toLowerCase() === 'dtiadmin'
+                                      ? '!bg-blue-600 !text-white'
+                                      : '!bg-green-700 !text-white'
+                                  } cursor-pointer !text-[9px] mr-1`}
+                                />
+                              ))}
+                            </div>
                           </div>
-                        </Link>
-                      ) : head.toLowerCase() === 'roles' ? (
-                        <div>
-                          <div className="font-semibold text-gray-900">
-                            {(row['ROLES'] ?? row['Roles']).map((role) => (
-                              <Chip
-                                key={role}
-                                label={
-                                  role.toLowerCase() === 'superadmin'
-                                    ? 'Admin'
-                                    : role.toLowerCase() === 'newconvertadmin'
-                                    ? 'Believers'
-                                    : role.toLowerCase() === 'dtiadmin'
-                                    ? 'DTI'
-                                    : 'Ministry'
-                                }
-                                className={`${
-                                  role.toLowerCase() === 'superadmin'
-                                    ? '!bg-primary !text-white'
-                                    : role.toLowerCase() === 'newconvertadmin'
-                                    ? '!bg-yellow-300'
-                                    : role.toLowerCase() === 'dtiadmin'
-                                    ? '!bg-blue-600 !text-white'
-                                    : '!bg-green-700 !text-white'
-                                } cursor-pointer !text-[9px] mr-1`}
-                              />
-                            ))}
+                        ) : (
+                          <div className="font-medium text-gray-900">
+                            {row[head] ? row[head] : '-'}
                           </div>
-                        </div>
-                      ) : (
-                        <div className="font-medium text-gray-900">
-                          {row[head] ? row[head] : '-'}
-                        </div>
-                      )}
-                    </td>
-                  ))}
+                        )}
+                      </td>
+                    ))}
                   <td>
                     {
                       headers && headers.length > 1 && (
@@ -134,7 +155,7 @@ const ReusableTable = ({
                           displayModalUi={optionModal}
                           optionsList={optionArrayList}
                           handleClick={optionsHandleClick}
-                          id={`${row['Id']}`}
+                          id={row['Id'] ?? row['id']}
                           pageLink={pageLink}
                         />
                       )
