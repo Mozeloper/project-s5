@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getAllNewConvert, getSoulsUnderWorker } from '../services/souls';
+import { getAllNewConvert, getSoulsUnderMe } from '../services/souls';
 import { getASoul } from '../services/details(id).api';
 
 export function useFetchAllNewConvert({ pageNumber, pageSize }) {
@@ -20,7 +20,7 @@ export function useFetchAllNewConvertDynamic({
   pageNumber,
   pageSize
 }) {
-  console.log(`is this an admin request? ${isAdmin}`);
+  // console.log(`is this an admin request? ${isAdmin}`);
   if (isAdmin == true) {
     const NewConvert = useQuery(
       [`NewBeliever`, pageNumber],
@@ -35,7 +35,7 @@ export function useFetchAllNewConvertDynamic({
   } else {
     const NewConvert = useQuery(
       [`NewBeliever`, pageNumber],
-      async () => await getSoulsUnderWorker({ workerId, pageNumber }),
+      async () => await getSoulsUnderMe({ pageNumber, pageSize }),
       {
         staleTime: 360000,
         enabled: !!pageNumber,
