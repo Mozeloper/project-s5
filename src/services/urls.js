@@ -36,7 +36,7 @@ export const appUrls = {
     '/api/v1/MinistryAdmin/get-all-new-convert-for-ministry-admin',
 
   //DTI Admins
-  GET_ALL_DTIAdmin_URL: '/api/v1/DTIAdmin/get-new-convant-for-dtiadmin',
+  GET_ALL_DTIAdmin_URL: '/api/v1/DTIAdmin/get-new-convert-for-dtiadmin',
   PROMOTE_CONVERT_TO_MINISTRY: '/api/v1/DTIAdmin/promote-new-convert-to-ministry',
 
   //Analytics Count
