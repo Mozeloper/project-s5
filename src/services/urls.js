@@ -37,11 +37,18 @@ export const appUrls = {
 
   //DTI Admins
   GET_ALL_DTIAdmin_URL: '/api/v1/DTIAdmin/get-new-convert-for-dtiadmin',
-  PROMOTE_CONVERT_TO_MINISTRY: '/api/v1/DTIAdmin/promote-new-convert-to-ministry',
+  PROMOTE_CONVERT_TO_MINISTRY:
+    '/api/v1/DTIAdmin/promote-new-convert-to-ministry',
+
+  //New Believers Admin
+  GET_ALL_NEW_BELIEVERS_CONVERTS:
+    '/api/v1/NewBelieverAdmin/get-all-new-convants-for-newconvertadmin',
 
   //Analytics Count
   GET_ALL_SOULS_COUNT_URL: '/api/v1/SuperAdmin/get-all-newconvert-count',
   GET_ALL_WORKERS_COUNT_URL: '/api/v1/SuperAdmin/get-all-worker-count',
+  // GET_CONVERT_ANALYTICS_BY_WORKERID:
+  //   '/api/v1/Analytics/worker-dashboard/retrieve-newconverts-analytics', //accepts worker id
   ADMINS_DASHBOARD_ANALYTICS:
     '/api/v1/Analytics/Admin-dashboard/retrieve-newconverts-analytics',
   NEWCONVERT_DASHBOARD_ANALYTICS:
@@ -51,7 +58,7 @@ export const appUrls = {
   MINISTRY_ADMINS_DASHBOARD_ANALYTICS:
     '/api/v1/Analytics/mininstryadmin-dashboard/retrieve-newconverts-analytics',
   PERSONAL_ANALYTICS_BY_ID:
-    '/api/v1/Analytics/worker-dashboard/retrieve-newconverts-analytics',
+    '/api/v1/Analytics/worker-dashboard/retrieve-newconverts-analytics', //accepts worker's id
 
   //Approvals
   GET_ALL_UNAPPROVED_WORKERS: '/api/v1/Approval/get-all-unapproved-workers',
