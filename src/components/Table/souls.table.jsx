@@ -32,8 +32,8 @@ export const SoulsTable = ({ isAdmin = false }) => {
 
   useEffect(() => {
     const getPosts = async () => {
-      const admins = await adminsData?.data;
-      if (admins == null) {
+      const admins = (await adminsData?.data);
+      if (admins == null || admins == undefined) {
         setData([]);
       }
       setData(!isError && admins);
@@ -41,7 +41,7 @@ export const SoulsTable = ({ isAdmin = false }) => {
       setHeaders(Object?.keys(!isError && admins[0]));
     };
     getPosts();
-    console.log(data);
+    // console.log(data);
   }, [adminsData, useFetchAllNewConvertDynamic, data]);
 
   const optionList = [
@@ -231,11 +231,11 @@ export const SoulsTable = ({ isAdmin = false }) => {
           {isLoading ? (
             <Loader />
           ) : !isError &&
-            (data?.length < 0 || data === null || data == undefined) ? (
+            data?.length <= 0 ? (
             <div className="flex justify-center text-center bg-gray-200 items-center h-96 mt-12">
               No data available at the moment
             </div>
-          ) : (
+          ) : isError || !data ? <div>An error occured</div> : (
             <>
               <ReusableTable
                 pageLink={'souls'}
