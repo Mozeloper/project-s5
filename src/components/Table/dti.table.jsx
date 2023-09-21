@@ -28,7 +28,7 @@ export default function DtiTable() {
 
   useEffect(() => {
     const getPosts = async () => {
-      const dtiRes = await DtiConverts?.data;
+      const dtiRes = await DtiConverts?.Data;
       if (dtiRes == null || dtiRes == undefined) {
         setData([]);
       }
@@ -119,9 +119,9 @@ export default function DtiTable() {
                   <PaginationFooter
                     pageNumber={pageNumber}
                     totalPerCount={Math.ceil(
-                      DtiConverts?.totalDataCount / pageSize
+                      DtiConverts?.TotalDataCount / pageSize
                     )}
-                    totalCount={Math.ceil(DtiConverts?.totalDataCount)}
+                    totalCount={Math.ceil(DtiConverts?.TotalDataCount)}
                     handlePaginationChange={handlePaginationChange}
                   />
                 </>

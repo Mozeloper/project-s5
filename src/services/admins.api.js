@@ -33,7 +33,7 @@ export async function getAllConvertsInDti() {
     const dtiConverts = await api.get(
       `${baseUrl}${appUrls.GET_ALL_DTIAdmin_URL}`
     );
-    const fetchDtiConverts = await dtiConverts?.data?.data;
+    const fetchDtiConverts = await dtiConverts?.data?.Data;
     return await fetchDtiConverts;
   } catch (error) {
     throw new Error(error.message || error);
