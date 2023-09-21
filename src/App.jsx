@@ -17,9 +17,11 @@ const Admins = React.lazy(() => import("./pages/dashboard/Admins"));
 const AdminDetailsById = React.lazy(() => import("./pages/dashboard/Admins/[Admin-id]"));
 const Workers = React.lazy(() => import("./pages/dashboard/Workers"));
 const WorkerDetailsById = React.lazy(() => import("./pages/dashboard/Workers/[Worker-id]"));
+const UnapprovedWorkerDetailsById = React.lazy(() => import("./pages/dashboard/UnapprovedWorkers/[Worker-id]"));
 const DTI = React.lazy(() => import("./pages/dashboard/DTI"));
 const NewConvert = React.lazy(() => import("./pages/dashboard/NewConvert"));
 const NewConvertDetailsById = React.lazy(() => import("./pages/dashboard/NewConvert/[NewConvert-id]"));
+const Souls = React.lazy(() => import("./pages/dashboard/Souls"));
 const Ministry = React.lazy(() => import("./pages/dashboard/Ministry"));
 const ChangePassword = React.lazy(() => import("./pages/auth/changePassword"));
 const ForgetPassword = React.lazy(() => import("./pages/auth/forgetPassword"));
@@ -107,7 +109,7 @@ function App() {
               path="/souls"
               element={
                 <React.Suspense fallback={<>...</>}>
-                  <NewConvert />
+                  <Souls />
                 </React.Suspense>
               }
             />
@@ -164,6 +166,14 @@ function App() {
               }
             />
             <Route
+              path="/dti/:dtiId"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <NewConvertDetailsById />
+                </React.Suspense>
+              }
+            />
+            <Route
               path="/newconvert"
               element={
                 <React.Suspense fallback={<>...</>}>
@@ -184,6 +194,14 @@ function App() {
               element={
                 <React.Suspense fallback={<>...</>}>
                   <Reminder />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/reminder/unapproved-worker/:workerId"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <UnapprovedWorkerDetailsById />
                 </React.Suspense>
               }
             />

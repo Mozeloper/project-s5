@@ -12,7 +12,8 @@ import { MdLocalFireDepartment } from 'react-icons/md';
 import { MdOutlineTravelExplore } from 'react-icons/md';
 import { MdOutlineSettings } from 'react-icons/md';
 
-import logo from '../../../assets/icons/Operation-5S-logo.png';
+import logo from '../../../assets/icons/Operation-5S-logo-white.png';
+import altLogo from '../../../assets/icons/O-5S-logo-white.png';
 import menuArrow from '../../../assets/icons/arrow-side-down.svg';
 import { MdNotificationsActive } from 'react-icons/md';
 
@@ -146,6 +147,10 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
     item.role.some((r) => currentLoggedAdmin.includes(r))
   );
 
+   const sidebarTransitionClass = isSideBarOpen
+     ? 'transition-all duration-300 ease-in-out'
+     : 'transition-all duration-300 ease-in-out';
+
   return (
     <>
       <div
@@ -153,9 +158,14 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
           isSideBarOpen ? 'pl-6' : 'pl-3'
         }`}
       >
-        <img src={logo} alt="tphol logo" loading="lazy" className="w-[100%]" />
+        <img
+          src={isSideBarOpen ? logo : altLogo}
+          alt="tphol logo"
+          loading="lazy"
+          className={!isSideBarOpen ? 'w-full' : 'max-w-[60%]'}
+        />
       </div>
-      <div className="w-full mb-6 mt-4">
+      <div className={`w-full mb-6 mt-4`}>
         <div className="rounded-tl-lg flex flex-col h-full">
           {filteredNavLinks.map((list) => {
             if (!list?.children) {

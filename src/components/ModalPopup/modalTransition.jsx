@@ -3,10 +3,9 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import { ListItemIcon } from "@mui/material";
+import { useModalToggle } from "../../context/ConfirmationModal.context";
 
 const style = {
   position: "absolute",
@@ -21,25 +20,29 @@ const style = {
   p: 4,
 };
 
-export default function TransitionsModal({ name, heading, width, children, icon, isOpen }) {
-  const [open, setOpen] = React.useState(false);
+export default function TransitionsModal({ name, heading, width, children, icon, isModalOpen }) {
+  const { isOpen, setIsOpen } = useModalToggle()
+
   const handleOpen = () => {
-    setOpen(isOpen || true)
+    setIsOpen(isModalOpen)
   };
-  const handleClose = () => setOpen(false);
+
+  
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  // const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <div className="z-20 flex !justify-center items-center" onClick={handleOpen}>
-        <ListItemIcon>
-            {icon}
-        </ListItemIcon>
-        {name}
+      <div className="z-20 flex !justify-center items-center py-1" onClick={handleOpen}>
+        <ListItemIcon className="w-max min-w-max">{icon}</ListItemIcon>{name}
       </div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        open={open}
+        open={isOpen}
         onClose={handleClose}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
@@ -50,7 +53,7 @@ export default function TransitionsModal({ name, heading, width, children, icon,
         }}
         // className="bg-[rgba(0,_0,_0,_0.7)]"
       >
-        <Fade in={open}>
+        <Fade in={isOpen}>
           <Box sx={style} className={`${width}`}>
             <Typography id="transition-modal-title">
               {heading}

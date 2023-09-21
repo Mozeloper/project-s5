@@ -1,7 +1,7 @@
 import React from "react";
 import Charts from "../../../components/chart/chart";
 import SummeryCard from "../../../components/SummeryCard/summeryCard";
-import WorkersTable from "../../../components/Table/worker.table";
+import DtiTable from "../../../components/Table/dti.table";
 import { useFetchDtiDashboardAnalytics } from "../../../hooks/useFetchAnalytics";
 
 //Todo - 1. Add loading ui to indicate loading state 
@@ -21,16 +21,19 @@ export default function DTI() {
     },
   ];
 
-  const summeryTitle = ["Souls"];
   return (
     <div className="flex flex-col gap-y-6">
       <div className="">
-        <SummeryCard data={DtiDashboardAnalytics && DtiDashboardAnalytics?.data} loading={isLoading} error={isError} />
+        <SummeryCard
+          data={DtiDashboardAnalytics && DtiDashboardAnalytics?.Data}
+          loading={isLoading}
+          error={isError}
+        />
       </div>
       <div className="bg-white">
-        <Charts type={"heatmap"} datas={ChartDatas} />
+        <Charts type={'heatmap'} datas={ChartDatas} />
       </div>
-      <WorkersTable />
+      <DtiTable />
     </div>
   );
 }

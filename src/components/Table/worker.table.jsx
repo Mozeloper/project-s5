@@ -13,8 +13,8 @@ export default function WorkersTable() {
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
-    const [totalPerPage, setTotalPerPage] = useState(7);
-    const { data: WorkersData, isError, isLoading, isFetching, error, isSuccess } = useWorkersAdmins({ pageNumber })
+    const [pageSize, setPageSize] = useState(2);
+    const { data: WorkersData, isError, isLoading, isFetching, error, isSuccess } = useWorkersAdmins({ pageNumber, pageSize })
 
   // const handleGetAllWorkers = async () => {
   //   setData([]);
@@ -151,9 +151,9 @@ export default function WorkersTable() {
 
   //       console.log('worker', data);
 
-  // const handleChange = (event, value) => {
-  //   setPageNumber(value);
-  // };
+  const handlePaginationChange = (event, value) => {
+    setPageNumber(value);
+  };
 
   return (
     <Fragment>
@@ -176,6 +176,13 @@ export default function WorkersTable() {
             <>
               <Table pageLink={'workers'} tableDataArray={WorkersData && WorkersData?.Data} />
               {/* Pagination will be here */}
+                  
+              <PaginationFooter 
+                pageNumber={pageNumber} 
+                totalPerCount={Math.ceil(WorkersData?.TotalDataCount / pageSize)} 
+                totalCount={Math.ceil(WorkersData?.TotalDataCount)} 
+                handlePaginationChange={handlePaginationChange}
+              /> 
             </>
           }
         </div>

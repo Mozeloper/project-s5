@@ -1,20 +1,20 @@
 import React from 'react';
-import Charts from '../../../components/chart/chart';
 import SummeryCard from '../../../components/SummeryCard/summeryCard';
-import { useFetchNewConvertDashboardAnalytics } from '../../../hooks/useFetchAnalytics';
-import NewBelieversTable from '../../../components/Table/newbelievers.table'
+import { useFetchPersonalAnalytics } from '../../../hooks/useFetchAnalytics';
+import { SoulsTable } from '../../../components/Table/souls.table'
 
 //Todo - 1. Add loading ui to indicate loading state
 //Todo - 2. Replace useEffect with react query for data fetching
 //Todo - 3. Ensure that the "get-all-new-converts" endpoint is now working and not returning 500 then uncomment the code in the SoulsTable
-export default function NewConvert() {
+export default function Souls() {
   const workerId = JSON.parse(sessionStorage.getItem('userObj')).Id;
   console.log(workerId);
   const {
-    data: NewConvertDashboardAnalytics,
+    data: PersonalAnalytics,
     isError,
     isLoading,
-  } = useFetchNewConvertDashboardAnalytics(workerId);
+  } = useFetchPersonalAnalytics({ AnalyticsId: workerId });
+
   const ChartDatas = [
     {
       name: '2022',
@@ -31,9 +31,7 @@ export default function NewConvert() {
     <div className="flex flex-col gap-y-6">
       <div className="">
         <SummeryCard
-          data={
-            NewConvertDashboardAnalytics && NewConvertDashboardAnalytics?.Data
-          }
+          data={PersonalAnalytics && PersonalAnalytics?.Data}
           loading={isLoading}
           error={isError}
         />
@@ -41,7 +39,7 @@ export default function NewConvert() {
       {/* <div className="bg-white">
         <Charts type={'heatmap'} datas={ChartDatas} />
       </div> */}
-      <NewBelieversTable />
+      <SoulsTable />
     </div>
   );
 }

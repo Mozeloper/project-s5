@@ -10,11 +10,18 @@ import { Skeleton } from '@mui/material';
 import ReturnToPrevious from '@/components/ReturnToPrevious';
 import ResultNotFound from '@/components/ResultNotFound';
 import SummeryCard from '../../SummeryCard/summeryCard';
-import { toPascalCase } from '../../../Helper/toPascalCase'
+import { toPascalCase } from '../../../Helper/toPascalCase';
+import { Link } from 'react-router-dom';
 
-const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) => {
+const DetailsByIdScreen = ({
+  data,
+  loading,
+  notFound,
+  personalAnalyticsDatas,
+}) => {
   // Reminder!!! Fetch worker details based on the workerId from your data source
   const [value, setValue] = React.useState('1');
+  console.log(`data : ${data}`);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -81,19 +88,19 @@ const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) 
                     ) : (
                       <div className="bg-green-800 rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center">
                         {/* <small>ACTIVE</small> */}
-                      <>
-                        {data?.IsActive && (
-                          <div
-                            className={`${
-                              data?.IsActive ? 'bg-green-800' : 'bg-red-800'
-                            } rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center`}
-                          >
-                            <small>
-                              {data?.IsActive ? 'Active' : 'Inactive'}
-                            </small>
-                          </div>
-                        )}
-                      </>
+                        <>
+                          {data?.IsActive && (
+                            <div
+                              className={`${
+                                data?.IsActive ? 'bg-green-800' : 'bg-red-800'
+                              } rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center`}
+                            >
+                              <small>
+                                {data?.IsActive ? 'Active' : 'Inactive'}
+                              </small>
+                            </div>
+                          )}
+                        </>
                       </div>
                     )}
                   </div>
@@ -106,7 +113,7 @@ const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) 
                     ) : (
                       <>
                         <small>
-                          {(data && data?.Department) || "Worker's Department"}
+                          {(data && data?.Department) || (data && data?.Status)}
                         </small>{' '}
                         | <small>Limited Access</small>
                       </>
@@ -115,10 +122,10 @@ const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) 
                   <div className="flex items-center gap-5 text-sm">
                     <Email className="h-5" />
                     {/* <h4>{(data && data?.Email) || '...'}</h4> */}
-                    {(data && data?.Email) ? (
+                    {data && data?.Email ? (
                       <h4 className="hover:underline">
                         <a href={`mailto:${data?.Email}`}>
-                          {(data && data?.Email)}
+                          {data && data?.Email}
                         </a>
                       </h4>
                     ) : (
@@ -129,15 +136,32 @@ const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) 
                     <Phone className="h-5" />
                     {/* <h4>{(data && data?.PhoneNumber) || '...'}</h4> */}
                     <h4 className="hover:underline">
-                      {(data && data?.PhoneNumber) ? (
+                      {data && data?.PhoneNumber ? (
                         <a href={`tel:${data?.PhoneNumber}`}>
-                          {(data && data?.PhoneNumber)}
+                          {data && data?.PhoneNumber}
                         </a>
                       ) : (
                         '...'
                       )}
                     </h4>
                   </div>
+                  {data?.CreatedBy && (
+                    <div className="flex items-center gap-2 text-sm">
+                      {/* <h4>{(data && data?.PhoneNumber) || '...'}</h4> */}
+                      <h2 className="font-bold text-blue-900">Won by:</h2>
+                      <h4 className="hover:underline">
+                        {data && data?.PhoneNumber ? (
+                          <Link to={`/workers/${data?.WorkerId}`}>
+                            <span className="text-gray-400 font-semibold">
+                              {data && data?.CreatedBy}
+                            </span>
+                          </Link>
+                        ) : (
+                          '...'
+                        )}
+                      </h4>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -152,8 +176,16 @@ const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) 
                       value="1"
                       className="!p-0 !mr-[50px]"
                     />
-                    <Tab label="Permissions" value="2" className="!p-0 !mr-[50px]" />
-                    <Tab label="Analytics Report" value="Analytics" className="!p-0" />
+                    <Tab
+                      label="Permissions"
+                      value="2"
+                      className="!p-0 !mr-[50px]"
+                    />
+                    <Tab
+                      label="Analytics Report"
+                      value="Analytics"
+                      className="!p-0"
+                    />
                   </TabList>
                 </Box>
                 <TabPanel value="1" className="!px-0">
@@ -200,15 +232,35 @@ const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) 
                       <div className="flex flex-col gap-y-6 mt-6">
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Phone</h3>{' '}
-                          <span>{(data && data?.PhoneNumber) || '...'}</span>
+                          <span>
+                            {data && data?.PhoneNumber ? (
+                              <Link to={`mailto:${data?.PhoneNumber}`} className='hover:underline'>
+                                {data && data?.PhoneNumber}
+                              </Link>
+                            ) : (
+                              '...'
+                            )}
+                          </span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Email</h3>{' '}
-                          <span>{(data && data?.Email) || '...'}</span>
+                          <span>
+                            {data && data?.Email ? (
+                              <Link to={`mailto:${data?.Email}`} className='hover:underline'>
+                                {data && data?.Email}
+                              </Link>
+                            ) : (
+                              '...'
+                            )}
+                          </span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Address</h3>{' '}
-                          <span>{(data && data?.HomeAddress) || '...'}</span>
+                          <span>
+                            {(data && data?.HomeAddress) ||
+                              (data && data?.Address) ||
+                              '...'}
+                          </span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
@@ -242,9 +294,17 @@ const DetailsByIdScreen = ({ data, loading, notFound, personalAnalyticsDatas }) 
                 <TabPanel value="Analytics" className="!px-0">
                   <div className="bg-white rounded-lg p-8 w-full min-h-[400px] flex flex-col gap-y-12">
                     <div className="text-[#111827] font-bold mb-3">
-                      <h2>Analytics Report For Souls Under {data && toPascalCase(data?.FirstName)} {data && toPascalCase(data?.SurName)}</h2>
+                      <h2>
+                        Analytics Report For Souls Under{' '}
+                        {data && toPascalCase(data?.FirstName)}{' '}
+                        {data && toPascalCase(data?.SurName)}
+                      </h2>
                     </div>
-                      <SummeryCard data={personalAnalyticsDatas && personalAnalyticsDatas} loading={loading} error={notFound} />
+                    <SummeryCard
+                      data={personalAnalyticsDatas && personalAnalyticsDatas}
+                      loading={loading}
+                      error={notFound}
+                    />
                   </div>
                 </TabPanel>
               </TabContext>

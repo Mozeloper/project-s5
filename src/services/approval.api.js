@@ -1,17 +1,17 @@
 import axios from "axios";
 import { appUrls } from "./urls";
 import { axiosRequest } from "../utils/axios-utils";
+import { api } from "./api";
 const baseUrl = import.meta.env.VITE_BASE_URL
 
-const token = sessionStorage.getItem('token');
-export async function getAllUnApproval() {
+export async function getAllUnApproval({ pageNumber, pageSize }) {
     try {
         // const UnApproval = await axios.get(`${baseUrl}${appUrls.GET_ALL_UNAPPROVED_WORKERS}`, {
         //     headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
         // })
         // const fetchUnApproval =  await UnApproval?.data
         // return await fetchUnApproval
-        const fetchUnApproval = await axiosRequest({ url : `${appUrls?.GET_ALL_UNAPPROVED_WORKERS}`})
+        const fetchUnApproval = await axiosRequest({ url : `${appUrls?.GET_ALL_UNAPPROVED_WORKERS}?page=${pageNumber}&pageSize=${pageSize}`})
         return fetchUnApproval?.data
     } catch (error) {
         throw new Error(error.message || error)
@@ -19,10 +19,23 @@ export async function getAllUnApproval() {
 }
 
 
-export async function getAllDeactivatedWorker() {
+export async function getAllDeactivatedWorker({ pageNumber, pageSize }) {
     try {
-        const AllDeactivatedWorker =  await axiosRequest({ url : `${appUrls.GET_ALL_DEACTIVATED_WORKERS}`})
+        const AllDeactivatedWorker =  await axiosRequest({ url : `${appUrls.GET_ALL_DEACTIVATED_WORKERS}?page=${pageNumber}&pageSize=${pageSize}`})
         return await AllDeactivatedWorker?.data
+    } catch (error) {
+        throw new Error(error.message || error)
+    }
+}
+
+export async function getAllDeactivatedNewConvert({ pageNumber, pageSize }) {
+    try {
+        // const AllDeactivatedWorker =  await axiosRequest({ url : `${appUrls.GET_ALL_DEACTIVATED_NEWCONVERTS}?page=${pageNumber}&pageSize=${pageSize}`})
+        // return await AllDeactivatedWorker?.data
+
+        const AllDeactivatedNewConvert = await api.get(`${baseUrl}${appUrls.GET_ALL_DEACTIVATED_NEWCONVERTS}?page=${pageNumber}&pageSize=${pageSize}`)
+        const fetchDeactivatedNewConvert =  await AllDeactivatedNewConvert?.data?.Data
+        return await fetchDeactivatedNewConvert
     } catch (error) {
         throw new Error(error.message || error)
     }

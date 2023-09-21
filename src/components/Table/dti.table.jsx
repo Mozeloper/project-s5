@@ -1,70 +1,74 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import TransitionsModal from '../ModalPopup/modalTransition';
-import AddSoulsFormControl from '../UI/Forms/addSoul.form';
+import { useNavigate } from 'react-router-dom';
 import SearchBox from '../Searchbox/searchbox';
 import ReusableTable from './Table.reusable';
 import PaginationFooter from '../PaginationFooter';
-import { useFetchMinistry } from '../../hooks/useFetchMinistry';
+import { useFetchDti } from '../../hooks/useFetchDti';
 import ConfirmDeactivate from '../UI/confirmation screen';
 import { GrView } from 'react-icons/gr';
 import { GiConfirmed } from 'react-icons/gi';
 import { IoRemoveCircleSharp } from 'react-icons/io5';
 import Loader from '../Loader';
+import PromoteScreen from '../UI/PromoteScreen'
 
-export default function MinstryTable() {
+export default function DtiTable() {
+  const navigate = useNavigate();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(2);
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
   const {
-    data: MinistryData,
+    data: DtiConverts,
     isError,
     isLoading,
     isFetching,
     error,
-  } = useFetchMinistry({ pageNumber, pageSize });
+  } = useFetchDti();
 
   useEffect(() => {
     const getPosts = async () => {
-      const ministry = (await MinistryData?.Data) || [];
-      setData(ministry);
-      //Object.keys returns the property names of/in an object as string of arrays
-      setHeaders(Object.keys(ministry[0] || []));
+      const dtiRes = await DtiConverts?.Data || [];
+      if (dtiRes == null || dtiRes == undefined) {
+        setData([]);
+      }
+      setData(!isError && dtiRes);
+      setHeaders(Object.keys(dtiRes[0] || []));
     };
+    // console.log(data);
     getPosts();
-  }, [MinistryData]);
+  }, [DtiConverts]);
 
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
-    { icon: <GiConfirmed className="text-green-500" />, name: 'Modify' },
+    { icon: <GiConfirmed className="text-green-500" />, name: 'Promote' },
     {
       icon: <IoRemoveCircleSharp className="text-yellow-500" />,
       name: 'Suspend',
     },
   ];
 
-  const handleOptionsClick = (event) => {
+    const handleModifyConvert = (id) => {
+      console.log(`modifying convert with ${id}`);
+    };
+    const handleSuspendCovert = (id) => {
+      console.log(`suspend convert with id of ${id}`);
+    };
+
+  const handleDtiOptionsClick = (event) => {
     const innerText = event.currentTarget.innerText;
     const id = event.currentTarget.id;
-    if (innerText.toLowerCase() === 'view') {
+     if (innerText.toLowerCase() === 'promote') {
       setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleViewAdmin.bind(null, id)}
-          screenName={innerText}
-        />
-      );
-    } else if (innerText.toLowerCase() === 'modify') {
-      setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleModifyAdmin.bind(null, id)}
+        <PromoteScreen
+          workerId={id}
           screenName={innerText}
         />
       );
     } else {
       setDisplayUi(
         <ConfirmDeactivate
-          handleDeactivate={handleSuspendAdmin.bind(null, id)}
+          handleDeactivate={handleSuspendCovert.bind(null, id)}
           screenName={innerText}
         />
       );
@@ -83,21 +87,12 @@ export default function MinstryTable() {
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-base font-semibold leading-6 text-gray-900">
-                Ministry
+                DTI
               </h1>
               <p className="mt-2 text-sm text-gray-700">
-                The list of all the Ministers.
+                List of Converts in Discipleship In Training Institue.
               </p>
             </div>
-            {/* <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-              <button
-                className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6"
-              > 
-                <TransitionsModal name={'+ Add Soul'} heading={'Add New Soul Form'} width={'max-w-6xl w-[90%]'}>
-                  <AddSoulsFormControl />
-                </TransitionsModal>
-              </button>
-            </div> */}
           </div>
           {isLoading ? (
             <Loader />
@@ -105,28 +100,28 @@ export default function MinstryTable() {
             <div>An Error occurred: {error.message} </div>
           ) : (
             <>
-              {data?.length < 1 ? (
+              {data?.length < 1 || !data ? (
                 <div className="flex justify-center items-center h-96">
                   Sorry! An error occurred, refresh and try again
                 </div>
               ) : (
                 <>
                   <ReusableTable
-                    pageLink={'ministry'}
+                    pageLink={'dti'}
                     optionModal={displayUi}
                     headers={headers}
-                    data={data}
+                    data={!isError && data}
                     filterNumber={10}
                     optionArrayList={optionList}
-                    optionsHandleClick={handleOptionsClick}
+                    optionsHandleClick={handleDtiOptionsClick}
                   />
 
                   <PaginationFooter
                     pageNumber={pageNumber}
                     totalPerCount={Math.ceil(
-                      MinistryData?.TotalDataCount / pageSize
+                      DtiConverts?.TotalDataCount / pageSize
                     )}
-                    totalCount={Math.ceil(MinistryData?.TotalDataCount)}
+                    totalCount={Math.ceil(DtiConverts?.TotalDataCount)}
                     handlePaginationChange={handlePaginationChange}
                   />
                 </>

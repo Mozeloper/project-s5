@@ -24,7 +24,7 @@ export default function Ministry() {
   return (
     <div className="flex flex-col gap-y-6">
       <div className="">
-        <SummeryCard data={MinistryDashboardAnalytics && MinistryDashboardAnalytics?.data} loading={isLoading} error={isError} />
+        <SummeryCard data={MinistryDashboardAnalytics && MinistryDashboardAnalytics?.Data} loading={isLoading} error={isError} />
       </div>
       <div className="bg-white">
         <Charts type={"scatter"} datas={ChartDatas} />
