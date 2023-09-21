@@ -21,6 +21,7 @@ const UnapprovedWorkerDetailsById = React.lazy(() => import("./pages/dashboard/U
 const DTI = React.lazy(() => import("./pages/dashboard/DTI"));
 const NewConvert = React.lazy(() => import("./pages/dashboard/NewConvert"));
 const NewConvertDetailsById = React.lazy(() => import("./pages/dashboard/NewConvert/[NewConvert-id]"));
+const Souls = React.lazy(() => import("./pages/dashboard/Souls"));
 const Ministry = React.lazy(() => import("./pages/dashboard/Ministry"));
 const ChangePassword = React.lazy(() => import("./pages/auth/changePassword"));
 const ForgetPassword = React.lazy(() => import("./pages/auth/forgetPassword"));
@@ -108,7 +109,7 @@ function App() {
               path="/souls"
               element={
                 <React.Suspense fallback={<>...</>}>
-                  <NewConvert />
+                  <Souls />
                 </React.Suspense>
               }
             />
