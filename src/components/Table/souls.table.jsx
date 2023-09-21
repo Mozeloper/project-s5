@@ -21,7 +21,7 @@ export const SoulsTable = ({ isAdmin = false }) => {
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(2);
+  const [pageSize, setPageSize] = useState(5);
   const {
     data: soulsData,
     isError,
@@ -41,7 +41,7 @@ export const SoulsTable = ({ isAdmin = false }) => {
     };
     getPosts();
     // console.log(data);
-  }, [soulsData, useFetchAllNewConvertDynamic, data]);
+  }, [useFetchAllNewConvertDynamic, isAdmin, data]);
 
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
