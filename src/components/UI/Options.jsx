@@ -12,11 +12,15 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from "react-router-dom";
+import { useModalToggle } from '../../context/ConfirmationModal.context';
 
 export default function TableOptions({ optionsList, handleClick, displayModalUi, id, pageLink }) {
   const navigate = useNavigate();
+  
+  const [open, setOpen] = React.useState(true);
 
   const handleView = (event) => {
+    // setOpen(prev => prev = true)
     const innerText = event.currentTarget.innerText
     const id = event.currentTarget.id
     if ( innerText.toLowerCase() === 'view') {
@@ -45,7 +49,7 @@ export default function TableOptions({ optionsList, handleClick, displayModalUi,
             {
               optionsList?.map((option) =>
                 <MenuItem key={option.name} id={id} onClick={handleView} value={option.name} className='flex justify-between text-slate-700'>
-                    <TransitionsModal isOpen={true} name={option.name} icon={option.icon} heading={`${option.name} Screen`} width={'max-w-max w-[90%]'}>
+                    <TransitionsModal isModalOpen={open} name={option.name} icon={option.icon} heading={`${option.name} Screen`} width={'max-w-max w-[90%]'}>
                       {displayModalUi}
                     </TransitionsModal>
                 </MenuItem>
