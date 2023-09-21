@@ -60,7 +60,7 @@ const ReusableTable = ({
                         : camelCaseToSingleWords(head)}
                     </th>
                   ))}
-                <th>{headers && headers.length > 1 && 'Actions'}</th>
+                <th className="pr-3 py-3.5 text-left uppercase text-sm font-semibold text-gray-900">{headers && headers.length > 1 && 'ACTIONS'}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
@@ -148,7 +148,7 @@ const ReusableTable = ({
                         )}
                       </td>
                     ))}
-                  <td>
+                  <td className="text-center">
                     {
                       headers && headers.length > 1 && (
                         <TableOptions
