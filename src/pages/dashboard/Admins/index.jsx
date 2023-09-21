@@ -30,7 +30,7 @@ export default function Admins() {
   return (
     <div className="flex flex-col gap-y-6">
       <div className="">
-        <SummeryCard data={AdminDashboardAnalytics && AdminDashboardAnalytics?.data} loading={isLoading} error={isError} />
+        <SummeryCard data={AdminDashboardAnalytics && AdminDashboardAnalytics?.Data} loading={isLoading} error={isError} />
       </div>
       <div className="bg-white">
         <Charts type={"area"} datas={ChartDatas} />

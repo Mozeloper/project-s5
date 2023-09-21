@@ -32,7 +32,7 @@ export default function NewConvert() {
       <div className="">
         <SummeryCard
           data={
-            NewConvertDashboardAnalytics && NewConvertDashboardAnalytics?.data
+            NewConvertDashboardAnalytics && NewConvertDashboardAnalytics?.Data
           }
           loading={isLoading}
           error={isError}

@@ -13,7 +13,7 @@ export default function AdminDetails() {
 
   return (
     <div>
-      <DetailsByIdScreen personalAnalyticsDatas={personalAnalyticsDatas && personalAnalyticsDatas?.data} data={!isLoading && adminInfo} loading={isLoading} notFound={!adminInfo && isError} />
+      <DetailsByIdScreen personalAnalyticsDatas={personalAnalyticsDatas && personalAnalyticsDatas?.Data} data={!isLoading && adminInfo} loading={isLoading} notFound={!adminInfo && isError} />
     </div>
   );
 }

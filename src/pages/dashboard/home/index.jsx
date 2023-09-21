@@ -86,7 +86,7 @@ export default function Home() {
             <div className="">
               <SummeryCard
                 data={
-                  DynamicDashboardAnalytics && DynamicDashboardAnalytics?.data
+                  DynamicDashboardAnalytics && DynamicDashboardAnalytics?.Data
                 }
                 loading={isLoading}
                 error={isError}
@@ -102,7 +102,7 @@ export default function Home() {
             The tableDataLimit is not fully implemented yet
             Todo - Renders all the table datas on the admins page dashboard and
             */}
-            <SoulsTable isAdmin={isSuperAdmin} tableDataLimit={11} />
+            {/* <SoulsTable isAdmin={isSuperAdmin} tableDataLimit={11} /> */}
           </TabPanel>
           {isSuperAdmin && (
             <TabPanel value="3" className="!px-2">

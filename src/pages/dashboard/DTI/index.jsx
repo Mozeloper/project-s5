@@ -25,7 +25,7 @@ export default function DTI() {
     <div className="flex flex-col gap-y-6">
       <div className="">
         <SummeryCard
-          data={DtiDashboardAnalytics && DtiDashboardAnalytics?.data}
+          data={DtiDashboardAnalytics && DtiDashboardAnalytics?.Data}
           loading={isLoading}
           error={isError}
         />

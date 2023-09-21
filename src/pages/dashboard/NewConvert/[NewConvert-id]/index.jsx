@@ -12,7 +12,7 @@ export default function NewConvertDetails() {
 
   return (
     <div>
-      <DetailsByIdScreen personalAnalyticsDatas={personalAnalyticsDatas && personalAnalyticsDatas?.data} data={!isLoading && soulInfo} loading={isLoading} notFound={!soulInfo && isError} />
+      <DetailsByIdScreen personalAnalyticsDatas={personalAnalyticsDatas && personalAnalyticsDatas?.Data} data={!isLoading && soulInfo} loading={isLoading} notFound={!soulInfo && isError} />
     </div>
   );
 }
