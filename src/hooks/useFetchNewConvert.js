@@ -4,7 +4,7 @@ import { getASoul } from '../services/details(id).api';
 
 export function useFetchAllNewConvert({ pageNumber, pageSize }) {
   const NewConvert = useQuery(
-    [`NewBeliever`, pageNumber],
+    [`NewConvert`, pageNumber],
     async () => await getAllNewConvert({ pageNumber, pageSize }),
     {
       staleTime: 360000,
@@ -18,23 +18,23 @@ export function useFetchAllNewConvertDynamic({
   workerId,
   isAdmin,
   pageNumber,
-  pageSize
+  pageSize,
 }) {
   // console.log(`is this an admin request? ${isAdmin}`);
   if (isAdmin == true) {
-    const NewConvert = useQuery(
-      [`NewBeliever`, pageNumber],
+    const AllNewConverts = useQuery(
+      [`AllNewConverts`, pageNumber, isAdmin],
       async () => await getAllNewConvert({ pageNumber, pageSize }),
       {
         staleTime: 360000,
-        enabled: !!pageNumber,
+        enabled: !!pageNumber && !!isAdmin,
         keepPreviousData: true,
       }
     );
-    return NewConvert;
+    return AllNewConverts;
   } else {
-    const NewConvert = useQuery(
-      [`NewBeliever`, pageNumber],
+    const ConvertsUnderMe = useQuery(
+      [`ConvertsUnderMe`, pageNumber],
       async () => await getSoulsUnderMe({ pageNumber, pageSize }),
       {
         staleTime: 360000,
@@ -42,8 +42,22 @@ export function useFetchAllNewConvertDynamic({
         keepPreviousData: true,
       }
     );
-    return NewConvert;
+    return ConvertsUnderMe;
   }
+}
+
+export function useFetchSoulsUnderMe({ pageNumber, pageSize }) {
+  // console.log('singleSoul soulId', soulId);
+  const ConvertsUnderMe = useQuery(
+    [`ConvertsUnderMe`, pageNumber],
+    async () => await getSoulsUnderMe({ pageNumber, pageSize }),
+    {
+      staleTime: 360000,
+      enabled: !!pageNumber,
+      keepPreviousData: true,
+    }
+  );
+  return ConvertsUnderMe;
 }
 
 export function useSoulDetails({ soulId }) {

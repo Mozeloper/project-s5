@@ -1,5 +1,13 @@
 import { useQuery } from "react-query"
-import { getAllAdminDashboardAnalytics, getAllDtiDashboardAnalytics, getAllMinistryDashboardAnalytics, getAllNewConvertDashboardAnalytics, getAllSoulsCount, getAllWorkersCount, getPersonalAnalytics } from "../services/analytics.api";
+import {
+  getAllAdminDashboardAnalytics,
+  getAllDtiDashboardAnalytics,
+  getAllMinistryDashboardAnalytics,
+  getAllNewConvertDashboardAnalytics,
+  getAllSoulsCount,
+  getAllWorkersCount,
+  getPersonalAnalytics,
+} from '../services/analytics.api';
 
 export function useFetchWorkersCount() {
     const workersCount = useQuery([`workersCount`], async () => await getAllWorkersCount(), {
@@ -15,33 +23,36 @@ export function useFetchSoulsCount() {
     return soulsCount
 }
 
-export function useFetchAdminDashboardAnalytics() {
-    const AdminsAnalytics = useQuery([`AdminsCountAnalytics`], async () => await getAllAdminDashboardAnalytics(), {
-        staleTime: 360000,
-    });
-    return AdminsAnalytics
-}
 export function useFetchDynamicDashboardAnalytics({ roles, userId }) {
   // console.log(`this is the role ${roles.includes('SuperAdmin')}`);
   if (roles.includes('SuperAdmin')) {
-    const Analytics = useQuery(
-      [`CountAnalytics`],
+    const AdminAnalytics = useQuery(
+      [`AdminCountAnalytics`],
       async () => await getAllAdminDashboardAnalytics(),
       {
         staleTime: 360000,
       }
     );
-    return Analytics;
+    return AdminAnalytics;
   } else {
     const Analytics = useQuery(
-      [`CountAnalytics`],
+      [`CountAnalytics`, userId],
       async () => await getPersonalAnalytics(userId),
       {
         staleTime: 360000,
+        enabled: !!userId,
+        keepPreviousData: true,
       }
     );
     return Analytics;
   }
+}
+
+export function useFetchAdminDashboardAnalytics() {
+    const AdminsAnalytics = useQuery([`AdminsCountAnalytics`], async () => await getAllAdminDashboardAnalytics(), {
+        staleTime: 360000,
+    });
+    return AdminsAnalytics
 }
 
 export function useFetchNewConvertDashboardAnalytics({ workerId }) {
@@ -70,11 +81,15 @@ export function useFetchMinistryDashboardAnalytics() {
 }
 
 export function useFetchPersonalAnalytics({ AnalyticsId }) {
-    const singleAnalytics = useQuery({
-        queryKey: ['Analytics', AnalyticsId],
-        queryFn: async () => await getPersonalAnalytics(AnalyticsId),
-        staleTime: 360000,
-        enabled: !!AnalyticsId, //Only run this function if Id is available
-    })
-    return singleAnalytics;
+  const singleAnalytics = useQuery(
+    ['PersonalAnalytics', AnalyticsId],
+    async () => await getPersonalAnalytics(AnalyticsId),
+    {
+      staleTime: 360000,
+      enabled: !!AnalyticsId, //Only run this function if Id is available
+      keepPreviousData: true,
+    }
+  );
+  return singleAnalytics;
 }
+

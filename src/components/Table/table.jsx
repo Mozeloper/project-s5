@@ -105,19 +105,19 @@ const handleClick = (event) => {
                 <tr key={person.Id}>
                   <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                     {/* <div className="flex items-center"> */}
-                      {/* <div className="h-11 w-11 flex-shrink-0 bg-gray-100 rounded-full">
+                    {/* <div className="h-11 w-11 flex-shrink-0 bg-gray-100 rounded-full">
                         <img
                           className="h-full w-full rounded-full"
                           src={person.image}
                           alt=""
                         />
                       </div> */}
-                      <Link to={`/${pageLink}/${person.Id}`} className="ml-4">
-                        <div className="font-medium text-gray-900 capitalize">
-                          {person.FirstName}{" "}{person.SurName}
-                        </div>
-                        <div className="mt-1 text-gray-500">{person.Email}</div>
-                      </Link>
+                    <Link to={`/${pageLink}/${person.Id}`} className="ml-4">
+                      <div className="font-medium text-gray-900 capitalize">
+                        {person.FullName}
+                      </div>
+                      <div className="mt-1 text-gray-500">{person.Email}</div>
+                    </Link>
                     {/* </div> */}
                   </td>
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
@@ -133,12 +133,12 @@ const handleClick = (event) => {
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                     <span
                       className={`inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium ${
-                        person.IsActive == 1
+                        person.IsActive
                           ? 'text-green-700 bg-green-50 '
                           : 'text-red-700 bg-red-50'
                       }  ring-1 ring-inset ring-green-600/20`}
                     >
-                      {person.IsActive == 1 ? 'Active' : 'Not Active'}
+                      {person.IsActive ? 'Active' : 'Not Active'}
                     </span>
                   </td>
                   {/*<td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">

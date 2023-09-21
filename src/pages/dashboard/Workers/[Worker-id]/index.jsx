@@ -12,7 +12,7 @@ export default function Worker() {
 
   return (
     <div>
-      <DetailsByIdScreen personalAnalyticsDatas={personalAnalyticsDatas && personalAnalyticsDatas?.data} data={!isLoading && workerInfo} loading={isLoading} notFound={!workerInfo && isError} />
+      <DetailsByIdScreen personalAnalyticsDatas={personalAnalyticsDatas && personalAnalyticsDatas?.Data} data={!isLoading && workerInfo} loading={isLoading} notFound={!workerInfo && isError} />
     </div>
   );
 }

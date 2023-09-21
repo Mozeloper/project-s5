@@ -33,8 +33,20 @@ export async function getAllConvertsInDti() {
     const dtiConverts = await api.get(
       `${baseUrl}${appUrls.GET_ALL_DTIAdmin_URL}`
     );
-    const fetchDtiConverts = await dtiConverts?.data?.data;
+    const fetchDtiConverts = await dtiConverts?.data?.Data;
     return await fetchDtiConverts;
+  } catch (error) {
+    throw new Error(error.message || error);
+  }
+}
+
+export async function getAllConvertsInNewBelievers() {
+  try {
+    const newbeleiversConverts = await api.get(
+      `${baseUrl}${appUrls.GET_ALL_NEW_BELIEVERS_CONVERTS}`
+    );
+    const fetchNewBelieversConverts = await newbeleiversConverts?.data?.Data;
+    return await fetchNewBelieversConverts;
   } catch (error) {
     throw new Error(error.message || error);
   }
@@ -51,7 +63,7 @@ export async function promoteConvertToMinistry(convertId, departmentId) {
       `${baseUrl}${appUrls.PROMOTE_CONVERT_TO_MINISTRY}`,
       payload
     );
-    const PromotedConvertRes = await promotedConvert?.data?.data;
+    const PromotedConvertRes = await promotedConvert?.data?.Data;
     return PromotedConvertRes;
   } catch (error) {
     throw new Error(error.message || error);

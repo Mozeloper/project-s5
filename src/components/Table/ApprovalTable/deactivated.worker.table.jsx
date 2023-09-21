@@ -17,9 +17,9 @@ export default function DeactivatedWorkerTable() {
 
     useEffect(() => {
       const getPosts = async () => {
-      const admins = await DeactivatedWorkerData?.Data
-      setData(admins || []);
-      setHeaders(Object.keys(await admins[0] || []));
+      const deactivatedWorkerRes = await DeactivatedWorkerData?.Data || []
+      setData(deactivatedWorkerRes || []);
+      setHeaders(Object.keys(await deactivatedWorkerRes[0] || []));
     };
     getPosts();
   }, [DeactivatedWorkerData]);

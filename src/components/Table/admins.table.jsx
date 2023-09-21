@@ -37,14 +37,14 @@ export default function AdminTables() {
   useEffect(() => {
     const getPosts = async () => {
       // make sure you add await to the return data from react query (hook)
-      const admins = await AdminsData;
+      const admins = await AdminsData?.Data || [];
       console.log('admins', admins);
-      if ((await admins?.Data) == null) {
+      if (admins == null) {
         setData([]);
       }
-      setData(await admins?.Data);
+      setData(admins || []);
       //Object.keys returns the property names of/in an object as string of arrays
-      setHeaders(Object.keys((await admins?.Data?.[0]) || []));
+      setHeaders(Object.keys(admins[0] || []));
     };
     getPosts();
   }, [useFetchAdmins, AdminsData, setData]);

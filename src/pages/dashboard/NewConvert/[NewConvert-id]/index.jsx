@@ -8,11 +8,13 @@ import { useFetchPersonalAnalytics } from '../../../../hooks/useFetchAnalytics';
 export default function NewConvertDetails() {
   const { soulId } = useParams();
   const { data: soulInfo, isError, isLoading } = useSoulDetails({ soulId })
-  const { data: personalAnalyticsDatas } = useFetchPersonalAnalytics({ AnalyticsId: soulId})
+  const { data: personalAnalyticsDatas } = useFetchPersonalAnalytics({
+    AnalyticsId: soulId,
+  });
 
   return (
     <div>
-      <DetailsByIdScreen personalAnalyticsDatas={personalAnalyticsDatas && personalAnalyticsDatas?.data} data={!isLoading && soulInfo} loading={isLoading} notFound={!soulInfo && isError} />
+      <DetailsByIdScreen personalAnalyticsDatas={personalAnalyticsDatas && personalAnalyticsDatas?.Data} data={!isLoading && soulInfo} loading={isLoading} notFound={!soulInfo && isError} />
     </div>
   );
 }

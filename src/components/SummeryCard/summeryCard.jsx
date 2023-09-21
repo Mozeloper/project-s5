@@ -5,6 +5,7 @@ function classNames(...classes) {
 }
 
 export default function SummeryCard({ data, error, loading }) {
+  // console.log(`the data arrived: ${data}`)
   
   //Diagram of the analytics api response
   // const dataResponse = {
@@ -18,10 +19,13 @@ export default function SummeryCard({ data, error, loading }) {
   // }
 
   const stats = [
-    { message: "Souls Last Week", data: data && data.soulsCountLastWeek },
-    { message: "Souls This month", data: data && data.soulsCountThisMonth },
-    { message: "Souls Last month", data: data && data.soulsCountLastMonth },
-    { message: "Total Souls", data: data && data.totalSoulsCountSinceInception },
+    { message: 'Souls Last Week', data: data && data.SoulsCountLastWeek },
+    { message: 'Souls This month', data: data && data.SoulsCountThisMonth },
+    { message: 'Souls Last month', data: data && data.SoulsCountLastMonth },
+    {
+      message: 'Total Souls',
+      data: data && data.TotalSoulsCountSinceInception,
+    },
     // { message: "Success rate", data: "98.5%" },
   ];
 

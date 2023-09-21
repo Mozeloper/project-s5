@@ -24,7 +24,7 @@ export default function PromoteScreen({
     departmentId: '',
   });
 
-  const signupSchema = Yup.object().shape({
+  const addSoulSchema = Yup.object().shape({
     departmentId: Yup.number().required('Select Department'),
   });
 
@@ -112,7 +112,7 @@ export default function PromoteScreen({
           <div>
             <Formik
               initialValues={formValues}
-              validationSchema={signupSchema}
+              validationSchema={addSoulSchema}
               onSubmit={(values) => {
                 //handleFormSubmit(values);
                 setFormValues(values);
@@ -171,7 +171,7 @@ export default function PromoteScreen({
       )}
       {showConfirmationButton && (
         <div>
-          <h3>Are you sure you want to promote this Convert?</h3>
+          <h3 className='mb-5'>Are you sure you want to promote this Convert?</h3>
           <Button
             title="Confirm"
             className="w-full h-[56px] text-center rounded-2xl"
