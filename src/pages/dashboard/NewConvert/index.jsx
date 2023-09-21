@@ -1,8 +1,8 @@
 import React from 'react';
-import { SoulsTable } from '../../../components/Table/souls.table';
 import Charts from '../../../components/chart/chart';
 import SummeryCard from '../../../components/SummeryCard/summeryCard';
 import { useFetchNewConvertDashboardAnalytics } from '../../../hooks/useFetchAnalytics';
+import NewBelieversTable from '../../../components/Table/newbelievers.table'
 
 //Todo - 1. Add loading ui to indicate loading state
 //Todo - 2. Replace useEffect with react query for data fetching
@@ -41,7 +41,7 @@ export default function NewConvert() {
       {/* <div className="bg-white">
         <Charts type={'heatmap'} datas={ChartDatas} />
       </div> */}
-      <SoulsTable />
+      <NewBelieversTable />
     </div>
   );
 }
