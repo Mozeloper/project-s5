@@ -40,6 +40,18 @@ export async function getAllConvertsInDti() {
   }
 }
 
+export async function getAllConvertsInNewBelievers() {
+  try {
+    const newbeleiversConverts = await api.get(
+      `${baseUrl}${appUrls.GET_ALL_NEW_BELIEVERS_CONVERTS}`
+    );
+    const fetchNewBelieversConverts = await newbeleiversConverts?.data?.Data;
+    return await fetchNewBelieversConverts;
+  } catch (error) {
+    throw new Error(error.message || error);
+  }
+}
+
 export async function promoteConvertToMinistry(convertId, departmentId) {
   const payload = {
     id: `${convertId}`,
