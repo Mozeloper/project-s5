@@ -3,6 +3,10 @@ import Charts from '../../../components/chart/chart';
 import SummeryCard from '../../../components/SummeryCard/summeryCard';
 import AdminTables from '../../../components/Table/admins.table';
 import { SoulsTable } from '../../../components/Table/souls.table';
+import { SoulsAdminTable } from '../../../components/Table/souls.admin.table';
+import MinstryTable from '../../../components/Table/ministry.table';
+import DtiTable  from '../../../components/Table/dti.table';
+import NewBelieversTable  from '../../../components/Table/newbelievers.table';
 import {
   useFetchAdminDashboardAnalytics,
   useFetchDynamicDashboardAnalytics,
@@ -30,17 +34,38 @@ export default function Home() {
 
   const roles = JSON.parse(sessionStorage.getItem('role'));
   const isSuperAdmin = roles.includes('SuperAdmin');
+  const isMinistryAdmin = roles.includes('MinistryAdmin');
+  const isDtiAdmin = roles.includes('DTIAdmin');
+  const isNewBelieversAdmin = roles.includes('NewConvertAdmin');
   console.log(isSuperAdmin);
 
   const fullName = userFullName();
   const userObj = JSON.parse(sessionStorage.getItem('userObj'));
   const userId = userObj?.Id;
 
-  const {
-    data: DynamicDashboardAnalytics,
-    isError,
-    isLoading,
-  } = useFetchDynamicDashboardAnalytics({ roles, userId });
+  // if(!isSuperAdmin) {
+
+  // const {
+  //   data: DynamicDashboardAnalytics,
+  //   isError,
+  //   isLoading,
+  // } = useFetchMyAnalytics();
+
+  // return (data, isError, isLoading)
+
+  // } else {
+
+  // const {
+  //   data: DynamicDashboardAnalytics,
+  //   isError,
+  //   isLoading,
+  // } = useFetchAdminDashboardAnalytics({
+  //   userId,
+  // });
+
+  // return data, isError, isLoading;
+
+  // }
 
   const ChartDatas = [
     {
@@ -84,13 +109,13 @@ export default function Home() {
           </Box>
           <TabPanel value="1" className="!px-2">
             <div className="">
-              <SummeryCard
+              {/* <SummeryCard
                 data={
                   DynamicDashboardAnalytics && DynamicDashboardAnalytics?.Data
                 }
                 loading={isLoading}
                 error={isError}
-              />
+              /> */}
             </div>
             <div className="p-2"></div>
             <div className="bg-white rounded-md">
@@ -102,8 +127,19 @@ export default function Home() {
             The tableDataLimit is not fully implemented yet
             Todo - Renders all the table datas on the admins page dashboard and
             */}
-            {/* <SoulsTable isAdmin={isSuperAdmin} tableDataLimit={11} /> */}
+            {isSuperAdmin ? (
+              <SoulsAdminTable />
+            ) : isMinistryAdmin ? (
+              <MinstryTable />
+            ) : isDtiAdmin ? (
+              <DtiTable />
+            ) : isNewBelieversAdmin ? (
+              <NewBelieversTable />
+            ) : (
+              <SoulsTable />
+            )}
           </TabPanel>
+
           {isSuperAdmin && (
             <TabPanel value="3" className="!px-2">
               <div className="rounded-md bg-white flex justify-center items-center min-h-[50vh]">
