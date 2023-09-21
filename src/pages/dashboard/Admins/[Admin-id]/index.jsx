@@ -9,7 +9,9 @@ import { useFetchPersonalAnalytics } from '../../../../hooks/useFetchAnalytics';
 export default function AdminDetails() {
   const { adminId } = useParams();
   const { data: adminInfo, isError, isLoading } = useAdminDetails({ adminId })
-  const { data: personalAnalyticsDatas } = useFetchPersonalAnalytics({ AnalyticsId: adminId})
+  const { data: personalAnalyticsDatas } = useFetchPersonalAnalytics({
+    AnalyticsId: adminId,
+  });
 
   return (
     <div>
