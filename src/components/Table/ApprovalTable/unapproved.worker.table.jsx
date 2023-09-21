@@ -4,6 +4,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { GiConfirmed } from 'react-icons/gi'
 import ReusableTable from '../Table.reusable';
 import PaginationFooter from '../../PaginationFooter';
+import Loader from '../../Loader';
 import { useFetchAllUnapproved, usePostApproveWorker, usePostDeleteWorker } from '@/hooks/useFetchUnapproved';
 import ConfirmDeactivate from '../../UI/confirmation screen';
 
@@ -86,7 +87,7 @@ export default function UnapprovedWorkerTable() {
     <div className="px-8 bg-white pt-7 grid grid-cols-1 gap-y-2">
       <h3 className='sm:text-left text-center'>The List of all pending / Unapproved workers</h3>
         {
-            isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred </div> : 
+            isLoading ? <Loader /> : isError ? <div>An Error occurred </div> : 
         <>
           {
             data?.length < 1 || !data  ? 

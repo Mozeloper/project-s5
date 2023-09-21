@@ -4,6 +4,7 @@ import { GrConnect } from 'react-icons/gr'
 import { useFetchAllDeactivatedWorker } from '../../../hooks/useFetchUnapproved';
 import ReusableTable from '../Table.reusable';
 import PaginationFooter from '../../PaginationFooter';
+import Loader from '../../Loader';
 
 
 export default function DeactivatedWorkerTable() {
@@ -47,7 +48,7 @@ export default function DeactivatedWorkerTable() {
     <div className="px-8 bg-white pt-7 grid grid-cols-1 gap-y-8">
       <h3 className='sm:text-left text-center'>The List of all Suspended / Deactivated workers</h3>
         {
-            isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred </div> : 
+            isLoading ? <Loader /> : isError ? <div>An Error occurred </div> : 
         <>
           <ReusableTable 
             pageLink={'reminder/deactivatedWorker'} 

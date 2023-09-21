@@ -9,6 +9,7 @@ import ConfirmDeactivate from '../UI/confirmation screen';
 import { GrView } from 'react-icons/gr';
 import { GiConfirmed } from 'react-icons/gi';
 import { IoRemoveCircleSharp } from 'react-icons/io5';
+import Loader from '../Loader';
 
 export default function MinstryTable() {
     const [pageNumber, setPageNumber] = useState(1);
@@ -63,7 +64,7 @@ export default function MinstryTable() {
                 The list of all the Ministers.
               </p>
             </div>
-            <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+            {/* <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
               <button
                 className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6"
               > 
@@ -71,10 +72,10 @@ export default function MinstryTable() {
                   <AddSoulsFormControl />
                 </TransitionsModal>
               </button>
-            </div>
+            </div> */}
           </div>
          {
-            isLoading ? <div>Loading...</div> : isError ? <div>An Error occurred: {error.message} </div> : 
+            isLoading ? <Loader /> : isError ? <div>An Error occurred: {error.message} </div> : 
             <>
               {
                 data?.length < 1 ? <div className='flex justify-center items-center h-96'>Sorry! An error occurred, refresh and try again</div> : 

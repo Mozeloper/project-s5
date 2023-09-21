@@ -21,6 +21,28 @@ export function useFetchAdminDashboardAnalytics() {
     });
     return AdminsAnalytics
 }
+export function useFetchDynamicDashboardAnalytics({ roles, userId }) {
+  // console.log(`this is the role ${roles.includes('SuperAdmin')}`);
+  if (roles.includes('SuperAdmin')) {
+    const Analytics = useQuery(
+      [`CountAnalytics`],
+      async () => await getAllAdminDashboardAnalytics(),
+      {
+        staleTime: 360000,
+      }
+    );
+    return Analytics;
+  } else {
+    const Analytics = useQuery(
+      [`CountAnalytics`],
+      async () => await getPersonalAnalytics(userId),
+      {
+        staleTime: 360000,
+      }
+    );
+    return Analytics;
+  }
+}
 
 export function useFetchNewConvertDashboardAnalytics({ workerId }) {
   const newConvertAnalytics = useQuery(

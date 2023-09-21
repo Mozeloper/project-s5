@@ -131,7 +131,7 @@ export default function PersonalDetailsSettings() {
                 <h2 className="text-grey600 md:text-sm text-xs font-bold leading-5">
                   Phone
                 </h2>
-                <h4 className="text-grey500 font-bold md:text-sm text-xs font-medium leading-4">
+                <h4 className="text-grey500 md:text-sm text-xs font-medium leading-4">
                   {data?.PhoneNumber || "..."}
                 </h4>
               </div>
