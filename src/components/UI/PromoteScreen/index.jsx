@@ -1,18 +1,22 @@
-import { GiConfirmed } from 'react-icons/gi';
-import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { GiConfirmed } from 'react-icons/gi';
 import * as Yup from 'yup';
+import { useModalToggle } from '../../../context/ConfirmationModal.context';
+import { api } from '../../../services/api';
+import { appUrls } from '../../../services/urls';
 import Button from '../../Button';
 import SearchableSelect from '../../CustomSelect';
-import { api } from '../../../services/api';
-import { toast } from 'react-hot-toast';
-import { appUrls } from '../../../services/urls';
 
-export default function PromoteScreen({
-  setDeactivateConfirmation,
-  screenName,
-  workerId,
-}) {
+export default function PromoteScreen({ screenName, workerId, }) {
+  const { isOpen, setIsOpen } = useModalToggle();
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+  
+
   const [isLoading, setIsLoading] = useState({
     getChurchDept: false,
   });
@@ -37,10 +41,11 @@ export default function PromoteScreen({
       const res = await api.get(appUrls.GETCHURCHDEPT);
       if (res?.status === 200) {
         let data = [];
-        const result = res?.data?.data || [];
+        const result = res?.data?.Data || [];
+        console.log(result)
         for (let index = 0; index < result.length; index++) {
           data.push({
-            label: result[index]?.departmentalNames,
+            label: result[index]?.DepartmentalNames,
             value: result[index]?.id,
           });
         }
@@ -70,7 +75,7 @@ export default function PromoteScreen({
   }, []);
 
   const handleFormSubmit = async (values) => {
-    console.log(values)
+    console.log(values);
     try {
       const res = await api.post(appUrls.PROMOTE_CONVERT_TO_MINISTRY, {
         id: workerId,
@@ -84,7 +89,7 @@ export default function PromoteScreen({
           duration: 3000,
         });
         // Close the modal
-        setDeactivateConfirmation(false);
+        handleClose();
       } else {
         // Worker promotion failed
         toast.error('An error occurred while promoting worker.', {
@@ -98,6 +103,7 @@ export default function PromoteScreen({
       });
     }
   };
+
 
   return (
     <>
@@ -154,7 +160,7 @@ export default function PromoteScreen({
                       backgroundColor="bg-none"
                       textColor="#38404b"
                       type="button"
-                      onClick={() => setDeactivateConfirmation(false)}
+                      onClick={handleClose}
                     />
                     <Button
                       title={screenName}
@@ -171,7 +177,9 @@ export default function PromoteScreen({
       )}
       {showConfirmationButton && (
         <div>
-          <h3 className='mb-5'>Are you sure you want to promote this Convert?</h3>
+          <h3 className="mb-5">
+            Are you sure you want to promote this Convert?
+          </h3>
           <Button
             title="Confirm"
             className="w-full h-[56px] text-center rounded-2xl"

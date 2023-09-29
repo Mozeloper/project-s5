@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Form, Formik } from "formik";
-import * as Yup from "yup";
-import Button from "../../../../components/Button";
-import SearchableSelect from "../../../../components/CustomSelect";
-import { useNavigate } from "react-router-dom";
-import { api } from "../../../../services/api";
-import { appUrls } from "../../../../services/urls";
-import { toast } from "react-hot-toast";
-import moment from "moment";
+import { Form, Formik } from 'formik'
+import moment from 'moment'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+import * as Yup from 'yup'
+import Button from '../../../../components/Button'
+import SearchableSelect from '../../../../components/CustomSelect'
+import { api } from '../../../../services/api'
+import { appUrls } from '../../../../services/urls'
 
 export default function ChurchInformation({
   userValues,
@@ -21,8 +21,8 @@ export default function ChurchInformation({
   });
   const [dept, setDept] = useState([]);
   const signupSchema = Yup.object().shape({
-    yearJoined: Yup.number().required("Input Year You Joined Church"),
-    departmentId: Yup.number().required("Select Department"),
+    yearJoined: Yup.number().required('Input Year You Joined Church'),
+    departmentId: Yup.number().required('Select Department'),
   });
 
   const handleRegisterUser = async () => {
@@ -31,7 +31,7 @@ export default function ChurchInformation({
       register: true,
     }));
     const formattedDate = moment(userValues?.dateOfBirth).format(
-      "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
+      'YYYY-MM-DDTHH:mm:ss.SSS[Z]'
     );
     const payload = {
       ...userValues,
@@ -41,13 +41,13 @@ export default function ChurchInformation({
       const res = await api.post(appUrls.REGISTER, payload);
       if (res?.status === 201) {
         toast.success(res?.data?.message, {
-          icon: "👏",
+          icon: '👏',
           duration: 3000,
         });
-        navigate("/");
+        navigate('/');
       }
     } catch (error) {
-      const errorMessage = error?.data?.message || "An Error Occured";
+      const errorMessage = error?.data?.message || 'An Error Occured';
       toast.error(errorMessage, {
         duration: 5000,
       });
@@ -67,18 +67,24 @@ export default function ChurchInformation({
     try {
       const res = await api.get(appUrls.GETCHURCHDEPT);
       if (res?.status === 200) {
-        let data = [];
-        const result = res?.data?.data || [];
-        for (let index = 0; index < result.length; index++) {
-          data.push({
-            label: result[index]?.departmentalNames,
-            value: result[index]?.id,
-          });
-        }
-        setDept((prev) => [...data]);
+        // let data = [];
+        const result = res?.data?.Data || [];
+        //   for (let index = 0; index < result.length; index++) {
+        //     data.push({
+        //       label: result[index]?.DepartmentalNames,
+        //       value: result[index]?.Id,
+        //     });
+        //   }
+        //   setDept((prev) => [...data]);
+        // }
+        const data = result.map((item) => ({
+          label: item.DepartmentalNames,
+          value: item.Id,
+        }));
+        setDept(data);
       }
     } catch (error) {
-      toast.error("An Error Occured while getting church dept...", {
+      toast.error('An Error Occured while getting church dept...', {
         duration: 3000,
       });
       setDept([]);
@@ -110,8 +116,8 @@ export default function ChurchInformation({
       </h2>
       <Formik
         initialValues={{
-          yearJoined: userValues?.yearJoined || "",
-          departmentId: userValues?.departmentId || "",
+          yearJoined: userValues?.yearJoined || '',
+          departmentId: userValues?.departmentId || '',
         }}
         validationSchema={signupSchema}
         onSubmit={(values) => {
@@ -160,7 +166,7 @@ export default function ChurchInformation({
                   htmlFor="yearJoined"
                   className={`text-sm md:text-black text-white leading-4`}
                 >
-                  Year Joined Church{" "}
+                  Year Joined Church{' '}
                   <span className="text-primary ml-1">*</span>
                 </label>
                 <input
