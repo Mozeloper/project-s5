@@ -1,13 +1,13 @@
-import { Form, Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
-import { GiConfirmed } from 'react-icons/gi';
-import * as Yup from 'yup';
-import { useModalToggle } from '../../../context/ConfirmationModal.context';
-import { api } from '../../../services/api';
-import { appUrls } from '../../../services/urls';
-import Button from '../../Button';
-import SearchableSelect from '../../CustomSelect';
+import { Form, Formik } from 'formik'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { GiConfirmed } from 'react-icons/gi'
+import * as Yup from 'yup'
+import { useModalToggle } from '../../../context/ConfirmationModal.context'
+import { api } from '../../../services/api'
+import { appUrls } from '../../../services/urls'
+import Button from '../../Button'
+import SearchableSelect from '../../CustomSelect'
 
 export default function PromoteScreen({ screenName, workerId, }) {
   const { isOpen, setIsOpen } = useModalToggle();
@@ -108,7 +108,7 @@ export default function PromoteScreen({ screenName, workerId, }) {
   return (
     <>
       {showForm && (
-        <div className="bg-white p-8 w-[400px] h-[220px] rounded-md flex flex-col gap-4 md:mt-0 mt-48 items-center justify-center">
+        <div className="bg-white p-8 md:w-[400px] min-h-[220px] rounded-md flex flex-col gap-4 md:mt-0 mt-2 items-center justify-center">
           <GiConfirmed className="w-[48px] h-[48px] text-green-500" />
           <h4 className="text-gray-700 text-lg text-center">
             Are you sure you want to{' '}
@@ -127,7 +127,7 @@ export default function PromoteScreen({ screenName, workerId, }) {
               }}
             >
               {({ values, errors, touched, setFieldValue }) => (
-                <Form>
+                <Form className='flex flex-col gap-10'>
                   <div className="w-full mt-2">
                     <label
                       className="text-sm md:text-black text-white leading-4"
