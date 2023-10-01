@@ -43,6 +43,7 @@ export const appUrls = {
   //New Believers Admin
   GET_ALL_NEW_BELIEVERS_CONVERTS:
     '/api/v1/NewBelieverAdmin/get-all-new-convants-for-newconvertadmin',
+  PROMOTE_CONVERT_TO_DTI: 'api/v1/NewBelieverAdmin/promote-new-convert-to-dti',
 
   //Analytics Count
   GET_ALL_SOULS_COUNT_URL: '/api/v1/SuperAdmin/get-all-newconvert-count',
