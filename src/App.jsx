@@ -174,10 +174,18 @@ function App() {
               }
             />
             <Route
-              path="/newconvert"
+              path="/newconverts"
               element={
                 <React.Suspense fallback={<>...</>}>
                   <NewConvert />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/newconverts/:soulId"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <NewConvertDetailsById />
                 </React.Suspense>
               }
             />
