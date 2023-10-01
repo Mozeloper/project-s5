@@ -3,6 +3,7 @@ import Charts from "../../../components/chart/chart";
 import SummeryCard from "../../../components/SummeryCard/summeryCard";
 import AdminTables from "../../../components/Table/admins.table";
 import { useFetchAdminDashboardAnalytics } from "../../../hooks/useFetchAnalytics";
+import PageTitle from "../../../components/PageTitle"
 
 export default function Admins() {
   const { data: AdminDashboardAnalytics, isError, isLoading } = useFetchAdminDashboardAnalytics()
@@ -29,6 +30,7 @@ export default function Admins() {
 
   return (
     <div className="flex flex-col gap-y-6">
+      <PageTitle title="Manage Admins" />
       <div className="">
         <SummeryCard data={AdminDashboardAnalytics && AdminDashboardAnalytics?.Data} loading={isLoading} error={isError} />
       </div>

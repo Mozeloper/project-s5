@@ -1,7 +1,8 @@
-import React from "react";
-import Charts from "../../../components/chart/chart";
-import SummeryCard from "../../../components/SummeryCard/summeryCard";
-import WorkersTable from "../../../components/Table/worker.table";
+import React from "react"
+import PageTitle from "../../../components/PageTitle"
+import SummeryCard from "../../../components/SummeryCard/summeryCard"
+import WorkersTable from "../../../components/Table/worker.table"
+import Charts from "../../../components/chart/chart"
 
 //Todo
 export default function Workers() {
@@ -19,6 +20,7 @@ export default function Workers() {
   const summeryTitle = ["Souls"];
   return (
     <div className="flex flex-col gap-y-6">
+      <PageTitle title="Workers" />
       <div className="">
         <SummeryCard title={summeryTitle[0]} />
       </div>

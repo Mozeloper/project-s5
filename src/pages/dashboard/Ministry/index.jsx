@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PageTitle from "../../../components/PageTitle";
 import SummeryCard from "../../../components/SummeryCard/summeryCard";
 import Charts from "../../../components/chart/chart";
 import MinstryTable from "../../../components/Table/ministry.table";
@@ -23,6 +24,7 @@ export default function Ministry() {
 
   return (
     <div className="flex flex-col gap-y-6">
+      <PageTitle title="Souls in Ministry" />
       <div className="">
         <SummeryCard data={MinistryDashboardAnalytics && MinistryDashboardAnalytics?.Data} loading={isLoading} error={isError} />
       </div>

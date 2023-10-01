@@ -1,7 +1,8 @@
-import React from 'react';
-import SummeryCard from '../../../components/SummeryCard/summeryCard';
-import { useFetchPersonalAnalytics } from '../../../hooks/useFetchAnalytics';
+import React from 'react'
+import PageTitle from '../../../components/PageTitle'
+import SummeryCard from '../../../components/SummeryCard/summeryCard'
 import { SoulsTable } from '../../../components/Table/souls.table'
+import { useFetchPersonalAnalytics } from '../../../hooks/useFetchAnalytics'
 
 //Todo - 1. Add loading ui to indicate loading state
 //Todo - 2. Replace useEffect with react query for data fetching
@@ -29,6 +30,7 @@ export default function Souls() {
   const summeryTitle = ['Souls'];
   return (
     <div className="flex flex-col gap-y-6">
+      <PageTitle title="Souls" />
       <div className="">
         <SummeryCard
           data={PersonalAnalytics && PersonalAnalytics?.Data}

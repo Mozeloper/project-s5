@@ -1,5 +1,6 @@
 import React from "react";
 import Charts from "../../../components/chart/chart";
+import PageTitle from "../../../components/PageTitle";
 import SummeryCard from "../../../components/SummeryCard/summeryCard";
 import DtiTable from "../../../components/Table/dti.table";
 import { useFetchDtiDashboardAnalytics } from "../../../hooks/useFetchAnalytics";
@@ -23,6 +24,7 @@ export default function DTI() {
 
   return (
     <div className="flex flex-col gap-y-6">
+      <PageTitle title="Souls in DTI Stage" />
       <div className="">
         <SummeryCard
           data={DtiDashboardAnalytics && DtiDashboardAnalytics?.Data}
