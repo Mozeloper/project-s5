@@ -45,15 +45,8 @@ export async function getAllDeactivatedNewConvert({ pageNumber, pageSize }) {
 
 export async function approveAWorker(workerId) {
     try {
-        console.log('workerId axios 1', await workerId);
-        const approveAWorker = await axios.post(`${baseUrl}${appUrls.APPROVE_A_WORKER}/${workerId}`, {
-            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}
-        })
-        console.log('workerId axios 2', workerId);
-
+        const approveAWorker = await api.post(`${baseUrl}${appUrls.APPROVE_A_WORKER}/${workerId}`)
         const postAWorker =  await approveAWorker?.data
-
-        console.log('workerId axios 3', workerId);
         return postAWorker
     } catch (error) {
         toast.error(error.message)
@@ -64,9 +57,7 @@ export async function approveAWorker(workerId) {
 
 export async function deactivateAWorker() {
     try {
-        const deactivateAWorker = await axios.post(`${baseUrl}${appUrls.SUSPEND_A_WORKER}`, {
-            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
-        })
+        const deactivateAWorker = await api.post(`${baseUrl}${appUrls.SUSPEND_A_WORKER}`)
         const postDeactivated =  await deactivateAWorker?.data
         return await postDeactivated
     } catch (error) {
@@ -76,7 +67,7 @@ export async function deactivateAWorker() {
 
 export async function deleteAWorker(id) {
     try {
-        const deleteAWorker = await axios.post(`${baseUrl}${appUrls.DELETE_A_WORKER}?workerId=${id}`, {
+        const deleteAWorker = await api.post(`${baseUrl}${appUrls.DELETE_A_WORKER}?workerId=${id}`, {
             headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: false,
         })
         const postDeleteAWorker =  await deleteAWorker?.data
@@ -91,9 +82,7 @@ export async function deleteAWorker(id) {
 
 export async function reactivateWorker() {
     try {
-        const ReactivateWorker = await axios.post(`${baseUrl}${appUrls.REACTIVATE_A_WORKER}`, {
-            headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
-        })
+        const ReactivateWorker = await api.post(`${baseUrl}${appUrls.REACTIVATE_A_WORKER}`)
         const postReactivateWorker =  await ReactivateWorker?.data
         return await postReactivateWorker
     } catch (error) {
