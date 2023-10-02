@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import Charts from '../../../components/chart/chart';
-import SummeryCard from '../../../components/SummeryCard/summeryCard';
-import AdminTables from '../../../components/Table/admins.table';
-import { SoulsTable } from '../../../components/Table/souls.table';
-import { SoulsAdminTable } from '../../../components/Table/souls.admin.table';
-import MinstryTable from '../../../components/Table/ministry.table';
-import DtiTable  from '../../../components/Table/dti.table';
-import NewBelieversTable  from '../../../components/Table/newbelievers.table';
-import {
-  useFetchAdminDashboardAnalytics,
-  useFetchDynamicDashboardAnalytics,
-  useFetchSoulsCount,
-  useFetchWorkersCount,
-} from '../../../hooks/useFetchAnalytics';
-import { userFullName } from '../../../utils/index';
-import { MdNotificationsActive } from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import './vibration.css';
-import useRole from '../../../hooks/useRole';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
+import TabContext from '@mui/lab/TabContext'
+import TabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel'
+import Box from '@mui/material/Box'
+import Tab from '@mui/material/Tab'
+import React from 'react'
+import { MdNotificationsActive } from 'react-icons/md'
+import { Link } from 'react-router-dom'
+import PageTitle from '../../../components/PageTitle'
+import DtiTable from '../../../components/Table/dti.table'
+import MinstryTable from '../../../components/Table/ministry.table'
+import NewBelieversTable from '../../../components/Table/newbelievers.table'
+import { SoulsAdminTable } from '../../../components/Table/souls.admin.table'
+import { SoulsTable } from '../../../components/Table/souls.table'
+import Charts from '../../../components/chart/chart'
+import { userFullName } from '../../../utils/index'
+import './vibration.css'
 
 export default function Home() {
   //const roles = useRole();
@@ -80,6 +72,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-y-6">
+      <PageTitle title="Dashboard" />
       <div className="rounded-md bg-white py-12 px-5 md:px-6 md:flex md:justify-between gap-5">
         <div>
           <h2 className="font-bold text-3xl">

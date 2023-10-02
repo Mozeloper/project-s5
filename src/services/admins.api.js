@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { appUrls } from './urls';
 import { api } from './api';
+import toast from 'react-hot-toast'
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -52,6 +53,23 @@ export async function getAllConvertsInNewBelievers() {
   }
 }
 
+export async function suspendAConvert(convertId, reason) {
+  const payload = {
+    id: `${convertId}`,
+    reasonForDeactivation: `${reason}`,
+  };
+  try {
+    const suspendedConvert = await api.post(
+      `${baseUrl}${appUrls.SUSPEND_A_CONVERT}`,
+      payload
+    );
+    const SuspendedConvertRes = await suspendedConvert?.data;
+    return SuspendedConvertRes;
+  } catch (error) {
+    toast.error(error || error.message)
+    throw new Error(error.message || error);
+  }
+}
 export async function promoteConvertToMinistry(convertId, departmentId) {
   const payload = {
     id: `${convertId}`,

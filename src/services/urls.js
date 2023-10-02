@@ -43,6 +43,7 @@ export const appUrls = {
   //New Believers Admin
   GET_ALL_NEW_BELIEVERS_CONVERTS:
     '/api/v1/NewBelieverAdmin/get-all-new-convants-for-newconvertadmin',
+  PROMOTE_CONVERT_TO_DTI: 'api/v1/NewBelieverAdmin/promote-new-convert-to-dti',
 
   //Analytics Count
   GET_ALL_SOULS_COUNT_URL: '/api/v1/SuperAdmin/get-all-newconvert-count',
@@ -64,7 +65,7 @@ export const appUrls = {
   GET_ALL_UNAPPROVED_WORKERS: '/api/v1/Approval/get-all-unapproved-workers',
   GET_UNAPPROVED_WORKERDETAILS: '/api/v1/Approval/get-unapproved-worker', //This api takes in an {workerId}
   GET_ALL_DEACTIVATED_WORKERS: '/api/v1/SuperAdmin/get-all-deactivated-workers',
-  APPROVE_A_WORKER: '/api/v1/SuperAdmin/approve-new-worker', //This api takes in an {id}
+  APPROVE_A_WORKER: '/api/v1/Approval/approve-new-worker', //This api takes in an {id}
   SUSPEND_A_WORKER: 'api/v1/SuperAdmin/deactivate-worker-account', //This api takes in an {id}
   DELETE_A_WORKER: '/api/v1/SuperAdmin/delete-worker-account', //This api takes in an {id}
   REACTIVATE_A_WORKER: '/api/v1/SuperAdmin/reactivate-worker-account', //This api takes in an {id}

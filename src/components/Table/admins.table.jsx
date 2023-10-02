@@ -10,8 +10,9 @@ import { IoRemoveCircleSharp } from 'react-icons/io5';
 import { GrView } from 'react-icons/gr';
 import { GiConfirmed } from 'react-icons/gi';
 import ConfirmDeactivate from '../UI/confirmation screen';
+import { useModalToggle } from '../../context/ConfirmationModal.context';
 
-export default function AdminTables() {
+export default function   AdminTables() {
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
@@ -25,6 +26,8 @@ export default function AdminTables() {
     error,
   } = useFetchAdmins({ pageNumber, pageSize });
 
+  const { isOpen, setIsOpen } = useModalToggle();
+
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
     { icon: <GiConfirmed className="text-green-500" />, name: 'Modify' },
@@ -37,7 +40,7 @@ export default function AdminTables() {
   useEffect(() => {
     const getPosts = async () => {
       // make sure you add await to the return data from react query (hook)
-      const admins = await AdminsData?.Data || [];
+      const admins = (await AdminsData?.Data) || [];
       console.log('admins', admins);
       if (admins == null) {
         setData([]);
@@ -93,21 +96,14 @@ export default function AdminTables() {
   const handleOptionsClick = (event) => {
     const innerText = event.currentTarget.innerText;
     const id = event.currentTarget.id;
-    if (innerText.toLowerCase() === 'view') {
-      setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleViewAdmin.bind(null, id)}
-          screenName={innerText}
-        />
-      );
-    } else if (innerText.toLowerCase() === 'modify') {
+    if (innerText.toLowerCase() === 'modify') {
       setDisplayUi(
         <ConfirmDeactivate
           handleDeactivate={handleModifyAdmin.bind(null, id)}
           screenName={innerText}
         />
       );
-    } else {
+    } else if (innerText.toLowerCase() === 'suspend') {
       setDisplayUi(
         <ConfirmDeactivate
           handleDeactivate={handleSuspendAdmin.bind(null, id)}
@@ -144,7 +140,10 @@ export default function AdminTables() {
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-              <button className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6">
+              <button
+                onClick={() => setIsOpen(true)}
+                className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6"
+              >
                 <TransitionsModal
                   name={'+ Add Admin'}
                   heading={'Add a new admin'}
@@ -172,6 +171,7 @@ export default function AdminTables() {
                     optionModal={displayUi}
                     headers={headers}
                     data={data}
+                    keyExtractor={(admin) => admin.Id}
                     filterNumber={11}
                     optionArrayList={optionList}
                     optionsHandleClick={handleOptionsClick}

@@ -1,15 +1,17 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { useNavigate } from 'react-router-dom';
-import SearchBox from '../Searchbox/searchbox';
-import ReusableTable from './Table.reusable';
-import PaginationFooter from '../PaginationFooter';
-import { useFetchDti } from '../../hooks/useFetchDti';
-import ConfirmDeactivate from '../UI/confirmation screen';
-import { GrView } from 'react-icons/gr';
-import { GiConfirmed } from 'react-icons/gi';
-import { IoRemoveCircleSharp } from 'react-icons/io5';
-import Loader from '../Loader';
+import React, { Fragment, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { GiConfirmed } from 'react-icons/gi'
+import { GrView } from 'react-icons/gr'
+import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { useNavigate } from 'react-router-dom'
+import { useFetchDti } from '../../hooks/useFetchDti'
+import { suspendAConvert } from '../../services/admins.api'
+import Loader from '../Loader'
+import PaginationFooter from '../PaginationFooter'
+import SearchBox from '../Searchbox/searchbox'
 import PromoteScreen from '../UI/PromoteScreen'
+import SuspendConvert from '../UI/SuspendConvert'
+import ReusableTable from './Table.reusable'
 
 export default function DtiTable() {
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ export default function DtiTable() {
 
   useEffect(() => {
     const getPosts = async () => {
-      const dtiRes = await DtiConverts?.Data || [];
+      const dtiRes = (await DtiConverts?.Data) || [];
       if (dtiRes == null || dtiRes == undefined) {
         setData([]);
       }
@@ -41,37 +43,49 @@ export default function DtiTable() {
 
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
-    { icon: <GiConfirmed className="text-green-500" />, name: 'Promote' },
     {
       icon: <IoRemoveCircleSharp className="text-yellow-500" />,
       name: 'Suspend',
     },
+    { icon: <GiConfirmed className="text-green-500" />, name: 'Promote' },
   ];
 
-    const handleModifyConvert = (id) => {
-      console.log(`modifying convert with ${id}`);
-    };
-    const handleSuspendCovert = (id) => {
-      console.log(`suspend convert with id of ${id}`);
-    };
+  const handleModifyConvert = (id) => {
+    console.log(`modifying convert with ${id}`);
+  };
+  const handleSuspendCovert = async (id, reason) => {
+    console.log(`suspend convert with id of ${id} and ${reason}`);
+    // const {suspededConvert, isLoading, isError}= useSuspendAConvert(id, reason);
 
-  const handleDtiOptionsClick = (event) => {
-    const innerText = event.currentTarget.innerText;
+    const suspededConvert = await suspendAConvert(id, reason);
+    console.log(suspededConvert.Message);
+    if (suspededConvert.StatusCode === 200) {
+      toast.success(suspededConvert.Message);
+    }
+
+    //  console.log(suspededConvert);
+  };
+
+  const handleDtiOptionsClick = (event, option) => {
+    const innerText = option.name;
+    console.log(innerText);
     const id = event.currentTarget.id;
-     if (innerText.toLowerCase() === 'promote') {
+    if (innerText.toLowerCase() === 'promote') {
       setDisplayUi(
         <PromoteScreen
           workerId={id}
           screenName={innerText}
+          handlePromote={handleModifyConvert.bind(null, id)}
         />
       );
-    } else {
+    } else if (innerText.toLowerCase() === 'suspend') {
       setDisplayUi(
-        <ConfirmDeactivate
+        <SuspendConvert
           handleDeactivate={handleSuspendCovert.bind(null, id)}
           screenName={innerText}
         />
       );
+      console.log('suspend was clicked ' + `${id}`);
     }
   };
 

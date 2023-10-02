@@ -55,10 +55,10 @@ export function useFetchAdminDashboardAnalytics() {
     return AdminsAnalytics
 }
 
-export function useFetchNewConvertDashboardAnalytics({ workerId }) {
+export function useFetchNewConvertDashboardAnalytics() {
   const newConvertAnalytics = useQuery(
-    [`NewConvertCountAnalytics`],
-    async () => await getPersonalAnalytics(workerId),
+    ['NewConvertCountAnalytics'],
+    async () => await getAllNewConvertDashboardAnalytics(),
     {
       staleTime: 360000,
     }

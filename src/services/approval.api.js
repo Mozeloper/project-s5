@@ -2,6 +2,7 @@ import axios from "axios";
 import { appUrls } from "./urls";
 import { axiosRequest } from "../utils/axios-utils";
 import { api } from "./api";
+import toast from "react-hot-toast"
 const baseUrl = import.meta.env.VITE_BASE_URL
 
 export async function getAllUnApproval({ pageNumber, pageSize }) {
@@ -55,6 +56,7 @@ export async function approveAWorker(workerId) {
         console.log('workerId axios 3', workerId);
         return postAWorker
     } catch (error) {
+        toast.error(error.message)
         throw new Error(error.message || error)
     }
 }

@@ -7,6 +7,8 @@ import { toast } from 'react-hot-toast';
 import { appUrls } from '../../../services/urls';
 import { api } from '../../../services/api';
 import { phoneRegExp } from '../../../utils';
+import { useModalToggle } from '../../../context/ConfirmationModal.context';
+
 export default function AddSoulsFormControl() {
   // payload for newconvert
   //     {
@@ -20,6 +22,7 @@ export default function AddSoulsFormControl() {
   // }
 
   const [isLoading, setIsLoading] = useState(false);
+ const { isOpen, setIsOpen } = useModalToggle();
 
   const addSoulSchema = Yup.object().shape({
     firstName: Yup.string().required('Firstname is Required'),
@@ -49,6 +52,7 @@ export default function AddSoulsFormControl() {
         const res = await api.post(appUrls.ADD_NEW_CONVERT, payload);
         if (res?.status === 200) {
           toast.success("Soul was Succefully Added", { duration: 5000, })
+          setIsOpen(false);
         }
       } catch (error) {
         const errorMessage = error?.data?.message || 'Something went wrong, please try again';
@@ -184,7 +188,7 @@ export default function AddSoulsFormControl() {
               </label>
             </div>
           </div>
-          <div className="relative z-0 w-full mb-6 group">
+          <div className="relative w-full mb-6 group">
             <label
               htmlFor="gender"
               className="block mb-2 text-base font-medium text-gray-900 "
@@ -245,6 +249,7 @@ export default function AddSoulsFormControl() {
               Nearest Bus Stop
             </label>
           </div>
+          <div className='flex gap-5'>
           <Button
             title="Submit"
             className="w-[200px] h-[56px] text-center mt-3 md:mb-4 mb-10 rounded-2xl"
@@ -252,6 +257,14 @@ export default function AddSoulsFormControl() {
             type="submit"
             isLoading={isLoading}
           />
+
+          <Button
+            title="Cancel"
+            onClick={() => setIsOpen(false)}
+            className="w-[200px] h-[56px] text-center mt-3 md:mb-4 mb-10 rounded-2xl border-2 border-gray-400 text-gray-500"
+            backgroundColor="bg-white"
+          />
+          </div>
           {/* <button
             type="submit"
             className="text-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg w-full sm:w-auto px-5 py-2.5 text-center bg-[#38404b]"

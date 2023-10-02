@@ -9,13 +9,15 @@ import { appUrls } from '../../../services/urls';
 import Button from '../../Button';
 import SearchableSelect from '../../CustomSelect';
 
-export default function PromoteScreen({ screenName, workerId, }) {
+
+export default function PromoteScreen({ screenName, workerId }) {
+
   const { isOpen, setIsOpen } = useModalToggle();
 
   const handleClose = () => {
     setIsOpen(false);
   };
-  
+
 
   const [isLoading, setIsLoading] = useState({
     getChurchDept: false,
@@ -42,7 +44,9 @@ export default function PromoteScreen({ screenName, workerId, }) {
       if (res?.status === 200) {
         let data = [];
         const result = res?.data?.Data || [];
-        console.log(result)
+
+        console.log(result);
+
         for (let index = 0; index < result.length; index++) {
           data.push({
             label: result[index]?.DepartmentalNames,
@@ -74,12 +78,17 @@ export default function PromoteScreen({ screenName, workerId, }) {
     };
   }, []);
 
-  const handleFormSubmit = async (values) => {
-    console.log(values);
+  const passToConfirmation = () => {
+      setshowForm(false);
+      setShowConfirmationButton(true);
+  };
+  const handleFormSubmit = async (formValues) => {
+    console.log(formValues);
+
     try {
       const res = await api.post(appUrls.PROMOTE_CONVERT_TO_MINISTRY, {
         id: workerId,
-        departmentId: values?.departmentId,
+        departmentId: formValues?.departmentId,
         status: 'Ministry',
       });
 
@@ -108,7 +117,7 @@ export default function PromoteScreen({ screenName, workerId, }) {
   return (
     <>
       {showForm && (
-        <div className="bg-white p-8 w-[400px] h-[220px] rounded-md flex flex-col gap-4 md:mt-0 mt-48 items-center justify-center">
+        <div className="bg-white p-8 md:w-[400px] min-h-[220px] rounded-md flex flex-col gap-4 md:mt-0 mt-2 items-center justify-center">
           <GiConfirmed className="w-[48px] h-[48px] text-green-500" />
           <h4 className="text-gray-700 text-lg text-center">
             Are you sure you want to{' '}
@@ -122,12 +131,11 @@ export default function PromoteScreen({ screenName, workerId, }) {
               onSubmit={(values) => {
                 //handleFormSubmit(values);
                 setFormValues(values);
-                setshowForm(false);
-                setShowConfirmationButton(true);
+                passToConfirmation();
               }}
             >
               {({ values, errors, touched, setFieldValue }) => (
-                <Form>
+                <Form className="flex flex-col gap-10">
                   <div className="w-full mt-2">
                     <label
                       className="text-sm md:text-black text-white leading-4"
@@ -167,6 +175,7 @@ export default function PromoteScreen({ screenName, workerId, }) {
                       className="w-full h-[56px] text-center rounded-2xl"
                       backgroundColor="bg-[#38404b]"
                       type="submit"
+                      onClick={passToConfirmation}
                     />
                   </div>
                 </Form>
@@ -185,10 +194,10 @@ export default function PromoteScreen({ screenName, workerId, }) {
             className="w-full h-[56px] text-center rounded-2xl"
             backgroundColor="bg-[#38404b]"
             type="button"
-            onClick={async () => {
+            onClick={
               // Promote the worker.
-              await handleFormSubmit(formValues);
-            }}
+              handleFormSubmit
+            }
           />
         </div>
       )}
