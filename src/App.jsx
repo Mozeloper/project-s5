@@ -8,7 +8,11 @@ import Home from './pages/dashboard/home';
 import BeginRegistration from './pages/auth/beginRegistration';
 import NotFound from './pages/notFound';
 import Forbidden from './pages/forbidden';
-import Register from './pages/auth/Register';
+import Register from "./pages/auth/Register";
+import { ErrorBoundary } from "react-error-boundary";
+import { useQueryErrorResetBoundary } from "@tanstack/react-query";
+import { Button } from "@mui/material";
+import ErrorBoundaryScreen from "./pages/ErrorBoundary";
 
 //This is for code splitting/ Lazy loading of page for faster routing
 // const Souls = React.lazy(() => import('./pages/dashboard/souls'))
@@ -69,8 +73,15 @@ export const AuthProtectRoutes = () => {
 };
 
 function App() {
+  const { reset } = useQueryErrorResetBoundary()
   return (
     <>
+    <ErrorBoundary
+        onReset={reset}
+        fallbackRender={({ resetErrorBoundary }) => (
+          <ErrorBoundaryScreen resetErrorBoundary={resetErrorBoundary} />
+        )}
+      >
       <main>
         <Routes>
           <Route path="/*" element={<NotFound />} />
@@ -97,10 +108,28 @@ function App() {
             />
             <Route element={<Authlayout />}>
               <Route
-                path="/begin-registration"
-                element={<BeginRegistration />}
+                path="/forget-password"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <ForgetPassword />
+                  </React.Suspense>
+                }
               />
-              <Route path="/sign-up" element={<Register />} />
+              <Route
+                path="/change-password"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <ChangePassword />
+                  </React.Suspense>
+                }
+              />
+              <Route element={<Authlayout />}>
+                <Route
+                  path="/begin-registration"
+                  element={<BeginRegistration />}
+                />
+                <Route path="/sign-up" element={<Register />} />
+              </Route>
             </Route>
           </Route>
 
@@ -124,40 +153,40 @@ function App() {
               }
             />
 
-            <Route
-              path="/workers"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Workers />
-                </React.Suspense>
-              }
-            />
+              <Route
+                path="/workers"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <Workers />
+                  </React.Suspense>
+                }
+              />
 
-            <Route
-              path="/workers/:workerId"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <WorkerDetailsById />
-                </React.Suspense>
-              }
-            />
+              <Route
+                path="/workers/:workerId"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <WorkerDetailsById />
+                  </React.Suspense>
+                }
+              />
 
-            <Route
-              path="/admins"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Admins />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/admins/:adminId"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <AdminDetailsById />
-                </React.Suspense>
-              }
-            />
+              <Route
+                path="/admins"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <Admins />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/admins/:adminId"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <AdminDetailsById />
+                  </React.Suspense>
+                }
+              />
 
             <Route
               path="/dti"
@@ -251,6 +280,7 @@ function App() {
           </Route>
         </Routes>
       </main>
+      </ErrorBoundary>
     </>
   );
 }
