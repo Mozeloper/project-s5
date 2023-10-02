@@ -13,7 +13,7 @@ export default function WorkersTable() {
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize, setPageSize] = useState(2);
+    const [pageSize, setPageSize] = useState(7);
     const { data: WorkersData, isError, isLoading, isFetching, error, isSuccess } = useWorkersAdmins({ pageNumber, pageSize })
 
   // const handleGetAllWorkers = async () => {
