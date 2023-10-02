@@ -14,7 +14,7 @@ import ConfirmDeactivate from '../../UI/confirmation screen';
 
 export default function UnapprovedWorkerTable() {
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(2);
+  const [pageSize, setPageSize] = useState(5);
   const [modalConfirmation, setModalConfirmation] = useState(false);
   const [displayUi, setDisplayUi] = React.useState(null);
   const [headers, setHeaders] = useState([]);
@@ -135,6 +135,7 @@ export default function UnapprovedWorkerTable() {
             </div>
           ) : (
             <>
+            {/* The table for all unapproved workers */}
               <ReusableTable
                 pageLink={'reminder/unapproved-worker'}
                 optionModal={displayUi}
@@ -145,12 +146,15 @@ export default function UnapprovedWorkerTable() {
                 optionsHandleClick={handleOptionsClick}
               />
 
+              {/* Pagination */}
               <PaginationFooter
                 pageNumber={pageNumber}
-                totalPerCount={Math.ceil(
-                  PendingData?.TotalDataCount / pageSize
-                )}
-                totalCount={Math.ceil(PendingData?.TotalDataCount)}
+                totalPerCount={PendingData && (Math.ceil(
+                  PendingData?.Data?.TotalDataCount / pageSize
+                ) || 1)}
+                totalCount={PendingData &&( Math.ceil(
+                  PendingData?.Data?.TotalDataCount
+                ) || 1)}
                 handlePaginationChange={handlePaginationChange}
               />
             </>

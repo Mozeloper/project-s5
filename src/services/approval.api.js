@@ -23,7 +23,7 @@ export async function getAllUnApproval({ pageNumber, pageSize }) {
 export async function getAllDeactivatedWorker({ pageNumber, pageSize }) {
     try {
         const AllDeactivatedWorker =  await axiosRequest({ url : `${appUrls.GET_ALL_DEACTIVATED_WORKERS}?page=${pageNumber}&pageSize=${pageSize}`})
-        return await AllDeactivatedWorker?.data
+        return await AllDeactivatedWorker?.data?.Data
     } catch (error) {
         throw new Error(error.message || error)
     }
