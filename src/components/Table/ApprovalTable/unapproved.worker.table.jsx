@@ -146,7 +146,7 @@ export default function UnapprovedWorkerTable() {
                 optionsHandleClick={handleOptionsClick}
               />
 
-              {/* Pagination */}
+              {/* Pagination Section */}
               <PaginationFooter
                 pageNumber={pageNumber}
                 totalPerCount={PendingData && (Math.ceil(
