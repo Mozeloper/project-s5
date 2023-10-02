@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdDeleteSweep } from "react-icons/md";
 import { GrConnect } from "react-icons/gr";
-import { useFetchAllDeactivatedWorker } from "../../../hooks/useFetchUnapproved";
+import { useFetchAllDeactivatedWorker } from "../../../hooks/useApproval";
 import ReusableTable from "../Table.reusable";
 import PaginationFooter from "../../PaginationFooter";
 import Loader from "../../Loader";
@@ -54,8 +54,7 @@ export default function DeactivatedWorkerTable() {
     setPageNumber(value);
   };
 
-  console.log('DeactivatedWorkerData', DeactivatedWorkerData);
-  console.log('data', data);
+  throw new Error('tester')
   return (
     <div className="px-8 bg-white pt-7 grid grid-cols-1 gap-y-8">
       <h3 className="sm:text-left text-center">

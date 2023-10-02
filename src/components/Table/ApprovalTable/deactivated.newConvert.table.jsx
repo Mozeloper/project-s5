@@ -3,7 +3,7 @@ import { MdDeleteSweep, MdOutlineAddLink } from "react-icons/md";
 import { GrConnect } from "react-icons/gr";
 import ReusableTable from "../Table.reusable";
 import PaginationFooter from "../../PaginationFooter";
-import { useFetchAllDeactivatedNewConvert } from "../../../hooks/useFetchUnapproved";
+import { useFetchAllDeactivatedNewConvert } from "../../../hooks/useApproval";
 import ConfirmDeactivate from "../../UI/confirmation screen";
 import Loader from "../../Loader";
 

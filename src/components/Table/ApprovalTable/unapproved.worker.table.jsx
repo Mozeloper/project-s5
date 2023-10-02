@@ -9,7 +9,7 @@ import {
   useFetchAllUnapproved,
   usePostApproveWorker,
   usePostDeleteWorker,
-} from '@/hooks/useFetchUnapproved';
+} from '@/hooks/useApproval';
 import ConfirmDeactivate from '../../UI/confirmation screen';
 
 export default function UnapprovedWorkerTable() {

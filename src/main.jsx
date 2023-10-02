@@ -20,8 +20,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <App />
         </ModalToggleContextProvider>
         <ReactQueryDevtools initialIsOpen={false} position="bottom-left"/>
-      </QueryClientProvider>
-      <Toaster />
+    </QueryClientProvider>
+    <Toaster />
     </HashRouter>
   </React.StrictMode>
 );

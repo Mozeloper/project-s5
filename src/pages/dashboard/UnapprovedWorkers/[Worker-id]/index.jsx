@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import DetailsByIdScreen from '../../../../components/UI/Details Screen/DetailsByIdScreen';
-import { useFetchUnapprovedWorkerDetails } from '../../../../hooks/useFetchUnapproved';
+import { useFetchUnapprovedWorkerDetails } from '../../../../hooks/useApproval';
 import { useFetchPersonalAnalytics } from '../../../../hooks/useFetchAnalytics';
 
 
