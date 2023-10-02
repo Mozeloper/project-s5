@@ -9,12 +9,15 @@ import { appUrls } from '../../../services/urls';
 import Button from '../../Button';
 import SearchableSelect from '../../CustomSelect';
 
+
 export default function PromoteScreen({ screenName, workerId }) {
+
   const { isOpen, setIsOpen } = useModalToggle();
 
   const handleClose = () => {
     setIsOpen(false);
   };
+
 
   const [isLoading, setIsLoading] = useState({
     getChurchDept: false,
@@ -41,7 +44,9 @@ export default function PromoteScreen({ screenName, workerId }) {
       if (res?.status === 200) {
         let data = [];
         const result = res?.data?.Data || [];
+
         console.log(result);
+
         for (let index = 0; index < result.length; index++) {
           data.push({
             label: result[index]?.DepartmentalNames,
@@ -79,6 +84,7 @@ export default function PromoteScreen({ screenName, workerId }) {
   };
   const handleFormSubmit = async (formValues) => {
     console.log(formValues);
+
     try {
       const res = await api.post(appUrls.PROMOTE_CONVERT_TO_MINISTRY, {
         id: workerId,
@@ -106,6 +112,7 @@ export default function PromoteScreen({ screenName, workerId }) {
       });
     }
   };
+
 
   return (
     <>
