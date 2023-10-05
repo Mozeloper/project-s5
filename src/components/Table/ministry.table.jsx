@@ -1,19 +1,18 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import TransitionsModal from '../ModalPopup/modalTransition';
-import AddSoulsFormControl from '../UI/Forms/addSoul.form';
-import SearchBox from '../Searchbox/searchbox';
-import ReusableTable from './Table.reusable';
-import PaginationFooter from '../PaginationFooter';
-import { useFetchMinistry } from '../../hooks/useFetchMinistry';
-import ConfirmDeactivate from '../UI/confirmation screen';
-import { GrView } from 'react-icons/gr';
-import { GiConfirmed } from 'react-icons/gi';
-import { IoRemoveCircleSharp } from 'react-icons/io5';
-import Loader from '../Loader';
+import React, { Fragment, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { GrView } from 'react-icons/gr'
+import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { useFetchMinistry } from '../../hooks/useFetchMinistry'
+import { suspendAConvert } from '../../services/admins.api'
+import Loader from '../Loader'
+import PaginationFooter from '../PaginationFooter'
+import SearchBox from '../Searchbox/searchbox'
+import SuspendConvert from '../UI/SuspendConvert'
+import ReusableTable from './Table.reusable'
 
 export default function MinstryTable() {
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(2);
+  const [pageSize, setPageSize] = useState(10);
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
@@ -37,34 +36,31 @@ export default function MinstryTable() {
 
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
-    { icon: <GiConfirmed className="text-green-500" />, name: 'Modify' },
     {
       icon: <IoRemoveCircleSharp className="text-yellow-500" />,
       name: 'Suspend',
     },
   ];
 
-  const handleOptionsClick = (event) => {
-    const innerText = event.currentTarget.innerText;
+  const handleSuspendCovert = async (id, reason) => {
+    console.log(`suspend convert with id of ${id} and ${reason}`);
+    const suspededConvert = await suspendAConvert(id, reason);
+    console.log(suspededConvert.Message);
+    if (suspededConvert.StatusCode === 200) {
+      toast.success(suspededConvert.Message);
+    }
+
+  };
+
+  
+
+  const handleOptionsClick = (event, option) => {
+    const innerText = option.name;
     const id = event.currentTarget.id;
-    if (innerText.toLowerCase() === 'view') {
+    if (innerText.toLowerCase() === 'suspend') {
       setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleViewAdmin.bind(null, id)}
-          screenName={innerText}
-        />
-      );
-    } else if (innerText.toLowerCase() === 'modify') {
-      setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleModifyAdmin.bind(null, id)}
-          screenName={innerText}
-        />
-      );
-    } else {
-      setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleSuspendAdmin.bind(null, id)}
+        <SuspendConvert
+          handleDeactivate={handleSuspendCovert.bind(null, id)}
           screenName={innerText}
         />
       );

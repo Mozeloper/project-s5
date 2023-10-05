@@ -14,13 +14,14 @@ import ConfirmDeactivate from '../../UI/confirmation screen';
 
 export default function UnapprovedWorkerTable() {
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(2);
+  const [pageSize, setPageSize] = useState(5);
   const [modalConfirmation, setModalConfirmation] = useState(false);
   const [displayUi, setDisplayUi] = React.useState(null);
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
 
   const [workerId, setWorkerId] = useState('');
+  const [activeFunction, setActiveFunction] = useState('');
   const {
     data: PendingData,
     isLoading,
@@ -30,14 +31,13 @@ export default function UnapprovedWorkerTable() {
     mutateAsync: deleteUserAsync,
     isLoading: isLoadingDeletion,
     isError: isErrorDeletion,
-  } = usePostDeleteWorker(workerId);
+  } = usePostDeleteWorker(workerId && workerId, pageNumber);
   const {
     mutateAsync: approveUserAsync,
-    data: ApproveUser,
     isLoading: isLoadingApproval,
     isError: isErrorRender,
     isSuccess,
-  } = usePostApproveWorker(workerId && workerId);
+  } = usePostApproveWorker(workerId && workerId, pageNumber);
 
   useEffect(() => {
     const getPosts = async () => {
@@ -57,16 +57,27 @@ export default function UnapprovedWorkerTable() {
     { icon: <AiFillDelete className="text-primary" />, name: 'Delete' },
   ];
 
+  //This useEffect only gets call when the workerId has been set/reassigned to a valid workerId
+  useEffect(() => {
+    //cause setWorkerId is undefined on component mount, and the reassigning of WorkerId isn't available,
+    //so we use a state to get the particular activeFunction and then run the appropriate logic for the 
+    //activeFunction
+    ( async () => {
+        if (activeFunction === 'approve') return await approveUserAsync();
+        if (activeFunction === 'delete') return await deleteUserAsync();
+    } )();
+  }, [workerId])
+  
   const handleApprovedConfirmation = useCallback(
     async (id) => {
-      setWorkerId((prev) => (prev = id));
-      console.log('user', workerId);
-      mutateAsync();
-      console.log(`you just confirmed the worker with id ${id} `);
+      setActiveFunction('approve')
+      setWorkerId(id);
+      // await approveUserAsync();
+      // console.log(`you just confirmed the worker with id ${id} `);
     },
     [approveUserAsync, workerId]
   );
-
+  
   const handleApprovedSuspend = useCallback((id) => {
     //Todo add logic/function to suspend a worker here
     console.log(`you just supended the worker with id ${id} `);
@@ -76,16 +87,13 @@ export default function UnapprovedWorkerTable() {
     async (id) => {
       //Todo add logic/function to suspend a worker
       setWorkerId(id);
-      console.log('user', workerId);
-      deleteUserAsync();
-      console.log(`you just deleted the worker with id ${id} `);
+      setActiveFunction('delete')
+      // console.log('user', workerId);
+      // await deleteUserAsync();
+      // console.log(`you just deleted the worker with id ${id} `);
     },
     [deleteUserAsync, workerId]
   );
-
-  if (isLoadingApproval) {
-    return <div>Loading.......</div>;
-  }
 
   const handleOptionsClick = (event) => {
     const innerText = event.currentTarget.innerText;
@@ -135,6 +143,7 @@ export default function UnapprovedWorkerTable() {
             </div>
           ) : (
             <>
+            {/* The table for all unapproved workers */}
               <ReusableTable
                 pageLink={'reminder/unapproved-worker'}
                 optionModal={displayUi}
@@ -145,12 +154,15 @@ export default function UnapprovedWorkerTable() {
                 optionsHandleClick={handleOptionsClick}
               />
 
+              {/* Pagination Section */}
               <PaginationFooter
                 pageNumber={pageNumber}
-                totalPerCount={Math.ceil(
-                  PendingData?.TotalDataCount / pageSize
-                )}
-                totalCount={Math.ceil(PendingData?.TotalDataCount)}
+                totalPerCount={PendingData && (Math.ceil(
+                  PendingData?.Data?.TotalDataCount / pageSize
+                ) || 1)}
+                totalCount={PendingData &&( Math.ceil(
+                  PendingData?.Data?.TotalDataCount
+                ) || 1)}
                 handlePaginationChange={handlePaginationChange}
               />
             </>

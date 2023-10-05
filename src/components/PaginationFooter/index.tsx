@@ -55,10 +55,10 @@ export default function PaginationFooter({pageNumber, totalPerCount, totalCount,
               Showing 
               {/* <span className="font-medium">1</span> to{" "}
               <span className="font-medium">10</span> of{" "} */}
-              <span className="font-medium"> {" "} {totalCount}</span> results
+              <span className="font-medium"> {" "} {totalCount && totalCount}</span> results
             </p>
             <Pagination 
-              count={+totalPerCount}
+              count={totalPerCount && +totalPerCount}
               variant="outlined"
               shape="rounded"
               page={pageNumber}

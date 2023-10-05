@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 import { getAllNewConvert, getSoulsUnderMe } from '../services/souls';
 import { getASoul } from '../services/details(id).api';
+import { suspendAConvert } from '../services/admins.api';
 
 export function useFetchAllNewConvert({ pageNumber, pageSize }) {
   const NewConvert = useQuery(
@@ -69,4 +70,15 @@ export function useSoulDetails({ soulId }) {
     enabled: !!soulId, //Only run this function if soulId is available
   });
   return singleSoul;
+}
+
+
+// Susped A Convert at any stage
+export function useSuspendAConvert({ convertId, reason }) {
+  const SuspendedConvert = useQuery(
+    [`SuspendAConvert`],
+    async () => await suspendAConvert(convertId, reason)
+  );
+  //   console.log(SuspendDtiConvert)
+  return SuspendedConvert;
 }

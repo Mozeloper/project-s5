@@ -1,13 +1,16 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import SearchBox from '../Searchbox/searchbox';
-import ReusableTable from './Table.reusable';
-import PaginationFooter from '../PaginationFooter';
-import { useFetchNewBelievers } from '../../hooks/useFetchNewBelievers';
-import ConfirmDeactivate from '../UI/confirmation screen';
-import { GrView } from 'react-icons/gr';
-import { GiConfirmed } from 'react-icons/gi';
-import { IoRemoveCircleSharp } from 'react-icons/io5';
-import Loader from '../Loader';
+import React, { Fragment, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { GiConfirmed } from 'react-icons/gi'
+import { GrView } from 'react-icons/gr'
+import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { useFetchNewBelievers } from '../../hooks/useFetchNewBelievers'
+import { suspendAConvert } from '../../services/admins.api'
+import Loader from '../Loader'
+import PaginationFooter from '../PaginationFooter'
+import SearchBox from '../Searchbox/searchbox'
+import PromoteConvertToDti from '../UI/PromoteScreen/PromoteConvertToDti'
+import SuspendConvert from '../UI/SuspendConvert'
+import ReusableTable from './Table.reusable'
 
 export default function NewBelieversTable() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -32,41 +35,71 @@ export default function NewBelieversTable() {
     getPosts();
   }, [NewBelieversData]);
 
+//   useEffect(() => {
+//   const listener = async () => {
+//     // Refetch the data
+//     await useFetchNewBelievers({ pageNumber, pageSize });
+//   };
+
+//   document.addEventListener('suspendConvert', listener);
+
+//   return () => {
+//     document.removeEventListener('suspendConvert', listener);
+//   };
+// }, []);
+
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
-    { icon: <GiConfirmed className="text-green-500" />, name: 'Modify' },
+    { icon: <GiConfirmed className="text-green-500" />, name: 'Promote' },
     {
       icon: <IoRemoveCircleSharp className="text-yellow-500" />,
       name: 'Suspend',
     },
   ];
 
-  const handleOptionsClick = (event) => {
-    const innerText = event.currentTarget.innerText;
-    const id = event.currentTarget.id;
-    if (innerText.toLowerCase() === 'view') {
-      setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleViewAdmin.bind(null, id)}
-          screenName={innerText}
-        />
-      );
-    } else if (innerText.toLowerCase() === 'modify') {
-      setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleModifyAdmin.bind(null, id)}
-          screenName={innerText}
-        />
-      );
-    } else {
-      setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleSuspendAdmin.bind(null, id)}
-          screenName={innerText}
-        />
-      );
-    }
+
+
+  const handlePromoteToDti = (id) => {
+    console.log(`promoted convert with ${id} to DTI`);
   };
+
+  const handleSuspendNBCovert = async (id, reason) => {
+    console.log(`suspend convert with id of ${id} and ${reason}`);
+    // const {suspededConvert, isLoading, isError}= useSuspendAConvert(id, reason);
+
+    const suspededConvert = await suspendAConvert(id, reason);
+    console.log(suspededConvert.Message);
+    if (suspededConvert.StatusCode === 200) {
+      toast.success(suspededConvert.Message);
+      // Refetch the data after suspending the convert
+       useFetchNewBelievers({ pageNumber, pageSize });
+    }
+
+    //  console.log(suspededConvert);
+  };
+
+   const handleOptionsClick = (event, option) => {
+     const innerText = option.name;
+     console.log(innerText);
+     const id = event.currentTarget.id;
+     if (innerText.toLowerCase() === 'promote') {
+       setDisplayUi(
+         <PromoteConvertToDti
+           workerId={id}
+           screenName={innerText}
+           handlePromote={handlePromoteToDti.bind(null, id)}
+         />
+       );
+     } else if (innerText.toLowerCase() === 'suspend') {
+       setDisplayUi(
+         <SuspendConvert
+           handleDeactivate={handleSuspendNBCovert.bind(null, id)}
+           screenName={innerText}
+         />
+       );
+       console.log('suspend was clicked ' + `${id}`);
+     }
+   };
 
   const handlePaginationChange = (event, value) => {
     setPageNumber(value);
@@ -80,7 +113,7 @@ export default function NewBelieversTable() {
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-base font-semibold leading-6 text-gray-900">
-                newBelieversRes
+                New Believers
               </h1>
               <p className="mt-2 text-sm text-gray-700">
                 The list of all the Ministers.
@@ -100,7 +133,7 @@ export default function NewBelieversTable() {
               ) : (
                 <>
                   <ReusableTable
-                    pageLink={'newBelieversRes'}
+                    pageLink={'newconverts'}
                     optionModal={displayUi}
                     headers={headers}
                     data={data}
