@@ -37,6 +37,7 @@ export default function DTI() {
             error={isError}
           />
         </div>
+        <div className="p-2"></div>
         <DtiTable />
       </>
     );

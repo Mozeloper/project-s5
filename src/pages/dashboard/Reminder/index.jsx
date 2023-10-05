@@ -25,7 +25,7 @@ export default function Reminder() {
             <TabList onChange={handleChange} aria-label="lab API tabs example">
               <Tab label="Unapproved Workers" value="1" />
               <Tab label="Suspended Workers" value="2" />
-              <Tab label="Deactivated New-Convert" value="3" />
+              <Tab label="Deactivated Converts" value="3" />
             </TabList>
           </Box>
           <TabPanel value="1" className="!px-2">
