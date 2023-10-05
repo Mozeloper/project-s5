@@ -45,7 +45,7 @@ export default function DeactivatedNewConvertTable() {
    * @param {number} pageNumber - The current page number.
    */
   const { mutateAsync: reativatedConvertAsync, isLoading: isLoadingApproval } =
-    usePostReactivateConvert(convertId && convertId, pageNumber);
+    usePostReactivateConvert(convertId, pageNumber);
 
   /**
    * Runs every time the deactivated convert table is updated
