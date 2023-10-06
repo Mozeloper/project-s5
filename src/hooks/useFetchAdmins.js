@@ -9,7 +9,7 @@ import { getAllAdmins } from "../services/admins.api";
 import { getAAdmin } from "../services/details(id).api";
 
 export function useFetchAdmins({ pageNumber, pageSize }) {
-    const admins = useQuery([`admins page `, pageNumber], async () => await getAllAdmins({ pageNumber, pageSize }), {
+    const admins = useQuery(['All Admins', pageNumber], async () => await getAllAdmins({ pageNumber, pageSize }), {
         staleTime: 360000,
         enabled: !!pageNumber,  //The enabled property allows only a boolean, then wait till id is not undefined or null
         keepPreviousData: true

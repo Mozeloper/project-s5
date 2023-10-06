@@ -9,6 +9,7 @@ import Loader from '../../Loader';
 import PaginationFooter from '../../PaginationFooter';
 import ConfirmDeactivate from '../../UI/confirmation screen';
 import ReusableTable from '../Table.reusable';
+import { useQueryClient } from 'react-query';
 
 export default function DeactivatedNewConvertTable() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -19,6 +20,7 @@ export default function DeactivatedNewConvertTable() {
   const [convertId, setConvertId] = useState('');
   const [reason, setReason] = useState('');
   const [activeFunction, setActiveFunction] = useState('');
+  const queryClient = useQueryClient();
 
   /**
    * Hook for Fetching Deactivated Converts Data
@@ -108,6 +110,7 @@ export default function DeactivatedNewConvertTable() {
     async (id) => {
       setActiveFunction('reactivate');
       setConvertId(id);
+      queryClient.invalidateQueries('DeactivatedConverts');
     },
     [reativatedConvertAsync, convertId]
   );
@@ -121,8 +124,9 @@ export default function DeactivatedNewConvertTable() {
       //Todo Please note that the endpoint for this is currently not functioning properly
       setConvertId(id);
       setActiveFunction('delete');
+      queryClient.invalidateQueries('DeactivatedConverts');
     },
-    [convertId]
+    [deletedConvertAsync, convertId]
   );
 
   /**

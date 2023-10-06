@@ -18,7 +18,6 @@ export default function Workers() {
     },
   ];
 
-  const summeryTitle = ['Souls'];
   return (
     <div className="flex flex-col gap-y-6">
       <PageTitle title="Workers" />
@@ -26,7 +25,7 @@ export default function Workers() {
       <DashboardTabs tabLabels={['All Workers', 'Analytics']}>
         <>
           <div className="">
-            <SummeryCard title={summeryTitle[0]} />
+            <SummeryCard />
           </div>
           <div className="p-2"></div>
           <WorkersTable />
