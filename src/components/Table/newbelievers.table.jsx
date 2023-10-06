@@ -3,6 +3,7 @@ import toast from 'react-hot-toast'
 import { GiConfirmed } from 'react-icons/gi'
 import { GrView } from 'react-icons/gr'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { useQueryClient } from 'react-query'
 import { useFetchNewBelievers } from '../../hooks/useFetchNewBelievers'
 import { suspendAConvert } from '../../services/admins.api'
 import Loader from '../Loader'
@@ -11,15 +12,20 @@ import SearchBox from '../Searchbox/searchbox'
 import PromoteConvertToDti from '../UI/PromoteScreen/PromoteConvertToDti'
 import SuspendConvert from '../UI/SuspendConvert'
 import ReusableTable from './Table.reusable'
-import { useQueryClient } from 'react-query';
 
 export default function NewBelieversTable() {
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(2);
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
+
+  /**
+   * Hook for fetching all converts in new believers stage
+   * @param {string} pageNumber
+   * @param {string} pageSize
+   */
   const {
     data: NewBelieversData,
     isError,
@@ -37,19 +43,6 @@ export default function NewBelieversTable() {
     getPosts();
   }, [NewBelieversData]);
 
-//   useEffect(() => {
-//   const listener = async () => {
-//     // Refetch the data
-//     await useFetchNewBelievers({ pageNumber, pageSize });
-//   };
-
-//   document.addEventListener('suspendConvert', listener);
-
-//   return () => {
-//     document.removeEventListener('suspendConvert', listener);
-//   };
-// }, []);
-
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
     { icon: <GiConfirmed className="text-green-500" />, name: 'Promote' },
@@ -59,16 +52,20 @@ export default function NewBelieversTable() {
     },
   ];
 
-
-
+  /**
+   * Function for handling promotion of a new beleiver (note the function is currently being handled by the modal)
+   * @param {string} id
+   */
   const handlePromoteToDti = (id) => {
     console.log(`promoted convert with ${id} to DTI`);
   };
 
+  /**
+   * Function for handling suspension of a new beleiver
+   * @param {string} id
+   * @param {string} reason
+   */
   const handleSuspendNBCovert = async (id, reason) => {
-    console.log(`suspend convert with id of ${id} and ${reason}`);
-    // const {suspededConvert, isLoading, isError}= useSuspendAConvert(id, reason);
-
     const suspededConvert = await suspendAConvert(id, reason);
     console.log(suspededConvert.Message);
     if (suspededConvert.StatusCode === 200) {
@@ -76,33 +73,40 @@ export default function NewBelieversTable() {
       // Refetch the data after suspending the convert
       queryClient.invalidateQueries('GetAllNewBelievers');
     }
-
-    //  console.log(suspededConvert);
   };
 
-   const handleOptionsClick = (event, option) => {
-     const innerText = option.name;
-     console.log(innerText);
-     const id = event.currentTarget.id;
-     if (innerText.toLowerCase() === 'promote') {
-       setDisplayUi(
-         <PromoteConvertToDti
-           workerId={id}
-           screenName={innerText}
-           handlePromote={handlePromoteToDti.bind(null, id)}
-         />
-       );
-     } else if (innerText.toLowerCase() === 'suspend') {
-       setDisplayUi(
-         <SuspendConvert
-           handleDeactivate={handleSuspendNBCovert.bind(null, id)}
-           screenName={innerText}
-         />
-       );
-       console.log('suspend was clicked ' + `${id}`);
-     }
-   };
+  /**
+   *
+   * @param {Event} event
+   * @param {Object} option
+   */
+  const handleOptionsClick = (event, option) => {
+    const innerText = option.name;
+    console.log(innerText);
+    const id = event.currentTarget.id;
+    if (innerText.toLowerCase() === 'promote') {
+      setDisplayUi(
+        <PromoteConvertToDti
+          workerId={id}
+          screenName={innerText}
+          handlePromote={handlePromoteToDti.bind(null, id)}
+        />
+      );
+    } else if (innerText.toLowerCase() === 'suspend') {
+      setDisplayUi(
+        <SuspendConvert
+          handleDeactivate={handleSuspendNBCovert.bind(null, id)}
+          screenName={innerText}
+        />
+      );
+    }
+  };
 
+  /**
+   * Handler for pagination
+   * @param {Event} event 
+   * @param {number} value 
+   */
   const handlePaginationChange = (event, value) => {
     setPageNumber(value);
   };
