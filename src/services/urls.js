@@ -15,6 +15,7 @@ export const appUrls = {
   GET_ADMIN_DETAILS: '/api/v1/SuperAdmin/get-admin-by', //get worker by id
   GET_ALL_New_Converts_URL: '/api/v1/SuperAdmin/get-all-new-converts',
   GET_WORKER_DETAILS: '/api/v1/SuperAdmin/get-worker', //get worker by id
+  GET_DEACTIVATED_WORKER_DETAILS: '/api/v1/SuperAdmin/get-deactivated-worker', //get deactivated worker by id
   ADD_ROLE_TO_USER: '/api/v1/SuperAdmin/Add-user-role', //accepts id & role as query  eg ?userId=1&roles=User
   REMOVE_ADMIN_FROM_ROLE: '/api/v1/SuperAdmin/Remove-user-role', //remove a role from an admin, accepts the admin's id and the role as a query param eg /ADMIN_ID?roles=User
 

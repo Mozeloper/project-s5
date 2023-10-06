@@ -21,6 +21,9 @@ const Workers = React.lazy(() => import('./pages/dashboard/Workers'));
 const WorkerDetailsById = React.lazy(() =>
   import('./pages/dashboard/Workers/[Worker-id]')
 );
+const DeactivatedWorkerDetailsById = React.lazy(() =>
+  import('./pages/dashboard/Workers/[DeactivatedWorker-id]')
+);
 const UnapprovedWorkerDetailsById = React.lazy(() =>
   import('./pages/dashboard/UnapprovedWorkers/[Worker-id]')
 );
@@ -210,6 +213,14 @@ function App() {
               }
             />
             <Route
+              path="/reminder/deactivated-worker/:workerId"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <DeactivatedWorkerDetailsById />
+                </React.Suspense>
+              }
+            />
+            <Route
               path="/reminder/unapproved-worker/:workerId"
               element={
                 <React.Suspense fallback={<>...</>}>
@@ -227,7 +238,6 @@ function App() {
               }
             />
           </Route>
-          
         </Routes>
       </main>
     </>

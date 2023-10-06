@@ -13,6 +13,18 @@ export async function getAWorkerAdmin(workerId) {
   }
 }
 
+export async function getDeactivatedWorker(workerId) {
+  try {
+    const deactivatedWorker = await api.get(
+      `${appUrls.GET_DEACTIVATED_WORKER_DETAILS}/${workerId}`
+    );
+    const deactivatedWorkerRes = await deactivatedWorker?.data?.Data;
+    return await deactivatedWorkerRes;
+  } catch (error) {
+    throw new Error(error.message || error);
+  }
+}
+
 export async function getUnapprovedWorker(workerId) {
   try {
     const unapprovedWorker = await api.get(

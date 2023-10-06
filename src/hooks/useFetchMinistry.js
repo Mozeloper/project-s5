@@ -3,7 +3,7 @@ import { getAllMinistryAdmins } from "../services/admins.api";
 
 export function useFetchMinistry({ pageNumber, pageSize }) {
     const Ministers = useQuery(
-      [`GetAllMinisters`, pageNumber],
+      ['GetAllMinisters', pageNumber],
       async () => await getAllMinistryAdmins({ pageNumber, pageSize }),
       {
         staleTime: 360000,
