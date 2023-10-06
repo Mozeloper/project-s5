@@ -20,19 +20,19 @@ export function useFetchAllDeactivatedNewConvert({ pageNumber, pageSize }) {
 }
 
 //Mutation / post functions
-export function usePostReactivateConvert(convertId, pageNumber) {
+export function usePostReactivateConvert(convertId) {
   //todo - workerId is not seen on first try
   const reactivatedConvert = useMutation({
     mutationFn: async () => await reactivateAConvert(convertId),
     onSuccess: async () => {
       queryClient.invalidateQueries({
-        queryKey: ['DeactivatedConverts', pageNumber],
+        queryKey: ['DeactivatedConverts'],
       });
       toast.success(`Congratulation: Convert has been reinstated`);
     },
     onError: async () => {
       queryClient.invalidateQueries({
-        queryKey: ['DeactivatedConverts', pageNumber],
+        queryKey: ['DeactivatedConverts'],
       });
       toast.error(`Opps: An error occurred, Try Again Later`);
     },
@@ -44,11 +44,11 @@ export function usePostDeleteConvert(convertId, reason) {
   const deletedConvert = useMutation({
     mutationFn: async () => await deleteAConvert(convertId, reason),
     onSuccess: async () => {
-      queryClient.invalidateQueries(['DeactivatedConverts', pageNumber]);
+      queryClient.invalidateQueries(['DeactivatedConverts']);
       toast.success(`Convert has been Permanently Deleted`);
     },
     onError: async () => {
-      queryClient.invalidateQueries(['DeactivatedConverts', pageNumber]);
+      queryClient.invalidateQueries(['DeactivatedConverts']);
       toast.error(`Opps: An error occurred, Try Again Later`);
     },
   });

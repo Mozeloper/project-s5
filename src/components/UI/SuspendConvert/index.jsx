@@ -55,7 +55,8 @@ const SuspendConvert = ({ handleDeactivate, screenName }) => {
             <div className='w-full mb-5'>
             <label htmlFor='reason' className="text-gray-700 text-lg text-center">
               Kindly State Your Reason:
-              <textarea 
+              <textarea
+              minLength='6' 
               id='reason' name='reason' 
               className='mt-2 border-2 w-full border-primary rounded-md'
               onChange={(e) => setSuspensionReason(e.target.value)}
