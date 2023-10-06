@@ -199,6 +199,14 @@ function App() {
               }
             />
             <Route
+              path="/ministry/:soulId"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <NewConvertDetailsById />
+                </React.Suspense>
+              }
+            />
+            <Route
               path="/reminder"
               element={
                 <React.Suspense fallback={<>...</>}>
