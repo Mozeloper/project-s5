@@ -1,8 +1,7 @@
-import axios from "axios";
-import { appUrls } from "./urls";
-import { axiosRequest } from "../utils/axios-utils";
-import { api } from "./api";
 import toast from "react-hot-toast"
+import { axiosRequest } from "../utils/axios-utils"
+import { api } from "./api"
+import { appUrls } from "./urls"
 const baseUrl = import.meta.env.VITE_BASE_URL
 
 export async function getAllUnApproval({ pageNumber, pageSize }) {
