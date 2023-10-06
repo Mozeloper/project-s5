@@ -11,8 +11,10 @@ import SearchBox from '../Searchbox/searchbox'
 import PromoteConvertToDti from '../UI/PromoteScreen/PromoteConvertToDti'
 import SuspendConvert from '../UI/SuspendConvert'
 import ReusableTable from './Table.reusable'
+import { useQueryClient } from 'react-query';
 
 export default function NewBelieversTable() {
+    const queryClient = useQueryClient();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(2);
   const [headers, setHeaders] = useState([]);
@@ -72,7 +74,7 @@ export default function NewBelieversTable() {
     if (suspededConvert.StatusCode === 200) {
       toast.success(suspededConvert.Message);
       // Refetch the data after suspending the convert
-       useFetchNewBelievers({ pageNumber, pageSize });
+      queryClient.invalidateQueries('GetAllNewBelievers');
     }
 
     //  console.log(suspededConvert);

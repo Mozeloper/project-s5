@@ -6,8 +6,11 @@ import { useModalToggle } from '../../../context/ConfirmationModal.context'
 import { api } from '../../../services/api'
 import { appUrls } from '../../../services/urls'
 import Button from '../../Button'
+import { useQueryClient } from 'react-query';
 
 export default function PromoteConvertToDti({ screenName, workerId }) {
+
+  const queryClient = useQueryClient();
   const { setIsOpen } = useModalToggle();
 
   const handleClose = () => {
@@ -30,11 +33,13 @@ export default function PromoteConvertToDti({ screenName, workerId }) {
 
       if (res?.status === 200) {
         // Convert promoted successfully
-        toast.success('COnvert was promoted successfully!', {
+        toast.success('Convert was promoted successfully!', {
           duration: 3000,
-        });
+        });      
+        
         // Close the modal
         handleClose();
+        queryClient.invalidateQueries('GetAllNewBelievers');
       } else {
         // Convert promotion failed
         toast.error('An error occurred while promoting Convert.', {
