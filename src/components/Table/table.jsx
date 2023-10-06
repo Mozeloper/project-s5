@@ -1,68 +1,78 @@
-import React, {useCallback} from "react";
-import TableOptions  from "../UI/Options";
-import { IoRemoveCircleSharp } from 'react-icons/io5'
-import { AiFillDelete } from "react-icons/ai";
+import React, { useCallback } from 'react'
 import { GiConfirmed } from 'react-icons/gi'
 import { GrView } from 'react-icons/gr'
-import ConfirmDeactivate from '../UI/confirmation screen'
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { useQueryClient } from 'react-query'
+import { Link } from 'react-router-dom'
+import { suspendAWorker } from '../../services/worker.api'
+import TableOptions from '../UI/Options'
+import PromoteWorkerToAdmin from '../UI/PromoteScreen/PromoteWorkerToAdmin'
+import SuspendConvert from '../UI/SuspendConvert'
 
 export default function Table({ tableDataArray, pageLink }) {
-  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-
-  const [displayUi, setDisplayUi] = React.useState(null)
+  const [displayUi, setDisplayUi] = React.useState(null);
   const optionList = [
-    { icon: <GrView className='text-blue-500' />, name: 'View' },
-    { icon: <GiConfirmed className='text-green-500' />, name: 'Promote' },
-    { icon: <IoRemoveCircleSharp className='text-yellow-500' />, name: 'Deactivate' },
-    { icon: <AiFillDelete className='text-primary' />, name: 'Delete' },
+    { icon: <GrView className="text-blue-500" />, name: 'View' },
+    { icon: <GiConfirmed className="text-green-500" />, name: 'Promote' },
+    {
+      icon: <IoRemoveCircleSharp className="text-yellow-500" />,
+      name: 'Deactivate',
+    },
   ];
 
-const handleApprovedConfirmation = useCallback(
-  async (id) => {
-    
-    console.log('user', id);
-    mutateAsync()
-    console.log(`you just confirmed the worker with id ${id} `);
-  }, [],
-);
+  /**
+   * Handler for Promoting a Worker to An Admin Position
+   * @param {string} workerId
+   * @param {string} role
+   */
+  // const handlePromotionConfirmation = useCallback(async (id) => {
+  //   console.log('user', id);
+  //   console.log(`you just confirmed the worker with id ${id} `);
+  // }, []);
 
-const handleApprovedSuspend = useCallback(
-  (id) => {
+
+  /**
+   * Handler for Suspending A Worker
+   * @param {string} workerId
+   * @param {string} reason
+   */
+  const handleSuspend = useCallback(async (id, reason) => {
     //Todo add logic/function to suspend a worker here
-    console.log(`you just supended the worker with id ${id} `);
-  }, [],
-);
+    //console.log(id, reason);
+    await suspendAWorker(id, reason);
+    queryClient.invalidateQueries('workers');
+    console.log(`you just supended the worker with id ${id} for ${reason} `);
+  }, []);
 
 
-const handleDelete = useCallback(
-  async (id) => {
-    //Todo add logic/function to suspend a worker 
-    
-    console.log('user', id);
-    
-    console.log(`you just deleted the worker with id ${id} `);
-  }, [],
-);
-
-
-const handleClick = (event) => {
-  const innerText = event.currentTarget.innerText
-  const id = event.currentTarget.id
-  if ( innerText.toLowerCase() === 'view') {
-    navigate(`/workers/${id}`);
-  }
-  else if (innerText.toLowerCase() === 'promote') {
-      setDisplayUi(<ConfirmDeactivate handleDeactivate={handleApprovedConfirmation.bind(null, id)} screenName={innerText}/>)
-  } else if (innerText.toLowerCase() === 'delete') {
-      setDisplayUi(<ConfirmDeactivate handleDeactivate={handleDelete.bind(null, id)} screenName={innerText}/>)
-  } else {
-      setDisplayUi(<ConfirmDeactivate handleDeactivate={handleApprovedSuspend.bind(null, id)} screenName={innerText}/>)
-  }
-};
-
+  /**
+   * Function in charge of launching the modal to be displayed
+   * @param {Event} event
+   */
+  const handleClick = (event) => {
+    const innerText = event.currentTarget.innerText;
+    const id = event.currentTarget.id;
+     if (innerText.toLowerCase() === 'promote') {
+      setDisplayUi(
+        <PromoteWorkerToAdmin
+          promoteCallback={() => queryClient.invalidateQueries('All Admins')}
+          screenName={innerText}
+          workerId={id}
+        />
+      );
+    } else if (innerText.toLowerCase() === 'deactivate') {
+      setDisplayUi(
+        <SuspendConvert
+          handleDeactivate={handleSuspend.bind(null, id)}
+          screenName={innerText}
+        />
+      );
+    } else {
+      null;
+    }
+  };
 
   return (
     <div className="mt-8 flow-root">
@@ -145,12 +155,6 @@ const handleClick = (event) => {
                     {person.role}
                     </td> */}
                   <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                    {/* <a
-                      href={`/workers/${person.id}`}
-                      className="text-indigo-600 hover:text-indigo-900"
-                    >
-                      Edit<span className="sr-only">, {person.name}</span>
-                    </a> */}
                     <TableOptions
                       pageLink={'workers'}
                       displayModalUi={displayUi}
