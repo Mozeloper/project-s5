@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 import { GiConfirmed } from 'react-icons/gi'
 import { GrView } from 'react-icons/gr'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
-import { useNavigate } from 'react-router-dom'
+import { useQueryClient } from 'react-query'
 import { useFetchDti } from '../../hooks/useFetchDti'
 import { suspendAConvert } from '../../services/admins.api'
 import Loader from '../Loader'
@@ -14,12 +14,16 @@ import SuspendConvert from '../UI/SuspendConvert'
 import ReusableTable from './Table.reusable'
 
 export default function DtiTable() {
-  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(2);
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
+
+  /**
+   * Hook for fetching all converts in DTI Stage
+   */
   const {
     data: DtiConverts,
     isError,
@@ -43,29 +47,36 @@ export default function DtiTable() {
 
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
+    { icon: <GiConfirmed className="text-green-500" />, name: 'Promote' },
     {
       icon: <IoRemoveCircleSharp className="text-yellow-500" />,
       name: 'Suspend',
     },
-    { icon: <GiConfirmed className="text-green-500" />, name: 'Promote' },
   ];
 
   const handleModifyConvert = (id) => {
     console.log(`modifying convert with ${id}`);
   };
-  const handleSuspendCovert = async (id, reason) => {
-    console.log(`suspend convert with id of ${id} and ${reason}`);
-    // const {suspededConvert, isLoading, isError}= useSuspendAConvert(id, reason);
 
+  /**
+   * Handler for suspending a Convert from DTI
+   * @param {number} id
+   * @param {string} reason
+   */
+  const handleSuspendCovert = async (id, reason) => {
     const suspededConvert = await suspendAConvert(id, reason);
-    console.log(suspededConvert.Message);
     if (suspededConvert.StatusCode === 200) {
       toast.success(suspededConvert.Message);
+      //update the data on the table by invalidating the dti query
+      queryClient.invalidateQueries('DtiConverts');
     }
-
-    //  console.log(suspededConvert);
   };
 
+  /**
+   * Fnction in charge of handling the modal to display based of the option selected
+   * @param {Event} event
+   * @param {Object} option
+   */
   const handleDtiOptionsClick = (event, option) => {
     const innerText = option.name;
     console.log(innerText);
@@ -85,10 +96,14 @@ export default function DtiTable() {
           screenName={innerText}
         />
       );
-      console.log('suspend was clicked ' + `${id}`);
     }
   };
 
+  /**
+   * Function for swithching pagination
+   * @param {Event} event
+   * @param {number} value
+   */
   const handlePaginationChange = (event, value) => {
     setPageNumber(value);
   };
@@ -101,7 +116,7 @@ export default function DtiTable() {
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-base font-semibold leading-6 text-gray-900">
-                DTI
+                Disciples In Training
               </h1>
               <p className="mt-2 text-sm text-gray-700">
                 List of Converts in Discipleship In Training Institue.

@@ -1,31 +1,42 @@
-import React from "react";
-import { Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
-import Signin from "./pages/auth/signin";
-import DashboardLayout from "./components/Layout/dashboard";
-import Authlayout from "./components/Layout/auth";
-import { isObjectEmpty } from "./utils";
-import Home from "./pages/dashboard/home";
-import BeginRegistration from "./pages/auth/beginRegistration";
-import NotFound from "./pages/notFound";
+import React from 'react';
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import Signin from './pages/auth/signin';
+import DashboardLayout from './components/Layout/dashboard';
+import Authlayout from './components/Layout/auth';
+import { isObjectEmpty } from './utils';
+import Home from './pages/dashboard/home';
+import BeginRegistration from './pages/auth/beginRegistration';
+import NotFound from './pages/notFound';
 import Forbidden from './pages/forbidden';
-import Register from "./pages/auth/Register";
+import Register from './pages/auth/Register';
 
 //This is for code splitting/ Lazy loading of page for faster routing
 // const Souls = React.lazy(() => import('./pages/dashboard/souls'))
-const Profile = React.lazy(() => import("./pages/dashboard/profile"));
-const Admins = React.lazy(() => import("./pages/dashboard/Admins"));
-const AdminDetailsById = React.lazy(() => import("./pages/dashboard/Admins/[Admin-id]"));
-const Workers = React.lazy(() => import("./pages/dashboard/Workers"));
-const WorkerDetailsById = React.lazy(() => import("./pages/dashboard/Workers/[Worker-id]"));
-const UnapprovedWorkerDetailsById = React.lazy(() => import("./pages/dashboard/UnapprovedWorkers/[Worker-id]"));
-const DTI = React.lazy(() => import("./pages/dashboard/DTI"));
-const NewConvert = React.lazy(() => import("./pages/dashboard/NewConvert"));
-const NewConvertDetailsById = React.lazy(() => import("./pages/dashboard/NewConvert/[NewConvert-id]"));
-const Souls = React.lazy(() => import("./pages/dashboard/Souls"));
-const Ministry = React.lazy(() => import("./pages/dashboard/Ministry"));
-const ChangePassword = React.lazy(() => import("./pages/auth/changePassword"));
-const ForgetPassword = React.lazy(() => import("./pages/auth/forgetPassword"));
-const Reminder = React.lazy(() => import("./pages/dashboard/Reminder"));
+const Profile = React.lazy(() => import('./pages/dashboard/profile'));
+const Admins = React.lazy(() => import('./pages/dashboard/Admins'));
+const AdminDetailsById = React.lazy(() =>
+  import('./pages/dashboard/Admins/[Admin-id]')
+);
+const Workers = React.lazy(() => import('./pages/dashboard/Workers'));
+const WorkerDetailsById = React.lazy(() =>
+  import('./pages/dashboard/Workers/[Worker-id]')
+);
+const UnapprovedWorkerDetailsById = React.lazy(() =>
+  import('./pages/dashboard/UnapprovedWorkers/[Worker-id]')
+);
+const DTI = React.lazy(() => import('./pages/dashboard/DTI'));
+const NewConvert = React.lazy(() => import('./pages/dashboard/NewConvert'));
+const NewConvertDetailsById = React.lazy(() =>
+  import('./pages/dashboard/NewConvert/[NewConvert-id]')
+);
+const DTICOnvertDetailsById = React.lazy(() =>
+  import('./pages/dashboard/DTI/[DtiConvert-id]')
+);
+const Souls = React.lazy(() => import('./pages/dashboard/Souls'));
+const Ministry = React.lazy(() => import('./pages/dashboard/Ministry'));
+const ChangePassword = React.lazy(() => import('./pages/auth/changePassword'));
+const ForgetPassword = React.lazy(() => import('./pages/auth/forgetPassword'));
+const Reminder = React.lazy(() => import('./pages/dashboard/Reminder'));
 
 export const ProtectRoutes = () => {
   const location = useLocation();
@@ -57,7 +68,9 @@ function App() {
       <main>
         <Routes>
           <Route path="/*" element={<NotFound />} />
+
           <Route path="/forbidden" element={<Forbidden />} />
+
           <Route element={<AuthProtectRoutes />}>
             <Route path="/" element={<Signin />} />
             <Route
@@ -84,26 +97,9 @@ function App() {
               <Route path="/sign-up" element={<Register />} />
             </Route>
           </Route>
+
           <Route element={<ProtectRoutes />}>
             <Route path="/dashboard" element={<Home />} />
-            {/* <Route
-              path="/souls"
-              element={
-                <React.Suspense
-                  fallback={<>...</>} // the fallback should be an error page if any error occurs while working on the component
-                >
-                  <Souls />
-                </React.Suspense>
-              }
-            /> */}
-            <Route
-              path="/souls/:soulId"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <NewConvertDetailsById />
-                </React.Suspense>
-              }
-            />
 
             <Route
               path="/souls"
@@ -114,10 +110,10 @@ function App() {
               }
             />
             <Route
-              path="/profile"
+              path="/souls/:soulId"
               element={
                 <React.Suspense fallback={<>...</>}>
-                  <Profile />
+                  <NewConvertDetailsById />
                 </React.Suspense>
               }
             />
@@ -169,7 +165,7 @@ function App() {
               path="/dti/:dtiId"
               element={
                 <React.Suspense fallback={<>...</>}>
-                  <NewConvertDetailsById />
+                  <DTICOnvertDetailsById />
                 </React.Suspense>
               }
             />
@@ -198,6 +194,14 @@ function App() {
               }
             />
             <Route
+              path="/ministry/:soulId"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <NewConvertDetailsById />
+                </React.Suspense>
+              }
+            />
+            <Route
               path="/reminder"
               element={
                 <React.Suspense fallback={<>...</>}>
@@ -213,7 +217,17 @@ function App() {
                 </React.Suspense>
               }
             />
+
+            <Route
+              path="/profile"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <Profile />
+                </React.Suspense>
+              }
+            />
           </Route>
+          
         </Routes>
       </main>
     </>
