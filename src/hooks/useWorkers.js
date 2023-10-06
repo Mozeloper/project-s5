@@ -1,6 +1,9 @@
 import { useQuery } from 'react-query';
 import { getAllWorkersAdmins } from '../services/admins.api';
-import { getAWorkerAdmin } from '../services/details(id).api';
+import {
+  getAWorkerAdmin,
+  getDeactivatedWorker,
+} from '../services/details(id).api';
 
 export function useWorkersAdmins({ pageNumber, pageSize }) {
   const admins = useQuery(
@@ -23,4 +26,14 @@ export function useWorkerDetails({ workerId }) {
     enabled: !!workerId, //Only run this function if workerId is available
   });
   return singleWorker;
+
+}
+export function useDeactivatedWorkerDetails({ workerId }) {
+  const deactivatedWorker = useQuery({
+    queryKey: ['DeactivatedWorker', workerId],
+    queryFn: async () => await getDeactivatedWorker(workerId),
+    staleTime: 360000,
+    enabled: !!workerId, //Only run this function if workerId is available
+  });
+  return deactivatedWorker;
 }
