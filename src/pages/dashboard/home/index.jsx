@@ -10,6 +10,7 @@ import PageTitle from '../../../components/PageTitle'
 import DtiTable from '../../../components/Table/dti.table'
 import MinstryTable from '../../../components/Table/ministry.table'
 import NewBelieversTable from '../../../components/Table/newbelievers.table'
+import { PerformersTable } from '../../../components/Table/performers.table'
 import { SoulsAdminTable } from '../../../components/Table/souls.admin.table'
 import { SoulsTable } from '../../../components/Table/souls.table'
 import Charts from '../../../components/chart/chart'
@@ -136,7 +137,7 @@ export default function Home() {
           {isSuperAdmin && (
             <TabPanel value="3" className="!px-2">
               <div className="rounded-md bg-white flex justify-center items-center min-h-[50vh]">
-                <h4 className="font-bold">Coming Soon</h4>
+                <PerformersTable />
               </div>
             </TabPanel>
           )}
