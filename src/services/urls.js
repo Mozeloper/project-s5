@@ -9,6 +9,9 @@ export const appUrls = {
   //Department
   GETCHURCHDEPT: '/api/v1/Entity/get-church-department',
 
+  //Top Performers
+  GET_TOP_PERFORMERS: '/api/v1/SuperAdmin/get-top-worker-performance',
+
   //Super Admins
   GETALLWORKERS: '/api/v1/SuperAdmin/get-all-workers', //
   GET_ALL_SUPERADMINS: '/api/v1/SuperAdmin/get-all-admin',

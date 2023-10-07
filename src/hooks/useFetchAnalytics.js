@@ -7,6 +7,7 @@ import {
   getAllSoulsCount,
   getAllWorkersCount,
   getPersonalAnalytics,
+  getTopPerformers
 } from '../services/analytics.api';
 
 export function useFetchWorkersCount() {
@@ -93,3 +94,13 @@ export function useFetchPersonalAnalytics({ AnalyticsId }) {
   return singleAnalytics;
 }
 
+export function useFetchTopPerformers() {
+  const TopPerformersMetrics = useQuery(
+    ['TopPerformers'],
+    async () => await getTopPerformers(),
+    {
+      staleTime: 360000,
+    }
+  );
+  return TopPerformersMetrics;
+}
