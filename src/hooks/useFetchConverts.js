@@ -3,7 +3,7 @@ import { reactivateAConvert, deleteAConvert } from '../services/souls';
 import { QueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { getAllDeactivatedNewConvert } from '../services/approval.api';
-
+import { getDeactivatedConvertDetails } from '../services/souls';
 //Quary / fetcher functions
 const queryClient = new QueryClient();
 
@@ -53,4 +53,14 @@ export function usePostDeleteConvert(convertId, reason) {
     },
   });
   return deletedConvert;
+}
+
+export function useFetchDeactivatedConvertDetails({ convertId }) {
+  const deactivatedConvert = useQuery({
+    queryKey: ['DeactivatedConvertDetails', convertId],
+    queryFn: async () => await getDeactivatedConvertDetails(convertId),
+    staleTime: 360000,
+    enabled: !!convertId, //Only run this function if workerId is available
+  });
+  return deactivatedConvert;
 }

@@ -24,6 +24,9 @@ const WorkerDetailsById = React.lazy(() =>
 const DeactivatedWorkerDetailsById = React.lazy(() =>
   import('./pages/dashboard/Workers/[DeactivatedWorker-id]')
 );
+const GetDeactivatedConvertDetails = React.lazy(() =>
+  import('./pages/dashboard/Reminder/[convertId]')
+);
 const UnapprovedWorkerDetailsById = React.lazy(() =>
   import('./pages/dashboard/UnapprovedWorkers/[Worker-id]')
 );
@@ -217,6 +220,14 @@ function App() {
               element={
                 <React.Suspense fallback={<>...</>}>
                   <DeactivatedWorkerDetailsById />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/reminder/deactivated-convert/:convertId"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <GetDeactivatedConvertDetails />
                 </React.Suspense>
               }
             />

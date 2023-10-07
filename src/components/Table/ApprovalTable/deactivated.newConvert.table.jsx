@@ -162,7 +162,7 @@ export default function DeactivatedNewConvertTable() {
           ) : (
             <>
               <ReusableTable
-                pageLink={'reminder/deactivatedNewConvert'}
+                pageLink={'reminder/deactivated-convert'}
                 optionModal={displayUi}
                 headers={headers}
                 data={data}
