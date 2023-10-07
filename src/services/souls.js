@@ -14,6 +14,16 @@ export async function getAllNewConvert({ pageNumber, pageSize }) {
     }
 }
 
+export async function getDeactivatedConvertDetails(convertId) {
+    try {
+        const ConvertDetails = await api.get(`${baseUrl}${appUrls.GET_DEACTIVATED_CONVERT_DETAILS}/${convertId}`)
+        const ConvertDetailsRes = await ConvertDetails?.data?.Data;
+        return ConvertDetailsRes
+    } catch (error) {
+        throw new Error(error.message || error)
+    }
+}
+
 
 export async function getSoulsUnderByWorkerId({ workerId, pageNumber, pageSize }) {
   try {

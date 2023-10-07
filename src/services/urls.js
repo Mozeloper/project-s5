@@ -29,6 +29,8 @@ export const appUrls = {
   GET_ALL_New_Convert:
     '/api/v1/NewConvertAdmin/get-all-new-convants-for-newconvertadmin',
   GET_CONVERT_DETAILS: '/api/v1/NewConvert/get-new-converts', //get soul by id
+  GET_DEACTIVATED_CONVERT_DETAILS:
+    '/api/v1/NewConvert/get-deactivitated-convert', //get deactivated convert by Id
   GET_ALL_SOULS_UNDER_A_WORKER: '/api/v1/NewConvert/get-new-converts-by-worker', //accepts worker's id
   ADD_NEW_CONVERT: 'api/v1/NewConvert/register-new-convert',
   DELETE_A_CONVERT: '/api/v1/NewConvert/delete-new-convert', //delete soul by id

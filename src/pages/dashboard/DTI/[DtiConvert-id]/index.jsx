@@ -1,23 +1,32 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import DetailsByIdScreen from '../../../../components/UI/Details Screen/DetailsByIdScreen';
-import { useSoulDetails } from '../../../../hooks/useFetchNewConvert';
+import ConvertDetailsByIdScreen from '../../../../components/UI/ConvertDetailsScreen';
 import { useFetchPersonalAnalytics } from '../../../../hooks/useFetchAnalytics';
-
+import { useSoulDetails } from '../../../../hooks/useFetchNewConvert';
 
 export default function DtiConvertDetails() {
+  /**
+   * Get Dynamic Id from the query param
+   */
   const { dtiId } = useParams();
-  const { data: soulInfo, isError, isLoading } = useSoulDetails({ soulId: dtiId });
-  const { data: personalAnalyticsDatas } = useFetchPersonalAnalytics({
-    AnalyticsId: dtiId,
-  });
+
+  /**
+   * Hook for fetching COnvert's Details
+   * @param {number} dtiId
+   */
+  const {
+    data: soulInfo,
+    isError,
+    isLoading,
+  } = useSoulDetails({ soulId: dtiId });
 
   return (
     <div>
-      <DetailsByIdScreen personalAnalyticsDatas={personalAnalyticsDatas && personalAnalyticsDatas?.Data} data={!isLoading && soulInfo} loading={isLoading} notFound={!soulInfo && isError} />
+      <ConvertDetailsByIdScreen
+        data={!isLoading && soulInfo}
+        loading={isLoading}
+        notFound={!soulInfo && isError}
+      />
     </div>
   );
 }
-
-
-
