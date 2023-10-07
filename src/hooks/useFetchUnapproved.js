@@ -26,7 +26,7 @@ export function useFetchAllUnapproved({ pageNumber, pageSize }) {
 
 export function useFetchAllDeactivatedWorker({ pageNumber, pageSize }) {
   const DeactivatedWorker = useQuery(
-    [`DeactivatedWorker`, pageNumber],
+    ['DeactivatedWorker', pageNumber],
     async () => await getAllDeactivatedWorker({ pageNumber, pageSize }),
     {
       staleTime: 360000,
