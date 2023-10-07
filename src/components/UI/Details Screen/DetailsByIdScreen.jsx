@@ -1,17 +1,16 @@
-import React from 'react';
-import Button from '@/components/Button';
-import { Email, Phone } from '@mui/icons-material';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import { Skeleton } from '@mui/material';
-import ReturnToPrevious from '@/components/ReturnToPrevious';
-import ResultNotFound from '@/components/ResultNotFound';
-import SummeryCard from '../../SummeryCard/summeryCard';
-import { toPascalCase } from '../../../Helper/toPascalCase';
-import { Link } from 'react-router-dom';
+import ResultNotFound from '@/components/ResultNotFound'
+import ReturnToPrevious from '@/components/ReturnToPrevious'
+import { Email, Phone } from '@mui/icons-material'
+import TabContext from '@mui/lab/TabContext'
+import TabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel'
+import { Skeleton } from '@mui/material'
+import Box from '@mui/material/Box'
+import Tab from '@mui/material/Tab'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { toPascalCase } from '../../../Helper/toPascalCase'
+import SummeryCard from '../../SummeryCard/summeryCard'
 
 const DetailsByIdScreen = ({
   data,
@@ -86,22 +85,17 @@ const DetailsByIdScreen = ({
                     {loading ? (
                       <Skeleton variant="rounded" className=" w-16 h-6 " />
                     ) : (
-                      <div className="bg-green-800 rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center">
-                        {/* <small>ACTIVE</small> */}
-                        <>
-                          {data?.IsActive && (
-                            <div
-                              className={`${
-                                data?.IsActive ? 'bg-green-800' : 'bg-red-800'
-                              } rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center`}
-                            >
-                              <small>
-                                {data?.IsActive ? 'Active' : 'Inactive'}
-                              </small>
-                            </div>
-                          )}
-                        </>
-                      </div>
+                      <>
+                        <div
+                          className={`${
+                            data?.IsActive ? 'bg-green-800' : 'bg-red-800'
+                          } rounded-md text-white p-2 w-16 h-6 flex text-center justify-center items-center`}
+                        >
+                          <small>
+                            {data?.IsActive ? 'Active' : 'Inactive'}
+                          </small>
+                        </div>
+                      </>
                     )}
                   </div>
                   <div className="text-gray-400 font-semibold">
@@ -152,7 +146,7 @@ const DetailsByIdScreen = ({
                       <h4 className="hover:underline">
                         {data && data?.PhoneNumber ? (
                           <Link to={`/workers/${data?.WorkerId}`}>
-                            <span className="text-gray-400 font-semibold">
+                            <span className="text-gray-400 font-semibold capitalize">
                               {data && data?.CreatedBy}
                             </span>
                           </Link>
@@ -234,7 +228,10 @@ const DetailsByIdScreen = ({
                           <h3 className="font-bold md:w-[20%]">Phone</h3>{' '}
                           <span>
                             {data && data?.PhoneNumber ? (
-                              <Link to={`mailto:${data?.PhoneNumber}`} className='hover:underline'>
+                              <Link
+                                to={`mailto:${data?.PhoneNumber}`}
+                                className="hover:underline"
+                              >
                                 {data && data?.PhoneNumber}
                               </Link>
                             ) : (
@@ -246,7 +243,10 @@ const DetailsByIdScreen = ({
                           <h3 className="font-bold md:w-[20%]">Email</h3>{' '}
                           <span>
                             {data && data?.Email ? (
-                              <Link to={`mailto:${data?.Email}`} className='hover:underline'>
+                              <Link
+                                to={`mailto:${data?.Email}`}
+                                className="hover:underline"
+                              >
                                 {data && data?.Email}
                               </Link>
                             ) : (
@@ -283,6 +283,46 @@ const DetailsByIdScreen = ({
                       </div>
                     </div>
                   )}
+                  {loading ? (
+                    <Skeleton variant="rounded" width="100%" height={400} />
+                  ) : (
+                    <div className="bg-white mt-5 rounded-lg p-8">
+                      <div className="text-primary font-bold mb-3">
+                        <h2>Personal Information</h2>
+                      </div>
+                      <hr />
+                      <div className="flex flex-col gap-y-6 mt-6">
+                        <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                          <h3 className="font-bold md:w-[20%]">
+                            Qualification
+                          </h3>{' '}
+                          <span>
+                            {(data && data?.Qualification) ||
+                              (data && data?.Qualification) ||
+                              '...'}
+                          </span>
+                        </div>
+                        <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                          <h3 className="font-bold md:w-[20%]">
+                            Employement Status
+                          </h3>{' '}
+                          <span>
+                            {(data && data?.EmploymentStatus) ||
+                              (data && data?.EmploymentStatus) ||
+                              '...'}
+                          </span>
+                        </div>
+                        <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                          <h3 className="font-bold md:w-[20%]">Organization</h3>{' '}
+                          <span>
+                            {(data && data?.NameOfOrganization) ||
+                              (data && data?.NameOfOrganization) ||
+                              '...'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </TabPanel>
                 <TabPanel value="2" className="!px-0">
                   <div className="bg-white rounded-lg p-8 w-full min-h-[400px]">
@@ -296,8 +336,10 @@ const DetailsByIdScreen = ({
                     <div className="text-[#111827] font-bold mb-3">
                       <h2>
                         Analytics Report For Souls Under{' '}
-                        {data && toPascalCase(data?.FirstName)}{' '}
-                        {data && toPascalCase(data?.SurName)}
+                        <span className="capitalize">
+                          {data && toPascalCase(data?.FirstName)}
+                        </span>{' '}
+                        <span>{data && toPascalCase(data?.SurName)}</span>
                       </h2>
                     </div>
                     <SummeryCard
