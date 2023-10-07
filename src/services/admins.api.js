@@ -5,10 +5,10 @@ import toast from 'react-hot-toast'
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-export async function getAllAdmins({ pageNumber, pageSize }) {
+export async function getAllAdmins({ pageNumber, pageSize, searchquery }) {
   try {
     const admins = await api.get(
-      `${baseUrl}${appUrls.GET_ALL_SUPERADMINS}?page=${pageNumber}&pageSize=${pageSize}`
+      `${baseUrl}${appUrls.GET_ALL_SUPERADMINS}?page=${pageNumber}&pageSize=${pageSize}&searchquery=${searchquery}`
     );
     const fetchAdmins = await admins?.data?.Data;
     return await fetchAdmins;
@@ -17,10 +17,25 @@ export async function getAllAdmins({ pageNumber, pageSize }) {
   }
 }
 
-export async function getAllMinistryAdmins({ pageNumber, pageSize }) {
+//This endpoint is not really important. but don't delete it.
+//just to fetch the entire name in the db without page number or any parameters
+//It's the replica of the function above with out parameters/queries
+export async function getAllSearchAdmins() {
+  try {
+    const admins = await api.get(
+      `${baseUrl}${appUrls.GET_ALL_SUPERADMINS}`
+    );
+    const fetchAdmins = await admins?.data?.Data;
+    return await fetchAdmins;
+  } catch (error) {
+    throw new Error(error.message || error);
+  }
+}
+
+export async function getAllMinistryAdmins({ pageNumber, pageSize, searchquery }) {
   try {
     const Ministryadmins = await api.get(
-      `${baseUrl}${appUrls.GET_ALL_MINISTRY_URL}?page=${pageNumber}&pageSize=${pageSize}`
+      `${baseUrl}${appUrls.GET_ALL_MINISTRY_URL}?page=${pageNumber}&pageSize=${pageSize}&searchquery=${searchquery}`
     );
     const fetchMinistryAdmins = await Ministryadmins?.data?.Data;
     return await fetchMinistryAdmins;
@@ -29,10 +44,10 @@ export async function getAllMinistryAdmins({ pageNumber, pageSize }) {
   }
 }
 
-export async function getAllConvertsInDti() {
+export async function getAllConvertsInDti({ pageNumber, pageSize, searchquery }) {
   try {
     const dtiConverts = await api.get(
-      `${baseUrl}${appUrls.GET_ALL_DTIAdmin_URL}`
+      `${baseUrl}${appUrls.GET_ALL_DTIAdmin_URL}?page=${pageNumber}&pageSize=${pageSize}&searchquery=${searchquery}`
     );
     const fetchDtiConverts = await dtiConverts?.data?.Data;
     return await fetchDtiConverts;
@@ -41,10 +56,10 @@ export async function getAllConvertsInDti() {
   }
 }
 
-export async function getAllConvertsInNewBelievers() {
+export async function getAllConvertsInNewBelievers({ pageNumber, pageSize, searchquery }) {
   try {
     const newbeleiversConverts = await api.get(
-      `${baseUrl}${appUrls.GET_ALL_NEW_BELIEVERS_CONVERTS}`
+      `${baseUrl}${appUrls.GET_ALL_NEW_BELIEVERS_CONVERTS}?page=${pageNumber}&pageSize=${pageSize}&searchquery=${searchquery}`
     );
     const fetchNewBelieversConverts = await newbeleiversConverts?.data?.Data;
     return await fetchNewBelieversConverts;
@@ -89,10 +104,10 @@ export async function promoteConvertToMinistry(convertId, departmentId) {
   }
 }
 
-export async function getAllWorkersAdmins({ pageNumber, pageSize }) {
+export async function getAllWorkersAdmins({ pageNumber, pageSize, searchquery }) {
   try {
     const Workersadmins = await api.get(
-      `${baseUrl}${appUrls.GETALLWORKERS}?page=${pageNumber}&pageSize=${pageSize}`
+      `${baseUrl}${appUrls.GETALLWORKERS}?page=${pageNumber}&pageSize=${pageSize}&searchquery=${searchquery}`
     );
     const fetchWorkersAdmins = await Workersadmins?.data?.Data;
     return await fetchWorkersAdmins;

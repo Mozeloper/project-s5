@@ -12,11 +12,13 @@ import SearchBox from '../Searchbox/searchbox'
 import PromoteScreen from '../UI/PromoteScreen'
 import SuspendConvert from '../UI/SuspendConvert'
 import ReusableTable from './Table.reusable'
+import { useTextSearchNav } from '../../context/textSearch.context'
 
 export default function DtiTable() {
   const queryClient = useQueryClient();
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(2);
+  const [pageSize, setPageSize] = useState(5);
+  let { textSearch, setTextSearch } = useTextSearchNav()
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
@@ -30,7 +32,7 @@ export default function DtiTable() {
     isLoading,
     isFetching,
     error,
-  } = useFetchDti();
+  } = useFetchDti({ pageNumber, pageSize, searchquery: textSearch });
 
   useEffect(() => {
     const getPosts = async () => {
@@ -111,7 +113,7 @@ export default function DtiTable() {
   return (
     <Fragment>
       <div className="bg-white">
-        <SearchBox />
+        {/* <SearchBox /> */}
         <div className="px-4 sm:px-6 lg:px-8 bg-white py-7">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">

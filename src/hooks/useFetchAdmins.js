@@ -1,20 +1,23 @@
-
-//Todo - use React Query to fetch datas
-//Todo - 1. Build hook for all my api calls
-//Todo - 2. add React Query to the root/app.js so it children can be accessible through the entire app
-//Todo - 3. when building also make provision for pagination
-
 import { useQuery } from "react-query"
-import { getAllAdmins } from "../services/admins.api";
+import { getAllAdmins, getAllSearchAdmins } from "../services/admins.api";
 import { getAAdmin } from "../services/details(id).api";
 
-export function useFetchAdmins({ pageNumber, pageSize }) {
-    const admins = useQuery(['All Admins', pageNumber], async () => await getAllAdmins({ pageNumber, pageSize }), {
+export function useFetchAdmins({ pageNumber, pageSize, searchquery }) {
+    const admins = useQuery([`admins`, searchquery, pageNumber], async () => await getAllAdmins({ pageNumber, pageSize, searchquery }), {
         staleTime: 360000,
         enabled: !!pageNumber,  //The enabled property allows only a boolean, then wait till id is not undefined or null
         keepPreviousData: true
     });
     return admins
+}
+
+
+export function useSearchedAdmins() {
+    const SearchAdmins = useQuery([`admins`], async () => await getAllSearchAdmins(), {
+        staleTime: 360000, 
+        keepPreviousData: true
+    });
+    return SearchAdmins
 }
 
 export function useAdminDetails({ adminId }) {

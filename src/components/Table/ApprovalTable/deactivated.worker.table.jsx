@@ -12,10 +12,12 @@ import Loader from '../../Loader'
 import PaginationFooter from '../../PaginationFooter'
 import ConfirmDeactivate from '../../UI/confirmation screen'
 import ReusableTable from '../Table.reusable'
+import { useTextSearchNav } from "../../../context/textSearch.context";
 
 export default function DeactivatedWorkerTable() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  let { textSearch, setTextSearch } = useTextSearchNav()
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
@@ -30,7 +32,7 @@ export default function DeactivatedWorkerTable() {
     data: DeactivatedWorkerData,
     isLoading,
     isError,
-  } = useFetchAllDeactivatedWorker({ pageNumber, pageSize });
+  } = useFetchAllDeactivatedWorker({ pageNumber, pageSize, searchquery: textSearch });
 
   useEffect(() => {
     const getPosts = async () => {

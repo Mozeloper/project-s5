@@ -1,20 +1,22 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import { GrView } from 'react-icons/gr';
-import { IoRemoveCircleSharp } from 'react-icons/io5';
-import { useQueryClient } from 'react-query';
-import { useFetchMinistry } from '../../hooks/useFetchMinistry';
-import { suspendAConvert } from '../../services/admins.api';
-import Loader from '../Loader';
-import PaginationFooter from '../PaginationFooter';
-import SearchBox from '../Searchbox/searchbox';
-import SuspendConvert from '../UI/SuspendConvert';
-import ReusableTable from './Table.reusable';
+import React, { Fragment, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { GrView } from 'react-icons/gr'
+import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { useFetchMinistry } from '../../hooks/useFetchMinistry'
+import { suspendAConvert } from '../../services/admins.api'
+import Loader from '../Loader'
+import PaginationFooter from '../PaginationFooter'
+import SearchBox from '../Searchbox/searchbox'
+import SuspendConvert from '../UI/SuspendConvert'
+import ReusableTable from './Table.reusable'
+import { useTextSearchNav } from '../../context/textSearch.context'
+import { useQueryClient } from '@tanstack/react-query'
 
 export default function MinstryTable() {
   const queryClient = useQueryClient();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  let { textSearch, setTextSearch } = useTextSearchNav()
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
@@ -28,7 +30,7 @@ export default function MinstryTable() {
     isLoading,
     isFetching,
     error,
-  } = useFetchMinistry({ pageNumber, pageSize });
+  } = useFetchMinistry({ pageNumber, pageSize, searchquery: textSearch });
 
   useEffect(() => {
     const getPosts = async () => {
@@ -93,7 +95,7 @@ export default function MinstryTable() {
   return (
     <Fragment>
       <div className="bg-white">
-        <SearchBox />
+        {/* <SearchBox /> */}
         <div className="px-4 sm:px-6 lg:px-8 bg-white py-7">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">

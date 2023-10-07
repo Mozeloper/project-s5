@@ -3,10 +3,10 @@ import { getAllNewConvert, getSoulsUnderMe } from '../services/souls';
 import { getASoul } from '../services/details(id).api';
 import { suspendAConvert } from '../services/admins.api';
 
-export function useFetchAllNewConvert({ pageNumber, pageSize }) {
+export function useFetchAllNewConvert({ pageNumber, pageSize, searchquery }) {
   const NewConvert = useQuery(
-    [`NewConvert`, pageNumber],
-    async () => await getAllNewConvert({ pageNumber, pageSize }),
+    [`NewConvert`, searchquery, pageNumber],
+    async () => await getAllNewConvert({ pageNumber, pageSize, searchquery }),
     {
       staleTime: 360000,
       enabled: !!pageNumber,
@@ -20,12 +20,13 @@ export function useFetchAllNewConvertDynamic({
   isAdmin,
   pageNumber,
   pageSize,
+  searchquery,
 }) {
   // console.log(`is this an admin request? ${isAdmin}`);
   if (isAdmin == true) {
     const AllNewConverts = useQuery(
-      [`AllNewConverts`, pageNumber, isAdmin],
-      async () => await getAllNewConvert({ pageNumber, pageSize }),
+      [`AllNewConverts`, searchquery, pageNumber, isAdmin],
+      async () => await getAllNewConvert({ pageNumber, pageSize, searchquery }),
       {
         staleTime: 360000,
         enabled: !!pageNumber && !!isAdmin,
@@ -36,7 +37,7 @@ export function useFetchAllNewConvertDynamic({
   } else {
     const ConvertsUnderMe = useQuery(
       [`ConvertsUnderMe`, pageNumber],
-      async () => await getSoulsUnderMe({ pageNumber, pageSize }),
+      async () => await getSoulsUnderMe({ pageNumber, pageSize, searchquery }),
       {
         staleTime: 360000,
         enabled: !!pageNumber,
@@ -47,11 +48,11 @@ export function useFetchAllNewConvertDynamic({
   }
 }
 
-export function useFetchSoulsUnderMe({ pageNumber, pageSize }) {
+export function useFetchSoulsUnderMe({ pageNumber, pageSize, searchquery }) {
   // console.log('singleSoul soulId', soulId);
   const ConvertsUnderMe = useQuery(
-    [`ConvertsUnderMe`, pageNumber],
-    async () => await getSoulsUnderMe({ pageNumber, pageSize }),
+    [`ConvertsUnderMe`, searchquery, pageNumber],
+    async () => await getSoulsUnderMe({ pageNumber, pageSize, searchquery }),
     {
       staleTime: 360000,
       enabled: !!pageNumber,
