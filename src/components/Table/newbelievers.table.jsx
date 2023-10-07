@@ -11,10 +11,12 @@ import SearchBox from '../Searchbox/searchbox'
 import PromoteConvertToDti from '../UI/PromoteScreen/PromoteConvertToDti'
 import SuspendConvert from '../UI/SuspendConvert'
 import ReusableTable from './Table.reusable'
+import { useTextSearchNav } from '../../context/textSearch.context'
 
 export default function NewBelieversTable() {
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(2);
+  const [pageSize, setPageSize] = useState(5);
+  let { textSearch, setTextSearch } = useTextSearchNav()
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
@@ -24,7 +26,7 @@ export default function NewBelieversTable() {
     isLoading,
     isFetching,
     error,
-  } = useFetchNewBelievers({ pageNumber, pageSize });
+  } = useFetchNewBelievers({ pageNumber, pageSize, searchquery: textSearch });
 
   useEffect(() => {
     const getPosts = async () => {
@@ -38,7 +40,7 @@ export default function NewBelieversTable() {
 //   useEffect(() => {
 //   const listener = async () => {
 //     // Refetch the data
-//     await useFetchNewBelievers({ pageNumber, pageSize });
+//     await useFetchNewBelievers({ pageNumber, pageSize, searchquery });
 //   };
 
 //   document.addEventListener('suspendConvert', listener);
@@ -72,7 +74,7 @@ export default function NewBelieversTable() {
     if (suspededConvert.StatusCode === 200) {
       toast.success(suspededConvert.Message);
       // Refetch the data after suspending the convert
-       useFetchNewBelievers({ pageNumber, pageSize });
+       useFetchNewBelievers({ pageNumber, pageSize, searchquery });
     }
 
     //  console.log(suspededConvert);
@@ -108,7 +110,7 @@ export default function NewBelieversTable() {
   return (
     <Fragment>
       <div className="bg-white">
-        <SearchBox />
+        {/* <SearchBox /> */}
         <div className="px-4 sm:px-6 lg:px-8 bg-white py-7">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">

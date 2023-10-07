@@ -12,22 +12,22 @@ import toast from "react-hot-toast";
 
 //Quary / fetcher functions
 const queryClient = new QueryClient();
-export function useFetchAllUnapproved({ pageNumber, pageSize }) {
+export function useFetchAllUnapproved({ pageNumber, pageSize, searchquery }) {
   const UnApproval = useQuery(
-    [`UnApproval`, pageNumber],
-    async () => await getAllUnApproval({ pageNumber, pageSize }),
+    [`UnApproval`, searchquery, pageNumber],
+    async () => await getAllUnApproval({ pageNumber, pageSize, searchquery }),
     {
-      // staleTime: 360000,
+      staleTime: 360000,
       enabled: !!pageNumber,
     }
   );
   return UnApproval;
 }
 
-export function useFetchAllDeactivatedWorker({ pageNumber, pageSize }) {
+export function useFetchAllDeactivatedWorker({ pageNumber, pageSize, searchquery }) {
   const DeactivatedWorker = useQuery(
-    [`DeactivatedWorker`, pageNumber],
-    async () => await getAllDeactivatedWorker({ pageNumber, pageSize }),
+    [`DeactivatedWorker`, searchquery, pageNumber],
+    async () => await getAllDeactivatedWorker({ pageNumber, pageSize, searchquery }),
     {
       staleTime: 360000,
       enabled: !!pageNumber,
@@ -36,10 +36,10 @@ export function useFetchAllDeactivatedWorker({ pageNumber, pageSize }) {
   return DeactivatedWorker;
 }
 
-export function useFetchAllDeactivatedNewConvert({ pageNumber, pageSize }) {
+export function useFetchAllDeactivatedNewConvert({ pageNumber, pageSize, searchquery }) {
   const DeactivatedWorker = useQuery(
-    [`DeactivatedNewConvert`, pageNumber],
-    async () => await getAllDeactivatedNewConvert({ pageNumber, pageSize }),
+    [`DeactivatedNewConvert`, searchquery, pageNumber],
+    async () => await getAllDeactivatedNewConvert({ pageNumber, pageSize, searchquery }),
     {
       staleTime: 360000,
       enabled: !!pageNumber,

@@ -5,7 +5,7 @@ import { api } from "./api";
 import toast from "react-hot-toast";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-export async function getAllUnApproval({ pageNumber, pageSize }) {
+export async function getAllUnApproval({ pageNumber, pageSize, searchquery }) {
   try {
     // const UnApproval = await axios.get(`${baseUrl}${appUrls.GET_ALL_UNAPPROVED_WORKERS}`, {
     //     headers: {Authorization: `Bearer ${sessionStorage.getItem("token")}`}, cache: 'force-cache',
@@ -13,7 +13,7 @@ export async function getAllUnApproval({ pageNumber, pageSize }) {
     // const fetchUnApproval =  await UnApproval?.data
     // return await fetchUnApproval
     const fetchUnApproval = await axiosRequest({
-      url: `${appUrls?.GET_ALL_UNAPPROVED_WORKERS}?page=${pageNumber}&pageSize=${pageSize}`,
+      url: `${appUrls?.GET_ALL_UNAPPROVED_WORKERS}?page=${pageNumber}&pageSize=${pageSize}&searchquery=${searchquery}`,
     });
     return fetchUnApproval?.data;
   } catch (error) {
@@ -21,10 +21,10 @@ export async function getAllUnApproval({ pageNumber, pageSize }) {
   }
 }
 
-export async function getAllDeactivatedWorker({ pageNumber, pageSize }) {
+export async function getAllDeactivatedWorker({ pageNumber, pageSize, searchquery }) {
   try {
     const AllDeactivatedWorker = await axiosRequest({
-      url: `${appUrls.GET_ALL_DEACTIVATED_WORKERS}?page=${pageNumber}&pageSize=${pageSize}`,
+      url: `${appUrls.GET_ALL_DEACTIVATED_WORKERS}?page=${pageNumber}&pageSize=${pageSize}&searchquery=${searchquery}`,
     });
     return await AllDeactivatedWorker?.data?.Data;
   } catch (error) {
@@ -32,10 +32,10 @@ export async function getAllDeactivatedWorker({ pageNumber, pageSize }) {
   }
 }
 
-export async function getAllDeactivatedNewConvert({ pageNumber, pageSize }) {
+export async function getAllDeactivatedNewConvert({ pageNumber, pageSize, searchquery }) {
   try {
     const AllDeactivatedNewConvert = await api.get(
-      `${baseUrl}${appUrls.GET_ALL_DEACTIVATED_NEWCONVERTS}?page=${pageNumber}&pageSize=${pageSize}`
+      `${baseUrl}${appUrls.GET_ALL_DEACTIVATED_NEWCONVERTS}?page=${pageNumber}&pageSize=${pageSize}&searchquery=${searchquery}`
     );
     const fetchDeactivatedNewConvert = await AllDeactivatedNewConvert?.data
       ?.Data;

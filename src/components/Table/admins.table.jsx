@@ -5,26 +5,31 @@ import SearchBox from '../Searchbox/searchbox';
 import Loader from '../Loader';
 import ReusableTable from './Table.reusable';
 import PaginationFooter from '../PaginationFooter';
-import { useFetchAdmins } from '../../hooks/useFetchAdmins';
+import { useFetchAdmins, useSearchedAdmins } from '../../hooks/useFetchAdmins';
 import { IoRemoveCircleSharp } from 'react-icons/io5';
 import { GrView } from 'react-icons/gr';
 import { GiConfirmed } from 'react-icons/gi';
 import ConfirmDeactivate from '../UI/confirmation screen';
 import { useModalToggle } from '../../context/ConfirmationModal.context';
+import SearchBoxIndex from '../Searchbox/searchBoxIndex';
+import { useTextSearchNav } from '../../context/textSearch.context';
 
 export default function   AdminTables() {
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(2);
+  const [pageSize, setPageSize] = useState(5);
+  let { textSearch, setTextSearch } = useTextSearchNav()
   const {
     data: AdminsData,
     isError,
     isLoading,
     isFetching,
     error,
-  } = useFetchAdmins({ pageNumber, pageSize });
+  } = useFetchAdmins({ pageNumber, pageSize, searchquery: textSearch });
+
+  const { data: searchAdmins } = useSearchedAdmins();
 
   const { isOpen, setIsOpen } = useModalToggle();
 
@@ -41,7 +46,6 @@ export default function   AdminTables() {
     const getPosts = async () => {
       // make sure you add await to the return data from react query (hook)
       const admins = (await AdminsData?.Data) || [];
-      console.log('admins', admins);
       if (admins == null) {
         setData([]);
       }
@@ -128,7 +132,9 @@ export default function   AdminTables() {
   return (
     <Fragment>
       <div className="bg-white">
-        <SearchBox />
+        {/* <SearchBox /> */}
+        {/* Below is the first functional implementation for search query */}
+        {/* <SearchBoxIndex searchArray={(searchAdmins && searchAdmins.Data) ?? (AdminsData && AdminsData?.Data)} linkTo='dashboard' /> */}
         <div className="px-4 sm:px-6 lg:px-8 bg-white py-7">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
@@ -175,6 +181,7 @@ export default function   AdminTables() {
                     filterNumber={11}
                     optionArrayList={optionList}
                     optionsHandleClick={handleOptionsClick}
+                    totalSearchData={(searchAdmins && searchAdmins.Data)}
                   />
 
                   <PaginationFooter

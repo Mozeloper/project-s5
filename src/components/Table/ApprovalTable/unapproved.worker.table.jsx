@@ -11,10 +11,12 @@ import {
   usePostDeleteWorker,
 } from '@/hooks/useApproval';
 import ConfirmDeactivate from '../../UI/confirmation screen';
+import { useTextSearchNav } from '../../../context/textSearch.context';
 
 export default function UnapprovedWorkerTable() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  let { textSearch, setTextSearch } = useTextSearchNav()
   const [modalConfirmation, setModalConfirmation] = useState(false);
   const [displayUi, setDisplayUi] = React.useState(null);
   const [headers, setHeaders] = useState([]);
@@ -26,7 +28,7 @@ export default function UnapprovedWorkerTable() {
     data: PendingData,
     isLoading,
     isError,
-  } = useFetchAllUnapproved({ pageNumber, pageSize });
+  } = useFetchAllUnapproved({ pageNumber, pageSize, searchquery: textSearch });
   const {
     mutateAsync: deleteUserAsync,
     isLoading: isLoadingDeletion,

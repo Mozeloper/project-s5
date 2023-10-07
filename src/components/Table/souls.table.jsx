@@ -14,6 +14,7 @@ import {
 import { camelCaseToSingleWords } from '../../Helper/toSeperateWord';
 import { GrView } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
+import { useTextSearchNav } from '../../context/textSearch.context';
 
 export const SoulsTable = () => {
   const workerId = JSON.parse(sessionStorage.getItem('userObj'))?.Id;
@@ -23,11 +24,12 @@ export const SoulsTable = () => {
   const [displayUi, setDisplayUi] = React.useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  let { textSearch, setTextSearch } = useTextSearchNav()
   const {
     data: soulsData,
     isError,
     isLoading,
-  } = useFetchSoulsUnderMe({ pageNumber, pageSize });
+  } = useFetchSoulsUnderMe({ pageNumber, pageSize, searchquery: textSearch });
 
   const navigate = useNavigate();
 
@@ -76,7 +78,7 @@ export const SoulsTable = () => {
   return (
     <Fragment>
       <div className="bg-white rounded-md">
-        <SearchBox />
+        {/* <SearchBox /> */}
         <div className="px-4 sm:px-6 lg:px-8 bg-white py-7 rounded-md">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">

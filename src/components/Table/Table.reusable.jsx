@@ -5,6 +5,7 @@ import TableOptions from '../UI/Options';
 import EditIcon from '@mui/icons-material/Edit';
 import { camelCaseToSingleWords } from '../../Helper/toSeperateWord';
 import { Chip } from '@mui/material';
+import SearchBoxIndex from '../Searchbox/searchBoxIndex';
 
 //This table is reuseable and can be use to render/display any data/apis as in (tabular form)/(table data)
 const ReusableTable = ({
@@ -15,14 +16,21 @@ const ReusableTable = ({
   optionsHandleClick,
   optionModal,
   pageLink,
+  totalSearchData, //This going to be a get all api call with out any parameters e.g pagesize... to get the total data and get the total name with just search based on page
+  //Check the admins.table.jsx file to see the full implementation for totalSearchData
 }) => {
   const filteredNumber = +filterNumber ?? +data?.length;
 
+
+  //todo: Adding loading indicators on the table when a pageNumber is changed
   return (
-    <div className="mt-8 flow-root">
+    <div className="mt-8 flow-root px-[-1rem]">
+      <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
+        <SearchBoxIndex searchArray={(totalSearchData && totalSearchData) ?? (data && data)} linkTo='' />
+      </div>
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-          <table className="min-w-full divide-y divide-gray-300">
+        <div className="inline-block min-w-full py-2 align-middle px-6 lg:px-8">
+          <table className="min-w-full divide-y divide-gray-300 overflow-hidden">
             <thead>
               <tr>
                 {(headers || undefined)

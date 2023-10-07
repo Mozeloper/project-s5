@@ -5,10 +5,12 @@ import { useFetchAllDeactivatedWorker } from "../../../hooks/useApproval";
 import ReusableTable from "../Table.reusable";
 import PaginationFooter from "../../PaginationFooter";
 import Loader from "../../Loader";
+import { useTextSearchNav } from "../../../context/textSearch.context";
 
 export default function DeactivatedWorkerTable() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  let { textSearch, setTextSearch } = useTextSearchNav()
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
@@ -16,7 +18,7 @@ export default function DeactivatedWorkerTable() {
     data: DeactivatedWorkerData,
     isLoading,
     isError,
-  } = useFetchAllDeactivatedWorker({ pageNumber, pageSize });
+  } = useFetchAllDeactivatedWorker({ pageNumber, pageSize, searchquery: textSearch });
 
   useEffect(() => {
     const getPosts = async () => {
@@ -54,7 +56,6 @@ export default function DeactivatedWorkerTable() {
     setPageNumber(value);
   };
 
-  throw new Error('tester')
   return (
     <div className="px-8 bg-white pt-7 grid grid-cols-1 gap-y-8">
       <h3 className="sm:text-left text-center">

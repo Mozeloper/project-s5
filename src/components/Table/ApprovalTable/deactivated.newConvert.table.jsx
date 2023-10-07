@@ -6,10 +6,12 @@ import PaginationFooter from "../../PaginationFooter";
 import { useFetchAllDeactivatedNewConvert } from "../../../hooks/useApproval";
 import ConfirmDeactivate from "../../UI/confirmation screen";
 import Loader from "../../Loader";
+import { useTextSearchNav } from "../../../context/textSearch.context";
 
 export default function DeactivatedNewConvertTable() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  let { textSearch, setTextSearch } = useTextSearchNav()
   const [displayUi, setDisplayUi] = React.useState(null);
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
@@ -17,7 +19,7 @@ export default function DeactivatedNewConvertTable() {
     data: DeactivatedNewConvertData,
     isLoading,
     isError,
-  } = useFetchAllDeactivatedNewConvert({ pageNumber, pageSize });
+  } = useFetchAllDeactivatedNewConvert({ pageNumber, pageSize, searchquery: textSearch });
 
   useEffect(() => {
     const getPosts = async () => {

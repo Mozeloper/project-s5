@@ -8,13 +8,15 @@ import { api } from '../../services/api';
 import { toast } from 'react-hot-toast';
 import ReusableTable from './Table.reusable'
 import { useWorkersAdmins } from '../../hooks/useWorkers'
+import { useTextSearchNav } from '../../context/textSearch.context';
 
 export default function WorkersTable() {
     const [headers, setHeaders] = useState([]);
     const [data, setData] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize, setPageSize] = useState(7);
-    const { data: WorkersData, isError, isLoading, isFetching, error, isSuccess } = useWorkersAdmins({ pageNumber, pageSize })
+    let { textSearch, setTextSearch } = useTextSearchNav()
+    const { data: WorkersData, isError, isLoading, isFetching, error, isSuccess } = useWorkersAdmins({ pageNumber, pageSize, searchquery: textSearch })
 
   // const handleGetAllWorkers = async () => {
   //   setData([]);
@@ -158,7 +160,7 @@ export default function WorkersTable() {
   return (
     <Fragment>
       <div className="bg-white rounded-md">
-        <SearchBox />
+        {/* <SearchBox /> */}
         <div className="px-4 sm:px-6 lg:px-8 bg-white py-7">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
