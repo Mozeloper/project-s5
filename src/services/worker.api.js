@@ -41,3 +41,37 @@ export async function suspendAWorker(workerId, reason) {
     throw new Error(error.message || error);
   }
 }
+
+export async function reactivateAWorker(workerId) {
+  
+  try {
+    const reactivedWorker = await api.post(
+      `${baseUrl}${appUrls.REACTIVATE_A_WORKER}/?workerId=${workerId}`
+    );
+    if (reactivedWorker?.status === 200) {
+      toast.success('Worker was reinstated successfully');
+    }
+    const reactivatedWorkerRes = reactivedWorker?.data;
+    return reactivatedWorkerRes;
+  } catch (error) {
+    toast.error('Opps! Your request was unsuccesful, please try again');
+    throw new Error(error.message || error);
+  }
+}
+
+export async function deleteWorkerById(workerId) {
+  
+  try {
+    const deletedWorker = await api.post(
+      `${baseUrl}${appUrls.DELETE_A_WORKER}/?workerId=${workerId}`
+    );
+    if (deletedWorker?.status === 200) {
+      toast.success('Worker was delete successfully');
+    }
+    const deletedWorkerRes = deletedWorker?.data;
+    return deletedWorkerRes;
+  } catch (error) {
+    toast.error('Opps! Your request was unsuccesful, please try again');
+    throw new Error(error.message || error);
+  }
+}
