@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Form, Formik } from "formik";
-import * as Yup from "yup";
-import Button from "../../../components/Button";
-import ProfileImg from "../../../assets/images/profile-img.svg";
-import PasswordField from "../../../components/FormInputs/PasswordField";
-import { api } from "../../../services/api";
-import { appUrls } from "../../../services/urls";
-import ModalPopup from "../../../components/ModalPopup";
-import { toast } from "react-hot-toast";
-import Update from "./components/Update";
+import { Form, Formik } from "formik"
+import React, { useEffect, useState } from "react"
+import { toast } from "react-hot-toast"
+import * as Yup from "yup"
+import ProfileImg from "../../../assets/images/profile-img.svg"
+import Button from "../../../components/Button"
+import PasswordField from "../../../components/FormInputs/PasswordField"
+import ModalPopup from "../../../components/ModalPopup"
+import { api } from "../../../services/api"
+import { appUrls } from "../../../services/urls"
+import Update from "./components/Update"
 
 export default function PersonalDetailsSettings() {
   const [data, setData] = useState({});
@@ -43,6 +43,7 @@ export default function PersonalDetailsSettings() {
       toast.error(error?.data?.message, 4);
     } finally {
       actions.setSubmitting(false);
+      setShowPasswordFields(false);
     }
   };
 
@@ -254,7 +255,7 @@ export default function PersonalDetailsSettings() {
                     isSubmitting,
                     isValid,
                   }) => (
-                    <Form onSubmit={handleSubmit} class="flex flex-col gap-y-6">
+                    <Form onSubmit={handleSubmit} className="flex flex-col gap-y-6">
                       <div className="md:w-[400px] w-full">
                         <PasswordField
                           labelName="Current Password"
