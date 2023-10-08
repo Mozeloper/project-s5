@@ -12,6 +12,9 @@ import PageTitle from '../../../components/PageTitle';
 export default function Reminder() {
   const [value, setValue] = React.useState('1');
 
+  const roles = JSON.parse(sessionStorage.getItem('role'));
+  const isSuperAdmin = roles.includes('SuperAdmin');
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -24,19 +27,23 @@ export default function Reminder() {
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabList onChange={handleChange} aria-label="lab API tabs example">
               <Tab label="Unapproved Workers" value="1" />
-              <Tab label="Suspended Workers" value="2" />
-              <Tab label="Deactivated Converts" value="3" />
+              {isSuperAdmin && <Tab label="Suspended Workers" value="2" />}
+              {isSuperAdmin && <Tab label="Deactivated Converts" value="3" />}
             </TabList>
           </Box>
           <TabPanel value="1" className="!px-2">
             <UnapprovedWorkerTable />
           </TabPanel>
-          <TabPanel value="2" className="!px-2">
-            <DeactivatedWorkerTable />
-          </TabPanel>
-          <TabPanel value="3" className="!px-2">
-            <DeactivatedNewConvertTable />
-          </TabPanel>
+          {isSuperAdmin && (
+            <TabPanel value="2" className="!px-2">
+              <DeactivatedWorkerTable />
+            </TabPanel>
+          )}
+          {isSuperAdmin && (
+            <TabPanel value="3" className="!px-2">
+              <DeactivatedNewConvertTable />
+            </TabPanel>
+          )}
         </TabContext>
       </Box>
     </>
