@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { GrConnect, GrView } from 'react-icons/gr'
 import { MdDeleteSweep } from 'react-icons/md'
 import { useQueryClient } from 'react-query'
-import { useFetchAllDeactivatedWorker } from '../../../hooks/useFetchUnapproved'
 import
   {
     deleteWorkerById,
@@ -13,6 +12,7 @@ import PaginationFooter from '../../PaginationFooter'
 import ConfirmDeactivate from '../../UI/confirmation screen'
 import ReusableTable from '../Table.reusable'
 import { useTextSearchNav } from "../../../context/textSearch.context";
+import { useFetchAllDeactivatedWorker } from '../../../hooks/useApproval'
 
 export default function DeactivatedWorkerTable() {
   const [pageNumber, setPageNumber] = useState(1);

@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getAllWorkersAdmins } from '../services/admins.api';
+import { getAllWorkersAdmins, getAllWorkersNames } from '../services/admins.api';
 import {
   getAWorkerAdmin,
   getDeactivatedWorker,
@@ -12,6 +12,15 @@ export function useWorkersAdmins({ pageNumber, pageSize, searchquery }) {
         keepPreviousData: true
     });
     return admins
+}
+
+export function useWorkersNames() {
+  const adminsNames = useQuery([`workers`], async () => await getAllWorkersNames(), {
+      staleTime: 360000,
+      // enabled: !!pageNumber,  //The enabled property allows only a boolean, then wait till id is not undefined or null
+      keepPreviousData: true
+  });
+  return adminsNames
 }
 
 export function useWorkerDetails({ workerId }) {

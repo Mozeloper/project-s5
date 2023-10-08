@@ -115,3 +115,15 @@ export async function getAllWorkersAdmins({ pageNumber, pageSize, searchquery })
     throw new Error(error.message || error);
   }
 }
+
+export async function getAllWorkersNames() {
+  try {
+    const Workersadmins = await api.get(
+      `${baseUrl}${appUrls.GETALLWORKERS}`
+    );
+    const fetchWorkersAdmins = await Workersadmins?.data?.Data;
+    return await fetchWorkersAdmins;
+  } catch (error) {
+    throw new Error(error.message || error);
+  }
+}
