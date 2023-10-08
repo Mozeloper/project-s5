@@ -97,8 +97,8 @@ export default function PersonalInformation({
                   type="date"
                   name="dateOfBirth"
                   id="dateOfBirth"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter dateOfBirth"
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Enter Your Date Of Birth"
                   onChange={handleChange}
                   value={values?.dateOfBirth}
                 />
@@ -227,8 +227,8 @@ export default function PersonalInformation({
                   type="text"
                   name="countryName"
                   id="countryName"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter Organization Name"
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Enter Country Name"
                   onChange={handleChange}
                   value={values?.countryName}
                 />
@@ -249,8 +249,8 @@ export default function PersonalInformation({
                   type="text"
                   name="stateName"
                   id="stateName"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter Organization Name"
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Enter State Name"
                   onChange={handleChange}
                   value={values?.stateName}
                 />
@@ -273,8 +273,8 @@ export default function PersonalInformation({
                   type="text"
                   name="localGovtName"
                   id="localGovtName"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter Organization Name"
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Enter L.G.A. Name"
                   onChange={handleChange}
                   value={values?.localGovtName}
                 />
@@ -295,7 +295,7 @@ export default function PersonalInformation({
                   type="text"
                   name="nameOfOrganization"
                   id="nameOfOrganization"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter Organization Name"
                   onChange={handleChange}
                   value={values?.nameOfOrganization}
@@ -319,7 +319,7 @@ export default function PersonalInformation({
                   type="text"
                   name="homeAddress"
                   id="homeAddress"
-                  className={`w-full h-[100px] border border-secondary text-base p-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[100px] border border-secondary text-base p-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter home Address"
                   onChange={handleChange}
                   value={values?.homeAddress}
@@ -341,8 +341,8 @@ export default function PersonalInformation({
                   type="text"
                   name="nearestBusStop"
                   id="nearestBusStop"
-                  className={`w-full h-[100px] border border-secondary text-base p-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter home Address"
+                  className={`w-full h-[100px] border border-secondary text-base p-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Enter Your Nearest Bus Stop"
                   onChange={handleChange}
                   value={values?.nearestBusStop}
                 />
@@ -356,7 +356,7 @@ export default function PersonalInformation({
             <div className="flex justify-end w-full">
               <Button
                 title="Proceed"
-                className="w-[200px] h-[56px] text-center mt-3 md:mb-4 mb-10 rounded-2xl"
+                className="w-[200px] h-[56px] text-center mt-5 md:mb-4 mb-10"
                 backgroundColor="bg-primary"
                 type="submit"
               />

@@ -1,13 +1,13 @@
-import { Form, Formik } from 'formik'
-import moment from 'moment'
-import React, { useEffect, useState } from 'react'
-import { toast } from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
-import * as Yup from 'yup'
-import Button from '../../../../components/Button'
-import SearchableSelect from '../../../../components/CustomSelect'
-import { api } from '../../../../services/api'
-import { appUrls } from '../../../../services/urls'
+import { Form, Formik } from 'formik';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
+import Button from '../../../../components/Button';
+import SearchableSelect from '../../../../components/CustomSelect';
+import { api } from '../../../../services/api';
+import { appUrls } from '../../../../services/urls';
 
 export default function ChurchInformation({
   userValues,
@@ -15,6 +15,8 @@ export default function ChurchInformation({
   // setCurrentStep,
 }) {
   const navigate = useNavigate();
+  //make sure the user can not put a date passed the current year in the year joined input
+  const currentYear = new Date().getFullYear();
   const [isLoading, setIsLoading] = useState({
     getChurchDept: false,
     register: false,
@@ -36,6 +38,8 @@ export default function ChurchInformation({
     const payload = {
       ...userValues,
       dateOfBirth: formattedDate,
+      yearJoined: userValues?.yearJoined,
+      departmentId: userValues?.departmentId
     };
     try {
       const res = await api.post(appUrls.REGISTER, payload);
@@ -173,11 +177,23 @@ export default function ChurchInformation({
                   type="number"
                   name="yearJoined"
                   id="yearJoined"
+                  min="2010"
+                  max={`${currentYear}`}
+                  step="1"
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Year Joined Church"
+                  onChange={handleChange}
+                  value={values?.yearJoined}
+                />
+                {/* <input
+                  type="number"
+                  name="yearJoined"
+                  id="yearJoined"
                   className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter yearJoined"
                   onChange={handleChange}
                   value={values?.yearJoined}
-                />
+                /> */}
                 {errors.yearJoined && touched.yearJoined ? (
                   <div className="text-xs mt-2 text-red-700">
                     {errors.yearJoined}
@@ -189,7 +205,7 @@ export default function ChurchInformation({
             <div className="flex justify-end w-full">
               <Button
                 title="Submit"
-                className="w-[200px] h-[56px] text-center mt-3 md:mb-4 mb-10 rounded-2xl"
+                className="w-[200px] h-[56px] text-center mt-5 md:mb-4 mb-10"
                 backgroundColor="bg-primary"
                 type="submit"
                 isLoading={isLoading?.register}

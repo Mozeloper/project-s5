@@ -128,13 +128,13 @@ export default function AccountInformation({
                   htmlFor="email"
                   className={`text-sm md:text-black text-white leading-4`}
                 >
-                  Email <span className="text-primary ml-1">*</span>
+                  Email <span className="text-yellow-500 md:text-primary ml-1">*</span>
                 </label>
                 <input
                   type="email"
                   name="email"
                   id="email"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter Email"
                   onChange={handleChange}
                   value={values?.email}
@@ -150,13 +150,13 @@ export default function AccountInformation({
                   htmlFor="firstName"
                   className={`text-sm md:text-black text-white leading-4`}
                 >
-                  Firstname <span className="text-primary ml-1">*</span>
+                  Firstname <span className="text-yellow-500 md:text-primary ml-1">*</span>
                 </label>
                 <input
                   type="text"
                   name="firstName"
                   id="firstName"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter Firstname"
                   onChange={handleChange}
                   value={values?.firstName}
@@ -174,14 +174,14 @@ export default function AccountInformation({
                   htmlFor="otherNames"
                   className={`text-sm md:text-black text-white leading-4`}
                 >
-                  Othernames <span className="text-primary ml-1">*</span>
+                  Othernames
                 </label>
                 <input
                   type="text"
                   name="otherNames"
                   id="otherNames"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter otherNames"
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Enter Other Names (Optional)"
                   onChange={handleChange}
                   value={values?.otherNames}
                 />
@@ -196,13 +196,13 @@ export default function AccountInformation({
                   htmlFor="surName"
                   className={`text-sm md:text-black text-white leading-4`}
                 >
-                  Surname <span className="text-primary ml-1">*</span>
+                  Surname <span className="text-yellow-500 md:text-primary ml-1">*</span>
                 </label>
                 <input
                   type="surName"
                   name="surName"
                   id="surName"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter Surname"
                   onChange={handleChange}
                   value={values?.surName}
@@ -220,14 +220,14 @@ export default function AccountInformation({
                   htmlFor="otherNames"
                   className={`text-sm md:text-black text-white leading-4`}
                 >
-                  Phone number <span className="text-primary ml-1">*</span>
+                  Phone number <span className="text-yellow-500 md:text-primary ml-1">*</span>
                 </label>
                 <input
                   type="tel"
                   name="phoneNumber"
                   id="phoneNumber"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter phone number"
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Enter Phone Number"
                   onChange={handleChange}
                   value={values?.phoneNumber}
                 />
@@ -317,7 +317,7 @@ export default function AccountInformation({
             <div className="flex justify-end w-full">
               <Button
                 title="Proceed"
-                className="w-[200px] h-[56px] text-center mt-3 mb-10 rounded-2xl"
+                className="w-[200px] h-[56px] text-center mt-5 mb-10"
                 backgroundColor="bg-primary"
                 type="submit"
               />
