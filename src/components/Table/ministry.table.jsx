@@ -10,7 +10,7 @@ import SearchBox from '../Searchbox/searchbox'
 import SuspendConvert from '../UI/SuspendConvert'
 import ReusableTable from './Table.reusable'
 import { useTextSearchNav } from '../../context/textSearch.context'
-import { useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from 'react-query';
 
 export default function MinstryTable() {
   const queryClient = useQueryClient();
