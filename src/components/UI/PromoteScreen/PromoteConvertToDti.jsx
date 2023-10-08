@@ -1,40 +1,55 @@
-import { Form, Formik } from 'formik'
-import React, { useState } from 'react'
-import { toast } from 'react-hot-toast'
-import { GiConfirmed } from 'react-icons/gi'
-import { useModalToggle } from '../../../context/ConfirmationModal.context'
-import { api } from '../../../services/api'
-import { appUrls } from '../../../services/urls'
-import Button from '../../Button'
+import { Form, Formik } from 'formik';
+import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { GiConfirmed } from 'react-icons/gi';
+import { useQueryClient } from 'react-query';
+import { useModalToggle } from '../../../context/ConfirmationModal.context';
+import { api } from '../../../services/api';
+import { appUrls } from '../../../services/urls';
+import Button from '../../Button';
 
 export default function PromoteConvertToDti({ screenName, workerId }) {
+  const queryClient = useQueryClient();
   const { setIsOpen } = useModalToggle();
 
+  /**
+   * Handler for closing the modal
+   */
   const handleClose = () => {
     setIsOpen(false);
   };
 
-
   const [showConfirmationButton, setShowConfirmationButton] = useState(false);
   const [showForm, setshowForm] = useState(true);
 
-
+  /**
+   * Handler in charge of displaying the confirmation button
+   * This function sends the form data to the server once the user
+   * confirms their action
+   */
   const passToConfirmation = () => {
     setshowForm(false);
     setShowConfirmationButton(true);
   };
+
+  /**
+   * Submit form action in charge of hadnling form inputs
+   */
   const handleFormSubmit = async () => {
-    
     try {
-      const res = await api.post(`${appUrls.PROMOTE_CONVERT_TO_DTI}?convertId=${workerId}&status=DTI`);
+      const res = await api.post(
+        `${appUrls.PROMOTE_CONVERT_TO_DTI}?convertId=${workerId}&status=DTI`
+      );
 
       if (res?.status === 200) {
         // Convert promoted successfully
-        toast.success('COnvert was promoted successfully!', {
+        toast.success('Convert was promoted successfully!', {
           duration: 3000,
         });
+
         // Close the modal
         handleClose();
+        queryClient.invalidateQueries('GetAllNewBelievers');
       } else {
         // Convert promotion failed
         toast.error('An error occurred while promoting Convert.', {
@@ -67,7 +82,6 @@ export default function PromoteConvertToDti({ screenName, workerId }) {
             >
               {() => (
                 <Form className="flex flex-col gap-10">
-                  
                   <div className="w-full flex gap-2">
                     <Button
                       title="cancel"

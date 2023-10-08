@@ -3,7 +3,7 @@ import { getAllConvertsInNewBelievers } from '../services/admins.api';
 
 export function useFetchNewBelievers({ pageNumber, pageSize }) {
     const AllNewBelievers = useQuery(
-      [`GetAllNewBelievers`, pageNumber],
+      ['GetAllNewBelievers', pageNumber],
       async () => await getAllConvertsInNewBelievers({ pageNumber, pageSize }),
       {
         staleTime: 360000,

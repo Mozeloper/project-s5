@@ -1,25 +1,24 @@
-import ResultNotFound from '@/components/ResultNotFound'
-import ReturnToPrevious from '@/components/ReturnToPrevious'
-import { Email, Phone } from '@mui/icons-material'
-import TabContext from '@mui/lab/TabContext'
-import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
-import { Skeleton } from '@mui/material'
-import Box from '@mui/material/Box'
-import Tab from '@mui/material/Tab'
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { toPascalCase } from '../../../Helper/toPascalCase'
-import SummeryCard from '../../SummeryCard/summeryCard'
+import ResultNotFound from '@/components/ResultNotFound';
+import ReturnToPrevious from '@/components/ReturnToPrevious';
+import { Email, Phone } from '@mui/icons-material';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import { Skeleton } from '@mui/material';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const DetailsByIdScreen = ({
+const ConvertDetailsByIdScreen = ({
   data,
   loading,
   notFound,
-  personalAnalyticsDatas,
+  isDeactivated = false,
 }) => {
-  // Reminder!!! Fetch worker details based on the workerId from your data source
-  const [value, setValue] = React.useState('1');
+  const [value, setValue] = React.useState(isDeactivated ? '0' : '1');
+
+
   console.log(`data : ${data}`);
 
   const handleChange = (event, newValue) => {
@@ -33,26 +32,9 @@ const DetailsByIdScreen = ({
           <div className="w-full rounded-md relative h-[240px] bg-gradient-to-b from-[#232931] to-[#38404b] p-4 ">
             <div className="flex justify-between items-center mb-5">
               <ReturnToPrevious />
-
-              {/* I had to comment the edit button since we're not using it now */}
-              {/* <div className="">
-                <Button
-                  title="Edit"
-                  className="w-[126px] text-sm rounded-md"
-                  backgroundColor="bg-white"
-                  textColor="text-secondary"
-                  onClick={() => console.log('Hello')}
-                />
-              </div> */}
             </div>
             <div className="md:absolute md:-bottom-24 flex flex-col md:flex-row md:gap-5 gap-2 md:left-[30px] md:right-[30px] bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
               <div className="flex gap-4">
-                {/* <img
-                src={ProfileImg}
-                alt="profile_img"
-                loading="lazy"
-                className="w-[160px] h-[160px] relative -top-16"
-              /> */}
                 {loading ? (
                   <Skeleton variant="circular" width={160} height={160} />
                 ) : (
@@ -109,7 +91,6 @@ const DetailsByIdScreen = ({
                         <small>
                           {(data && data?.Department) || (data && data?.Status)}
                         </small>{' '}
-                        | <small>Limited Access</small>
                       </>
                     )}
                   </div>
@@ -165,23 +146,65 @@ const DetailsByIdScreen = ({
               <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                   <TabList onChange={handleChange} aria-label="Workers Tablist">
+                    {isDeactivated && (
+                      <Tab
+                        label="Deactivation Details"
+                        value="0"
+                        className="!p-0 !mr-[50px]"
+                      />
+                    )}
                     <Tab
-                      label="Worker Details"
+                      label="Convert Details"
                       value="1"
                       className="!p-0 !mr-[50px]"
                     />
-                    <Tab
-                      label="Permissions"
-                      value="2"
-                      className="!p-0 !mr-[50px]"
-                    />
-                    <Tab
-                      label="Analytics Report"
-                      value="Analytics"
-                      className="!p-0"
-                    />
                   </TabList>
                 </Box>
+
+                {isDeactivated && (
+                  <TabPanel value="0" className="!px-0">
+                    {loading ? (
+                      <Skeleton variant="rounded" width="100%" height={200} />
+                    ) : (
+                      <div className="bg-white rounded-lg p-8">
+                        <div className="text-primary font-bold mb-3">
+                          <h2>Deactivation Details</h2>
+                        </div>
+                        <hr />
+                        <div className="flex flex-col gap-y-6 mt-6">
+                          <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                            <h3 className="font-bold md:w-[20%]">
+                              Deactivated By
+                            </h3>{' '}
+                            <span className="capitalize">
+                              {(data && data?.DeactivatedBy) ||
+                                data?.DeactivitatedBy ||
+                                '...'}
+                            </span>
+                          </div>
+                          <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                            <h3 className="font-bold md:w-[20%]">
+                              Deactivation Reason
+                            </h3>{' '}
+                            <span>
+                              {(data && data?.ReasonForDeactivation) || '...'}
+                            </span>
+                          </div>
+                          <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                            <h3 className="font-bold md:w-[20%]">
+                              Deactivation Date
+                            </h3>{' '}
+                            <span>
+                              {(data && data?.DateDeactivated) ||
+                                data?.DateDeactivitated ||
+                                '...'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </TabPanel>
+                )}
                 <TabPanel value="1" className="!px-0">
                   {loading ? (
                     <Skeleton variant="rounded" width="100%" height={200} />
@@ -324,31 +347,6 @@ const DetailsByIdScreen = ({
                     </div>
                   )}
                 </TabPanel>
-                <TabPanel value="2" className="!px-0">
-                  <div className="bg-white rounded-lg p-8 w-full min-h-[400px]">
-                    <div className="text-primary font-bold mb-3">
-                      <h2>Permissions</h2>
-                    </div>
-                  </div>
-                </TabPanel>
-                <TabPanel value="Analytics" className="!px-0">
-                  <div className="bg-white rounded-lg p-8 w-full min-h-[400px] flex flex-col gap-y-12">
-                    <div className="text-[#111827] font-bold mb-3">
-                      <h2>
-                        Analytics Report For Souls Under{' '}
-                        <span className="capitalize">
-                          {data && toPascalCase(data?.FirstName)}
-                        </span>{' '}
-                        <span>{data && toPascalCase(data?.SurName)}</span>
-                      </h2>
-                    </div>
-                    <SummeryCard
-                      data={personalAnalyticsDatas && personalAnalyticsDatas}
-                      loading={loading}
-                      error={notFound}
-                    />
-                  </div>
-                </TabPanel>
               </TabContext>
             </Box>
           </section>
@@ -360,4 +358,4 @@ const DetailsByIdScreen = ({
   );
 };
 
-export default DetailsByIdScreen;
+export default ConvertDetailsByIdScreen;

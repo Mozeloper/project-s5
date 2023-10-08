@@ -79,8 +79,8 @@ export default function PromoteWorkerToAdmin({ screenName, workerId, promoteCall
         <div className="bg-white p-8 md:w-[400px] min-h-[220px] rounded-md flex flex-col gap-4 md:mt-0 mt-2 items-center justify-center">
           <GiConfirmed className="w-[48px] h-[48px] text-green-500" />
           <h4 className="text-gray-700 text-lg text-center">
-            Please select the
-            <span className="!text-red-900 font-bold">role</span> to want to
+            Please select the 
+            <span className="!text-red-900 font-bold"> role</span> to want to
             assign to this worker.
           </h4>
           <div>

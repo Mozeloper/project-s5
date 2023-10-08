@@ -1,21 +1,27 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
-import { GrView } from 'react-icons/gr'
-import { IoRemoveCircleSharp } from 'react-icons/io5'
-import { useFetchMinistry } from '../../hooks/useFetchMinistry'
-import { suspendAConvert } from '../../services/admins.api'
-import Loader from '../Loader'
-import PaginationFooter from '../PaginationFooter'
-import SearchBox from '../Searchbox/searchbox'
-import SuspendConvert from '../UI/SuspendConvert'
-import ReusableTable from './Table.reusable'
+import React, { Fragment, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { GrView } from 'react-icons/gr';
+import { IoRemoveCircleSharp } from 'react-icons/io5';
+import { useQueryClient } from 'react-query';
+import { useFetchMinistry } from '../../hooks/useFetchMinistry';
+import { suspendAConvert } from '../../services/admins.api';
+import Loader from '../Loader';
+import PaginationFooter from '../PaginationFooter';
+import SearchBox from '../Searchbox/searchbox';
+import SuspendConvert from '../UI/SuspendConvert';
+import ReusableTable from './Table.reusable';
 
 export default function MinstryTable() {
+  const queryClient = useQueryClient();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
+
+  /**
+   * Hook for fetching All Converts in Ministry Stage
+   */
   const {
     data: MinistryData,
     isError,
@@ -42,18 +48,26 @@ export default function MinstryTable() {
     },
   ];
 
+  /**
+   * Handler for suspending a minstry convert
+   * @param {number} id
+   * @param {string} reason
+   */
   const handleSuspendCovert = async (id, reason) => {
-    console.log(`suspend convert with id of ${id} and ${reason}`);
     const suspededConvert = await suspendAConvert(id, reason);
-    console.log(suspededConvert.Message);
     if (suspededConvert.StatusCode === 200) {
       toast.success(suspededConvert.Message);
+      //update data on the table
+      queryClient.invalidateQueries('GetAllMinisters');
     }
-
   };
 
-  
-
+  /**
+   * Handler for displaying modal
+   * based on the option the user selects on the action menu
+   * @param {Event} event
+   * @param {Object} option
+   */
   const handleOptionsClick = (event, option) => {
     const innerText = option.name;
     const id = event.currentTarget.id;
@@ -67,6 +81,11 @@ export default function MinstryTable() {
     }
   };
 
+  /**
+   * Pagination Handler
+   * @param {Event} event
+   * @param {number} value
+   */
   const handlePaginationChange = (event, value) => {
     setPageNumber(value);
   };
@@ -79,21 +98,12 @@ export default function MinstryTable() {
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-base font-semibold leading-6 text-gray-900">
-                Ministry
+                Ministry Stage
               </h1>
               <p className="mt-2 text-sm text-gray-700">
                 The list of all the Ministers.
               </p>
             </div>
-            {/* <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-              <button
-                className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6"
-              > 
-                <TransitionsModal name={'+ Add Soul'} heading={'Add New Soul Form'} width={'max-w-6xl w-[90%]'}>
-                  <AddSoulsFormControl />
-                </TransitionsModal>
-              </button>
-            </div> */}
           </div>
           {isLoading ? (
             <Loader />

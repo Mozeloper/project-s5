@@ -4,15 +4,13 @@ import { getAllConvertsInDti } from '../services/admins.api';
 // todo - add getAlldti fetch call function
 export function useFetchDti() {
   const DtiConverts = useQuery(
-    [`DtiConverts`],
+    ['DtiConverts'],
     async () => await getAllConvertsInDti(),
     {
       staleTime: 360000,
       enabled: true,
-      keepPreviousData: true,
     }
   );
-//   console.log(DtiConverts)
   return DtiConverts;
 }
 

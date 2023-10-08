@@ -26,7 +26,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
   const navLinks = [
     {
       id: 1,
-      name: 'Dashboard',
+      name: 'Overview',
       path: '/dashboard',
       icon: <RxDashboard className="w-[24px] h-[24px]" />,
       hasChildren: false,
@@ -94,7 +94,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
     },
     {
       id: 7,
-      name: 'Reminder',
+      name: 'Approvals',
       path: '/reminder',
       icon: <MdNotificationsActive className="w-[24px] h-[24px]" />,
       hasChildren: false,

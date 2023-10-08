@@ -54,8 +54,9 @@ export async function getAllConvertsInNewBelievers() {
 }
 
 export async function suspendAConvert(convertId, reason) {
+  const ConvertId = Number(convertId)
   const payload = {
-    id: `${convertId}`,
+    id: `${ConvertId}`,
     reasonForDeactivation: `${reason}`,
   };
   try {

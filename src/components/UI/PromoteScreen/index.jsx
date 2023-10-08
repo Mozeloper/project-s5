@@ -2,6 +2,7 @@ import { Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { GiConfirmed } from 'react-icons/gi';
+import { useQueryClient } from 'react-query';
 import * as Yup from 'yup';
 import { useModalToggle } from '../../../context/ConfirmationModal.context';
 import { api } from '../../../services/api';
@@ -9,15 +10,16 @@ import { appUrls } from '../../../services/urls';
 import Button from '../../Button';
 import SearchableSelect from '../../CustomSelect';
 
-
 export default function PromoteScreen({ screenName, workerId }) {
+  const queryClient = useQueryClient();
+  const { setIsOpen } = useModalToggle();
 
-  const { isOpen, setIsOpen } = useModalToggle();
-
+  /**
+   * Hook for Closing the modal
+   */
   const handleClose = () => {
     setIsOpen(false);
   };
-
 
   const [isLoading, setIsLoading] = useState({
     getChurchDept: false,
@@ -25,7 +27,6 @@ export default function PromoteScreen({ screenName, workerId }) {
   const [showConfirmationButton, setShowConfirmationButton] = useState(false);
   const [showForm, setshowForm] = useState(true);
   const [dept, setDept] = useState([]);
-
   const [formValues, setFormValues] = useState({
     departmentId: '',
   });
@@ -34,6 +35,9 @@ export default function PromoteScreen({ screenName, workerId }) {
     departmentId: Yup.number().required('Select Department'),
   });
 
+  /**
+   * Get Church Departments from the server
+   */
   const getChurhDept = async () => {
     setIsLoading((prev) => ({
       ...prev,
@@ -78,10 +82,19 @@ export default function PromoteScreen({ screenName, workerId }) {
     };
   }, []);
 
+  /**
+   * Handler that sends the payload to the server
+   * when the user makes confirmation
+   */
   const passToConfirmation = () => {
-      setshowForm(false);
-      setShowConfirmationButton(true);
+    setshowForm(false);
+    setShowConfirmationButton(true);
   };
+
+  /**
+   * This handles all form inputs
+   * @param {Object} formValues 
+   */
   const handleFormSubmit = async (formValues) => {
     console.log(formValues);
 
@@ -97,6 +110,7 @@ export default function PromoteScreen({ screenName, workerId }) {
         toast.success('Worker promoted successfully!', {
           duration: 3000,
         });
+        queryClient.invalidateQueries('DtiConverts');
         // Close the modal
         handleClose();
       } else {
@@ -112,7 +126,6 @@ export default function PromoteScreen({ screenName, workerId }) {
       });
     }
   };
-
 
   return (
     <>

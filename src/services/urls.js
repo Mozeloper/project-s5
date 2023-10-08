@@ -9,12 +9,16 @@ export const appUrls = {
   //Department
   GETCHURCHDEPT: '/api/v1/Entity/get-church-department',
 
+  //Top Performers
+  GET_TOP_PERFORMERS: '/api/v1/SuperAdmin/get-top-worker-performance',
+
   //Super Admins
   GETALLWORKERS: '/api/v1/SuperAdmin/get-all-workers', //
   GET_ALL_SUPERADMINS: '/api/v1/SuperAdmin/get-all-admin',
   GET_ADMIN_DETAILS: '/api/v1/SuperAdmin/get-admin-by', //get worker by id
   GET_ALL_New_Converts_URL: '/api/v1/SuperAdmin/get-all-new-converts',
   GET_WORKER_DETAILS: '/api/v1/SuperAdmin/get-worker', //get worker by id
+  GET_DEACTIVATED_WORKER_DETAILS: '/api/v1/SuperAdmin/get-deactivated-worker', //get deactivated worker by id
   ADD_ROLE_TO_USER: '/api/v1/SuperAdmin/Add-user-role', //accepts id & role as query  eg ?userId=1&roles=User
   REMOVE_ADMIN_FROM_ROLE: '/api/v1/SuperAdmin/Remove-user-role', //remove a role from an admin, accepts the admin's id and the role as a query param eg /ADMIN_ID?roles=User
 
@@ -25,6 +29,8 @@ export const appUrls = {
   GET_ALL_New_Convert:
     '/api/v1/NewConvertAdmin/get-all-new-convants-for-newconvertadmin',
   GET_CONVERT_DETAILS: '/api/v1/NewConvert/get-new-converts', //get soul by id
+  GET_DEACTIVATED_CONVERT_DETAILS:
+    '/api/v1/NewConvert/get-deactivitated-convert', //get deactivated convert by Id
   GET_ALL_SOULS_UNDER_A_WORKER: '/api/v1/NewConvert/get-new-converts-by-worker', //accepts worker's id
   ADD_NEW_CONVERT: 'api/v1/NewConvert/register-new-convert',
   DELETE_A_CONVERT: '/api/v1/NewConvert/delete-new-convert', //delete soul by id

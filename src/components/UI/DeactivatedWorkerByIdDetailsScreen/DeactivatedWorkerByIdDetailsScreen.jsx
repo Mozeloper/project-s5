@@ -12,14 +12,14 @@ import { Link } from 'react-router-dom'
 import { toPascalCase } from '../../../Helper/toPascalCase'
 import SummeryCard from '../../SummeryCard/summeryCard'
 
-const DetailsByIdScreen = ({
+const DeactivatedWorkerByIdDetailsScreen = ({
   data,
   loading,
   notFound,
   personalAnalyticsDatas,
 }) => {
   // Reminder!!! Fetch worker details based on the workerId from your data source
-  const [value, setValue] = React.useState('1');
+  const [value, setValue] = React.useState('0');
   console.log(`data : ${data}`);
 
   const handleChange = (event, newValue) => {
@@ -146,7 +146,7 @@ const DetailsByIdScreen = ({
                       <h4 className="hover:underline">
                         {data && data?.PhoneNumber ? (
                           <Link to={`/workers/${data?.WorkerId}`}>
-                            <span className="text-gray-400 font-semibold capitalize">
+                            <span className="text-gray-400 font-semibold">
                               {data && data?.CreatedBy}
                             </span>
                           </Link>
@@ -166,6 +166,11 @@ const DetailsByIdScreen = ({
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                   <TabList onChange={handleChange} aria-label="Workers Tablist">
                     <Tab
+                      label="Deactivation Details"
+                      value="0"
+                      className="!p-0 !mr-[50px]"
+                    />
+                    <Tab
                       label="Worker Details"
                       value="1"
                       className="!p-0 !mr-[50px]"
@@ -182,6 +187,74 @@ const DetailsByIdScreen = ({
                     />
                   </TabList>
                 </Box>
+                <TabPanel value="0" className="!px-0">
+                  {loading ? (
+                    <Skeleton variant="rounded" width="100%" height={200} />
+                  ) : (
+                    <div className="bg-white rounded-lg p-8">
+                      <div className="text-primary font-bold mb-3">
+                        <h2>Deactivation Details</h2>
+                      </div>
+                      <hr />
+                      <div className="flex flex-col gap-y-6 mt-6">
+                        <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                          <h3 className="font-bold md:w-[20%]">
+                            Deactivated By
+                          </h3>{' '}
+                          <span className="capitalize">
+                            {(data && data?.DeactivatedBy) || '...'}
+                          </span>
+                        </div>
+                        <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                          <h3 className="font-bold md:w-[20%]">
+                            Deactivation Reason
+                          </h3>{' '}
+                          <span>
+                            {(data && data?.ReasonForDeactivation) || '...'}
+                          </span>
+                        </div>
+                        <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                          <h3 className="font-bold md:w-[20%]">
+                            Deactivation Date
+                          </h3>{' '}
+                          <span>
+                            {(data && data?.DateDeactivated) || '...'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {loading ? (
+                    <Skeleton variant="rounded" width="100%" height={200} />
+                  ) : (
+                    <div className="bg-white mt-5 -lg p-8">
+                      <div className="text-primary font-bold mb-3">
+                        <h2>Account Information</h2>
+                      </div>
+                      <hr />
+                      <div className="flex flex-col gap-y-6 mt-6">
+                        <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                          <h3 className="font-bold md:w-[20%]">
+                            Date of Application
+                          </h3>{' '}
+                          <span>{(data && data?.DateCreated) || '...'}</span>
+                        </div>
+                        <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                          <h3 className="font-bold md:w-[20%]">Approved By</h3>{' '}
+                          <span className="capitalize">
+                            {(data && data?.ApprovedBy) || '...'}
+                          </span>
+                        </div>
+                        <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                          <h3 className="font-bold md:w-[20%]">
+                            Date of Approval
+                          </h3>{' '}
+                          <span>{(data && data?.DateCreated) || '...'}</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </TabPanel>
                 <TabPanel value="1" className="!px-0">
                   {loading ? (
                     <Skeleton variant="rounded" width="100%" height={200} />
@@ -336,10 +409,8 @@ const DetailsByIdScreen = ({
                     <div className="text-[#111827] font-bold mb-3">
                       <h2>
                         Analytics Report For Souls Under{' '}
-                        <span className="capitalize">
-                          {data && toPascalCase(data?.FirstName)}
-                        </span>{' '}
-                        <span>{data && toPascalCase(data?.SurName)}</span>
+                        {data && toPascalCase(data?.FirstName)}{' '}
+                        {data && toPascalCase(data?.SurName)}
                       </h2>
                     </div>
                     <SummeryCard
@@ -360,4 +431,4 @@ const DetailsByIdScreen = ({
   );
 };
 
-export default DetailsByIdScreen;
+export default DeactivatedWorkerByIdDetailsScreen;

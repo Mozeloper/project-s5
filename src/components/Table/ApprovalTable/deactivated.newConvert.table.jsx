@@ -95,9 +95,17 @@ export default function DeactivatedNewConvertTable() {
    */
   useEffect(() => {
     (async () => {
-      if (activeFunction === 'reactivate')
-        return await reativatedConvertAsync();
-      if (activeFunction === 'delete') return await deletedConvertAsync();
+      if (activeFunction === 'reactivate') {
+        return (
+          (await reativatedConvertAsync()) &&
+          queryClient.invalidateQueries('DeactivatedConverts')
+        );
+      }
+      if (activeFunction === 'delete')
+        return (
+          (await deletedConvertAsync()) &&
+          queryClient.invalidateQueries('DeactivatedConverts')
+        );
     })();
   }, [convertId]);
 
@@ -110,7 +118,6 @@ export default function DeactivatedNewConvertTable() {
     async (id) => {
       setActiveFunction('reactivate');
       setConvertId(id);
-      queryClient.invalidateQueries('DeactivatedConverts');
     },
     [reativatedConvertAsync, convertId]
   );
@@ -124,7 +131,6 @@ export default function DeactivatedNewConvertTable() {
       //Todo Please note that the endpoint for this is currently not functioning properly
       setConvertId(id);
       setActiveFunction('delete');
-      queryClient.invalidateQueries('DeactivatedConverts');
     },
     [deletedConvertAsync, convertId]
   );
@@ -156,7 +162,7 @@ export default function DeactivatedNewConvertTable() {
           ) : (
             <>
               <ReusableTable
-                pageLink={'reminder/deactivatedNewConvert'}
+                pageLink={'reminder/deactivated-convert'}
                 optionModal={displayUi}
                 headers={headers}
                 data={data}
