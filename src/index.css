@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -23,11 +23,11 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
-input[type="tel"] {
+input[type='tel'] {
   background-color: none;
   color: #263238;
   outline: none;
@@ -36,3 +36,10 @@ input[type="tel"] {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media screen and (max-width: 765px) {
+  #RFS-Label {
+    font-size: 11px;
+    color: white;
+  }
+}
