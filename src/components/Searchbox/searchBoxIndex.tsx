@@ -14,6 +14,12 @@ export  type searchType = {
     [key: string]: any,
 }
 
+export type styleOptions = {
+  bg?: string;
+  textColor?: string;
+  placeholder?: string;
+}
+
 //Famimilizing with the code below (SearchBoxIndex)
 //it's a dynamic search box to search array of data based on fullname and name following our api convertion for project 5s
 
@@ -27,7 +33,7 @@ export  type searchType = {
 
 //Happy coding guys ===>>>>>> Dimgba Micheal says 'hi'😅
 
-export default function SearchBoxIndex({searchArray, linkTo}: {searchArray: [searchType], linkTo?: string}) {
+export default function SearchBoxIndex({searchArray, linkTo, bg, textColor, placeholder }: {searchArray: [searchType], linkTo?: string, bg?: string, textColor?: string, placeholder?: string }) {
   const [selected, setSelected] = useState<any>(null)
   const [query, setQuery] = useState('')
   // const [ textSearch, setTextSearch ] = useState('')
@@ -65,6 +71,7 @@ export default function SearchBoxIndex({searchArray, linkTo}: {searchArray: [sea
     setTextSearch('')
   }
 
+  const colorText = textColor ?? '#CBCBCB'
   return (
     <>
       <Combobox 
@@ -73,18 +80,19 @@ export default function SearchBoxIndex({searchArray, linkTo}: {searchArray: [sea
         onChange={handleSearchChange} 
         className="flex font-mono items-center box-border duration-300 ease-in-out">
           <div className="relative mt-1 mx-auto max-w-7xl w-full">
-            <div className="relative w-full cursor-default overflow-hidden text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm bg-[#38404b] lg:h-16 h-12 flex justify-between items-center px-4 rounded-[0.99063rem] box-border
-            ">
-              <p className='text-base text-[#CBCBCB] z-20 lg:w-7 w-5 cursor-pointer'>
-                {query === '' || selected === '' || textSearch === '' ? <FaSearch title='search' className='text-base text-[#CBCBCB] ' /> : <BiArrowBack title='go back' onClick={handleArrowBackButton} className='md:text-2xl text-xl text-[#CBCBCB] ' />}
+            <div className={`relative w-full cursor-default overflow-hidden text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm ${bg ?? 'bg-[#38404b]'} lg:h-16 h-12 flex justify-between items-center px-4 rounded-[0.99063rem] box-border
+            `}>
+              <p className={`text-base text-[${colorText}] z-20 lg:w-7 w-5 cursor-pointer`}>
+                {query === '' || selected === '' || textSearch === '' ? <FaSearch title='search' className={`text-base text-[#CBCBCB] ` }/> : <BiArrowBack title='go back' onClick={handleArrowBackButton} className={`md:text-2xl text-xl text-[#CBCBCB] `} />}
               </p>
               <Combobox.Input
-                className={`bg-inherit admin-search w-full h-full outline-none ring-0 border-none px-4 rounded-[0.99063rem] placeholde-[#CBCBCB] text-base box-border duration-200 ease-linear caret-[var(--orange-box-bg)] py-2 pl-3 pr-10 leading-5 text-[#CBCBCB] focus:ring-0 `}
+                className={`bg-inherit admin-search w-full h-full outline-none ring-0 border-none px-4 rounded-[0.99063rem] placeholde-[#CBCBCB] text-base box-border duration-200 ease-linear caret-[${colorText}] py-2 pl-3 pr-10 leading-5 text-[${colorText}] focus:ring-0 
+                 border-b-2 border-gray-300 appearance-none focus:outline-none  focus:border-primary peer`}
                 // displayValue={(person: any) => person.FullName}
                 // value={query}
                 // name='title'
                 autoComplete="off"
-                placeholder="Search name..."
+                placeholder={`${placeholder ?? 'Search Names...'}`}
                 required
                 onChange={(event) => setQuery(event.target.value.trim() || (selected?.FullName ?? selected?.name).trim())}
               />
@@ -124,7 +132,7 @@ export default function SearchBoxIndex({searchArray, linkTo}: {searchArray: [sea
                     <Combobox.Option
                       key={person.id ?? person.Id}
                       className={({ active }) =>
-                        `relative cursor-default select-none py-2 pl-10 pr-4 hover:bg-primary/90 flex items-center ${
+                        `relative cursor-pointer select-none py-2 pl-10 pr-4 hover:bg-primary/90 flex items-center z-[999] ${
                           active ? 'bg-primary text-white' : 'text-gray-600'
                         }`
                       }
