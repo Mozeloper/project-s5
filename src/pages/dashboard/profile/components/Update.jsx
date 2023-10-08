@@ -7,7 +7,7 @@ import { appUrls } from "../../../../services/urls";
 import { api } from "../../../../services/api";
 import { toast } from "react-hot-toast";
 import SearchableSelect from "../../../../components/CustomSelect";
-import moment from "moment";
+import { formatToISODate } from "../../../../utils";
 
 export default function Update({ setOpenModal, data, handleGetUser }) {
   const updateUserSchema = Yup.object().shape({
@@ -62,9 +62,10 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
         validationSchema={updateUserSchema}
         enableReinitialize={true}
         onSubmit={(values, actions) => {
-          const formattedDate = moment(data?.DateOfBirth).format(
-            "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
-          );
+          const formattedDateOfBirth = formatToISODate(data?.DateOfBirth);
+          // const formattedDate = moment(data?.DateOfBirth).format(
+          //   "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
+          // );
           const payload = {
             firstName: values?.FirstName,
             userName: data?.UserName,
@@ -73,8 +74,8 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
             email: values?.Email,
             gender: values?.Gender,
             phoneNumber: values?.PhoneNumber,
-            dateOfBirth: formattedDate,
-            department: "",
+            dateOfBirth: formattedDateOfBirth,
+            department: '',
             employmentStatus: data?.EmploymentStatus,
             maritalStatus: data?.MaritalStatus,
             countryName: data?.CountryName,
