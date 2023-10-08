@@ -106,7 +106,7 @@ function App() {
                 </React.Suspense>
               }
             />
-            <Route element={<Authlayout />}>
+            <Route>
               <Route
                 path="/forget-password"
                 element={
@@ -123,7 +123,7 @@ function App() {
                   </React.Suspense>
                 }
               />
-              <Route element={<Authlayout />}>
+              <Route  element={<Authlayout />}>
                 <Route
                   path="/begin-registration"
                   element={<BeginRegistration />}
