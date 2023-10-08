@@ -1,8 +1,8 @@
-import React from "react";
-import { Form, Formik } from "formik";
-import * as Yup from "yup";
-import Button from "../../../../components/Button";
-import SearchableSelect from "../../../../components/CustomSelect";
+import { Form, Formik } from 'formik';
+import React from 'react';
+import * as Yup from 'yup';
+import Button from '../../../../components/Button';
+import SearchableSelect from '../../../../components/CustomSelect';
 
 export default function PersonalInformation({
   userValues,
@@ -10,18 +10,20 @@ export default function PersonalInformation({
   setCurrentStep,
 }) {
   const signupSchema = Yup.object().shape({
-    gender: Yup.number().required("Gender is Required"),
-    dateOfBirth: Yup.string().required("Date Of Birth is Required"),
+    gender: Yup.number().required('Gender is Required'),
+    dateOfBirth: Yup.string().required('Date Of Birth is Required'),
     employmentStatus: Yup.string(),
     qualification: Yup.string(),
-    maritalStatus: Yup.string().required("Select Marital status"),
-    countryName: Yup.string().required("Select country"),
-    stateName: Yup.string().required("Select country"),
-    localGovtName: Yup.string().required("Select LGA"),
+    maritalStatus: Yup.string().required('Select Marital status'),
+    countryName: Yup.string().required('Select country'),
+    stateName: Yup.string().required('Select country'),
+    localGovtName: Yup.string().required('Select LGA'),
     nameOfOrganization: Yup.string(),
     homeAddress: Yup.string(),
     nearestBusStop: Yup.string(),
   });
+
+  const maxDOBYear = new Date().getFullYear() - 8; // Calculate 8 years ago
 
   return (
     <div className="w-full h-full">
@@ -30,17 +32,17 @@ export default function PersonalInformation({
       </h2>
       <Formik
         initialValues={{
-          gender: userValues?.gender || "",
-          dateOfBirth: userValues?.dateOfBirth || "",
-          employmentStatus: userValues?.employmentStatus || "",
-          qualification: userValues?.qualification || "",
-          maritalStatus: userValues?.maritalStatus || "",
-          countryName: userValues?.countryName || "",
-          stateName: userValues?.stateName || "",
-          localGovtName: userValues?.localGovtName || "",
-          nameOfOrganization: userValues?.nameOfOrganization || "",
-          homeAddress: userValues?.homeAddress || "",
-          nearestBusStop: userValues?.nearestBusStop || "",
+          gender: userValues?.gender || '',
+          dateOfBirth: userValues?.dateOfBirth || '',
+          employmentStatus: userValues?.employmentStatus || '',
+          qualification: userValues?.qualification || '',
+          maritalStatus: userValues?.maritalStatus || '',
+          countryName: userValues?.countryName || '',
+          stateName: userValues?.stateName || '',
+          localGovtName: userValues?.localGovtName || '',
+          nameOfOrganization: userValues?.nameOfOrganization || '',
+          homeAddress: userValues?.homeAddress || '',
+          nearestBusStop: userValues?.nearestBusStop || '',
         }}
         validationSchema={signupSchema}
         onSubmit={(values) => {
@@ -70,8 +72,8 @@ export default function PersonalInformation({
                 </label>
                 <SearchableSelect
                   options={[
-                    { label: "Male", value: 0 },
-                    { label: "Female", value: 1 },
+                    { label: 'Male', value: 0 },
+                    { label: 'Female', value: 1 },
                   ]}
                   name="gender"
                   id="gender"
@@ -97,6 +99,7 @@ export default function PersonalInformation({
                   type="date"
                   name="dateOfBirth"
                   id="dateOfBirth"
+                  max={`${maxDOBYear}-12-31`} // Set the max date to 8 years ago
                   className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter Your Date Of Birth"
                   onChange={handleChange}
@@ -119,9 +122,9 @@ export default function PersonalInformation({
                 </label>
                 <SearchableSelect
                   options={[
-                    { label: "Employed", value: "Employed" },
-                    { label: "Self-Employed", value: "SelfEmployed" },
-                    { label: "Unemployed ", value: "Unemployed" },
+                    { label: 'Employed', value: 'Employed' },
+                    { label: 'Self-Employed', value: 'SelfEmployed' },
+                    { label: 'Unemployed ', value: 'Unemployed' },
                   ]}
                   name="employmentStatus"
                   id="employmentStatus"
@@ -146,20 +149,20 @@ export default function PersonalInformation({
                 <SearchableSelect
                   options={[
                     {
-                      label: "Married",
-                      value: "Married",
+                      label: 'Married',
+                      value: 'Married',
                     },
                     {
-                      label: "Single",
-                      value: "Single",
+                      label: 'Single',
+                      value: 'Single',
                     },
                     {
-                      label: "Divorced",
-                      value: "Divorced",
+                      label: 'Divorced',
+                      value: 'Divorced',
                     },
                     {
-                      label: "Widowed",
-                      value: "Widowed",
+                      label: 'Widowed',
+                      value: 'Widowed',
                     },
                   ]}
                   name="maritalStatus"
@@ -187,19 +190,19 @@ export default function PersonalInformation({
                 <SearchableSelect
                   options={[
                     {
-                      label: "LeavingSchoolCertificate",
-                      value: "LeavingSchoolCertificate",
+                      label: 'LeavingSchoolCertificate',
+                      value: 'LeavingSchoolCertificate',
                     },
                     {
-                      label: "SSCE",
-                      value: "SSCE",
+                      label: 'SSCE',
+                      value: 'SSCE',
                     },
-                    { label: "OND", value: "OND" },
-                    { label: "HND", value: "HND" },
-                    { label: "BSc", value: "BSc" },
-                    { label: "MSc", value: "MSc" },
-                    { label: "PhD", value: "PhD" },
-                    { label: "Others", value: "Others" },
+                    { label: 'OND', value: 'OND' },
+                    { label: 'HND', value: 'HND' },
+                    { label: 'BSc', value: 'BSc' },
+                    { label: 'MSc', value: 'MSc' },
+                    { label: 'PhD', value: 'PhD' },
+                    { label: 'Others', value: 'Others' },
                   ]}
                   name="qualification"
                   id="qualification"
