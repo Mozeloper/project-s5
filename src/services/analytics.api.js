@@ -16,10 +16,10 @@ export async function getAllSoulsCount() {
   }
 }
 
-export async function getAllWorkersCount() {
+export async function getWorkersAnalytics() {
   try {
     const allWorkersCount = await api.get(
-      `${baseUrl}${appUrls.GET_ALL_WORKERS_COUNT_URL}`
+      `${baseUrl}${appUrls.WORKERS_ANALYTICS}`
     );
     const WorkersCount = await allWorkersCount?.data;
     return WorkersCount;
@@ -40,6 +40,19 @@ export async function getAllAdminDashboardAnalytics() {
     throw new Error(error.message || error);
   }
 }
+
+//Active Analytics Api fetcher functions
+// export async function getWorkersAnalytics() {
+//   try {
+//     const workersAnalytics = await api.get(
+//       `${baseUrl}${appUrls.WORKERS_ANALYTICS}`
+//     );
+//     const WorkersCount = await workersAnalytics?.data;
+//     return WorkersCount;
+//   } catch (error) {
+//     throw new Error(error.message || error);
+//   }
+// }
 
 export async function getAllNewConvertDashboardAnalytics() {
   try {

@@ -1,27 +1,35 @@
-import { useQuery } from "react-query"
+import { useQuery } from 'react-query';
 import {
   getAllAdminDashboardAnalytics,
   getAllDtiDashboardAnalytics,
   getAllMinistryDashboardAnalytics,
   getAllNewConvertDashboardAnalytics,
   getAllSoulsCount,
-  getAllWorkersCount,
   getPersonalAnalytics,
-  getTopPerformers
+  getTopPerformers,
+  getWorkersAnalytics,
 } from '../services/analytics.api';
 
 export function useFetchWorkersCount() {
-    const workersCount = useQuery([`workersCount`], async () => await getAllWorkersCount(), {
-        staleTime: 360000,
-    });
-    return workersCount
+  const workersCount = useQuery(
+    ['workersCount'],
+    async () => await getWorkersAnalytics(),
+    {
+      staleTime: 360000,
+    }
+  );
+  return workersCount;
 }
 
 export function useFetchSoulsCount() {
-    const soulsCount = useQuery([`soulsCount`], async () => await getAllSoulsCount(), {
-        staleTime: 360000,
-    });
-    return soulsCount
+  const soulsCount = useQuery(
+    [`soulsCount`],
+    async () => await getAllSoulsCount(),
+    {
+      staleTime: 360000,
+    }
+  );
+  return soulsCount;
 }
 
 export function useFetchDynamicDashboardAnalytics({ roles, userId }) {
@@ -50,10 +58,14 @@ export function useFetchDynamicDashboardAnalytics({ roles, userId }) {
 }
 
 export function useFetchAdminDashboardAnalytics() {
-    const AdminsAnalytics = useQuery([`AdminsCountAnalytics`], async () => await getAllAdminDashboardAnalytics(), {
-        staleTime: 360000,
-    });
-    return AdminsAnalytics
+  const AdminsAnalytics = useQuery(
+    [`AdminsCountAnalytics`],
+    async () => await getAllAdminDashboardAnalytics(),
+    {
+      staleTime: 360000,
+    }
+  );
+  return AdminsAnalytics;
 }
 
 export function useFetchNewConvertDashboardAnalytics() {
@@ -68,17 +80,25 @@ export function useFetchNewConvertDashboardAnalytics() {
 }
 
 export function useFetchDtiDashboardAnalytics() {
-    const DtiAnalytics = useQuery([`DtiCountAnalytics`], async () => await getAllDtiDashboardAnalytics(), {
-        staleTime: 360000,
-    });
-    return DtiAnalytics
+  const DtiAnalytics = useQuery(
+    [`DtiCountAnalytics`],
+    async () => await getAllDtiDashboardAnalytics(),
+    {
+      staleTime: 360000,
+    }
+  );
+  return DtiAnalytics;
 }
 
 export function useFetchMinistryDashboardAnalytics() {
-    const MinistryAnalytics = useQuery([`MinistryCountAnalytics`], async () => await getAllMinistryDashboardAnalytics(), {
-        staleTime: 360000,
-    });
-    return MinistryAnalytics
+  const MinistryAnalytics = useQuery(
+    [`MinistryCountAnalytics`],
+    async () => await getAllMinistryDashboardAnalytics(),
+    {
+      staleTime: 360000,
+    }
+  );
+  return MinistryAnalytics;
 }
 
 export function useFetchPersonalAnalytics({ AnalyticsId }) {
