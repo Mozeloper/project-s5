@@ -36,8 +36,12 @@ export default function TransitionsModal2({ name, width, children, icon, isModal
 
   return (
     <div>
-      <div className="z-20 flex !justify-center items-center py-1" onClick={handleOpen}>
-        <ListItemIcon className="w-max min-w-max">{icon}</ListItemIcon>{name}
+      <div
+        className="z-20 flex !justify-center items-center py-1"
+        onClick={handleOpen}
+      >
+        <ListItemIcon className="w-max min-w-max">{icon}</ListItemIcon>
+        {name}
       </div>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -54,8 +58,15 @@ export default function TransitionsModal2({ name, width, children, icon, isModal
         // className="bg-[rgba(0,_0,_0,_0.7)]"
       >
         <Fade in={isOpen}>
-          <Box sx={style} className={`${width}`}>
-            <Typography id="transition-modal-description" component={'div'} sx={{ mt: 2 }}>
+          <Box
+            sx={style}
+            className={`${width} max-h-[95vh] overflow-y-auto`}
+          >
+            <Typography
+              id="transition-modal-description"
+              component={'div'}
+              sx={{ mt: 2 }}
+            >
               {children}
             </Typography>
           </Box>
