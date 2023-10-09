@@ -1,5 +1,4 @@
 import { Form, Formik } from 'formik';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +7,7 @@ import Button from '../../../../components/Button';
 import SearchableSelect from '../../../../components/CustomSelect';
 import { api } from '../../../../services/api';
 import { appUrls } from '../../../../services/urls';
+import { formatToISODate } from '../../../../utils';
 
 export default function ChurchInformation({
   userValues,
@@ -21,25 +21,34 @@ export default function ChurchInformation({
     getChurchDept: false,
     register: false,
   });
+  const [isFormValid, setIsFormValid] = useState(false);
   const [dept, setDept] = useState([]);
+
   const signupSchema = Yup.object().shape({
-    yearJoined: Yup.number().required('Input Year You Joined Church'),
+    yearJoined: Yup.number()
+      .required('Input Year You Joined Church')
+      .min(2010, 'Year Joined should be greater than or equal to 2010')
+      .max(currentYear, `Year Joined cannot be greater than ${currentYear}`), // Optional: Add a maximum year constraint
+
     departmentId: Yup.number().required('Select Department'),
   });
 
-  const handleRegisterUser = async () => {
+  const handleRegisterUser = async (values) => {
     setIsLoading((prev) => ({
       ...prev,
       register: true,
     }));
-    const formattedDate = moment(userValues?.dateOfBirth).format(
-      'YYYY-MM-DDTHH:mm:ss.SSS[Z]'
-    );
+    // const formattedDate = moment(userValues?.dateOfBirth).format(
+    //   'YYYY-MM-DDTHH:mm:ss.SSS[Z]'
+    // );
+
+    // Format the date using native JavaScript Date
+    const formattedDateOfBirth = formatToISODate(userValues?.dateOfBirth);
+
     const payload = {
       ...userValues,
-      dateOfBirth: formattedDate,
-      yearJoined: userValues?.yearJoined,
-      departmentId: userValues?.departmentId
+      dateOfBirth: formattedDateOfBirth,
+      ...values, // Include the form values
     };
     try {
       const res = await api.post(appUrls.REGISTER, payload);
@@ -126,7 +135,7 @@ export default function ChurchInformation({
         validationSchema={signupSchema}
         onSubmit={(values) => {
           setUserValues((prev) => ({ ...prev, ...values }));
-          handleRegisterUser();
+          handleRegisterUser(values);
         }}
       >
         {({
@@ -147,7 +156,10 @@ export default function ChurchInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="departmentId"
                 >
-                  Church dept <span className="text-primary ml-1">*</span>
+                  Church dept{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <SearchableSelect
                   options={dept}
@@ -155,7 +167,11 @@ export default function ChurchInformation({
                   id="departmentId"
                   isLoading={isLoading?.getChurchDept}
                   value={values.departmentId}
-                  setFieldValue={(name, value) => setFieldValue(name, value)}
+                  setFieldValue={(name, value) => {
+                    setFieldValue(name, value);
+                    // Check form validity and update isFormValid accordingly
+                    setIsFormValid(!!values.yearJoined && !!value);
+                  }}
                   className="w-full outline-none"
                   placeholder="Select department"
                 />
@@ -185,15 +201,6 @@ export default function ChurchInformation({
                   onChange={handleChange}
                   value={values?.yearJoined}
                 />
-                {/* <input
-                  type="number"
-                  name="yearJoined"
-                  id="yearJoined"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter yearJoined"
-                  onChange={handleChange}
-                  value={values?.yearJoined}
-                /> */}
                 {errors.yearJoined && touched.yearJoined ? (
                   <div className="text-xs mt-2 text-red-700">
                     {errors.yearJoined}
@@ -204,6 +211,7 @@ export default function ChurchInformation({
 
             <div className="flex justify-end w-full">
               <Button
+                disabled={!isFormValid}
                 title="Submit"
                 className="w-[200px] h-[56px] text-center mt-5 md:mb-4 mb-10"
                 backgroundColor="bg-primary"

@@ -8,8 +8,13 @@ import { appUrls } from '../../../services/urls';
 import { api } from '../../../services/api';
 import { phoneRegExp } from '../../../utils';
 import { useModalToggle } from '../../../context/ConfirmationModal.context';
+import { useQueryClient } from 'react-query';
+
 
 export default function AddSoulsFormControl() {
+
+    const queryClient = useQueryClient();
+
   // payload for newconvert
   //     {
   //   "surname": "string",
@@ -53,6 +58,9 @@ export default function AddSoulsFormControl() {
         if (res?.status === 200) {
           toast.success("Soul was Succefully Added", { duration: 5000, })
           setIsOpen(false);
+          queryClient.invalidateQueries('ConvertsUnderMe');
+          queryClient.invalidateQueries('PersonalAnalytics');
+
         }
       } catch (error) {
         const errorMessage = error?.data?.message || 'Something went wrong, please try again';
@@ -90,6 +98,7 @@ export default function AddSoulsFormControl() {
         isValid,
       }) => (
         <Form onSubmit={handleSubmit}>
+          <h2 className='text-primary font-semibold md:text-2xl mb-5'>Add A Soul</h2>
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
               <input
@@ -173,7 +182,7 @@ export default function AddSoulsFormControl() {
                 name="email"
                 id="email"
                 className="block py-2.5 px-0 w-full text-gray-900 text-base bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder="Email"
+                placeholder=" "
                 onChange={handleChange}
                 value={values?.email}
               />
@@ -249,21 +258,20 @@ export default function AddSoulsFormControl() {
               Nearest Bus Stop
             </label>
           </div>
-          <div className='flex gap-5'>
-          <Button
-            title="Submit"
-            className="w-[200px] h-[56px] text-center mt-3 md:mb-4 mb-10 rounded-2xl"
-            backgroundColor="bg-primary"
-            type="submit"
-            isLoading={isLoading}
-          />
-
-          <Button
-            title="Cancel"
-            onClick={() => setIsOpen(false)}
-            className="w-[200px] h-[56px] text-center mt-3 md:mb-4 mb-10 rounded-2xl border-2 border-gray-400 text-gray-500"
-            backgroundColor="bg-white"
-          />
+          <div className="flex gap-5">
+            <Button
+              title="Cancel"
+              onClick={() => setIsOpen(false)}
+              className="w-[200px] h-[56px] text-center mt-3 md:mb-4 mb-10 rounded border-2 border-gray-400 text-gray-500"
+              backgroundColor="bg-white"
+            />
+            <Button
+              title="Submit"
+              className="w-[200px] h-[56px] text-center mt-3 md:mb-4 mb-10 rounded"
+              backgroundColor="bg-primary"
+              type="submit"
+              isLoading={isLoading}
+            />
           </div>
           {/* <button
             type="submit"

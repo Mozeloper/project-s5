@@ -36,7 +36,7 @@ export function useFetchAllNewConvertDynamic({
     return AllNewConverts;
   } else {
     const ConvertsUnderMe = useQuery(
-      [`ConvertsUnderMe`, pageNumber],
+      ['ConvertsUnderMe', pageNumber],
       async () => await getSoulsUnderMe({ pageNumber, pageSize, searchquery }),
       {
         staleTime: 360000,
@@ -51,7 +51,7 @@ export function useFetchAllNewConvertDynamic({
 export function useFetchSoulsUnderMe({ pageNumber, pageSize, searchquery }) {
   // console.log('singleSoul soulId', soulId);
   const ConvertsUnderMe = useQuery(
-    [`ConvertsUnderMe`, searchquery, pageNumber],
+    ['ConvertsUnderMe', searchquery, pageNumber],
     async () => await getSoulsUnderMe({ pageNumber, pageSize, searchquery }),
     {
       staleTime: 360000,
