@@ -1,9 +1,10 @@
 import React from 'react';
 import PageTitle from '../../../components/PageTitle';
+import DashboardTabs from '../../../components/ReusableTabs';
 import SummeryCard from '../../../components/SummeryCard/summeryCard';
 import WorkersTable from '../../../components/Table/worker.table';
 import Charts from '../../../components/chart/chart';
-import DashboardTabs from '../../../components/ReusableTabs';
+import { useFetchWorkersCount } from '../../../hooks/useFetchAnalytics';
 
 //Todo
 export default function Workers() {
@@ -18,6 +19,11 @@ export default function Workers() {
     },
   ];
 
+  /**
+   * Hook for fetching Workers Analytics
+   */
+  const { data: workersCount, isError, isLoading } = useFetchWorkersCount();
+
   return (
     <div className="flex flex-col gap-y-6">
       <PageTitle title="Workers" />
@@ -25,7 +31,12 @@ export default function Workers() {
       <DashboardTabs tabLabels={['All Workers', 'Analytics']}>
         <>
           <div className="">
-            <SummeryCard />
+            <SummeryCard
+              data={workersCount && workersCount?.Data}
+              error={isError}
+              loading={isLoading}
+              label="Workers"
+            />
           </div>
           <div className="p-2"></div>
           <WorkersTable />
