@@ -1,19 +1,25 @@
-import React, { Fragment, useState } from 'react'
-import { toast } from 'react-hot-toast'
-import { useWorkersAdmins } from '../../hooks/useWorkers'
-import PaginationFooter from '../PaginationFooter'
-import SearchBox from '../Searchbox/searchbox'
-import Table from './table'
+import React, { Fragment, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { useWorkersAdmins } from '../../hooks/useWorkers';
+import PaginationFooter from '../PaginationFooter';
+import SearchBox from '../Searchbox/searchbox';
+import Table from './table';
 import { useTextSearchNav } from '../../context/textSearch.context';
+import Loader from '../Loader';
+import { Link } from 'react-router-dom';
 
 export default function WorkersTable() {
-    const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize, setPageSize] = useState(7);
-    let { textSearch, setTextSearch } = useTextSearchNav()
-    const { data: WorkersData, isError, isLoading, isFetching, error, isSuccess } = useWorkersAdmins({ pageNumber, pageSize, searchquery: textSearch })
-
-  
-
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(7);
+  let { textSearch, setTextSearch } = useTextSearchNav();
+  const {
+    data: WorkersData,
+    isError,
+    isLoading,
+    isFetching,
+    error,
+    isSuccess,
+  } = useWorkersAdmins({ pageNumber, pageSize, searchquery: textSearch });
 
   const handlePaginationChange = (event, value) => {
     setPageNumber(value);
@@ -35,20 +41,45 @@ export default function WorkersTable() {
               </p>
             </div>
           </div>
-          {
-            isLoading ? 'Loading...' : isError ? toast.error(error?.message) :
+          {isLoading ? (
+            <Loader />
+          ) : isError ? (
+            <div>An Error occurred: {error.message} </div>
+          ) : (
             <>
-              <Table pageLink={'workers'} tableDataArray={WorkersData && WorkersData?.Data} />
-              {/* Pagination will be here */}
-                  
-              <PaginationFooter 
-                pageNumber={pageNumber} 
-                totalPerCount={Math.ceil(WorkersData?.TotalDataCount / pageSize)} 
-                totalCount={Math.ceil(WorkersData?.TotalDataCount)} 
-                handlePaginationChange={handlePaginationChange}
-              /> 
+              {WorkersData?.Data?.length < 1 ? (
+                <div className="flex flex-col justify-center items-center h-96 bg-gray-200  p-10 md:p-16">
+                  <h3 className="font-bold mb-3">
+                    Currently, no approved workers have been added.
+                  </h3>{' '}
+                  <p>
+                    Please go to the{' '}
+                    <span className="text-primary">
+                      <Link to={'/approvals'}>Approvals page</Link>
+                    </span>{' '}
+                    to see if any workers require approval.
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <Table
+                    pageLink={'workers'}
+                    tableDataArray={WorkersData && WorkersData?.Data}
+                  />
+                  {/* Pagination will be here */}
+
+                  <PaginationFooter
+                    pageNumber={pageNumber}
+                    totalPerCount={Math.ceil(
+                      WorkersData?.TotalDataCount / pageSize
+                    )}
+                    totalCount={Math.ceil(WorkersData?.TotalDataCount)}
+                    handlePaginationChange={handlePaginationChange}
+                  />
+                </>
+              )}
             </>
-          }
+          )}
         </div>
       </div>
     </Fragment>
