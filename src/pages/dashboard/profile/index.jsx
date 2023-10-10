@@ -1,15 +1,16 @@
-import { Form, Formik } from "formik"
-import React, { useEffect, useState } from "react"
-import { toast } from "react-hot-toast"
-import * as Yup from "yup"
-import MaleProfileImg from "../../../assets/images/profile-img.svg"
-import FemaleProfileImg from "../../../assets/icons/female-profile.svg"
-import Button from "../../../components/Button"
-import PasswordField from "../../../components/FormInputs/PasswordField"
-import ModalPopup from "../../../components/ModalPopup"
-import { api } from "../../../services/api"
-import { appUrls } from "../../../services/urls"
-import Update from "./components/Update"
+import { Form, Formik } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import * as Yup from 'yup';
+import MaleProfileImg from '../../../assets/images/profile-img.svg';
+import FemaleProfileImg from '../../../assets/icons/female-profile.svg';
+import Button from '../../../components/Button';
+import PasswordField from '../../../components/FormInputs/PasswordField';
+import ModalPopup from '../../../components/ModalPopup';
+import { api } from '../../../services/api';
+import { appUrls } from '../../../services/urls';
+import Update from './components/Update';
+import { Skeleton } from '@mui/material';
 
 export default function PersonalDetailsSettings() {
   const [data, setData] = useState({});
@@ -18,16 +19,16 @@ export default function PersonalDetailsSettings() {
 
   const changePassowordSchema = Yup.object().shape({
     current_password: Yup.string()
-      .min(7, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Current Password is required"),
+      .min(7, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Current Password is required'),
     new_password: Yup.string()
-      .min(7, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Password is required"),
+      .min(7, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Password is required'),
     confirm_password: Yup.string()
-      .oneOf([Yup.ref("new_password"), null], "Passwords must match")
-      .required("Please Confirm your password...."),
+      .oneOf([Yup.ref('new_password'), null], 'Passwords must match')
+      .required('Please Confirm your password....'),
   });
 
   const handleChangePassword = async (payload, actions) => {
@@ -36,7 +37,7 @@ export default function PersonalDetailsSettings() {
       const res = await api.post(appUrls.CHANGEPASSWORD_URL, payload);
       if (res?.data) {
         actions.resetForm();
-        toast.success("Password change successfully...", {
+        toast.success('Password change successfully...', {
           duration: 3000,
         });
       }
@@ -53,7 +54,7 @@ export default function PersonalDetailsSettings() {
     try {
       const res = await api.get(appUrls.GETSINGLEWORKERDETAILS_URL);
       if (res?.status === 200) {
-        sessionStorage.setItem("userObj", JSON.stringify(res?.data?.Data));
+        sessionStorage.setItem('userObj', JSON.stringify(res?.data?.Data));
         setData(res?.data?.Data);
       }
     } catch (error) {
@@ -97,16 +98,27 @@ export default function PersonalDetailsSettings() {
           </div>
           <div className="absolute -bottom-24 flex md:gap-16 gap-2 md:left-[30px] md:right-[30px] right-0 left-0 bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
             <div className="flex gap-4">
-              <img
-                src={
-                  `${data?.Gender}`.toLowerCase() == 'male'
-                    ? MaleProfileImg
-                    : FemaleProfileImg
-                }
-                alt="profile_img"
-                loading="lazy"
-                className="w-auto max-h-[160px] relative -top-16"
-              />
+              {/* added min height and width to prevent flickering  */}
+              {data && data?.Gender ? (
+                <img
+                  src={
+                    `${data?.Gender}`.toLowerCase() === 'male'
+                      ? MaleProfileImg
+                      : FemaleProfileImg
+                  }
+                  alt="profile_img"
+                  loading="lazy"
+                  className="w-auto min-h-[160px] min-w-[160px] max-h-[160px] relative -top-16"
+                />
+              ) : (
+                <Skeleton
+                  animation="wave"
+                  variant="rectangular"
+                  width={160}
+                  height={160}
+                  className="w-auto !bg-gray-200 min-w-[160px] min-h-[160px] max-h-[160px] relative -top-16"
+                />
+              )}
             </div>
             <div className="grid md:grid-cols-2 grid-cols-2 md:gap-8 gap-2">
               <div className="flex flex-col gap-1 md:mr-20 mr-4">
