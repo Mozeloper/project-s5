@@ -36,7 +36,12 @@ const ConvertDetailsByIdScreen = ({
             <div className="md:absolute md:-bottom-24 flex flex-col md:flex-row md:gap-5 gap-2 md:left-[30px] md:right-[30px] bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
               <div className="flex gap-4">
                 {loading ? (
-                  <Skeleton variant="circular" width={160} height={160} />
+                  <Skeleton
+                    animation="wave"
+                    variant="circular"
+                    width={160}
+                    height={160}
+                  />
                 ) : (
                   <div
                     className={`${
@@ -55,6 +60,7 @@ const ConvertDetailsByIdScreen = ({
                   <div className="flex gap-6 items-center">
                     {loading ? (
                       <Skeleton
+                        animation="wave"
                         variant="text"
                         className="w-20 font-bold md:text-lg text-base leading-4 capitalize"
                       />
@@ -65,7 +71,11 @@ const ConvertDetailsByIdScreen = ({
                       </h4>
                     )}
                     {loading ? (
-                      <Skeleton variant="rounded" className=" w-16 h-6 " />
+                      <Skeleton
+                        animation="wave"
+                        variant="rounded"
+                        className=" w-16 h-6 "
+                      />
                     ) : (
                       <>
                         <div
@@ -83,8 +93,16 @@ const ConvertDetailsByIdScreen = ({
                   <div className="text-gray-400 font-semibold">
                     {loading ? (
                       <div>
-                        <Skeleton variant="rounded" className=" w-16 h-6 " />{' '}
-                        <Skeleton variant="rounded" className=" w-16 h-6 " />
+                        <Skeleton
+                          animation="wave"
+                          variant="rounded"
+                          className=" w-16 h-6 "
+                        />{' '}
+                        <Skeleton
+                          animation="wave"
+                          variant="rounded"
+                          className=" w-16 h-6 "
+                        />
                       </div>
                     ) : (
                       <>
@@ -164,7 +182,12 @@ const ConvertDetailsByIdScreen = ({
                 {isDeactivated && (
                   <TabPanel value="0" className="!px-0">
                     {loading ? (
-                      <Skeleton variant="rounded" width="100%" height={200} />
+                      <Skeleton
+                        animation="wave"
+                        variant="rounded"
+                        width="100%"
+                        height={200}
+                      />
                     ) : (
                       <div className="bg-white rounded-lg p-8">
                         <div className="text-primary font-bold mb-3">
@@ -207,7 +230,12 @@ const ConvertDetailsByIdScreen = ({
                 )}
                 <TabPanel value="1" className="!px-0">
                   {loading ? (
-                    <Skeleton variant="rounded" width="100%" height={200} />
+                    <Skeleton
+                      animation="wave"
+                      variant="rounded"
+                      width="100%"
+                      height={200}
+                    />
                   ) : (
                     <div className="bg-white rounded-lg p-8">
                       <div className="text-primary font-bold mb-3">
@@ -239,7 +267,12 @@ const ConvertDetailsByIdScreen = ({
                     </div>
                   )}
                   {loading ? (
-                    <Skeleton variant="rounded" width="100%" height={400} />
+                    <Skeleton
+                      animation="wave"
+                      variant="rounded"
+                      width="100%"
+                      height={400}
+                    />
                   ) : (
                     <div className="bg-white mt-5 rounded-lg p-8">
                       <div className="text-primary font-bold mb-3">
@@ -307,7 +340,12 @@ const ConvertDetailsByIdScreen = ({
                     </div>
                   )}
                   {loading ? (
-                    <Skeleton variant="rounded" width="100%" height={400} />
+                    <Skeleton
+                      animation="wave"
+                      variant="rounded"
+                      width="100%"
+                      height={400}
+                    />
                   ) : (
                     <div className="bg-white mt-5 rounded-lg p-8">
                       <div className="text-primary font-bold mb-3">
