@@ -114,8 +114,9 @@ export default function MinstryTable() {
           ) : (
             <>
               {data?.length < 1 ? (
-                <div className="flex justify-center items-center h-96">
-                  No Converts have been graduated to Ministers at the moment.
+                <div className="flex flex-col justify-center items-center h-96 bg-gray-200  p-10 md:p-16">
+                  <h3 className='font-bold'>No Converts have been graduated to Ministers at the moment. Please check
+                  back later for updates</h3>
                 </div>
               ) : (
                 <>

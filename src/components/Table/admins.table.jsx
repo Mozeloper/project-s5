@@ -167,9 +167,11 @@ export default function   AdminTables() {
           ) : (
             <>
               {data?.length < 1 ? (
-                <div className="flex justify-center items-center h-96">
-                  No Worker has been added assigned an admin role. Kindly add
-                  one by clicking the <span className='text-primary font-bold'>Add Admin</span> button.
+                <div className="flex  flex-col justify-center items-center h-96 bg-gray-200  p-10 md:p-16">
+                  <h3 className='font-bold mb-3'>No Worker has been added assigned an admin role.</h3> <p>Kindly add
+                  one by clicking the{' '}
+                  <span className="text-primary font-bold">Add Admin</span>{' '}
+                  button.</p>
                 </div>
               ) : (
                 <>
