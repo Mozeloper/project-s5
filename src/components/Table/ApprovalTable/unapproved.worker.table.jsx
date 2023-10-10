@@ -129,7 +129,7 @@ export default function UnapprovedWorkerTable() {
   };
 
   return (
-    <div className="px-8 bg-white pt-7 grid grid-cols-1 gap-y-2">
+    <div className="p-8 bg-white grid grid-cols-1 gap-y-2">
       <h3 className="sm:text-left text-center">
         The List of all pending / Unapproved workers
       </h3>
