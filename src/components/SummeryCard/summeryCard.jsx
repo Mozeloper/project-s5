@@ -23,7 +23,7 @@ export default function SummeryCard({ data, error, loading, label= 'Souls' }) {
     { message: `${label} This month`, data: data && data.SoulsCountThisMonth },
     { message: `${label} Last month`, data: data && data.SoulsCountLastMonth },
     {
-      message: 'Total Souls',
+      message: `Total ${label}`,
       data: data && data.TotalSoulsCountSinceInception,
     },
     // { message: "Success rate", data: "98.5%" },
