@@ -165,7 +165,7 @@ export default function DeactivatedNewConvertTable() {
           ) : (
             <>
               <ReusableTable
-                pageLink={'reminder/deactivated-convert'}
+                pageLink={'approvals/deactivated-convert'}
                 optionModal={displayUi}
                 headers={headers}
                 data={data}

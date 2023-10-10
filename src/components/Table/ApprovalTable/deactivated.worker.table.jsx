@@ -127,7 +127,7 @@ export default function DeactivatedWorkerTable() {
       ) : (
         <>
           <ReusableTable
-            pageLink={'reminder/deactivated-worker'}
+            pageLink={'approvals/deactivated-worker'}
             optionModal={displayUi}
             headers={headers}
             data={data}

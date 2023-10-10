@@ -147,7 +147,7 @@ export default function UnapprovedWorkerTable() {
             <>
             {/* The table for all unapproved workers */}
               <ReusableTable
-                pageLink={'reminder/unapproved-worker'}
+                pageLink={'approvals/unapproved-worker'}
                 optionModal={displayUi}
                 headers={headers}
                 data={data}
