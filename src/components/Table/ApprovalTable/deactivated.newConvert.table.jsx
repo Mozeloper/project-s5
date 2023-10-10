@@ -159,8 +159,11 @@ export default function DeactivatedNewConvertTable() {
       ) : (
         <>
           {data?.length < 1 || !data ? (
-            <div className="flex text-center justify-center items-center h-96">
-              There's No Deactivated Account At the moment
+            <div className="flex flex-col justify-center text-center items-center h-96 bg-gray-200  p-10 md:p-16">
+              <h3 className="font-bold">
+                Praise God!, No convert is currently suspended.
+              </h3>
+              <p>Please check back later for updates.</p>
             </div>
           ) : (
             <>

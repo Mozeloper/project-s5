@@ -136,8 +136,11 @@ export default function NewBelieversTable() {
           ) : (
             <>
               {data?.length < 1 ? (
-                <div className="flex justify-center items-center h-96">
-                  No Converts have been added at the moment. 
+                <div className="flex  flex-col  justify-center items-center h-96 bg-gray-200  p-10 md:p-16">
+                  <h3 className="font-bold">
+                    At the moment, no new converts have been registered.
+                    Please check back later for updates.
+                  </h3>
                 </div>
               ) : (
                 <>
