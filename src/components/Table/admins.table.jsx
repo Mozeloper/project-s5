@@ -1,26 +1,25 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import TransitionsModal from '../ModalPopup/modalTransition';
-import AddAdminFormControl from '../UI/Forms/addAdmin.form';
+import React, { Fragment, useEffect, useState } from 'react'
+import { GiConfirmed } from 'react-icons/gi'
+import { GrView } from 'react-icons/gr'
+import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { useModalToggle } from '../../context/ConfirmationModal.context'
+import { useTextSearchNav } from '../../context/textSearch.context'
+import { useFetchAdmins, useSearchedAdmins } from '../../hooks/useFetchAdmins'
+import Loader from '../Loader'
+import TransitionsModal from '../ModalPopup/modalTransition'
+import PaginationFooter from '../PaginationFooter'
+import AddAdminFormControl from '../UI/Forms/addAdmin.form'
+import ConfirmDeactivate from '../UI/confirmation screen'
+import ReusableTable from './Table.reusable'
 import SearchBox from '../Searchbox/searchbox';
-import Loader from '../Loader';
-import ReusableTable from './Table.reusable';
-import PaginationFooter from '../PaginationFooter';
-import { useFetchAdmins, useSearchedAdmins } from '../../hooks/useFetchAdmins';
-import { IoRemoveCircleSharp } from 'react-icons/io5';
-import { GrView } from 'react-icons/gr';
-import { GiConfirmed } from 'react-icons/gi';
-import ConfirmDeactivate from '../UI/confirmation screen';
-import { useModalToggle } from '../../context/ConfirmationModal.context';
-import SearchBoxIndex from '../Searchbox/searchBoxIndex';
-import { useTextSearchNav } from '../../context/textSearch.context';
 
-export default function   AdminTables() {
+export default function AdminTables() {
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  let { textSearch, setTextSearch } = useTextSearchNav()
+  let { textSearch, setTextSearch } = useTextSearchNav();
   const {
     data: AdminsData,
     isError,
@@ -168,10 +167,14 @@ export default function   AdminTables() {
             <>
               {data?.length < 1 ? (
                 <div className="flex  flex-col justify-center items-center h-96 bg-gray-200  p-10 md:p-16">
-                  <h3 className='font-bold mb-3'>No Worker has been added assigned an admin role.</h3> <p>Kindly add
-                  one by clicking the{' '}
-                  <span className="text-primary font-bold">Add Admin</span>{' '}
-                  button.</p>
+                  <h3 className="font-bold mb-3">
+                    No Worker has been added assigned an admin role.
+                  </h3>{' '}
+                  <p>
+                    Kindly add one by clicking the{' '}
+                    <span className="text-primary font-bold">Add Admin</span>{' '}
+                    button.
+                  </p>
                 </div>
               ) : (
                 <>

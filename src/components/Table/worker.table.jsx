@@ -1,12 +1,11 @@
-import React, { Fragment, useState } from 'react';
-import { toast } from 'react-hot-toast';
-import { useWorkersAdmins } from '../../hooks/useWorkers';
-import PaginationFooter from '../PaginationFooter';
+import React, { Fragment, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useTextSearchNav } from '../../context/textSearch.context'
+import { useWorkersAdmins } from '../../hooks/useWorkers'
+import Loader from '../Loader'
+import PaginationFooter from '../PaginationFooter'
+import Table from './table'
 import SearchBox from '../Searchbox/searchbox';
-import Table from './table';
-import { useTextSearchNav } from '../../context/textSearch.context';
-import Loader from '../Loader';
-import { Link } from 'react-router-dom';
 
 export default function WorkersTable() {
   const [pageNumber, setPageNumber] = useState(1);

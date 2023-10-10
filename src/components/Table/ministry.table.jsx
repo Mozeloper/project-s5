@@ -2,15 +2,15 @@ import React, { Fragment, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { GrView } from 'react-icons/gr'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { useQueryClient } from 'react-query'
+import { useTextSearchNav } from '../../context/textSearch.context'
 import { useFetchMinistry } from '../../hooks/useFetchMinistry'
 import { suspendAConvert } from '../../services/admins.api'
 import Loader from '../Loader'
 import PaginationFooter from '../PaginationFooter'
-import SearchBox from '../Searchbox/searchbox'
 import SuspendConvert from '../UI/SuspendConvert'
 import ReusableTable from './Table.reusable'
-import { useTextSearchNav } from '../../context/textSearch.context'
-import { useQueryClient } from 'react-query';
+import SearchBox from '../Searchbox/searchbox';
 
 export default function MinstryTable() {
   const queryClient = useQueryClient();
@@ -115,8 +115,10 @@ export default function MinstryTable() {
             <>
               {data?.length < 1 ? (
                 <div className="flex flex-col justify-center items-center h-96 bg-gray-200  p-10 md:p-16">
-                  <h3 className='font-bold'>No Converts have been graduated to Ministers at the moment. Please check
-                  back later for updates</h3>
+                  <h3 className="font-bold mb-3">
+                    No Converts have been graduated to Ministers at the moment.
+                  </h3>
+                  <p>Please check back later for updates</p>
                 </div>
               ) : (
                 <>

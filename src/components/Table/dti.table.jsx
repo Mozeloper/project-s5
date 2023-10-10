@@ -133,10 +133,10 @@ export default function DtiTable() {
             <>
               {data?.length < 1 || !data ? (
                 <div className="flex  flex-col justify-center items-center h-96 bg-gray-200  p-10 md:p-16">
-                  <h3 className="font-bold">
+                  <h3 className="font-bold mb-3">
                     At the moment, there are no converts registered in DTI.
-                    Please check back later for updates.
                   </h3>
+                  <p>Please check back later for updates.</p>
                 </div>
               ) : (
                 <>

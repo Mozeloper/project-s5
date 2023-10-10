@@ -4,15 +4,15 @@ import { GiConfirmed } from 'react-icons/gi'
 import { GrView } from 'react-icons/gr'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
 import { useQueryClient } from 'react-query'
+import { useTextSearchNav } from '../../context/textSearch.context'
 import { useFetchNewBelievers } from '../../hooks/useFetchNewBelievers'
 import { suspendAConvert } from '../../services/admins.api'
 import Loader from '../Loader'
 import PaginationFooter from '../PaginationFooter'
-import SearchBox from '../Searchbox/searchbox'
 import PromoteConvertToDti from '../UI/PromoteScreen/PromoteConvertToDti'
 import SuspendConvert from '../UI/SuspendConvert'
 import ReusableTable from './Table.reusable'
-import { useTextSearchNav } from '../../context/textSearch.context'
+import SearchBox from '../Searchbox/searchbox';
 
 export default function NewBelieversTable() {
   const queryClient = useQueryClient();
@@ -137,10 +137,10 @@ export default function NewBelieversTable() {
             <>
               {data?.length < 1 ? (
                 <div className="flex  flex-col  justify-center items-center h-96 bg-gray-200  p-10 md:p-16">
-                  <h3 className="font-bold">
+                  <h3 className="font-bold mb-3">
                     At the moment, no new converts have been registered.
-                    Please check back later for updates.
                   </h3>
+                  <p>Please check back later for updates.</p>
                 </div>
               ) : (
                 <>
