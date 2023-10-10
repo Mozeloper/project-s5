@@ -19,7 +19,7 @@ export default function BeginRegistration() {
           Welcome to Operation 5<span className="text-primary">S</span> portal
         </h2>
         <p className="md:text-textDark_200 text-white font-normal text-lg leading-7 pt-5">
-          Please be advised that only TPHOL'S members are allowed access to this portal.
+          Please be advised that only TPHOL's members are allowed access to this portal.
         </p>
         </div>
         {/* <p className="md:text-textDark_200 text-white font-normal text-lg mb-3 leading-7">
