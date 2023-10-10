@@ -8,6 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import { useNavigate } from 'react-router-dom';
 import { useModalToggle } from '../../context/ConfirmationModal.context';
+import AddAdminFormControl from './Forms/addAdmin.form';
 
 export default function TableOptions({
   optionsList,
@@ -17,7 +18,7 @@ export default function TableOptions({
   pageLink,
 }) {
   const navigate = useNavigate();
-  const { isOpen, setIsOpen } = useModalToggle();
+  const { isOpen, modalType, openModal, closeModal } = useModalToggle();
   const [selectedOption, setSelectedOption] = React.useState(null);
 
   const handleView = (event, option, popupState) => {
@@ -29,7 +30,7 @@ export default function TableOptions({
     if (innerText.toLowerCase() === 'view') {
       navigate(`/${pageLink}/${itemId}`);
     } else {
-      setIsOpen(true);
+       openModal(innerText);
       handleClick(event, option);
     }
   };
@@ -38,7 +39,7 @@ export default function TableOptions({
     if (selectedOption) {
       return (
         <TransitionsModal
-          isModalOpen={isOpen}
+          //isModalOpen={isOpen}
           name={selectedOption.name}
           icon={selectedOption.icon}
           heading={`${selectedOption.name} Screen`}
@@ -48,7 +49,18 @@ export default function TableOptions({
           {displayModalUi}
         </TransitionsModal>
       );
-    }
+    } else if (modalType === 'AddAdmin') {
+      return (
+        <TransitionsModal
+          name={'+ Add Admin'}
+          heading={'Add a new admin'}
+          width={'max-w-2xl w-[90%]'}
+        >
+          {/* {displayModalUi} */}
+          <AddAdminFormControl />
+        </TransitionsModal>
+      );
+    } 
     return null;
   };
 
