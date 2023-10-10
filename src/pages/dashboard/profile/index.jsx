@@ -2,7 +2,8 @@ import { Form, Formik } from "formik"
 import React, { useEffect, useState } from "react"
 import { toast } from "react-hot-toast"
 import * as Yup from "yup"
-import ProfileImg from "../../../assets/images/profile-img.svg"
+import MaleProfileImg from "../../../assets/images/profile-img.svg"
+import FemaleProfileImg from "../../../assets/icons/female-profile.svg"
 import Button from "../../../components/Button"
 import PasswordField from "../../../components/FormInputs/PasswordField"
 import ModalPopup from "../../../components/ModalPopup"
@@ -97,10 +98,14 @@ export default function PersonalDetailsSettings() {
           <div className="absolute -bottom-24 flex md:gap-16 gap-2 md:left-[30px] md:right-[30px] right-0 left-0 bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
             <div className="flex gap-4">
               <img
-                src={ProfileImg}
+                src={
+                  `${data?.Gender}`.toLowerCase() == 'male'
+                    ? MaleProfileImg
+                    : FemaleProfileImg
+                }
                 alt="profile_img"
                 loading="lazy"
-                className="w-[160px] h-[160px] relative -top-16"
+                className="w-auto max-h-[160px] relative -top-16"
               />
             </div>
             <div className="grid md:grid-cols-2 grid-cols-2 md:gap-8 gap-2">
@@ -109,7 +114,7 @@ export default function PersonalDetailsSettings() {
                   Firstname
                 </h2>
                 <h4 className="text-grey500 font-medium md:text-sm text-xs  leading-4">
-                  {data?.FirstName || "...."}
+                  {data?.FirstName || '....'}
                 </h4>
               </div>
               <div className="flex flex-col gap-1">
@@ -117,7 +122,7 @@ export default function PersonalDetailsSettings() {
                   Lastname
                 </h2>
                 <h4 className="text-grey500 md:text-sm text-xs font-medium leading-4">
-                  {data?.SurName || "..."}
+                  {data?.SurName || '...'}
                 </h4>
               </div>
               <div className="flex flex-col gap-1 mr-20">
@@ -125,7 +130,7 @@ export default function PersonalDetailsSettings() {
                   Othername
                 </h2>
                 <h4 className="text-grey500 md:text-sm text-xs font-medium leading-4">
-                  {data?.OtherNames || "..."}
+                  {data?.OtherNames || '...'}
                 </h4>
               </div>
               <div className="flex flex-col gap-1">
@@ -133,7 +138,7 @@ export default function PersonalDetailsSettings() {
                   Phone
                 </h2>
                 <h4 className="text-grey500 md:text-sm text-xs font-medium leading-4">
-                  {data?.PhoneNumber || "..."}
+                  {data?.PhoneNumber || '...'}
                 </h4>
               </div>
             </div>
@@ -146,20 +151,20 @@ export default function PersonalDetailsSettings() {
           <hr />
           <div className="flex flex-col gap-y-6 mt-6">
             <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">Gender</h3>{" "}
-              <span>{data?.Gender || "..."}</span>
+              <h3 className="font-bold w-[20%]">Gender</h3>{' '}
+              <span>{data?.Gender || '...'}</span>
             </div>
             <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">Date of Birth</h3>{" "}
-              <span>{data?.DateOfBirth || "..."}</span>
+              <h3 className="font-bold w-[20%]">Date of Birth</h3>{' '}
+              <span>{data?.DateOfBirth || '...'}</span>
             </div>
             <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">Marital Status</h3>{" "}
-              <span>{data?.MaritalStatus || "..."}</span>
+              <h3 className="font-bold w-[20%]">Marital Status</h3>{' '}
+              <span>{data?.MaritalStatus || '...'}</span>
             </div>
             <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">Member Since</h3>{" "}
-              <span>{data?.YearJoined || "..."}</span>
+              <h3 className="font-bold w-[20%]">Member Since</h3>{' '}
+              <span>{data?.YearJoined || '...'}</span>
             </div>
           </div>
         </div>
@@ -170,32 +175,32 @@ export default function PersonalDetailsSettings() {
           <hr />
           <div className="flex flex-col gap-y-6 mt-6">
             <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">Phone</h3>{" "}
-              <span>{data?.PhoneNumber || "..."}</span>
+              <h3 className="font-bold w-[20%]">Phone</h3>{' '}
+              <span>{data?.PhoneNumber || '...'}</span>
             </div>
             <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">Email</h3>{" "}
-              <span>{data?.Email || "..."}</span>
+              <h3 className="font-bold w-[20%]">Email</h3>{' '}
+              <span>{data?.Email || '...'}</span>
             </div>
             <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">Address</h3>{" "}
-              <span>{data?.HomeAddress || "..."}</span>
+              <h3 className="font-bold w-[20%]">Address</h3>{' '}
+              <span>{data?.HomeAddress || '...'}</span>
             </div>
             <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">Nearest Bus Stop</h3>{" "}
-              <span>{data?.NearestBusStop || "..."}</span>
+              <h3 className="font-bold w-[20%]">Nearest Bus Stop</h3>{' '}
+              <span>{data?.NearestBusStop || '...'}</span>
             </div>
             <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">State</h3>{" "}
-              <span>{data?.StateName || "..."}</span>
+              <h3 className="font-bold w-[20%]">State</h3>{' '}
+              <span>{data?.StateName || '...'}</span>
             </div>
             <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">L.G.A.</h3>{" "}
-              <span>{data?.LocalGovtName || "..."}</span>
+              <h3 className="font-bold w-[20%]">L.G.A.</h3>{' '}
+              <span>{data?.LocalGovtName || '...'}</span>
             </div>
             <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">Country</h3>{" "}
-              <span>{data?.CountryName || "..."}</span>
+              <h3 className="font-bold w-[20%]">Country</h3>{' '}
+              <span>{data?.CountryName || '...'}</span>
             </div>
           </div>
         </div>
@@ -214,10 +219,10 @@ export default function PersonalDetailsSettings() {
                   combination of alphabets, numbers and symbols.
                 </p>
                 <div>
-                  {" "}
+                  {' '}
                   <Button
                     onClick={() => setShowPasswordFields(!showPasswordFields)}
-                    title={!showPasswordFields ? "Set New Password" : "Cancel"}
+                    title={!showPasswordFields ? 'Set New Password' : 'Cancel'}
                     className="text-sm rounded-md mt-5 md:mt-0"
                     backgroundColor="bg-primary"
                     type="submit"
@@ -231,9 +236,9 @@ export default function PersonalDetailsSettings() {
               <div className="border p-5 rounded">
                 <Formik
                   initialValues={{
-                    current_password: "",
-                    new_password: "",
-                    confirm_password: "",
+                    current_password: '',
+                    new_password: '',
+                    confirm_password: '',
                   }}
                   validationSchema={changePassowordSchema}
                   onSubmit={(values, actions) => {
@@ -255,7 +260,10 @@ export default function PersonalDetailsSettings() {
                     isSubmitting,
                     isValid,
                   }) => (
-                    <Form onSubmit={handleSubmit} className="flex flex-col gap-y-6">
+                    <Form
+                      onSubmit={handleSubmit}
+                      className="flex flex-col gap-y-6"
+                    >
                       <div className="md:w-[400px] w-full">
                         <PasswordField
                           labelName="Current Password"
