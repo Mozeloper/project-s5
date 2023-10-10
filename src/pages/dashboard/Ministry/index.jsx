@@ -50,6 +50,7 @@ export default function Ministry() {
               }
               loading={isLoading}
               error={isError}
+              label='Ministers'
             />
           </div>
           <div className="p-2"></div>
