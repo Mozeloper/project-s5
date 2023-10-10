@@ -129,7 +129,7 @@ export default function UnapprovedWorkerTable() {
   };
 
   return (
-    <div className="px-8 bg-white pt-7 grid grid-cols-1 gap-y-2">
+    <div className="p-8 bg-white grid grid-cols-1 gap-y-2">
       <h3 className="sm:text-left text-center">
         The List of all pending / Unapproved workers
       </h3>
@@ -140,14 +140,17 @@ export default function UnapprovedWorkerTable() {
       ) : (
         <>
           {data?.length < 1 || !data ? (
-            <div className="flex justify-center text-center items-center h-96">
-              There's No pending "Unapproved" Account At the moment
+            <div className="flex flex-col justify-center text-center items-center h-96 bg-gray-200  p-10 md:p-16">
+              <h3 className="font-bold">
+                No worker accounts need approval at this time.
+              </h3>
+              <p>Please check back later for updates.</p>
             </div>
           ) : (
             <>
-            {/* The table for all unapproved workers */}
+              {/* The table for all unapproved workers */}
               <ReusableTable
-                pageLink={'reminder/unapproved-worker'}
+                pageLink={'approvals/unapproved-worker'}
                 optionModal={displayUi}
                 headers={headers}
                 data={data}
@@ -159,12 +162,14 @@ export default function UnapprovedWorkerTable() {
               {/* Pagination Section */}
               <PaginationFooter
                 pageNumber={pageNumber}
-                totalPerCount={PendingData && (Math.ceil(
-                  PendingData?.Data?.TotalDataCount / pageSize
-                ) || 1)}
-                totalCount={PendingData &&( Math.ceil(
-                  PendingData?.Data?.TotalDataCount
-                ) || 1)}
+                totalPerCount={
+                  PendingData &&
+                  (Math.ceil(PendingData?.Data?.TotalDataCount / pageSize) || 1)
+                }
+                totalCount={
+                  PendingData &&
+                  (Math.ceil(PendingData?.Data?.TotalDataCount) || 1)
+                }
                 handlePaginationChange={handlePaginationChange}
               />
             </>

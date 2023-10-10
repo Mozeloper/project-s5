@@ -95,7 +95,7 @@ export default function Sidebar({ isSideBarOpen, toggleDrawer }) {
     {
       id: 7,
       name: 'Approvals',
-      path: '/reminder',
+      path: '/approvals',
       icon: <MdNotificationsActive className="w-[24px] h-[24px]" />,
       hasChildren: false,
       role: ['SuperAdmin', 'NewConvertAdmin', 'MinistryAdmin', 'DTIAdmin'],

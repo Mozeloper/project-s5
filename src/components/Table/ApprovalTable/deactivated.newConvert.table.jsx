@@ -148,7 +148,7 @@ export default function DeactivatedNewConvertTable() {
   };
 
   return (
-    <div className="px-8 bg-white pt-7 grid grid-cols-1 gap-y-8">
+    <div className="p-8 bg-white grid grid-cols-1 gap-y-8">
       <h3 className="sm:text-left text-center">
         The List of all Deactivated Converts
       </h3>
@@ -159,13 +159,16 @@ export default function DeactivatedNewConvertTable() {
       ) : (
         <>
           {data?.length < 1 || !data ? (
-            <div className="flex text-center justify-center items-center h-96">
-              There's No Deactivated Account At the moment
+            <div className="flex flex-col justify-center text-center items-center h-96 bg-gray-200  p-10 md:p-16">
+              <h3 className="font-bold">
+                Praise God!, No convert is currently suspended.
+              </h3>
+              <p>Please check back later for updates.</p>
             </div>
           ) : (
             <>
               <ReusableTable
-                pageLink={'reminder/deactivated-convert'}
+                pageLink={'approvals/deactivated-convert'}
                 optionModal={displayUi}
                 headers={headers}
                 data={data}

@@ -116,7 +116,7 @@ export default function DeactivatedWorkerTable() {
   };
 
   return (
-    <div className="px-8 bg-white pt-7 grid grid-cols-1 gap-y-8">
+    <div className="p-8 bg-white grid grid-cols-1 gap-y-8">
       <h3 className="sm:text-left text-center">
         The List of all Suspended / Deactivated workers
       </h3>
@@ -126,31 +126,42 @@ export default function DeactivatedWorkerTable() {
         <div>An Error occurred </div>
       ) : (
         <>
-          <ReusableTable
-            pageLink={'reminder/deactivated-worker'}
-            optionModal={displayUi}
-            headers={headers}
-            data={data}
-            filterNumber={11}
-            optionArrayList={optionList}
-            optionsHandleClick={handleOptionsClick}
-          />
+          {data?.length < 1 || !data ? (
+            <div className="flex flex-col justify-center text-center items-center h-96 bg-gray-200  p-10 md:p-16">
+              <h3 className="font-bold">
+                Good news!, No worker is currently suspended.
+              </h3>
+              <p>Please check back later for updates.</p>
+            </div>
+          ) : (
+            <>
+              <ReusableTable
+                pageLink={'approvals/deactivated-worker'}
+                optionModal={displayUi}
+                headers={headers}
+                data={data}
+                filterNumber={11}
+                optionArrayList={optionList}
+                optionsHandleClick={handleOptionsClick}
+              />
 
-          <PaginationFooter
-            pageNumber={pageNumber}
-            totalPerCount={
-              DeactivatedWorkerData &&
-              (Math.ceil(
-                DeactivatedWorkerData?.Data?.TotalDataCount / pageSize
-              ) ||
-                1)
-            }
-            totalCount={
-              DeactivatedWorkerData &&
-              (Math.ceil(DeactivatedWorkerData?.Data?.TotalDataCount) || 1)
-            }
-            handlePaginationChange={handlePaginationChange}
-          />
+              <PaginationFooter
+                pageNumber={pageNumber}
+                totalPerCount={
+                  DeactivatedWorkerData &&
+                  (Math.ceil(
+                    DeactivatedWorkerData?.Data?.TotalDataCount / pageSize
+                  ) ||
+                    1)
+                }
+                totalCount={
+                  DeactivatedWorkerData &&
+                  (Math.ceil(DeactivatedWorkerData?.Data?.TotalDataCount) || 1)
+                }
+                handlePaginationChange={handlePaginationChange}
+              />
+            </>
+          )}
         </>
       )}
     </div>

@@ -84,7 +84,7 @@ export default function Home() {
           </small>
         </div>
         <Link
-          to="/reminder"
+          to="/approvals"
           className="bg-primary h-11 text-white py-3 px-5 rounded-full flex justify-center max-w-[145px] mt-5 md:mt-0"
         >
           <MdNotificationsActive className="w-[18px] h-[18px] mr-2 vibrate-icon" />

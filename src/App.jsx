@@ -237,7 +237,7 @@ function App() {
               }
             />
             <Route
-              path="/reminder"
+              path="/approvals"
               element={
                 <React.Suspense fallback={<>...</>}>
                   <Reminder />
@@ -245,7 +245,7 @@ function App() {
               }
             />
             <Route
-              path="/reminder/deactivated-worker/:workerId"
+              path="/approvals/deactivated-worker/:workerId"
               element={
                 <React.Suspense fallback={<>...</>}>
                   <DeactivatedWorkerDetailsById />
@@ -253,7 +253,7 @@ function App() {
               }
             />
             <Route
-              path="/reminder/deactivated-convert/:convertId"
+              path="/approvals/deactivated-convert/:convertId"
               element={
                 <React.Suspense fallback={<>...</>}>
                   <GetDeactivatedConvertDetails />
@@ -261,7 +261,7 @@ function App() {
               }
             />
             <Route
-              path="/reminder/unapproved-worker/:workerId"
+              path="/approvals/unapproved-worker/:workerId"
               element={
                 <React.Suspense fallback={<>...</>}>
                   <UnapprovedWorkerDetailsById />
