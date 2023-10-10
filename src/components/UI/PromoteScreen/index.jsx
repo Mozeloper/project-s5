@@ -12,13 +12,13 @@ import SearchableSelect from '../../CustomSelect';
 
 export default function PromoteScreen({ screenName, workerId }) {
   const queryClient = useQueryClient();
-  const { setIsOpen } = useModalToggle();
+  const { closeModal } = useModalToggle();
 
   /**
    * Hook for Closing the modal
    */
   const handleClose = () => {
-    setIsOpen(false);
+    closeModal();
   };
 
   const [isLoading, setIsLoading] = useState({
@@ -93,7 +93,7 @@ export default function PromoteScreen({ screenName, workerId }) {
 
   /**
    * This handles all form inputs
-   * @param {Object} formValues 
+   * @param {Object} formValues
    */
   const handleFormSubmit = async (formValues) => {
     console.log(formValues);
