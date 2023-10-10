@@ -112,6 +112,7 @@ export async function getAllWorkersAdmins({ pageNumber, pageSize, searchquery })
     const fetchWorkersAdmins = await Workersadmins?.data?.Data;
     return await fetchWorkersAdmins;
   } catch (error) {
+    toast.error(error || error.message);
     throw new Error(error.message || error);
   }
 }
