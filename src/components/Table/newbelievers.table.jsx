@@ -137,7 +137,7 @@ export default function NewBelieversTable() {
             <>
               {data?.length < 1 ? (
                 <div className="flex justify-center items-center h-96">
-                  Sorry! An error occurred, refresh and try again
+                  No Converts have been added at the moment. 
                 </div>
               ) : (
                 <>

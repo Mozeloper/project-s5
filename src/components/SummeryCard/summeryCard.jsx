@@ -4,7 +4,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function SummeryCard({ data, error, loading }) {
+export default function SummeryCard({ data, error, loading, label= 'Souls' }) {
   // console.log(`the data arrived: ${data}`)
 
   //Diagram of the analytics api response
@@ -19,9 +19,9 @@ export default function SummeryCard({ data, error, loading }) {
   // }
 
   const stats = [
-    { message: 'Souls Last Week', data: data && data.SoulsCountLastWeek },
-    { message: 'Souls This month', data: data && data.SoulsCountThisMonth },
-    { message: 'Souls Last month', data: data && data.SoulsCountLastMonth },
+    { message: `${label} Last Week`, data: data && data.SoulsCountLastWeek },
+    { message: `${label} This month`, data: data && data.SoulsCountThisMonth },
+    { message: `${label} Last month`, data: data && data.SoulsCountLastMonth },
     {
       message: 'Total Souls',
       data: data && data.TotalSoulsCountSinceInception,

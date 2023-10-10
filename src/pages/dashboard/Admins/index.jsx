@@ -6,11 +6,7 @@ import { useFetchAdminDashboardAnalytics } from '../../../hooks/useFetchAnalytic
 import PageTitle from '../../../components/PageTitle';
 import DashboardTabs from '../../../components/ReusableTabs';
 export default function Admins() {
-  const {
-    data: AdminDashboardAnalytics,
-    isError,
-    isLoading,
-  } = useFetchAdminDashboardAnalytics();
+
 
   const ChartDatas = [
     {
@@ -23,27 +19,11 @@ export default function Admins() {
     },
   ];
 
-  //   useEffect(() => {
-  //     const getcounts = async () => {
-  //     const soulCount = await SoulsCountData
-  //     const workersCount = await WorkersCountData
-  //     setDataCount([soulCount, workersCount])
-  //   };
-  //   getcounts();
-  // }, [SoulsCountData, WorkersCountData]);
 
   const AdminTable = () => {
     return (
       <>
-        <div className="">
-          <SummeryCard
-            data={AdminDashboardAnalytics && AdminDashboardAnalytics?.Data}
-            loading={isLoading}
-            error={isError}
-          />
-        </div>
-        <div className="p-2"></div>
-        <AdminTables tableDataLimit={5} />
+        <AdminTables tableDataLimit={10} />
       </>
     );
   };

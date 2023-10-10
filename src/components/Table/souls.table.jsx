@@ -122,8 +122,16 @@ export const SoulsTable = () => {
           {isLoading ? (
             <Loader />
           ) : !isError && data?.length <= 0 ? (
-            <div className="flex justify-center text-center bg-gray-200 items-center h-96 mt-12">
-              No data available at the moment
+            <div className="flex text-xl flex-col p-10 md:p-16 justify-center text-center bg-gray-200 items-center h-96 mt-12">
+                <h3 className='text-2xl font-bold'>Dearly <span className='text-primary'>Beloved</span>, looks like You haven't won any Soul so far.</h3>
+                 <p className='mt-5'>Please be encouraged and remember that <br />
+                <q>
+                  The fruit of the righteous is a tree of life,{' '} <br />
+                  <span className="text-primary">
+                    And he who wins souls is wise
+                  </span>
+                  : Prov 11:30.
+                </q></p>
             </div>
           ) : isError || !data ? (
             <div>An error occured</div>

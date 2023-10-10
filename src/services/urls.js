@@ -58,6 +58,8 @@ export const appUrls = {
   //   '/api/v1/Analytics/worker-dashboard/retrieve-newconverts-analytics', //accepts worker id
   ADMINS_DASHBOARD_ANALYTICS:
     '/api/v1/Analytics/Admin-dashboard/retrieve-newconverts-analytics',
+  WORKERS_ANALYTICS:
+    '/api/v1/Analytics/Admin-dashboard/retrieve-worker-analytics',
   NEWCONVERT_DASHBOARD_ANALYTICS:
     '/api/v1/Analytics/newconvertAdmin-dashboard/retrieve-newconverts-analytics',
   DTI_ADMINS_DASHBOARD_ANALYTICS:
