@@ -4,16 +4,16 @@ import { useModalToggle } from '../../../context/ConfirmationModal.context';
 import Button from '../../Button';
 
 const SuspendConvert = ({ handleDeactivate, screenName }) => {
-  const { setIsOpen } = useModalToggle();
+  const { closeModal } = useModalToggle();
   const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [SuspensionReason, setSuspensionReason] = useState('');
 
   const handleClose = () => {
-    setIsOpen(false);
+    closeModal();
   };
 
   const handleConfirm = () => {
-    setIsOpen(false);
+    closeModal();
     
     handleDeactivate(SuspensionReason);
     setSuspensionReason('')

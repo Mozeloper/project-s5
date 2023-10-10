@@ -1,16 +1,14 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { GiConfirmed } from 'react-icons/gi'
-import { GrView } from 'react-icons/gr'
-import { IoRemoveCircleSharp } from 'react-icons/io5'
-import { useModalToggle } from '../../context/ConfirmationModal.context'
-import { useTextSearchNav } from '../../context/textSearch.context'
-import { useFetchAdmins, useSearchedAdmins } from '../../hooks/useFetchAdmins'
-import Loader from '../Loader'
-import TransitionsModal from '../ModalPopup/modalTransition'
-import PaginationFooter from '../PaginationFooter'
-import AddAdminFormControl from '../UI/Forms/addAdmin.form'
-import ConfirmDeactivate from '../UI/confirmation screen'
-import ReusableTable from './Table.reusable'
+import React, { Fragment, useEffect, useState } from 'react';
+import { GiConfirmed } from 'react-icons/gi';
+import { GrView } from 'react-icons/gr';
+import { IoRemoveCircleSharp } from 'react-icons/io5';
+import { useModalToggle } from '../../context/ConfirmationModal.context';
+import { useTextSearchNav } from '../../context/textSearch.context';
+import { useFetchAdmins, useSearchedAdmins } from '../../hooks/useFetchAdmins';
+import Loader from '../Loader';
+import PaginationFooter from '../PaginationFooter';
+import ConfirmDeactivate from '../UI/confirmation screen';
+import ReusableTable from './Table.reusable';
 import SearchBox from '../Searchbox/searchbox';
 
 export default function AdminTables() {
@@ -20,6 +18,7 @@ export default function AdminTables() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   let { textSearch, setTextSearch } = useTextSearchNav();
+
   const {
     data: AdminsData,
     isError,
@@ -30,7 +29,7 @@ export default function AdminTables() {
 
   const { data: searchAdmins } = useSearchedAdmins();
 
-  const { isOpen, setIsOpen } = useModalToggle();
+  const { openModal } = useModalToggle();
 
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
@@ -40,6 +39,10 @@ export default function AdminTables() {
       name: 'Suspend',
     },
   ];
+
+  const openAddAdminModal = () => {
+    openModal('AddAdmin');
+  };
 
   useEffect(() => {
     const getPosts = async () => {
@@ -65,37 +68,6 @@ export default function AdminTables() {
     console.log(`suspend admin with id of ${id}`);
   };
 
-  const handleClick = (event) => {
-    const innerText = event.currentTarget.innerText;
-    const id = event.currentTarget.id;
-    if (innerText.toLowerCase() === 'view') {
-      setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleViewAdmin.bind(null, id)}
-          screenName={innerText}
-        />
-      );
-    } else if (innerText.toLowerCase() === 'modify') {
-      setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleModifyAdmin.bind(null, id)}
-          screenName={innerText}
-        />
-      );
-    } else {
-      setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleSuspendAdmin.bind(null, id)}
-          screenName={innerText}
-        />
-      );
-    }
-  };
-
-  // const handlePaginationChange = (event, value) => {
-  //   setPageNumber(value);
-  // };
-
   const handleOptionsClick = (event) => {
     const innerText = event.currentTarget.innerText;
     const id = event.currentTarget.id;
@@ -120,14 +92,6 @@ export default function AdminTables() {
     setPageNumber(value);
   };
 
-  // const optionList = [
-  //   // suspend, change department, promote
-  //   { icon: <HiMiniViewfinderCircle />, name: 'View' },
-  //   { icon: <VscGitPullRequestGoToChanges />, name: 'Promote' },
-  //   { icon: <MdPublishedWithChanges />, name: 'Change Department' },
-  //   { icon: <IoRemoveCircleSharp />, name: 'Suspend' },
-  // ];
-
   return (
     <Fragment>
       <div className="bg-white">
@@ -146,16 +110,10 @@ export default function AdminTables() {
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
               <button
-                onClick={() => setIsOpen(true)}
+                onClick={openAddAdminModal}
                 className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6"
               >
-                <TransitionsModal
-                  name={'+ Add Admin'}
-                  heading={'Add a new admin'}
-                  width={'max-w-2xl w-[90%]'}
-                >
-                  <AddAdminFormControl />
-                </TransitionsModal>
+                Add An Admin
               </button>
             </div>
           </div>
@@ -170,10 +128,10 @@ export default function AdminTables() {
                   <h3 className="font-bold mb-3">
                     No Worker has been added assigned an admin role.
                   </h3>{' '}
-                  <p>
-                    Kindly add one by clicking the{' '}
-                    <span className="text-primary font-bold">Add Admin</span>{' '}
-                    button.
+                  <p onClick={openAddAdminModal}>
+                    Kindly add one by clicking{' '}
+                    <span className="text-primary font-bold">this button</span>{' '}
+                    .
                   </p>
                 </div>
               ) : (

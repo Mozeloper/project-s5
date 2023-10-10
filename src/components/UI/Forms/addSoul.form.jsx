@@ -27,7 +27,8 @@ export default function AddSoulsFormControl() {
   // }
 
   const [isLoading, setIsLoading] = useState(false);
- const { isOpen, setIsOpen } = useModalToggle();
+     const { closeModal } = useModalToggle();
+
 
   const addSoulSchema = Yup.object().shape({
     firstName: Yup.string().required('Firstname is Required'),
@@ -57,7 +58,7 @@ export default function AddSoulsFormControl() {
         const res = await api.post(appUrls.ADD_NEW_CONVERT, payload);
         if (res?.status === 200) {
           toast.success("Soul was Succefully Added", { duration: 5000, })
-          setIsOpen(false);
+          closeModal();
           queryClient.invalidateQueries('ConvertsUnderMe');
           queryClient.invalidateQueries('PersonalAnalytics');
 
@@ -98,7 +99,9 @@ export default function AddSoulsFormControl() {
         isValid,
       }) => (
         <Form onSubmit={handleSubmit}>
-          <h2 className='text-primary font-semibold md:text-2xl mb-5'>Add A Soul</h2>
+          <h2 className="text-primary font-semibold md:text-2xl mb-5">
+            Add A Soul
+          </h2>
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
               <input
@@ -261,7 +264,7 @@ export default function AddSoulsFormControl() {
           <div className="flex gap-5">
             <Button
               title="Cancel"
-              onClick={() => setIsOpen(false)}
+              onClick={() => closeModal()}
               className="w-[200px] h-[56px] text-center mt-3 md:mb-4 mb-10 rounded border-2 border-gray-400 text-gray-500"
               backgroundColor="bg-white"
             />

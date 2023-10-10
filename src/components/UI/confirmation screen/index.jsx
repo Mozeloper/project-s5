@@ -4,14 +4,15 @@ import { useModalToggle } from '../../../context/ConfirmationModal.context'
 import Button from '../../Button'
 
 export default function ConfirmDeactivate({ handleDeactivate, screenName }) {
-  const { isOpen, setIsOpen } = useModalToggle();
+    const { closeModal } = useModalToggle();
+
 
   const handleClose = () => {
-    setIsOpen(false);
+    closeModal();
   };
 
   const handleConfirm = () => {
-    setIsOpen(false);
+    closeModal();
     handleDeactivate();
   };
 

@@ -10,13 +10,13 @@ import Button from '../../Button';
 
 export default function PromoteConvertToDti({ screenName, workerId }) {
   const queryClient = useQueryClient();
-  const { setIsOpen } = useModalToggle();
+  const { closeModal } = useModalToggle();
 
   /**
    * Handler for closing the modal
    */
   const handleClose = () => {
-    setIsOpen(false);
+    closeModal();
   };
 
   const [showConfirmationButton, setShowConfirmationButton] = useState(false);

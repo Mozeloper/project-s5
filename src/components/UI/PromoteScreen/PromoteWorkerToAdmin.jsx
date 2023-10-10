@@ -13,10 +13,10 @@ import { promoteAWorker } from '../../../services/worker.api';
 
 export default function PromoteWorkerToAdmin({ screenName, workerId, promoteCallback }) {
 
-  const { isOpen, setIsOpen } = useModalToggle();
+  const { closeModal } = useModalToggle();
 
   const handleClose = () => {
-    setIsOpen(false);
+    closeModal();
   };
 
 
