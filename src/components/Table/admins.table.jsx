@@ -168,7 +168,8 @@ export default function   AdminTables() {
             <>
               {data?.length < 1 ? (
                 <div className="flex justify-center items-center h-96">
-                  Sorry! An error occurred, refresh and try again
+                  No Worker has been added assigned an admin role. Kindly add
+                  one by clicking the <span className='text-primary font-bold'>Add Admin</span> button.
                 </div>
               ) : (
                 <>
@@ -181,7 +182,7 @@ export default function   AdminTables() {
                     filterNumber={11}
                     optionArrayList={optionList}
                     optionsHandleClick={handleOptionsClick}
-                    totalSearchData={(searchAdmins && searchAdmins.Data)}
+                    totalSearchData={searchAdmins && searchAdmins.Data}
                   />
 
                   <PaginationFooter

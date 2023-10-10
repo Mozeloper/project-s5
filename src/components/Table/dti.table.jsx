@@ -133,7 +133,7 @@ export default function DtiTable() {
             <>
               {data?.length < 1 || !data ? (
                 <div className="flex justify-center items-center h-96">
-                  Sorry! An error occurred, refresh and try again
+                  No Converts have been added to DTI at the moment.
                 </div>
               ) : (
                 <>

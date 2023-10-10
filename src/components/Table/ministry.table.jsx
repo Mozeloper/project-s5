@@ -115,7 +115,7 @@ export default function MinstryTable() {
             <>
               {data?.length < 1 ? (
                 <div className="flex justify-center items-center h-96">
-                  Sorry! An error occurred, refresh and try again
+                  No Converts have been graduated to Ministers at the moment.
                 </div>
               ) : (
                 <>
