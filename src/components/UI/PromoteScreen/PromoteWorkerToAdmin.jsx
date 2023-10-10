@@ -115,7 +115,7 @@ export default function PromoteWorkerToAdmin({ screenName, workerId, promoteCall
                       value={values.adminRole}
                       onChange={handleAdminRoleChange}
                       className="w-full outline-none"
-                      placeholder="Select department"
+                      placeholder="Select the Role you'd like to assign to the worker"
                     />
                     {errors.adminRole && touched.adminRole ? (
                       <div className="text-xs mt-2 text-red-700">

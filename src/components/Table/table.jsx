@@ -57,7 +57,7 @@ export default function Table({ tableDataArray, pageLink }) {
      if (innerText.toLowerCase() === 'promote') {
       setDisplayUi(
         <PromoteWorkerToAdmin
-          promoteCallback={() => queryClient.invalidateQueries('All Admins')}
+          promoteCallback={() => queryClient.invalidateQueries('admins')}
           screenName={innerText}
           workerId={id}
         />
