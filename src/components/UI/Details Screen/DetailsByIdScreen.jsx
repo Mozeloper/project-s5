@@ -1,16 +1,16 @@
-import ResultNotFound from '@/components/ResultNotFound'
-import ReturnToPrevious from '@/components/ReturnToPrevious'
-import { Email, Phone } from '@mui/icons-material'
-import TabContext from '@mui/lab/TabContext'
-import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
-import { Skeleton } from '@mui/material'
-import Box from '@mui/material/Box'
-import Tab from '@mui/material/Tab'
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { toPascalCase } from '../../../Helper/toPascalCase'
-import SummeryCard from '../../SummeryCard/summeryCard'
+import ResultNotFound from '@/components/ResultNotFound';
+import ReturnToPrevious from '@/components/ReturnToPrevious';
+import { Email, Phone } from '@mui/icons-material';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import { Skeleton } from '@mui/material';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { toPascalCase } from '../../../Helper/toPascalCase';
+import SummeryCard from '../../SummeryCard/summeryCard';
 
 const DetailsByIdScreen = ({
   data,
@@ -127,7 +127,17 @@ const DetailsByIdScreen = ({
                         <small>
                           {(data && data?.Department) || (data && data?.Status)}
                         </small>{' '}
-                        | <small>Limited Access</small>
+                        {data.Roles && (
+                          <>
+                            |{' '}
+                            <small>
+                              {' '}
+                              {data?.Roles.includes('SuperAdmin')
+                                ? 'Full Access'
+                                : ' Limited Access'}
+                            </small>
+                          </>
+                        )}
                       </>
                     )}
                   </div>

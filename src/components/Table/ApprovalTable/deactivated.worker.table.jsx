@@ -91,6 +91,7 @@ export default function DeactivatedWorkerTable() {
     if (reactivatedWorkerRes.StatusCode === 200) {
       //update the data on the table by invalidating the dti query
       queryClient.invalidateQueries('DeactivatedWorker');
+      queryClient.invalidateQueries('admins');
     }
   };
 
@@ -131,7 +132,6 @@ export default function DeactivatedWorkerTable() {
               <h3 className="font-bold">
                 Good news!, No worker is currently suspended.
               </h3>
-              <p>Please check back later for updates.</p>
             </div>
           ) : (
             <>

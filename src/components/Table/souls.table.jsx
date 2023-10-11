@@ -155,7 +155,6 @@ export const SoulsTable = () => {
         </div>
       </div>
       <TransitionsModal2
-        name={'+ Add Soul'}
         heading={'Add New Soul Form'}
         width={'max-w-2xl w-[90%] bg-[#Bf0A30]'}
       >
