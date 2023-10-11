@@ -43,11 +43,10 @@ export const PerformersTable = () => {
   return (
     <Fragment>
       <div className="bg-white rounded-md w-full">
-        <SearchBox />
         <div className="px-4 sm:px-6 lg:px-8 bg-white py-7 rounded-md">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
-              <h1 className="text-base font-semibold leading-6 text-gray-900">
+              <h1 className="text-lg font-bold leading-6 text-primary">
                 List of Top Soul Winners.
               </h1>
             </div>
@@ -70,6 +69,7 @@ export const PerformersTable = () => {
                 headers={headers}
                 data={!isError && data}
                 filterNumber={9}
+                hideSearch="true"
               />
 
             </>
