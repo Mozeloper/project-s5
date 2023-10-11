@@ -47,7 +47,7 @@ export default function PaginationFooter({pageNumber, totalPerCount, totalCount,
   // };
 
   return (
-    <div className="pb-4">
+    <div className="pb-4 pt-5 border-t-2 border-gray-200">
       <Stack spacing={2}>
         {/* <Typography>pageNumber: {pageNumber}</Typography> */}
         <div className="flex justify-center sm:justify-between items-center w-full">
