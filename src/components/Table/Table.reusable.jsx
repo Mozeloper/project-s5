@@ -18,16 +18,21 @@ const ReusableTable = ({
   pageLink,
   totalSearchData, //This going to be a get all api call with out any parameters e.g pagesize... to get the total data and get the total name with just search based on page
   //Check the admins.table.jsx file to see the full implementation for totalSearchData
+  hideSearch, // Add the hideSearch prop
 }) => {
   const filteredNumber = +filterNumber ?? +data?.length;
-
 
   //todo: Adding loading indicators on the table when a pageNumber is changed
   return (
     <div className="mt-8 flow-root px-[-1rem]">
-      <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
-        <SearchBoxIndex searchArray={(totalSearchData && totalSearchData) ?? (data && data)} linkTo='' />
-      </div>
+      {hideSearch ? null : (
+        <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
+          <SearchBoxIndex
+            searchArray={(totalSearchData && totalSearchData) ?? (data && data)}
+            linkTo=""
+          />
+        </div>
+      )}
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle px-6 lg:px-8">
           <table className="min-w-full divide-y divide-gray-300 overflow-hidden">
@@ -55,7 +60,8 @@ const ReusableTable = ({
                         head.toLowerCase() === 'workerid' ||
                         head.toLowerCase() === 'dateofbirth' ||
                         head.toLowerCase() === 'address' ||
-                        head.toLowerCase() === 'datecreated'
+                        head.toLowerCase() === 'datecreated' ||
+                        head.toLowerCase() === 'yearjoined'
                           ? 'hidden'
                           : ''
                       }`}
@@ -65,10 +71,14 @@ const ReusableTable = ({
                       head.toLowerCase() === 'fullname' ||
                       head === 'fullName'
                         ? 'Name'
+                        : head.toLowerCase() === 'isactive'
+                        ? 'Status'
                         : camelCaseToSingleWords(head)}
                     </th>
                   ))}
-                <th className="pr-3 py-3.5 text-left uppercase text-sm font-semibold text-gray-900">{headers && headers.length > 1 && 'ACTIONS'}</th>
+                <th className="pr-3 py-3.5 text-left uppercase text-sm font-semibold text-gray-900">
+                  {headers && headers.length > 1 && 'ACTIONS'}
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
@@ -95,7 +105,8 @@ const ReusableTable = ({
                           head.toLowerCase() === 'workerid' ||
                           head.toLowerCase() === 'dateofbirth' ||
                           head.toLowerCase() === 'address' ||
-                          head.toLowerCase() === 'datecreated'
+                          head.toLowerCase() === 'datecreated' ||
+                          head.toLowerCase() === 'yearjoined'
                             ? 'hidden'
                             : ''
                         }`}
@@ -147,6 +158,18 @@ const ReusableTable = ({
                                   } cursor-pointer !text-[9px] mr-1`}
                                 />
                               ))}
+                            </div>
+                          </div>
+                        ) : head.toLowerCase() === 'isactive' ? (
+                          <div>
+                            <div
+                              className={`text-xs font-semibold text-gray-900  inline-flex items-center rounded-md bg-green-50 px-2 py-1 ${
+                                row['IsActive']
+                                  ? 'text-green-700 bg-green-50 '
+                                  : 'text-red-700 bg-red-50'
+                              }`}
+                            >
+                              {row['IsActive'] ? 'Active' : 'Inactive'}
                             </div>
                           </div>
                         ) : (
