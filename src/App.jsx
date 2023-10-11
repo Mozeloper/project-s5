@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import Signin from './pages/auth/signin';
 import DashboardLayout from './components/Layout/dashboard';
@@ -13,6 +13,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { Button } from "@mui/material";
 import ErrorBoundaryScreen from "./pages/ErrorBoundary";
+
 
 //This is for code splitting/ Lazy loading of page for faster routing
 // const Souls = React.lazy(() => import('./pages/dashboard/souls'))
@@ -73,40 +74,31 @@ export const AuthProtectRoutes = () => {
 };
 
 function App() {
-  const { reset } = useQueryErrorResetBoundary()
+  const { reset } = useQueryErrorResetBoundary();
+
+  const location = useLocation();
+
+  // Listen for route changes and reset page position
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
     <>
-    <ErrorBoundary
+      <ErrorBoundary
         onReset={reset}
         fallbackRender={({ resetErrorBoundary }) => (
           <ErrorBoundaryScreen resetErrorBoundary={resetErrorBoundary} />
         )}
       >
-      <main>
-        <Routes>
-          <Route path="/*" element={<NotFound />} />
+        <main>
+          <Routes>
+            <Route path="/*" element={<NotFound />} />
 
-          <Route path="/forbidden" element={<Forbidden />} />
+            <Route path="/forbidden" element={<Forbidden />} />
 
-          <Route element={<AuthProtectRoutes />}>
-            <Route path="/" element={<Signin />} />
-            <Route
-              path="/forget-password"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <ForgetPassword />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/change-password"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <ChangePassword />
-                </React.Suspense>
-              }
-            />
-            <Route>
+            <Route element={<AuthProtectRoutes />}>
+              <Route path="/" element={<Signin />} />
               <Route
                 path="/forget-password"
                 element={
@@ -123,35 +115,52 @@ function App() {
                   </React.Suspense>
                 }
               />
-              <Route  element={<Authlayout />}>
+              <Route>
                 <Route
-                  path="/begin-registration"
-                  element={<BeginRegistration />}
+                  path="/forget-password"
+                  element={
+                    <React.Suspense fallback={<>...</>}>
+                      <ForgetPassword />
+                    </React.Suspense>
+                  }
                 />
-                <Route path="/sign-up" element={<Register />} />
+                <Route
+                  path="/change-password"
+                  element={
+                    <React.Suspense fallback={<>...</>}>
+                      <ChangePassword />
+                    </React.Suspense>
+                  }
+                />
+                <Route element={<Authlayout />}>
+                  <Route
+                    path="/begin-registration"
+                    element={<BeginRegistration />}
+                  />
+                  <Route path="/sign-up" element={<Register />} />
+                </Route>
               </Route>
             </Route>
-          </Route>
 
-          <Route element={<ProtectRoutes />}>
-            <Route path="/dashboard" element={<Home />} />
+            <Route element={<ProtectRoutes />}>
+              <Route path="/dashboard" element={<Home />} />
 
-            <Route
-              path="/souls"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Souls />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/souls/:soulId"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <NewConvertDetailsById />
-                </React.Suspense>
-              }
-            />
+              <Route
+                path="/souls"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <Souls />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/souls/:soulId"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <NewConvertDetailsById />
+                  </React.Suspense>
+                }
+              />
 
               <Route
                 path="/workers"
@@ -188,98 +197,98 @@ function App() {
                 }
               />
 
-            <Route
-              path="/dti"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <DTI />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/dti/:dtiId"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <DTICOnvertDetailsById />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/newconverts"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <NewConvert />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/newconverts/:soulId"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <NewConvertDetailsById />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/ministry"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Ministry />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/ministry/:soulId"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <NewConvertDetailsById />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/approvals"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Reminder />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/approvals/deactivated-worker/:workerId"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <DeactivatedWorkerDetailsById />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/approvals/deactivated-convert/:convertId"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <GetDeactivatedConvertDetails />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/approvals/unapproved-worker/:workerId"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <UnapprovedWorkerDetailsById />
-                </React.Suspense>
-              }
-            />
+              <Route
+                path="/dti"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <DTI />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/dti/:dtiId"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <DTICOnvertDetailsById />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/newconverts"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <NewConvert />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/newconverts/:soulId"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <NewConvertDetailsById />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/ministry"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <Ministry />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/ministry/:soulId"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <NewConvertDetailsById />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/approvals"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <Reminder />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/approvals/deactivated-worker/:workerId"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <DeactivatedWorkerDetailsById />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/approvals/deactivated-convert/:convertId"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <GetDeactivatedConvertDetails />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/approvals/unapproved-worker/:workerId"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <UnapprovedWorkerDetailsById />
+                  </React.Suspense>
+                }
+              />
 
-            <Route
-              path="/profile"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Profile />
-                </React.Suspense>
-              }
-            />
-          </Route>
-        </Routes>
-      </main>
+              <Route
+                path="/profile"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <Profile />
+                  </React.Suspense>
+                }
+              />
+            </Route>
+          </Routes>
+        </main>
       </ErrorBoundary>
     </>
   );
