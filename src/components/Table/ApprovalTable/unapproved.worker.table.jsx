@@ -131,7 +131,7 @@ export default function UnapprovedWorkerTable() {
   return (
     <div className="p-8 bg-white grid grid-cols-1 gap-y-2">
       <h3 className="sm:text-left text-center">
-        The List of all pending / Unapproved workers
+        Worker Accounts Awaiting Admin Approval
       </h3>
       {isLoading ? (
         <Loader />

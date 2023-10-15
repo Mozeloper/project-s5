@@ -7,11 +7,14 @@ import AddSoulsFormControl from '../UI/Forms/addSoul.form';
 import ReusableTable from './Table.reusable';
 import { useFetchAllNewConvert } from '../../hooks/useFetchNewConvert';
 import { GrView } from 'react-icons/gr';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTextSearchNav } from '../../context/textSearch.context';
+import TransitionsModal2 from '../ModalPopup/modalTransition2';
+import { useModalToggle } from '../../context/ConfirmationModal.context';
 
 export const SoulsAdminTable = () => {
   const workerId = JSON.parse(sessionStorage.getItem('userObj'))?.Id;
+  const { openModal } = useModalToggle();
 
   const [headers, setHeaders] = useState([] || undefined || null);
   const [data, setData] = useState([]);
@@ -26,6 +29,11 @@ export const SoulsAdminTable = () => {
   } = useFetchAllNewConvert({ workerId, pageNumber, pageSize, searchquery: textSearch });
 
   const navigate = useNavigate();
+
+    const AddSoulModal = () => {
+      openModal('AddSoul');
+    };
+
 
   useEffect(() => {
     const getPosts = async () => {
@@ -77,16 +85,11 @@ export const SoulsAdminTable = () => {
             </div>
 
             <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-              <button className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6 min-w-max">
-                <TransitionsModal
-                  name={'+ Add Soul'}
-                  heading={'Add a new Soul'}
-                  width={'w-[90%]'}
-                  isModalOpen={true}
-                >
-                  <AddSoulsFormControl />
-                </TransitionsModal>
-              </button>
+              <Link
+                className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6 min-w-max"
+              >
+                View All
+              </Link>
             </div>
           </div>
           {isLoading ? (
@@ -107,6 +110,7 @@ export const SoulsAdminTable = () => {
                 headers={headers}
                 data={!isError && data}
                 filterNumber={9}
+                hideSearch="true"
               />
 
               <PaginationFooter
@@ -119,6 +123,7 @@ export const SoulsAdminTable = () => {
           )}
         </div>
       </div>
+
     </Fragment>
   );
 };

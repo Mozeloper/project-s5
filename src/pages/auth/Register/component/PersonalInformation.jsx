@@ -68,7 +68,10 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="gender"
                 >
-                  Gender <span className="text-primary ml-1">*</span>
+                  Gender{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <SearchableSelect
                   options={[
@@ -93,14 +96,17 @@ export default function PersonalInformation({
                   htmlFor="dateOfBirth"
                   className={`text-sm md:text-black text-white leading-4`}
                 >
-                  Date Of birth <span className="text-primary ml-1">*</span>
+                  Date Of birth{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <input
                   type="date"
                   name="dateOfBirth"
                   id="dateOfBirth"
                   max={`${maxDOBYear}-12-31`} // Set the max date to 8 years ago
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[40px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter Your Date Of Birth"
                   onChange={handleChange}
                   value={values?.dateOfBirth}
@@ -116,35 +122,12 @@ export default function PersonalInformation({
               <div className="w-full mt-2">
                 <label
                   className="text-sm md:text-black text-white leading-4"
-                  htmlFor="employmentStatus"
-                >
-                  Employment status
-                </label>
-                <SearchableSelect
-                  options={[
-                    { label: 'Employed', value: 'Employed' },
-                    { label: 'Self-Employed', value: 'SelfEmployed' },
-                    { label: 'Unemployed ', value: 'Unemployed' },
-                  ]}
-                  name="employmentStatus"
-                  id="employmentStatus"
-                  value={values.employmentStatus}
-                  setFieldValue={(name, value) => setFieldValue(name, value)}
-                  className="w-full outline-none"
-                  placeholder="Select Employment status"
-                />
-                {errors.employmentStatus && touched.employmentStatus ? (
-                  <div className="text-xs mt-2 text-red-700">
-                    {errors.employmentStatus}
-                  </div>
-                ) : null}
-              </div>
-              <div className="w-full mt-2">
-                <label
-                  className="text-sm md:text-black text-white leading-4"
                   htmlFor="maritalStatus"
                 >
-                  Marital status <span className="text-primary ml-1">*</span>
+                  Marital status{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <SearchableSelect
                   options={[
@@ -185,7 +168,10 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="qualification"
                 >
-                  Qualification
+                  Qualification{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <SearchableSelect
                   options={[
@@ -222,9 +208,68 @@ export default function PersonalInformation({
               <div className="w-full mt-2">
                 <label
                   className="text-sm md:text-black text-white leading-4"
+                  htmlFor="employmentStatus"
+                >
+                  Employment status{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
+                </label>
+                <SearchableSelect
+                  options={[
+                    { label: 'Employed', value: 'Employed' },
+                    { label: 'Self-Employed', value: 'SelfEmployed' },
+                    { label: 'Unemployed ', value: 'Unemployed' },
+                  ]}
+                  name="employmentStatus"
+                  id="employmentStatus"
+                  value={values.employmentStatus}
+                  setFieldValue={(name, value) => setFieldValue(name, value)}
+                  className="w-full outline-none"
+                  placeholder="Select Employment status"
+                />
+                {errors.employmentStatus && touched.employmentStatus ? (
+                  <div className="text-xs mt-2 text-red-700">
+                    {errors.employmentStatus}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+            <div className="w-full flex md:flex-row flex-col gap-2 mb-2">
+              <div className="mb-1 w-full">
+                <label
+                  htmlFor="nameOfOrganization"
+                  className={`text-sm md:text-black text-white leading-4`}
+                >
+                  Name of Organization
+                </label>
+                <input
+                  type="text"
+                  name="nameOfOrganization"
+                  id="nameOfOrganization"
+                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Enter Organization Name"
+                  onChange={handleChange}
+                  value={values?.nameOfOrganization}
+                />
+                {errors.nameOfOrganization && touched.nameOfOrganization ? (
+                  <div className="text-xs mt-2 text-red-700">
+                    {errors.nameOfOrganization}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="w-full flex md:flex-row flex-col gap-2 mb-2">
+              <div className="w-full mt-2">
+                <label
+                  className="text-sm md:text-black text-white leading-4"
                   htmlFor="countryName"
                 >
-                  Country<span className="text-primary ml-1">*</span>
+                  Country
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -246,14 +291,17 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="stateName"
                 >
-                  State <span className="text-primary ml-1">*</span>
+                  State Of Residence{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
                   name="stateName"
                   id="stateName"
                   className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter State Name"
+                  placeholder="Enter State Of Residence"
                   onChange={handleChange}
                   value={values?.stateName}
                 />
@@ -270,42 +318,23 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="localGovtName"
                 >
-                  LGA<span className="text-primary ml-1">*</span>
+                  L.G.A. Of Residence
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
                   name="localGovtName"
                   id="localGovtName"
                   className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter L.G.A. Name"
+                  placeholder="Enter L.G.A. Of Residence"
                   onChange={handleChange}
                   value={values?.localGovtName}
                 />
                 {errors.localGovtName && touched.localGovtName ? (
                   <div className="text-xs mt-2 text-red-700">
                     {errors.localGovtName}
-                  </div>
-                ) : null}
-              </div>
-              <div className="mb-1 w-full">
-                <label
-                  htmlFor="nameOfOrganization"
-                  className={`text-sm md:text-black text-white leading-4`}
-                >
-                  Name of Organization
-                </label>
-                <input
-                  type="text"
-                  name="nameOfOrganization"
-                  id="nameOfOrganization"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter Organization Name"
-                  onChange={handleChange}
-                  value={values?.nameOfOrganization}
-                />
-                {errors.nameOfOrganization && touched.nameOfOrganization ? (
-                  <div className="text-xs mt-2 text-red-700">
-                    {errors.nameOfOrganization}
                   </div>
                 ) : null}
               </div>

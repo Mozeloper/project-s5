@@ -187,7 +187,7 @@ export default function ChurchInformation({
                   className={`text-sm md:text-black text-white leading-4`}
                 >
                   Year Joined Church{' '}
-                  <span className="text-primary ml-1">*</span>
+                  <span className="text-yellow-500 md:text-primary ml-1">*</span>
                 </label>
                 <input
                   type="number"
@@ -196,7 +196,7 @@ export default function ChurchInformation({
                   min="2010"
                   max={`${currentYear}`}
                   step="1"
-                  className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full h-[40px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Year Joined Church"
                   onChange={handleChange}
                   value={values?.yearJoined}

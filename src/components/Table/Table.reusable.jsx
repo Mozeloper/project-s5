@@ -188,6 +188,13 @@ const ReusableTable = ({
                           handleClick={optionsHandleClick}
                           id={row['Id'] ?? row['id']}
                           pageLink={pageLink}
+                          selectedUserData={{
+                            name:
+                              row['SurName'] && row['FirstName']
+                                ? `${row['FirstName']} ${row['SurName']}`
+                                : row['FullName'] || row['fullName'],
+                            roles: row['ROLES'] || row['Roles'],
+                          }}
                         />
                       )
                       // <Options linkId={`/${row['Id']}`}>

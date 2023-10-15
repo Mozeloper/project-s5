@@ -98,7 +98,7 @@ export const SoulsTable = () => {
                   : 'Lastest list of souls added to Opeation 5 S portal.'}
               </p> */}
               <p className="mt-2 text-sm text-gray-700">
-                Here are the list of all the souls in you have won.
+                List of souls you've won.
               </p>
             </div>
 

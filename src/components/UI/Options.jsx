@@ -16,6 +16,7 @@ export default function TableOptions({
   displayModalUi,
   id,
   pageLink,
+  selectedUserData = {}
 }) {
   const navigate = useNavigate();
   const { isOpen, modalType, openModal, closeModal } = useModalToggle();
@@ -23,6 +24,9 @@ export default function TableOptions({
 
   const handleView = (event, option, popupState) => {
     // Close the popstate when an option is clicked
+    if(selectedUserData) {
+      event.selectedUserData = selectedUserData;
+    }
     popupState.close();
     setSelectedOption(option);
     const innerText = event.currentTarget.innerText;

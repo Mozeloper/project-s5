@@ -10,6 +10,7 @@ import PaginationFooter from '../PaginationFooter';
 import ConfirmDeactivate from '../UI/confirmation screen';
 import ReusableTable from './Table.reusable';
 import SearchBox from '../Searchbox/searchbox';
+import AdminRoleMgt from '../UI/AdminRoleMgtScreen';
 
 export default function AdminTables() {
   const [headers, setHeaders] = useState([]);
@@ -58,6 +59,7 @@ export default function AdminTables() {
     getPosts();
   }, [useFetchAdmins, AdminsData, setData]);
 
+
   const handleViewAdmin = (id) => {
     console.log('id');
   };
@@ -69,13 +71,18 @@ export default function AdminTables() {
   };
 
   const handleOptionsClick = (event) => {
+    console.log(event.selectedUserData)
     const innerText = event.currentTarget.innerText;
     const id = event.currentTarget.id;
+    const { name: Name, roles: Roles } = event.selectedUserData;
+
     if (innerText.toLowerCase() === 'modify') {
       setDisplayUi(
-        <ConfirmDeactivate
-          handleDeactivate={handleModifyAdmin.bind(null, id)}
-          screenName={innerText}
+        <AdminRoleMgt
+          handleAdminRole={handleModifyAdmin.bind(null, id)}
+          adminId={id}
+          roles={Roles}
+          name={Name}
         />
       );
     } else if (innerText.toLowerCase() === 'suspend') {
