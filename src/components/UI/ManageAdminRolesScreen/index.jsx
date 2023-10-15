@@ -8,9 +8,9 @@ import { appUrls } from '../../../services/urls';
 import { FaSpinner } from 'react-icons/fa';
 
 
-export default function AdminRoleMgt({ handleAdminRole, adminId, roles, name }) {
+export default function ManageAdminRoles({ handleAdminRole, adminId, roles, name }) {
   const { closeModal } = useModalToggle();
-  console.log(adminId, roles);
+  // console.log(adminId, roles);
    const [isLoading, setIsLoading] = useState(null);
 
   const handleClose = () => {
@@ -24,9 +24,9 @@ export default function AdminRoleMgt({ handleAdminRole, adminId, roles, name }) 
 
   const [adminRoles, setAdminRoles] = useState({
     SuperAdmin: false,
-    DtiAdmin: false,
+    DTIAdmin: false,
     MinistryAdmin: false,
-    NewbeleiversAdmin: false,
+    NewConvertAdmin: false,
   });
 
     useEffect(() => {
@@ -61,9 +61,9 @@ export default function AdminRoleMgt({ handleAdminRole, adminId, roles, name }) 
       setTimeout(() => {
         resolve({
           SuperAdmin: true,
-          DtiaAmin: false,
+          DTIAdmin: false,
           MinistryAdmin: true,
-          NewbeleiversAdmin: false,
+          NewConvertAdmin: false,
         });
       }, 1000);
     });
@@ -121,10 +121,14 @@ export default function AdminRoleMgt({ handleAdminRole, adminId, roles, name }) 
   return (
     <>
       <div className="bg-white p-8 md:w-[400px] min-h-[220px] rounded-md flex flex-col gap-4 md:mt-0 mt-2 items-center justify-center">
-        <h3 className="text-gray-700 text-lg text-center font-bold">
-          <span className="text-primary">{name}</span> is currentlty assigned to
-          the following admin roles:
+        <h3 className="text-gray-700 text-lg font-bold">
+          <span className="text-primary">{name}</span> is currently assigned to
+          the checked admin roles:
         </h3>
+        <p>
+          Click on any of the checkboxes to assign or remove this user from the
+          Role
+        </p>
         <div className="w-full flex flex-col gap-y-4 py-5">
           {/* <h2>Admin Roles for Admin ID: {adminId}</h2> */}
           <div>
@@ -136,7 +140,7 @@ export default function AdminRoleMgt({ handleAdminRole, adminId, roles, name }) 
                   type="checkbox"
                   checked={adminRoles.SuperAdmin}
                   onChange={() => handleRoleToggle('SuperAdmin')}
-                  className="checked:bg-red-500"
+                  className="!checked:bg-red-500"
                 />
               )}
               General Admin
@@ -144,13 +148,13 @@ export default function AdminRoleMgt({ handleAdminRole, adminId, roles, name }) 
           </div>
           <div>
             <label className="flex gap-x-3">
-              {isLoading === 'DtiAdmin' ? (
+              {isLoading === 'DTIAdmin' ? (
                 <FaSpinner className="animate-spin" />
               ) : (
                 <input
                   type="checkbox"
-                  checked={adminRoles.DtiAdmin}
-                  onChange={() => handleRoleToggle('DtiAdmin')}
+                  checked={adminRoles.DTIAdmin}
+                  onChange={() => handleRoleToggle('DTIAdmin')}
                   className=""
                 />
               )}
@@ -166,7 +170,7 @@ export default function AdminRoleMgt({ handleAdminRole, adminId, roles, name }) 
                   type="checkbox"
                   checked={adminRoles.MinistryAdmin}
                   onChange={() => handleRoleToggle('MinistryAdmin')}
-                  className=""
+                  className="accent-red-700 checked:bg-blue-500 read-only:bg-gray-100"
                 />
               )}
               Ministry Admin
@@ -174,13 +178,13 @@ export default function AdminRoleMgt({ handleAdminRole, adminId, roles, name }) 
           </div>
           <div>
             <label className="flex gap-x-3">
-              {isLoading === 'NewbeleiversAdmin' ? (
+              {isLoading === 'NewConvertAdmin' ? (
                 <FaSpinner className="animate-spin" />
               ) : (
                 <input
                   type="checkbox"
-                  checked={adminRoles.NewbeleiversAdmin}
-                  onChange={() => handleRoleToggle('NewbeleiversAdmin')}
+                  checked={adminRoles.NewConvertAdmin}
+                  onChange={() => handleRoleToggle('NewConvertAdmin')}
                   className=""
                 />
               )}
@@ -191,7 +195,7 @@ export default function AdminRoleMgt({ handleAdminRole, adminId, roles, name }) 
         <div className="w-full">
           <Button
             title="Close"
-            className="w-full h-[56px] text-[#38404b] text-center rounded-2xl border border-[#D0D5DD]"
+            className="w-full h-[56px] bg-secondary text-white text-center rounded-2xl border border-[#D0D5DD]"
             backgroundColor="bg-none"
             textColor="#38404b"
             type="button"
