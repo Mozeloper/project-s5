@@ -96,27 +96,12 @@ export default function Home() {
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabList onChange={handleChange} aria-label="">
-              <Tab label="Analytics" value="1" />
-              <Tab label="Lastest Souls" value="2" />
+              <Tab label="Lastest Souls" value="1" />
               {isSuperAdmin && <Tab label="Top Performers" value="3" />}
+              <Tab label="Analytics" value="2" />
             </TabList>
           </Box>
           <TabPanel value="1" className="!px-2">
-            <div className="">
-              {/* <SummeryCard
-                data={
-                  DynamicDashboardAnalytics && DynamicDashboardAnalytics?.Data
-                }
-                loading={isLoading}
-                error={isError}
-              /> */}
-            </div>
-            <div className="p-2"></div>
-            <div className="bg-white rounded-md">
-              <Charts type={'area'} datas={ChartDatas} />
-            </div>
-          </TabPanel>
-          <TabPanel value="2" className="!px-2">
             {/* 
             The tableDataLimit is not fully implemented yet
             Todo - Renders all the table datas on the admins page dashboard and
@@ -132,6 +117,21 @@ export default function Home() {
             ) : (
               <SoulsTable />
             )}
+          </TabPanel>
+          <TabPanel value="2" className="!px-2">
+            <div className="">
+              {/* <SummeryCard
+                data={
+                  DynamicDashboardAnalytics && DynamicDashboardAnalytics?.Data
+                }
+                loading={isLoading}
+                error={isError}
+              /> */}
+            </div>
+            <div className="p-2"></div>
+            <div className="bg-white rounded-md">
+              <Charts type={'area'} datas={ChartDatas} />
+            </div>
           </TabPanel>
 
           {isSuperAdmin && (
