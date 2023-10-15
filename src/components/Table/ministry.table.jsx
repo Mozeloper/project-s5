@@ -46,7 +46,7 @@ export default function MinstryTable() {
     { icon: <GrView className="text-blue-500" />, name: 'View' },
     {
       icon: <IoRemoveCircleSharp className="text-yellow-500" />,
-      name: 'Suspend',
+      name: 'disable',
     },
   ];
 
@@ -73,7 +73,7 @@ export default function MinstryTable() {
   const handleOptionsClick = (event, option) => {
     const innerText = option.name;
     const id = event.currentTarget.id;
-    if (innerText.toLowerCase() === 'suspend') {
+    if (innerText.toLowerCase() === 'disable') {
       setDisplayUi(
         <SuspendConvert
           handleDeactivate={handleSuspendCovert.bind(null, id)}

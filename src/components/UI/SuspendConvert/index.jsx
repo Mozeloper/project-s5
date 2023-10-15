@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { GiConfirmed } from 'react-icons/gi';
+import { BsFillExclamationTriangleFill } from 'react-icons/bs';
 import { useModalToggle } from '../../../context/ConfirmationModal.context';
 import Button from '../../Button';
 
@@ -23,10 +24,10 @@ const SuspendConvert = ({ handleDeactivate, screenName }) => {
     <>
       {!confirmDeletion ? (
         <div className="bg-white p-8 md:w-[400px] min-h-[220px] rounded-md flex flex-col gap-4 md:mt-0 mt-2 items-center justify-center">
-          <GiConfirmed className="w-[48px] h-[48px] text-[#38404b]" />
+          <BsFillExclamationTriangleFill className="w-[48px] h-[48px] text-yellow-500" />
           <h2>
             You are about to{' '}
-            <span className="!text-red-900 font-bold"> Suspend </span> Account
+            <span className="!text-yellow-500 font-bold"> Disable </span> Account
           </h2>
           <h4 className="text-gray-700 text-lg text-center">
             Are you sure you want to continue ?
@@ -52,16 +53,20 @@ const SuspendConvert = ({ handleDeactivate, screenName }) => {
       ) : (
         <div className="bg-white p-8 md:w-[400px] min-h-[220px] rounded-md flex flex-col gap-4 md:mt-0 mt-2 items-center justify-center">
           <form>
-            <div className='w-full mb-5'>
-            <label htmlFor='reason' className="text-gray-700 text-lg text-center">
-              Kindly State Your Reason:
-              <textarea
-              minLength='6' 
-              id='reason' name='reason' 
-              className='mt-2 border-2 w-full border-primary rounded-md'
-              onChange={(e) => setSuspensionReason(e.target.value)}
-              />
-            </label>
+            <div className="w-full mb-5">
+              <label
+                htmlFor="reason"
+                className="text-gray-700 text-lg text-center"
+              >
+                Kindly State Your Reason:
+                <textarea
+                  minLength="6"
+                  id="reason"
+                  name="reason"
+                  className="mt-2 border-2 w-full border-primary rounded-md"
+                  onChange={(e) => setSuspensionReason(e.target.value)}
+                />
+              </label>
             </div>
             <div className="w-full flex gap-2">
               <Button

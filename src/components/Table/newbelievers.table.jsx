@@ -50,7 +50,7 @@ export default function NewBelieversTable() {
     { icon: <GiConfirmed className="text-green-500" />, name: 'Promote' },
     {
       icon: <IoRemoveCircleSharp className="text-yellow-500" />,
-      name: 'Suspend',
+      name: 'Disable',
     },
   ];
 
@@ -95,7 +95,7 @@ export default function NewBelieversTable() {
           handlePromote={handlePromoteToDti.bind(null, id)}
         />
       );
-    } else if (innerText.toLowerCase() === 'suspend') {
+    } else if (innerText.toLowerCase() === 'disable') {
       setDisplayUi(
         <SuspendConvert
           handleDeactivate={handleSuspendNBCovert.bind(null, id)}

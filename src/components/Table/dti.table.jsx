@@ -52,7 +52,7 @@ export default function DtiTable() {
     { icon: <GiConfirmed className="text-green-500" />, name: 'Promote' },
     {
       icon: <IoRemoveCircleSharp className="text-yellow-500" />,
-      name: 'Suspend',
+      name: 'Disable',
     },
   ];
 
@@ -91,7 +91,7 @@ export default function DtiTable() {
           handlePromote={handleModifyConvert.bind(null, id)}
         />
       );
-    } else if (innerText.toLowerCase() === 'suspend') {
+    } else if (innerText.toLowerCase() === 'disable') {
       setDisplayUi(
         <SuspendConvert
           handleDeactivate={handleSuspendCovert.bind(null, id)}
