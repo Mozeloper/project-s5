@@ -68,7 +68,10 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="gender"
                 >
-                  Gender <span className="text-primary ml-1">*</span>
+                  Gender{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <SearchableSelect
                   options={[
@@ -93,7 +96,10 @@ export default function PersonalInformation({
                   htmlFor="dateOfBirth"
                   className={`text-sm md:text-black text-white leading-4`}
                 >
-                  Date Of birth <span className="text-primary ml-1">*</span>
+                  Date Of birth{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <input
                   type="date"
@@ -118,7 +124,10 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="maritalStatus"
                 >
-                  Marital status <span className="text-primary ml-1">*</span>
+                  Marital status{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <SearchableSelect
                   options={[
@@ -159,7 +168,10 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="qualification"
                 >
-                  Qualification <span className="text-primary ml-1">*</span>
+                  Qualification{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <SearchableSelect
                   options={[
@@ -198,7 +210,10 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="employmentStatus"
                 >
-                  Employment status <span className="text-primary ml-1">*</span>
+                  Employment status{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <SearchableSelect
                   options={[
@@ -251,7 +266,10 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="countryName"
                 >
-                  Country<span className="text-primary ml-1">*</span>
+                  Country
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -273,7 +291,10 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="stateName"
                 >
-                  State Of Residence <span className="text-primary ml-1">*</span>
+                  State Of Residence{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -297,7 +318,10 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="localGovtName"
                 >
-                  L.G.A. Of Residence<span className="text-primary ml-1">*</span>
+                  L.G.A. Of Residence
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
