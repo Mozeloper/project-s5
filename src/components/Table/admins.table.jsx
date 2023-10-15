@@ -90,6 +90,7 @@ export default function AdminTables() {
         <ConfirmDeactivate
           handleDeactivate={handleSuspendAdmin.bind(null, id)}
           screenName={innerText}
+          name={Name}
         />
       );
     }
