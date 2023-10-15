@@ -8,9 +8,9 @@ import { appUrls } from '../../../services/urls';
 import { FaSpinner } from 'react-icons/fa';
 
 
-export default function AdminRoleMgt({ handleAdminRole, adminId, roles, name }) {
+export default function ManageAdminRoles({ handleAdminRole, adminId, roles, name }) {
   const { closeModal } = useModalToggle();
-  console.log(adminId, roles);
+  // console.log(adminId, roles);
    const [isLoading, setIsLoading] = useState(null);
 
   const handleClose = () => {
