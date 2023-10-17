@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 export default function Authlayout() {
   return (
     <div className="w-full flex h-screen overflow-hidden">
-      <div className="w-full overflow-scroll bg-white h-full overflow-x-hidden md:block hidden">
+      <div className="w-full overflow-auto bg-white h-full overflow-x-hidden md:block hidden">
         <Outlet />
       </div>
       <div className="bg-[url('assets/images/p5-bg.jpg')] bg-[100%] bg-no-repeat bg-cover w-full h-full  overflow-scroll md:hidden">
