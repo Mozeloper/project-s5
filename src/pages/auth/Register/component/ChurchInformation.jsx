@@ -12,6 +12,7 @@ import { formatToISODate } from '../../../../utils';
 export default function ChurchInformation({
   userValues,
   setUserValues,
+  setRegSent,
   // setCurrentStep,
 }) {
   const navigate = useNavigate();
@@ -57,7 +58,8 @@ export default function ChurchInformation({
           icon: '👏',
           duration: 3000,
         });
-        navigate('/');
+        //navigate('/');
+        setRegSent(false);
       }
     } catch (error) {
       const errorMessage = error?.data?.message || 'An Error Occured';
@@ -187,7 +189,9 @@ export default function ChurchInformation({
                   className={`text-sm md:text-black text-white leading-4`}
                 >
                   Year Joined Church{' '}
-                  <span className="text-yellow-500 md:text-primary ml-1">*</span>
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
                 </label>
                 <input
                   type="number"

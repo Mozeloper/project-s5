@@ -41,7 +41,7 @@ const apiResource = () => {
           } else {   
             toast.error('An Error Occurred');
             sessionStorage.clear();
-            window.location = "/login";
+            window.location = "#/";
         }
       } else if (error?.response?.status === 401) {
         if (originalConfig.url !== appUrls.LOGIN_URL) {

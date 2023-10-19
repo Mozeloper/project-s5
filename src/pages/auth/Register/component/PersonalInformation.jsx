@@ -236,7 +236,7 @@ export default function PersonalInformation({
               </div>
             </div>
             <div className="w-full flex md:flex-row flex-col gap-2 mb-2">
-              <div className="mb-1 w-full">
+              <div className="mb-1 w-full hidden">
                 <label
                   htmlFor="nameOfOrganization"
                   className={`text-sm md:text-black text-white leading-4`}
@@ -244,7 +244,7 @@ export default function PersonalInformation({
                   Name of Organization
                 </label>
                 <input
-                  type="text"
+                  type="hidden"
                   name="nameOfOrganization"
                   id="nameOfOrganization"
                   className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
@@ -266,12 +266,12 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="countryName"
                 >
-                  Country
+                  Country Of Residence
                   <span className="text-yellow-500 md:text-primary ml-1">
                     *
                   </span>
                 </label>
-                <input
+                {/* <input
                   type="text"
                   name="countryName"
                   id="countryName"
@@ -279,6 +279,15 @@ export default function PersonalInformation({
                   placeholder="Enter Country Name"
                   onChange={handleChange}
                   value={values?.countryName}
+                /> */}
+                <SearchableSelect
+                  options={[{ label: 'Nigeria', value: 'Nigeria' }]}
+                  name="countryName"
+                  id="countryName"
+                  value={values.countryName}
+                  setFieldValue={(name, value) => setFieldValue(name, value)}
+                  className="w-full outline-none"
+                  placeholder="Select Country Of Residence"
                 />
                 {errors.countryName && touched.countryName ? (
                   <div className="text-xs mt-2 text-red-700">
@@ -296,7 +305,7 @@ export default function PersonalInformation({
                     *
                   </span>
                 </label>
-                <input
+                {/* <input
                   type="text"
                   name="stateName"
                   id="stateName"
@@ -304,6 +313,54 @@ export default function PersonalInformation({
                   placeholder="Enter State Of Residence"
                   onChange={handleChange}
                   value={values?.stateName}
+                /> */}
+                <SearchableSelect
+                  options={
+                    [
+                    { label: 'Lagos', value: 'Lagos' },
+                    { label: 'Abuja', value: 'Abuja' },
+                    { label: 'Abia', value: 'Abia' },
+                    { label: 'Adamawa', value: 'Adamawa' },
+                    { label: 'Akwa Ibom', value: 'Akwa Ibom' },
+                    { label: 'Anambra', value: 'Anambra' },
+                    { label: 'Bauchi', value: 'Bauchi' },
+                    { label: 'Bayelsa', value: 'Bayelsa' },
+                    { label: 'Benue', value: 'Benue' },
+                    { label: 'Borno', value: 'Borno' },
+                    { label: 'Cross River', value: 'Cross River' },
+                    { label: 'Delta', value: 'Delta' },
+                    { label: 'Ebonyi', value: 'Ebonyi' },
+                    { label: 'Edo', value: 'Edo' },
+                    { label: 'Ekiti', value: 'Ekiti' },
+                    { label: 'Enugu', value: 'Enugu' },
+                    { label: 'Gombe', value: 'Gombe' },
+                    { label: 'Imo', value: 'Imo' },
+                    { label: 'Jigawa', value: 'Jigawa' },
+                    { label: 'Kaduna', value: 'Kaduna' },
+                    { label: 'Kano', value: 'Kano' },
+                    { label: 'Katsina', value: 'Katsina' },
+                    { label: 'Kebbi', value: 'Kebbi' },
+                    { label: 'Kogi', value: 'Kogi' },
+                    { label: 'Kwara', value: 'Kwara' },
+                    { label: 'Nasarawa', value: 'Nasarawa' },
+                    { label: 'Niger', value: 'Niger' },
+                    { label: 'Ogun', value: 'Ogun' },
+                    { label: 'Ondo', value: 'Ondo' },
+                    { label: 'Osun', value: 'Osun' },
+                    { label: 'Oyo', value: 'Oyo' },
+                    { label: 'Plateau', value: 'Plateau' },
+                    { label: 'Rivers', value: 'Rivers' },
+                    { label: 'Sokoto', value: 'Sokoto' },
+                    { label: 'Taraba', value: 'Taraba' },
+                    { label: 'Yobe', value: 'Yobe' },
+                    { label: 'Zamfara', value: 'Zamfara' }]
+                  }
+                  name="stateName"
+                  id="stateName"
+                  value={values.stateName}
+                  setFieldValue={(name, value) => setFieldValue(name, value)}
+                  className="w-full outline-none"
+                  placeholder="Select State Of Residence"
                 />
                 {errors.stateName && touched.stateName ? (
                   <div className="text-xs mt-2 text-red-700">
@@ -318,7 +375,7 @@ export default function PersonalInformation({
                   className="text-sm md:text-black text-white leading-4"
                   htmlFor="localGovtName"
                 >
-                  L.G.A. Of Residence
+                  City Of Residence
                   <span className="text-yellow-500 md:text-primary ml-1">
                     *
                   </span>
@@ -328,7 +385,7 @@ export default function PersonalInformation({
                   name="localGovtName"
                   id="localGovtName"
                   className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter L.G.A. Of Residence"
+                  placeholder="Enter City Of Residence (Optional)"
                   onChange={handleChange}
                   value={values?.localGovtName}
                 />
@@ -352,7 +409,7 @@ export default function PersonalInformation({
                   name="homeAddress"
                   id="homeAddress"
                   className={`w-full h-[100px] border border-secondary text-base p-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter home Address"
+                  placeholder="Enter Home Address"
                   onChange={handleChange}
                   value={values?.homeAddress}
                 />
@@ -362,7 +419,7 @@ export default function PersonalInformation({
                   </div>
                 ) : null}
               </div>
-              <div className="mb-1 w-full">
+              <div className="mb-1 w-full hidden">
                 <label
                   htmlFor="nearestBusStop"
                   className={`text-sm md:text-black text-white leading-4`}
@@ -370,7 +427,7 @@ export default function PersonalInformation({
                   Nearest Bus-stop
                 </label>
                 <textarea
-                  type="text"
+                  type="hidden"
                   name="nearestBusStop"
                   id="nearestBusStop"
                   className={`w-full h-[100px] border border-secondary text-base p-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}

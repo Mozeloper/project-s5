@@ -169,7 +169,7 @@ export default function AccountInformation({
               </div>
             </div>
             <div className="w-full flex md:flex-row flex-col gap-2 mb-6">
-              <div className="mb-1 w-full">
+              <div className="mb-1 w-full hidden">
                 <label
                   htmlFor="otherNames"
                   className={`text-sm md:text-black text-white leading-4`}
@@ -177,7 +177,7 @@ export default function AccountInformation({
                   Othernames
                 </label>
                 <input
-                  type="text"
+                  type="hidden"
                   name="otherNames"
                   id="otherNames"
                   className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
