@@ -14,6 +14,7 @@ export default function Signin() {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
   const [isLoading, setIsLoading] = useState(false);
+  const [pendingApproval, setPendingApproval] = useState(false);
 
   const loginSchema = Yup.object().shape({
     email: Yup.string()
@@ -60,6 +61,10 @@ export default function Signin() {
         });
       }
     } catch (error) {
+      if(error.status === 403) {
+        setPendingApproval(true);
+      }
+      console.log(error)
       const errorMessage =
         error?.data?.message ||
         "Unable to login this user is not Approved yet contact system Administrator...";
@@ -73,7 +78,7 @@ export default function Signin() {
 
   return (
     <div className="flex min-h-screen h-screen justify-center items-center bg-gray-900 md:p-4 p-5">
-      <div className="bg-white md:w-[500px] w-full min-h-[300px] md:h-auto flex flex-col justify-between md:items-center md:pt-16 rounded-lg md:p-6 p-5">
+      {!pendingApproval ? (<div className="bg-white md:w-[500px] w-full min-h-[300px] md:h-auto flex flex-col justify-between md:items-center md:pt-16 rounded-lg md:p-6 p-5">
         <div className="w-full flex justify-center">
           <img src={logo} alt="logo" className="md:w-[300px] w-[200px]" />
         </div>
@@ -82,8 +87,8 @@ export default function Signin() {
         </h3>
         <Formik
           initialValues={{
-            email: "",
-            password: "",
+            email: '',
+            password: '',
           }}
           validationSchema={loginSchema}
           onSubmit={(values) => {
@@ -110,6 +115,7 @@ export default function Signin() {
                 <input
                   type="text"
                   name="email"
+                  autoComplete="off"
                   id="email"
                   className={`w-full h-[56px] border border-secondary text-base px-4 rounded-lg mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Email"
@@ -136,7 +142,7 @@ export default function Signin() {
                 </div>
               ) : null}
               <p
-                onClick={() => navigate("/forget-password")}
+                onClick={() => navigate('/forget-password')}
                 className="text-[#0562cc] flex justify-end hover:text-indigo-500 font-sm leading-4 my-4 cursor-pointer"
               >
                 Forgot Password ?
@@ -154,7 +160,7 @@ export default function Signin() {
                   Don't have an account?
                 </p>
                 <p
-                  onClick={() => navigate("/begin-registration")}
+                  onClick={() => navigate('/begin-registration')}
                   className="text-[#0562cc] hover:text-indigo-500 font-sm leading-4 my-4 cursor-pointer hover:border-b hover:border-indigo-600"
                 >
                   Register
@@ -163,8 +169,18 @@ export default function Signin() {
             </Form>
           )}
         </Formik>
-        <div className="text-center"><small className="text-primary font-bold">Powered by The Potters House of Lagos</small></div>
-      </div>
+        <div className="text-center">
+          <small className="text-primary font-bold">
+            Powered by The Potters House of Lagos
+          </small>
+        </div>
+      </div>) : (
+
+      <div className="bg-white md:w-[500px] w-full min-h-[300px] md:h-auto md:pt-16 rounded-lg md:p-6 p-5">
+        Hello <span className="text-primary">Beloved</span>, <br/> You are unable to access the portal at this time as your account is still pending approval.  
+        Once your account has been approved, a mail will be sent to you, after which you should reattempt to login.
+         Thanks for your patience. God bless.
+      </div>)}
     </div>
   );
 }
