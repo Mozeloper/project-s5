@@ -6,7 +6,7 @@ import PersonalInformation from "./component/PersonalInformation";
 import ChurchInformation from "./component/ChurchInformation";
 
 export default function Register() {
-    const [RegSent, isRegSent] = useState(true);
+    const [RegSent, setRegSent] = useState(true);
 
   const [steps] = useState([
     { name: "Account Information" },
@@ -35,6 +35,7 @@ export default function Register() {
       <ChurchInformation
         userValues={userValues}
         setUserValues={setUserValues}
+        setRegSent={setRegSent}
       />
     ),
   };
@@ -45,10 +46,10 @@ export default function Register() {
       > */}
       <div
         className={
-    RegSent === false
-      ? "md:bg-[#232931] md:flex md:flex-col md:justify-center md:mt-auto w-full h-full mt-0 lg:px-8 md:px-4 px-2"
-      : "md:mt-32 w-full h-full mt-0 lg:px-8 md:px-4 px-2"
-  }
+          RegSent === false
+            ? 'md:bg-[#232931] md:flex md:flex-col md:justify-center md:mt-auto w-full h-full mt-0 lg:px-8 md:px-4 px-2'
+            : 'md:mt-32 w-full h-full mt-0 lg:px-8 md:px-4 px-2'
+        }
       >
         {RegSent ? (
           <>
@@ -72,21 +73,21 @@ export default function Register() {
           <div className="rounded bg-white px-5 py-10">
             <h2>
               Dearly <span className="text-primary">Beloved</span>, <br />
-              Thank you for pledging to be a part of this vision and taking time
-              to complete the registration.
+              Thank you for your commitment to this vision and also taking some
+              time to register.
             </h2>
             <p>
-              You might not be able to login at this time, as your account is
-              currently on hold and needs to be approved by an admin to grant
-              you access.
+              You might not be able to login at the moment as your account needs
+              approval for access.
             </p>
             <p>
-              Please be patient as this usually takes between a couple of
-              minutes to within a day.
+              Please be patient as the process takes about 2 minutes - 24 hours.
             </p>
-            <p>You will recieve a mail once your account has been approved.</p>
-            <p>Your Labor of love will not be in vain, in Jesus name (Amen).</p>
-            <p>Peace Be With You.</p>
+            <p>
+              You will receive a mail upon approval. Thanks for your labour of
+              love. God bless.
+            </p>
+          
             <Link to="/" className="underline text-primary mt-3 md:mt-10">
               Proceed to Login
             </Link>
