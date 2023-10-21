@@ -66,7 +66,7 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
           maritalStatus: data?.MaritalStatus || '',
           countryName: data?.CountryName || '',
           stateName: data?.StateName || '',
-          localGovtName: data?.LocalGovtName || '',
+          city: data?.City || '',
           homeAddress: data?.HomeAddress || '',
           nearestBusStop: data?.NearestBusStop || '',
           qualification: data?.Qualification || '',
@@ -94,7 +94,7 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
             maritalStatus: values?.maritalStatus,
             countryName: values?.countryName,
             stateName: values?.stateName,
-            localGovtName: data?.LocalGovtName,
+            City: values?.city,
             homeAddress: values?.homeAddress,
             nearestBusStop: data?.NearestBusStop,
             qualification: data?.Qualification,
@@ -397,7 +397,7 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
               <div className="w-full flex flex-col">
                 <label
                   className="text-sm md:text-black text-white leading-4"
-                  htmlFor="localGovtName"
+                  htmlFor="city"
                 >
                   City Of Residence
                   <span className="text-yellow-500 md:text-primary ml-1">
@@ -406,17 +406,15 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
                 </label>
                 <input
                   type="text"
-                  name="localGovtName"
-                  id="localGovtName"
+                  name="city"
+                  id="city"
                   className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter City Of Residence (Optional)"
                   onChange={handleChange}
-                  value={values?.localGovtName}
+                  value={values?.city}
                 />
-                {errors.localGovtName && touched.localGovtName ? (
-                  <div className="text-xs mt-2 text-red-700">
-                    {errors.localGovtName}
-                  </div>
+                {errors.city && touched.city ? (
+                  <div className="text-xs mt-2 text-red-700">{errors.city}</div>
                 ) : null}
               </div>
             </div>

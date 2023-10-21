@@ -17,7 +17,7 @@ export default function PersonalInformation({
     maritalStatus: Yup.string().required('Select Marital status'),
     countryName: Yup.string().required('Select country'),
     stateName: Yup.string().required('Select country'),
-    localGovtName: Yup.string().required('Select LGA'),
+    city: Yup.string().string(),
     nameOfOrganization: Yup.string(),
     homeAddress: Yup.string(),
     nearestBusStop: Yup.string(),
@@ -39,7 +39,7 @@ export default function PersonalInformation({
           maritalStatus: userValues?.maritalStatus || '',
           countryName: userValues?.countryName || '',
           stateName: userValues?.stateName || '',
-          localGovtName: userValues?.localGovtName || '',
+          City: userValues?.city || '',
           nameOfOrganization: userValues?.nameOfOrganization || '',
           homeAddress: userValues?.homeAddress || '',
           nearestBusStop: userValues?.nearestBusStop || '',
@@ -315,8 +315,7 @@ export default function PersonalInformation({
                   value={values?.stateName}
                 /> */}
                 <SearchableSelect
-                  options={
-                    [
+                  options={[
                     { label: 'Lagos', value: 'Lagos' },
                     { label: 'Abuja', value: 'Abuja' },
                     { label: 'Abia', value: 'Abia' },
@@ -353,8 +352,8 @@ export default function PersonalInformation({
                     { label: 'Sokoto', value: 'Sokoto' },
                     { label: 'Taraba', value: 'Taraba' },
                     { label: 'Yobe', value: 'Yobe' },
-                    { label: 'Zamfara', value: 'Zamfara' }]
-                  }
+                    { label: 'Zamfara', value: 'Zamfara' },
+                  ]}
                   name="stateName"
                   id="stateName"
                   value={values.stateName}
@@ -373,7 +372,7 @@ export default function PersonalInformation({
               <div className="w-full">
                 <label
                   className="text-sm md:text-black text-white leading-4"
-                  htmlFor="localGovtName"
+                  htmlFor="city"
                 >
                   City Of Residence
                   <span className="text-yellow-500 md:text-primary ml-1">
@@ -382,16 +381,16 @@ export default function PersonalInformation({
                 </label>
                 <input
                   type="text"
-                  name="localGovtName"
-                  id="localGovtName"
+                  name="city"
+                  id="city"
                   className={`w-full h-[56px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter City Of Residence (Optional)"
                   onChange={handleChange}
-                  value={values?.localGovtName}
+                  value={values?.city}
                 />
-                {errors.localGovtName && touched.localGovtName ? (
+                {errors.city && touched.city ? (
                   <div className="text-xs mt-2 text-red-700">
-                    {errors.localGovtName}
+                    {errors.city}
                   </div>
                 ) : null}
               </div>

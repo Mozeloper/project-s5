@@ -218,7 +218,7 @@ export default function PersonalDetailsSettings() {
             </div>
             <div className="flex gap-x-16">
               <h3 className="font-bold w-[20%]">City of Residence</h3>{' '}
-              <span>{data?.LocalGovtName || '...'}</span>
+              <span>{data?.City || '...'}</span>
             </div>
             <div className="flex gap-x-16">
               <h3 className="font-bold w-[20%]">State of Residence</h3>{' '}
