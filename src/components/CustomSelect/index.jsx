@@ -37,7 +37,7 @@ const colourStyles = {
     return {
       ...styles,
       backgroundColor: isFocused ? "#bf0a30" : "#FFF",
-      color: isFocused ? "#FFF" : "#bf0a30",
+      color: isFocused ? "#FFF" : isDisabled ? "#00FF00" : "#bf0a30",
       cursor: isDisabled ? "not-allowed" : "pointer",
     };
   },
@@ -54,6 +54,7 @@ const SearchableSelect = ({
   extraFunction,
   defaultValue,
   multipleOptions = false,
+  isDisabled = false,
   setEmptyField = false,
   ...props
 }) => {
@@ -93,11 +94,12 @@ const SearchableSelect = ({
         } else {
           setFieldValue(name, isUpdatingObj ? option : option.value);
         }
-        setEmptyField && setFieldValue(setEmptyField, "", false);
+        setEmptyField && setFieldValue(setEmptyField, '', false);
         extraFunction && extraFunction(option);
       }}
       styles={colourStyles}
-      placeholder={!isLoading ? placeholder : ""}
+      placeholder={!isLoading ? placeholder : ''}
+      isDisabled={isDisabled}
       isLoading={isLoading}
       defaultInputValue={defaultValue}
       isMulti={multipleOptions}

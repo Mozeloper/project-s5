@@ -88,13 +88,23 @@ export default function PersonalDetailsSettings() {
       <div className="overflow-hidden">
         <div className="w-full rounded-md relative h-[240px] bg-gradient-to-b from-[#232931] to-[#38404b] p-4">
           <div className="w-full flex justify-end">
-            <Button
-              title="Edit"
-              className="w-[126px] text-sm rounded-md"
-              backgroundColor="bg-white"
-              textColor="text-secondary"
-              onClick={() => setOpenModal(true)}
-            />
+            {data?.FirstName ? (
+              <Button
+                title="Edit"
+                className="w-[126px] text-sm rounded-md"
+                backgroundColor="bg-white"
+                textColor="text-secondary"
+                onClick={() => setOpenModal(true)}
+              />
+            ) : (
+              <Skeleton
+                animation="wave"
+                variant="rectangular"
+                width={126}
+                height={40}
+                className="w-[126px] text-sm rounded-md !bg-gray-200"
+              />
+            )}
           </div>
           <div className="absolute -bottom-24 flex md:gap-16 gap-2 md:left-[30px] md:right-[30px] right-0 left-0 bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
             <div className="flex gap-4">
@@ -175,6 +185,10 @@ export default function PersonalDetailsSettings() {
               <span>{data?.MaritalStatus || '...'}</span>
             </div>
             <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">Department</h3>{' '}
+              <span>{data?.Department || '...'}</span>
+            </div>
+            <div className="flex gap-x-16">
               <h3 className="font-bold w-[20%]">Member Since</h3>{' '}
               <span>{data?.YearJoined || '...'}</span>
             </div>
@@ -203,13 +217,14 @@ export default function PersonalDetailsSettings() {
               <span>{data?.NearestBusStop || '...'}</span>
             </div>
             <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">State</h3>{' '}
-              <span>{data?.StateName || '...'}</span>
-            </div>
-            <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">L.G.A.</h3>{' '}
+              <h3 className="font-bold w-[20%]">City of Residence</h3>{' '}
               <span>{data?.LocalGovtName || '...'}</span>
             </div>
+            <div className="flex gap-x-16">
+              <h3 className="font-bold w-[20%]">State of Residence</h3>{' '}
+              <span>{data?.StateName || '...'}</span>
+            </div>
+
             <div className="flex gap-x-16">
               <h3 className="font-bold w-[20%]">Country</h3>{' '}
               <span>{data?.CountryName || '...'}</span>
