@@ -19,8 +19,8 @@ const ReusableTable = ({
   totalSearchData, //This going to be a get all api call with out any parameters e.g pagesize... to get the total data and get the total name with just search based on page
   //Check the admins.table.jsx file to see the full implementation for totalSearchData
   hideSearch, // Add the hideSearch prop
-  // setTextSearch,
-  // textSearch,
+  setTextSearch,
+  textSearch,
 }) => {
   const filteredNumber = +filterNumber ?? +data?.length;
 
@@ -32,8 +32,8 @@ const ReusableTable = ({
           <SearchBoxIndex
             searchArray={(totalSearchData && totalSearchData) ?? (data && data)}
             linkTo=""
-            // textSearch={textSearch}
-            // setTextSearch={setTextSearch}
+            textSearch={textSearch}
+            setTextSearch={setTextSearch}
           />
         </div>
       )}

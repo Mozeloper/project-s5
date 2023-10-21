@@ -20,8 +20,8 @@ interface Props {
   bg?: string;
   textColor?: string;
   placeholder?: string;
-  setTextSearch?: (query: string) => void;
-  textSearch?: string;
+  setTextSearch: (query: string) => void;
+  textSearch: string;
 }
 
 export default function SearchBoxIndex({ searchArray, linkTo, bg, textColor, placeholder, setTextSearch, textSearch }: Props) {
