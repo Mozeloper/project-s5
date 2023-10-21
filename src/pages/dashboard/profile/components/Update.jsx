@@ -48,9 +48,9 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
           onClick={() => setOpenModal(false)}
         />
       </div>
-      <h3 className="mb-4 font-bold first-letter:text-3xl first-letter:font-bold text-normal text-lg leading-7">
+      <h2 className="mb-4 font-bold first-letter:text-3xl first-letter:font-bold text-normal text-lg leading-7">
         Update Information
-      </h3>
+      </h2>
       <Formik
         initialValues={{
           FirstName: data?.FirstName || '',
@@ -114,6 +114,9 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
           errors,
         }) => (
           <Form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <h3 className="font-bold mt-5 text-primary">
+              Personal Information
+            </h3>
             <div className="w-full flex md:flex-row flex-col gap-3">
               <div className="w-full flex flex-col">
                 <label

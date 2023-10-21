@@ -102,7 +102,7 @@ export default function PersonalDetailsSettings() {
                 variant="rectangular"
                 width={126}
                 height={40}
-                className="w-[126px] text-sm rounded-md !bg-gray-300"
+                className="w-[126px] text-sm rounded-md !bg-gray-200"
               />
             )}
           </div>
