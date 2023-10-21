@@ -8,42 +8,31 @@ import { useTextSearchNav } from '../../context/textSearch.context'
 import { FaSearch } from 'react-icons/fa';
 // import { useRouter } from 'next/navigation'
 
-export  type searchType = {
-    id: string | number,
-    title: string,
-    [key: string]: any,
+interface SearchType {
+  id: string | number;
+  title: string;
+  [key: string]: any;
 }
 
-export type styleOptions = {
+interface Props {
+  searchArray: SearchType[];
+  linkTo?: string;
   bg?: string;
   textColor?: string;
   placeholder?: string;
+  setTextSearch: (query: string) => void;
+  textSearch: string;
 }
 
-//Famimilizing with the code below (SearchBoxIndex)
-//it's a dynamic search box to search array of data based on fullname and name following our api convertion for project 5s
-
-//1. create a reactjs context for text(string) search based on the api search query
-//1a. The context on change makes an api refetch query based off your search text
-// 2. searchArray: is/should be the response data array from the api call
-// 2a. The search query will also work well with any dummy array data but should have a property of
-// 2aii. FullName or Name properties
-
-//3. linkto: isn't really important but i've added should incase we want to redirect or view search result in another page.
-
-//Happy coding guys ===>>>>>> Dimgba Micheal says 'hi'😅
-
-export default function SearchBoxIndex({searchArray, linkTo, bg, textColor, placeholder }: {searchArray: [searchType], linkTo?: string, bg?: string, textColor?: string, placeholder?: string }) {
+export default function SearchBoxIndex({ searchArray, linkTo, bg, textColor, placeholder, setTextSearch, textSearch }: Props) {
   const [selected, setSelected] = useState<any>(null)
   const [query, setQuery] = useState('')
-  // const [ textSearch, setTextSearch ] = useState('')
-  let { textSearch, setTextSearch } = useTextSearchNav()
   // const router = useRouter()
 
   useEffect(() => {
     setQuery(textSearch)
     setSelected(textSearch)
-  }, [textSearch])
+  }, [query])
   
   const filteredPeople =
     query === ''
