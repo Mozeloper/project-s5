@@ -2,31 +2,39 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import Button from '../../../../components/Button';
-import { appUrls } from '../../../../services/urls';
-import { api } from '../../../../services/api';
+import Button from '../Button';
+import { appUrls } from '../../services/urls';
+import { api } from '../../services/api';
 import { toast } from 'react-hot-toast';
-import SearchableSelect from '../../../../components/CustomSelect';
-import { formatToISODate } from '../../../../utils';
+import SearchableSelect from '../CustomSelect';
 
-export default function Update({ setOpenModal, data, handleGetUser }) {
-  const updateUserSchema = Yup.object().shape({
-    Email: Yup.string()
-      .email('Invalid email format')
-      .required('Email is required'),
-    FirstName: Yup.string().required('First Name is required'),
-    SurName: Yup.string().required('Last Name is required'),
-    PhoneNumber: Yup.string().required('Phone number is required'),
-    Gender: Yup.string().required('Gender is required'),
-    OtherNames: Yup.string(),
+export default function EditConvertDetails({
+  setOpenModal,
+  data,
+  // handleConvertUpdate,
+}) {
+  const updateConvertSchema = Yup.object().shape({
+    email: Yup.string(),
+    firstName: Yup.string().required('First Name is required'),
+    surName: Yup.string().required('Last Name is required'),
+    phoneNumber: Yup.string().required('Phone number is required'),
+    gender: Yup.string().required('Gender is required'),
+    address: Yup.string().required('Address is required'),
+    nearestBusStop: Yup.string(),
+    maritalStatus: Yup.string(),
+    employmentStatus: Yup.string(),
+    qualification: Yup.string(),
+    countryName: Yup.string(),
+    stateName: Yup.string(),
+    city: Yup.string(),
+    yearJoined: Yup.number(),
   });
-  const maxDOBYear = new Date().getFullYear() - 8; // Calculate 8 years ago
 
-  const handleUpdateUser = async (payload, actions) => {
+  const handleUpdateConvert = async (payload, actions) => {
     try {
-      const res = await api.post(appUrls.UPDATEUSER_URL, payload);
+      const res = await api.post(appUrls.UPDATE_CONVERT, payload);
       if (res?.status === 200) {
-        handleGetUser();
+        // handleConvertUpdate();
         setOpenModal(false);
         toast.success('Updated Successful', {
           icon: '👏',
@@ -49,59 +57,48 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
         />
       </div>
       <h2 className="mb-4 font-bold first-letter:text-3xl first-letter:font-bold text-normal text-lg leading-7">
-        Update Information
+        Update Convert Information
       </h2>
       <Formik
         initialValues={{
-          FirstName: data?.FirstName || '',
-          SurName: data?.SurName || '',
-          OtherNames: data?.OtherNames || '',
-          Email: data?.Email || '',
-          PhoneNumber: data?.PhoneNumber || '',
-          Gender: data?.Gender || '',
+          surname: data?.Surname || '',
+          firstName: data?.FirstName || '',
+          email: data?.Email || '',
+          address: data?.Address || '',
           phoneNumber: data?.PhoneNumber || '',
-          dateOfBirth: data?.DateOfBirth || '',
-          department: data?.department || '',
-          employmentStatus: data?.EmploymentStatus || '',
-          maritalStatus: data?.MaritalStatus || '',
+          gender: data?.Gender || 'Male',
+          nearestBusStop: data?.NearestBusStop || '',
+          maritalStatus: data?.MaritalStatus || 'Single',
+          employmentStatus: data?.EmploymentStatus || null,
+          qualification: data?.Qualification || 'LeavingSchoolCertificate',
           countryName: data?.CountryName || '',
           stateName: data?.StateName || '',
+          additionalInformation: '',
           city: data?.City || '',
-          homeAddress: data?.HomeAddress || '',
-          nearestBusStop: data?.NearestBusStop || '',
-          qualification: data?.Qualification || '',
-          nameOfOrganization: data?.NameOfOrganization || '',
-          yearJoined: data?.YearJoined || '',
+          yearJoined: data?.YearJoined || 0,
         }}
-        validationSchema={updateUserSchema}
+        //validationSchema={updateConvertSchema}
         enableReinitialize={true}
         onSubmit={(values, actions) => {
-          const formattedDateOfBirth = formatToISODate(values?.dateOfBirth);
-          // const formattedDate = moment(data?.DateOfBirth).format(
-          //   "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
-          // );
+          console.log(values);
           const payload = {
-            firstName: data?.FirstName,
-            userName: data?.UserName,
-            surName: data?.SurName,
-            otherNames: values?.OtherNames,
+            surname: values?.surname,
+            firstName: values?.firstName,
             email: data?.Email,
+            address: values?.address,
+            phoneNumber: values?.phoneNumber,
             gender: data?.Gender,
-            phoneNumber: values?.PhoneNumber,
-            dateOfBirth: formattedDateOfBirth,
-            department: data?.Department,
-            employmentStatus: data?.EmploymentStatus,
+            nearestBusStop: values?.nearestBusStop,
             maritalStatus: values?.maritalStatus,
+            employmentStatus: values?.employmentStatus,
+            qualification: values?.qualification,
             countryName: values?.countryName,
             stateName: values?.stateName,
-            City: values?.city,
-            homeAddress: values?.homeAddress,
-            nearestBusStop: data?.NearestBusStop,
-            qualification: data?.Qualification,
-            nameOfOrganization: data?.NameOfOrganization,
+            additionalInformation: values?.additionalInformation,
+            city: values?.city,
             yearJoined: values?.yearJoined,
           };
-          handleUpdateUser(payload, actions);
+          handleUpdateConvert(payload, actions);
         }}
       >
         {({
@@ -121,161 +118,88 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
               <div className="w-full flex flex-col">
                 <label
                   className="text-sm text-black leading-4"
-                  htmlFor="FirstName"
+                  htmlFor="firstName"
                 >
                   First Name
                 </label>
                 <input
                   type="text"
-                  readOnly
-                  name="FirstName"
-                  id="FirstName"
+                  name="firstName"
+                  id="firstName"
                   className={`w-full h-[41px] text-sm px-4 border border-secondary rounded-lg mt-2 outline-none bg-grey700 read-only:cursor-not-allowed disabled:cursor-not-allowed`}
                   placeholder="First Name"
                   onChange={handleChange}
-                  value={values?.FirstName}
+                  value={values?.firstName}
                 />
-                {errors.FirstName && touched.FirstName ? (
-                  <div className="text-xs text-red-700">{errors.FirstName}</div>
+                {errors.firstName && touched.firstName ? (
+                  <div className="text-xs text-red-700">{errors.firstName}</div>
                 ) : null}
               </div>
               <div className="w-full flex flex-col">
                 <label
                   className="text-sm text-black leading-4"
-                  htmlFor="SurName"
+                  htmlFor="surname"
                 >
                   Last Name
                 </label>
                 <input
                   type="text"
-                  readOnly
-                  name="SurName"
-                  id="SurName"
+                  name="surname"
+                  id="surname"
                   className={`w-full h-[41px] text-sm px-4  border border-secondary rounded-lg mt-2 outline-none bg-grey700 read-only:cursor-not-allowed disabled:cursor-not-allowed`}
                   placeholder="Last Name"
                   onChange={handleChange}
-                  value={values?.SurName}
+                  value={values?.surname}
                 />
-                {errors.SurName && touched.SurName ? (
-                  <div className="text-xs text-red-700">{errors.SurName}</div>
-                ) : null}
-              </div>
-            </div>
-            <div className="w-full flex md:flex-row-reserve flex-col-reverse gap-3">
-              <div className="w-full flex flex-col">
-                <label
-                  className="text-sm text-black leading-4"
-                  htmlFor="OtherNames"
-                >
-                  Other Names
-                </label>
-                <input
-                  type="text"
-                  name="OtherNames"
-                  id="OtherNames"
-                  className={`w-full h-[41px] text-sm px-4  border border-secondary rounded-lg mt-2 outline-none bg-grey700 focus:bg-none active:bg-transparent disabled:cursor-not-allowed`}
-                  placeholder="Other Names"
-                  onChange={handleChange}
-                  value={values?.OtherNames}
-                />
-                {errors.OtherNames && touched.OtherNames ? (
-                  <div className="text-xs text-red-700">
-                    {errors.OtherNames}
-                  </div>
+                {errors.surname && touched.surname ? (
+                  <div className="text-xs text-red-700">{errors.surname}</div>
                 ) : null}
               </div>
             </div>
             <div className="w-full flex md:flex-row flex-col gap-3">
               <div className="w-full flex flex-col">
-                <label className="text-sm text-black leading-4" htmlFor="Email">
+                <label className="text-sm text-black leading-4" htmlFor="email">
                   Email Address
                 </label>
                 <input
                   type="text"
-                  name="Email"
-                  id="Email"
+                  name="email"
+                  id="email"
                   className={`w-full h-[41px] text-sm px-4  border border-secondary rounded-lg mt-2 outline-none bg-grey700 read-only:cursor-not-allowed disabled:cursor-not-allowed`}
-                  placeholder="Email Address"
+                  placeholder="email Address"
                   onChange={handleChange}
-                  value={values?.Email}
-                  readOnly
+                  value={values?.email}
                 />
-                {errors.Email && touched.Email ? (
-                  <div className="text-xs text-red-700">{errors.Email}</div>
+                {errors.email && touched.email ? (
+                  <div className="text-xs text-red-700">{errors.email}</div>
                 ) : null}
               </div>
               <div className="w-full flex flex-col">
                 <label
                   className="text-sm text-black leading-4"
-                  htmlFor="PhoneNumber"
+                  htmlFor="phoneNumber"
                 >
                   Phone number
                 </label>
                 <input
-                  type="text"
-                  name="PhoneNumber"
-                  id="PhoneNumber"
+                  type="number"
+                  name="phoneNumber"
+                  id="phoneNumber"
                   className={`w-full h-[41px] text-sm px-4  border border-secondary rounded-lg mt-2 outline-none bg-grey700`}
-                  placeholder="Enter Username"
+                  placeholder="Enter Phone Number"
                   onChange={handleChange}
-                  value={values?.PhoneNumber}
+                  value={values?.phoneNumber}
                 />
-                {errors.PhoneNumber && touched.PhoneNumber ? (
+                {errors.phoneNumber && touched.phoneNumber ? (
                   <div className="text-xs text-red-700">
-                    {errors.PhoneNumber}
+                    {errors.phoneNumber}
                   </div>
                 ) : null}
               </div>
             </div>
             <div className="w-full flex md:flex-row flex-col gap-3">
-              <div className="w-full flex flex-col">
-                {/* <label
-                  className="text-sm text-black leading-4"
-                  htmlFor="homeAddress"
-                >
-                  BOD
-                </label>
-                <input
-                  type="text"
-                  name="dateOfBirth"
-                  id="dateOfBirth"
-                  className={`w-full h-[41px] text-sm px-4  border border-secondary rounded-lg mt-2 outline-none bg-grey700`}
-                  placeholder="Date Of Birth"
-                  onChange={handleChange}
-                  value={values?.dateOfBirth}
-                />
-                {errors.dateOfBirth && touched.dateOfBirth ? (
-                  <div className="text-xs text-red-700">
-                    {errors.dateOfBirth}
-                  </div>
-                ) : null} */}
-                <label
-                  htmlFor="dateOfBirth"
-                  className={`text-sm md:text-black text-white leading-4`}
-                >
-                  Date Of birth{' '}
-                  <span className="text-yellow-500 md:text-primary ml-1">
-                    *
-                  </span>
-                </label>
-                <input
-                  type="date"
-                  name="dateOfBirth"
-                  id="dateOfBirth"
-                  max={`${maxDOBYear}-12-31`} // Set the max date to 8 years ago
-                  className={`w-full h-[40px] border border-secondary text-base px-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
-                  placeholder="Enter Your Date Of Birth"
-                  onChange={handleChange}
-                  value={values?.dateOfBirth}
-                />
-                {errors.dateOfBirth && touched.dateOfBirth ? (
-                  <div className="text-xs mt-2 text-red-700">
-                    {errors.dateOfBirth}
-                  </div>
-                ) : null}
-              </div>
-              <div className="w-full">
-                <label className="text-sm ext-black leading-4" htmlFor="Gender">
+              {/* <div className="w-full">
+                <label className="text-sm ext-black leading-4" htmlFor="gender">
                   Gender
                 </label>
                 <SearchableSelect
@@ -283,24 +207,21 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
                     { label: 'Male', value: 0 },
                     { label: 'Female', value: 1 },
                   ]}
-                  name="Gender"
-                  id="Gender"
+                  name="gender"
+                  id="gender"
                   isDisabled={true}
-                  value={values.Gender}
+                  value={values.gender}
                   setFieldValue={(name, value) => setFieldValue(name, value)}
                   className="w-full outline-none"
                   placeholder="Select Gender"
                   defaultValue={data?.Gender}
                 />
-                {errors.Gender && touched.Gender ? (
+                {errors.gender && touched.gender ? (
                   <div className="text-xs mt-2 text-red-700">
-                    {errors.Gender}
+                    {errors.gender}
                   </div>
                 ) : null}
-              </div>
-            </div>
-
-            <div className="w-full flex md:flex-row flex-col gap-3">
+              </div> */}
               <div className="w-full">
                 <label
                   className="text-sm ext-black leading-4"
@@ -341,6 +262,50 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
                   </div>
                 ) : null}
               </div>
+            </div>
+
+            <div className="w-full flex md:flex-row flex-col gap-3">
+              <div className="w-full">
+                <label
+                  className="text-sm md:text-black text-white leading-4"
+                  htmlFor="qualification"
+                >
+                  Qualification{' '}
+                  <span className="text-yellow-500 md:text-primary ml-1">
+                    *
+                  </span>
+                </label>
+                <SearchableSelect
+                  options={[
+                    {
+                      label: 'LeavingSchoolCertificate',
+                      value: 'LeavingSchoolCertificate',
+                    },
+                    {
+                      label: 'SSCE',
+                      value: 'SSCE',
+                    },
+                    { label: 'OND', value: 'OND' },
+                    { label: 'HND', value: 'HND' },
+                    { label: 'BSc', value: 'BSc' },
+                    { label: 'MSc', value: 'MSc' },
+                    { label: 'PhD', value: 'PhD' },
+                    { label: 'Others', value: 'Others' },
+                  ]}
+                  name="qualification"
+                  id="qualification"
+                  value={values.qualification}
+                  setFieldValue={(name, value) => setFieldValue(name, value)}
+                  className="w-full outline-none"
+                  placeholder="Select Employment status"
+                />
+                {errors.qualification && touched.qualification ? (
+                  <div className="text-xs mt-2 text-red-700">
+                    {errors.qualification}
+                  </div>
+                ) : null}
+              </div>
+
               <div className="w-full flex flex-col">
                 <label
                   className="text-sm text-black leading-4"
@@ -371,24 +336,46 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
             <div className="w-full flex md:flex-row flex-col gap-3">
               <div className="w-full flex flex-col">
                 <label
+                  htmlFor="nearestBusStop"
+                  className={`text-sm md:text-black text-white leading-4`}
+                >
+                  Nearest Bus-stop
+                </label>
+                <input
+                  type="text"
+                  name="nearestBusStop"
+                  id="nearestBusStop"
+                  className={`w-full min-h-[46px] border border-secondary text-base p-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  placeholder="Enter Your Nearest Bus Stop"
+                  onChange={handleChange}
+                  value={values?.nearestBusStop}
+                />
+                {errors.nearestBusStop && touched.nearestBusStop ? (
+                  <div className="text-xs mt-2 text-red-700">
+                    {errors.nearestBusStop}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+            <div className="w-full flex md:flex-row flex-col gap-3">
+              <div className="w-full flex flex-col">
+                <label
                   className="text-sm text-black leading-4"
-                  htmlFor="homeAddress"
+                  htmlFor="address"
                 >
                   Home Address
                 </label>
                 <textarea
                   type="text"
-                  name="homeAddress"
-                  id="homeAddress"
+                  name="address"
+                  id="address"
                   className={`w-full min-h-[56px] text-sm px-4 py-4 border border-secondary rounded mt-2 outline-none bg-grey700`}
                   placeholder="Home Address"
                   onChange={handleChange}
-                  value={values?.homeAddress}
+                  value={values?.address}
                 />
-                {errors.homeAddress && touched.homeAddress ? (
-                  <div className="text-xs text-red-700">
-                    {errors.homeAddress}
-                  </div>
+                {errors.address && touched.address ? (
+                  <div className="text-xs text-red-700">{errors.address}</div>
                 ) : null}
               </div>
             </div>

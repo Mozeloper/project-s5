@@ -36,6 +36,7 @@ export const appUrls = {
   DELETE_A_CONVERT: '/api/v1/NewConvert/delete-new-convert', //delete soul by id
   SUSPEND_A_CONVERT: '/api/v1/NewConvert/deactivate-new-convert', //suspend soul by id
   REACTIVATE_A_CONVERT: '/api/v1/NewConvert/reactivate-new-convert', //reactivate soul by id
+  UPDATE_CONVERT: '/api/v1/NewConvert/update-newconvert-profile',
 
   //Ministry
   GET_ALL_MINISTRY_URL:

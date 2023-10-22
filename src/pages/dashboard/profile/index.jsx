@@ -109,17 +109,26 @@ export default function PersonalDetailsSettings() {
           <div className="absolute -bottom-24 flex md:gap-16 gap-2 md:left-[30px] md:right-[30px] right-0 left-0 bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
             <div className="flex gap-4">
               {/* added min height and width to prevent flickering  */}
-              {data && data?.Gender ? (
-                <img
-                  src={
-                    `${data?.Gender}`.toLowerCase() === 'male'
-                      ? MaleProfileImg
-                      : FemaleProfileImg
-                  }
-                  alt="profile_img"
-                  loading="lazy"
-                  className="w-auto min-h-[160px] min-w-[160px] max-h-[160px] relative -top-16"
-                />
+              {data && data?.PhotoUrl ? (
+                data?.PhotoUrl !== '' ? (
+                  <img
+                    src={data?.PhotoUrl}
+                    alt="profile_img"
+                    loading="lazy"
+                    className="w-auto min-h-[160px] rounded object-cover min-w-[160px] max-h-[160px] relative -top-16"
+                  />
+                ) : (
+                  <img
+                    src={
+                      `${data?.Gender}`.toLowerCase() === 'male'
+                        ? MaleProfileImg
+                        : FemaleProfileImg
+                    }
+                    alt="profile_img"
+                    loading="lazy"
+                    className="w-auto min-h-[160px] min-w-[160px] max-h-[160px] relative -top-16"
+                  />
+                )
               ) : (
                 <Skeleton
                   animation="wave"
@@ -218,7 +227,7 @@ export default function PersonalDetailsSettings() {
             </div>
             <div className="flex gap-x-16">
               <h3 className="font-bold w-[20%]">City of Residence</h3>{' '}
-              <span>{data?.LocalGovtName || '...'}</span>
+              <span>{data?.City || '...'}</span>
             </div>
             <div className="flex gap-x-16">
               <h3 className="font-bold w-[20%]">State of Residence</h3>{' '}
