@@ -65,7 +65,8 @@ const ReusableTable = ({
                         head.toLowerCase() === 'dateofbirth' ||
                         head.toLowerCase() === 'address' ||
                         head.toLowerCase() === 'datecreated' ||
-                        head.toLowerCase() === 'yearjoined'
+                        head.toLowerCase() === 'yearjoined' ||
+                        head.toLowerCase() === 'isassigned'
                           ? 'hidden'
                           : ''
                       }`}
@@ -110,7 +111,9 @@ const ReusableTable = ({
                           head.toLowerCase() === 'dateofbirth' ||
                           head.toLowerCase() === 'address' ||
                           head.toLowerCase() === 'datecreated' ||
-                          head.toLowerCase() === 'yearjoined'
+                          head.toLowerCase() === 'yearjoined' ||
+                          head.toLowerCase() === 'datecreated' ||
+                          head.toLowerCase() === 'isassigned'
                             ? 'hidden'
                             : ''
                         }`}
