@@ -3,6 +3,7 @@ import toast from 'react-hot-toast'
 import { GiConfirmed } from 'react-icons/gi'
 import { GrView } from 'react-icons/gr'
 import { IoRemoveCircleSharp } from 'react-icons/io5'
+import { MdAssignmentAdd } from 'react-icons/md';
 import { useQueryClient } from 'react-query'
 import { useTextSearchNav } from '../../context/textSearch.context'
 import { useFetchNewBelievers } from '../../hooks/useFetchNewBelievers'
@@ -47,6 +48,7 @@ export default function NewBelieversTable() {
 
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
+    { icon: <MdAssignmentAdd className="text-red-700" />, name: 'Assign' },
     { icon: <GiConfirmed className="text-green-500" />, name: 'Promote' },
     {
       icon: <IoRemoveCircleSharp className="text-yellow-500" />,
@@ -96,6 +98,13 @@ export default function NewBelieversTable() {
         />
       );
     } else if (innerText.toLowerCase() === 'disable') {
+      setDisplayUi(
+        <SuspendConvert
+          handleDeactivate={handleSuspendNBCovert.bind(null, id)}
+          screenName={innerText}
+        />
+      );
+    } else if (innerText.toLowerCase() === 'assign') {
       setDisplayUi(
         <SuspendConvert
           handleDeactivate={handleSuspendNBCovert.bind(null, id)}
