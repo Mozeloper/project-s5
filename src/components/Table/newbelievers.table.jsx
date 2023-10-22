@@ -1,25 +1,27 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
-import { GiConfirmed } from 'react-icons/gi'
-import { GrView } from 'react-icons/gr'
-import { IoRemoveCircleSharp } from 'react-icons/io5'
+import React, { Fragment, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { GiConfirmed } from 'react-icons/gi';
+import { GrView } from 'react-icons/gr';
+import { IoRemoveCircleSharp } from 'react-icons/io5';
 import { MdAssignmentAdd } from 'react-icons/md';
-import { useQueryClient } from 'react-query'
-import { useTextSearchNav } from '../../context/textSearch.context'
-import { useFetchNewBelievers } from '../../hooks/useFetchNewBelievers'
-import { suspendAConvert } from '../../services/admins.api'
-import Loader from '../Loader'
-import PaginationFooter from '../PaginationFooter'
-import PromoteConvertToDti from '../UI/PromoteScreen/PromoteConvertToDti'
-import SuspendConvert from '../UI/SuspendConvert'
-import ReusableTable from './Table.reusable'
+import { useQueryClient } from 'react-query';
+import { useTextSearchNav } from '../../context/textSearch.context';
+import { useFetchNewBelievers } from '../../hooks/useFetchNewBelievers';
+import { suspendAConvert } from '../../services/admins.api';
+import Loader from '../Loader';
+import PaginationFooter from '../PaginationFooter';
+import PromoteConvertToDti from '../UI/PromoteScreen/PromoteConvertToDti';
+import SuspendConvert from '../UI/SuspendConvert';
+import ReusableTable from './Table.reusable';
 import SearchBox from '../Searchbox/searchbox';
+import AssignNewBelieverToAdmin from '../UI/AssignNewBelieverToAdminScreen';
+import { assignConvertToAdmin } from '../../services/admins.api';
 
 export default function NewBelieversTable() {
   const queryClient = useQueryClient();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  let { textSearch, setTextSearch } = useTextSearchNav()
+  let { textSearch, setTextSearch } = useTextSearchNav();
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
@@ -76,7 +78,25 @@ export default function NewBelieversTable() {
       toast.success(suspededConvert.Message);
       // Refetch the data after suspending the convert
       queryClient.invalidateQueries('GetAllNewBelievers');
-       useFetchNewBelievers({ pageNumber, pageSize, searchquery });
+      useFetchNewBelievers({ pageNumber, pageSize, searchquery });
+    }
+  };
+
+  /**
+   * Function for handling assigning of a new beleiver to an Admin
+   * @param {string} id
+   * @param {string} adminId
+   */
+  const handleAssignNBToAdmin = async (id, adminId) => {
+    console.log(id, adminId);
+    try {
+      const AssignRes = await assignConvertToAdmin(id, adminId);
+      if (AssignRes.StatusCode === 200) {
+        toast.success(AssignRes.Message);
+        queryClient.invalidateQueries('GetAllNewBelievers');
+      }
+    } catch (error) {
+      // toast.error('Could not assign convert, please try again');
     }
   };
 
@@ -89,6 +109,8 @@ export default function NewBelieversTable() {
     const innerText = option.name;
     console.log(innerText);
     const id = event.currentTarget.id;
+    const { name: Name, roles: Roles } = event.selectedUserData;
+
     if (innerText.toLowerCase() === 'promote') {
       setDisplayUi(
         <PromoteConvertToDti
@@ -106,9 +128,11 @@ export default function NewBelieversTable() {
       );
     } else if (innerText.toLowerCase() === 'assign') {
       setDisplayUi(
-        <SuspendConvert
-          handleDeactivate={handleSuspendNBCovert.bind(null, id)}
+        <AssignNewBelieverToAdmin
+          handleAssignToAdmin={handleAssignNBToAdmin.bind(null, id)}
           screenName={innerText}
+          convertId={id}
+          name={Name}
         />
       );
     }
@@ -116,8 +140,8 @@ export default function NewBelieversTable() {
 
   /**
    * Handler for pagination
-   * @param {Event} event 
-   * @param {number} value 
+   * @param {Event} event
+   * @param {number} value
    */
   const handlePaginationChange = (event, value) => {
     setPageNumber(value);
