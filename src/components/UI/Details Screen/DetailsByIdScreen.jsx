@@ -61,16 +61,26 @@ const DetailsByIdScreen = ({
                     height={160}
                   />
                 ) : (
-                  <div
-                    className={`${
-                      (data && data?.Gender)?.toLowerCase() === 'male'
-                        ? 'bg-blue-900'
-                        : 'bg-pink-700'
-                    } w-[160px] h-[160px] flex items-center justify-center text-6xl relative rounded-full text-white uppercase`}
-                  >
-                    {data && data?.FirstName?.charAt(0)}
-                    {data && data?.SurName?.charAt(0)}
-                  </div>
+                  <>
+                    {data?.PhotoUrl ? (
+                      <img
+                        src={data?.PhotoUrl}
+                        alt="Worker Profile Image"
+                        className={`w-[160px] min-h-[160px] h-[160px] object-cover rounded-full`}
+                      />
+                    ) : (
+                      <div
+                        className={`${
+                          (data && data?.Gender)?.toLowerCase() === 'male'
+                            ? 'bg-blue-900'
+                            : 'bg-pink-700'
+                        } w-[160px] h-[160px] flex items-center justify-center text-6xl relative rounded-full text-white uppercase`}
+                      >
+                        {data && data?.FirstName?.charAt(0)}
+                        {data && data?.SurName?.charAt(0)}
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
               <div className="grid grid-cols-1 md:gap-8 gap-2">
@@ -233,7 +243,7 @@ const DetailsByIdScreen = ({
                           <h3 className="font-bold md:w-[20%]">
                             Date of Birth
                           </h3>{' '}
-                          <span>{(data && data?.DateOfBirth) || '...'}</span>
+                          <span>{(data && data?.DateOfBirth.split('-').slice(0,2).join('-')) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
@@ -311,8 +321,8 @@ const DetailsByIdScreen = ({
                           <span>{(data && data?.StateName) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
-                          <h3 className="font-bold md:w-[20%]">L.G.A.</h3>{' '}
-                          <span>{(data && data?.LocalGovtName) || '...'}</span>
+                          <h3 className="font-bold md:w-[20%]">City Of Residence</h3>{' '}
+                          <span>{(data && data?.City) || '...'}</span>
                         </div>
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">Country</h3>{' '}
