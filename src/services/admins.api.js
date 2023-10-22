@@ -128,3 +128,15 @@ export async function getAllWorkersNames() {
     throw new Error(error.message || error);
   }
 }
+
+export async function getAllDTIAdminNames(nameQuery) {
+  try {
+    const DtiAdminNames = await api.get(
+      `${baseUrl}${appUrls.GET_ALL_NEW_BELIEVERS_ADMIN_NAMES}?searchquery=${nameQuery}`
+    );
+    const fetchDTIAdmins = await DtiAdminNames?.data?.Data;
+    return await fetchDTIAdmins;
+  } catch (error) {
+    throw new Error(error.message || error);
+  }
+}
