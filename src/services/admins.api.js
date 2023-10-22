@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { appUrls } from './urls';
 import { api } from './api';
-import toast from 'react-hot-toast'
+import toast from 'react-hot-toast';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -22,9 +22,7 @@ export async function getAllAdmins({ pageNumber, pageSize, searchquery }) {
 //It's the replica of the function above with out parameters/queries
 export async function getAllSearchAdmins() {
   try {
-    const admins = await api.get(
-      `${baseUrl}${appUrls.GET_ALL_SUPERADMINS}`
-    );
+    const admins = await api.get(`${baseUrl}${appUrls.GET_ALL_SUPERADMINS}`);
     const fetchAdmins = await admins?.data?.Data;
     return await fetchAdmins;
   } catch (error) {
@@ -32,7 +30,11 @@ export async function getAllSearchAdmins() {
   }
 }
 
-export async function getAllMinistryAdmins({ pageNumber, pageSize, searchquery }) {
+export async function getAllMinistryAdmins({
+  pageNumber,
+  pageSize,
+  searchquery,
+}) {
   try {
     const Ministryadmins = await api.get(
       `${baseUrl}${appUrls.GET_ALL_MINISTRY_URL}?page=${pageNumber}&pageSize=${pageSize}&searchquery=${searchquery}`
@@ -44,7 +46,11 @@ export async function getAllMinistryAdmins({ pageNumber, pageSize, searchquery }
   }
 }
 
-export async function getAllConvertsInDti({ pageNumber, pageSize, searchquery }) {
+export async function getAllConvertsInDti({
+  pageNumber,
+  pageSize,
+  searchquery,
+}) {
   try {
     const dtiConverts = await api.get(
       `${baseUrl}${appUrls.GET_ALL_DTIAdmin_URL}?page=${pageNumber}&pageSize=${pageSize}&searchquery=${searchquery}`
@@ -56,7 +62,11 @@ export async function getAllConvertsInDti({ pageNumber, pageSize, searchquery })
   }
 }
 
-export async function getAllConvertsInNewBelievers({ pageNumber, pageSize, searchquery }) {
+export async function getAllConvertsInNewBelievers({
+  pageNumber,
+  pageSize,
+  searchquery,
+}) {
   try {
     const newbeleiversConverts = await api.get(
       `${baseUrl}${appUrls.GET_ALL_NEW_BELIEVERS_CONVERTS}?page=${pageNumber}&pageSize=${pageSize}&searchquery=${searchquery}`
@@ -69,7 +79,7 @@ export async function getAllConvertsInNewBelievers({ pageNumber, pageSize, searc
 }
 
 export async function suspendAConvert(convertId, reason) {
-  const ConvertId = Number(convertId)
+  const ConvertId = Number(convertId);
   const payload = {
     id: `${ConvertId}`,
     reasonForDeactivation: `${reason}`,
@@ -82,7 +92,7 @@ export async function suspendAConvert(convertId, reason) {
     const SuspendedConvertRes = await suspendedConvert?.data;
     return SuspendedConvertRes;
   } catch (error) {
-    toast.error(error || error.message)
+    toast.error(error || error.message);
     throw new Error(error.message || error);
   }
 }
@@ -104,7 +114,11 @@ export async function promoteConvertToMinistry(convertId, departmentId) {
   }
 }
 
-export async function getAllWorkersAdmins({ pageNumber, pageSize, searchquery }) {
+export async function getAllWorkersAdmins({
+  pageNumber,
+  pageSize,
+  searchquery,
+}) {
   try {
     const Workersadmins = await api.get(
       `${baseUrl}${appUrls.GETALLWORKERS}?page=${pageNumber}&pageSize=${pageSize}&searchquery=${searchquery}`
@@ -119,9 +133,7 @@ export async function getAllWorkersAdmins({ pageNumber, pageSize, searchquery })
 
 export async function getAllWorkersNames() {
   try {
-    const Workersadmins = await api.get(
-      `${baseUrl}${appUrls.GETALLWORKERS}`
-    );
+    const Workersadmins = await api.get(`${baseUrl}${appUrls.GETALLWORKERS}`);
     const fetchWorkersAdmins = await Workersadmins?.data?.Data;
     return await fetchWorkersAdmins;
   } catch (error) {
@@ -137,6 +149,38 @@ export async function getAllDTIAdminNames(nameQuery) {
     const fetchDTIAdmins = await DtiAdminNames?.data?.Data;
     return await fetchDTIAdmins;
   } catch (error) {
+    throw new Error(error.message || error);
+  }
+}
+
+export async function assignConvertToAdmin(convertId, adminId) {
+  try {
+    const assignConvert = await api.post(
+      `${baseUrl}${appUrls.ASSIGN_NEW_BELIEVERS_ADMIN_TO_CONVERT}?convertId=${convertId}&disciplerId=${adminId}`
+    );
+    const AssignedConvertRes = await assignConvert?.data;
+    return AssignedConvertRes;
+  } catch (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      const responseJson = JSON.parse(error.request.responseText);
+      if (responseJson.Message) {
+        toast.error(responseJson.Message, 5000);
+      }
+
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.response.status);
+    }
+    //console.log(error.config);
     throw new Error(error.message || error);
   }
 }
