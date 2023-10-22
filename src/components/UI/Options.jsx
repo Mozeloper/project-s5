@@ -16,15 +16,14 @@ export default function TableOptions({
   displayModalUi,
   id,
   pageLink,
-  selectedUserData = {}
+  selectedUserData = {},
 }) {
   const navigate = useNavigate();
   const { isOpen, modalType, openModal, closeModal } = useModalToggle();
   const [selectedOption, setSelectedOption] = React.useState(null);
-
   const handleView = (event, option, popupState) => {
     // Close the popstate when an option is clicked
-    if(selectedUserData) {
+    if (selectedUserData) {
       event.selectedUserData = selectedUserData;
     }
     popupState.close();
@@ -34,7 +33,7 @@ export default function TableOptions({
     if (innerText.toLowerCase() === 'view') {
       navigate(`/${pageLink}/${itemId}`);
     } else {
-       openModal(innerText);
+      openModal(innerText);
       handleClick(event, option);
     }
   };
@@ -64,9 +63,19 @@ export default function TableOptions({
           <AddAdminFormControl />
         </TransitionsModal>
       );
-    } 
+    }
     return null;
   };
+
+  function getButtonText(option, selectedUserData) {
+    if (
+      option.name.toLowerCase() === 'assign' &&
+      selectedUserData.isAssigned === true
+    ) {
+      return 'Reassign';
+    }
+    return option.name;
+  }
 
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">
@@ -94,7 +103,8 @@ export default function TableOptions({
               >
                 <span className="flex gap-5">
                   {option.icon}
-                  {option.name}
+                  {/* {option.name} */}
+                  {getButtonText(option, selectedUserData)}
                 </span>
               </MenuItem>
             ))}
