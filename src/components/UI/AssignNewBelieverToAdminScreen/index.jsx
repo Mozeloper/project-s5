@@ -16,7 +16,13 @@ export default function AssignNewBelieverToAdmin({
   const { closeModal } = useModalToggle();
   const [dtiAdmins, setDtiAdmins] = useState(null);
   const [selectedAdmin, setSelectedAdmin] = useState({});
-  const logValue = (value) => console.log(`this is the admin ${value}`);
+  const [confrimAction, setConfrimAction] = useState(false);
+
+  const handleAdminSelect = (value) => {
+    setSelectedAdmin(value);
+    setConfrimAction(true);
+    // console.log(`this is the admin ${value}`)
+  };
 
   useEffect(() => {
     async function fetchAdmins() {
@@ -46,7 +52,7 @@ export default function AssignNewBelieverToAdmin({
   return (
     <>
       <div className="bg-white p-8 md:w-[600px] min-h-[220px] rounded-md flex flex-col gap-4 md:mt-0 mt-2 items-center justify-center">
-        {selectedAdmin.FullName == undefined ? (
+        {confrimAction === false ? (
           <>
             <h3 className="text-gray-700 text-lg font-bold">
               Assign a New Believers Admin to
@@ -65,7 +71,7 @@ export default function AssignNewBelieverToAdmin({
               </p>
               <SearchNBAdmin
                 searchArray={dtiAdmins}
-                onSelect={setSelectedAdmin}
+                onSelect={handleAdminSelect}
                 // bg={'bg-transparent'}
                 textColor="#CBCBCB"
                 placeholder="Search NewBelievers Admin's Name..."
@@ -85,7 +91,6 @@ export default function AssignNewBelieverToAdmin({
                 type="button"
                 onClick={handleClose}
               />
-              
             </div>
           </>
         ) : (
@@ -96,15 +101,15 @@ export default function AssignNewBelieverToAdmin({
               disciple
               <span className="text-primary"> {name}</span>
             </h3>
-            <p className='mb-10'>Click the Proceed button to Confirm?</p>
-            <div className="w-full">
+            <p className="mb-10">Click the Proceed button to Confirm?</p>
+            <div className="w-full md:flex md:gap-3">
               <Button
                 title="Back"
-                className="w-full h-[56px] bg-secondary text-white text-center rounded-2xl border border-[#D0D5DD]"
+                className="w-full h-[56px]  text-gray-500 text-center rounded-2xl border border-[#D0D5DD]"
                 backgroundColor="bg-none"
                 textColor="#38404b"
                 type="button"
-                onClick={handleClose}
+                onClick={() => setConfrimAction(false)}
               />
               <Button
                 title="Proceed"
