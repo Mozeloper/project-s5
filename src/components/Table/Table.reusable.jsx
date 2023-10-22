@@ -201,6 +201,7 @@ const ReusableTable = ({
                                 ? `${row['FirstName']} ${row['SurName']}`
                                 : row['FullName'] || row['fullName'],
                             roles: row['ROLES'] || row['Roles'],
+                            isAssigned: row['IsAssigned'] || row['isassigned'],
                           }}
                         />
                       )
