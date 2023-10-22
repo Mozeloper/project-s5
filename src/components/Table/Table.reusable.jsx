@@ -65,7 +65,8 @@ const ReusableTable = ({
                         head.toLowerCase() === 'dateofbirth' ||
                         head.toLowerCase() === 'address' ||
                         head.toLowerCase() === 'datecreated' ||
-                        head.toLowerCase() === 'yearjoined'
+                        head.toLowerCase() === 'yearjoined' ||
+                        head.toLowerCase() === 'isassigned'
                           ? 'hidden'
                           : ''
                       }`}
@@ -110,7 +111,9 @@ const ReusableTable = ({
                           head.toLowerCase() === 'dateofbirth' ||
                           head.toLowerCase() === 'address' ||
                           head.toLowerCase() === 'datecreated' ||
-                          head.toLowerCase() === 'yearjoined'
+                          head.toLowerCase() === 'yearjoined' ||
+                          head.toLowerCase() === 'datecreated' ||
+                          head.toLowerCase() === 'isassigned'
                             ? 'hidden'
                             : ''
                         }`}
@@ -198,6 +201,7 @@ const ReusableTable = ({
                                 ? `${row['FirstName']} ${row['SurName']}`
                                 : row['FullName'] || row['fullName'],
                             roles: row['ROLES'] || row['Roles'],
+                            isAssigned: row['IsAssigned'] || row['isassigned'],
                           }}
                         />
                       )
