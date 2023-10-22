@@ -20,7 +20,7 @@ import { assignConvertToAdmin } from '../../services/admins.api';
 export default function NewBelieversTable() {
   const queryClient = useQueryClient();
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   let { textSearch, setTextSearch } = useTextSearchNav();
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
@@ -158,7 +158,7 @@ export default function NewBelieversTable() {
                 New Believers
               </h1>
               <p className="mt-2 text-sm text-gray-700">
-                The list of all the Ministers.
+                List of Converts in New Believers Stage.
               </p>
             </div>
           </div>
