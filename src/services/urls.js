@@ -50,9 +50,9 @@ export const appUrls = {
   //New Believers Admin
   GET_ALL_NEW_BELIEVERS_CONVERTS:
     '/api/v1/NewBelieverAdmin/get-all-new-convants-for-newconvertadmin',
-  GET_ALL_NEW_BELIEVERS_ADMIN_NAMES:  'api/v1/NewBelieverAdmin/get-all-newbeliever-admin',
+  GET_ALL_NEW_BELIEVERS_ADMIN_NAMES:  '/api/v1/NewBelieverAdmin/get-all-newbeliever-admin', //search for new beliver admins
   PROMOTE_CONVERT_TO_DTI: 'api/v1/NewBelieverAdmin/promote-new-convert-to-dti',
-
+  ASSIGN_NEW_BELIEVERS_ADMIN_TO_CONVERT: '/api/v1/NewBelieverAdmin/assign-discipler-to-new-convert', //accepts convert and admin Ids 
   //Analytics Count
   GET_ALL_SOULS_COUNT_URL: '/api/v1/SuperAdmin/get-all-newconvert-count',
   GET_ALL_WORKERS_COUNT_URL: '/api/v1/SuperAdmin/get-all-worker-count',
