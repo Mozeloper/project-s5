@@ -11,7 +11,7 @@ import SearchableSelect from '../CustomSelect';
 export default function EditConvertDetails({
   setOpenModal,
   data,
-  handleConvertUpdate,
+  // handleConvertUpdate,
 }) {
   const updateConvertSchema = Yup.object().shape({
     email: Yup.string(),
@@ -34,7 +34,7 @@ export default function EditConvertDetails({
     try {
       const res = await api.post(appUrls.UPDATE_CONVERT, payload);
       if (res?.status === 200) {
-        handleConvertUpdate();
+        // handleConvertUpdate();
         setOpenModal(false);
         toast.success('Updated Successful', {
           icon: '👏',
@@ -61,40 +61,42 @@ export default function EditConvertDetails({
       </h2>
       <Formik
         initialValues={{
-          surname: data?.surname || '',
-          firstName: data?.firstName || '',
-          email: data?.email || '',
-          address: data?.address || '',
-          phoneNumber: data?.phoneNumber || '',
-          gender: data?.gender || 'Male',
-          nearestBusStop: data?.nearestBusStop || '',
-          maritalStatus: data?.maritalStatus || '',
-          employmentStatus: data?.employmentStatus || NULL,
-          qualification: data?.qualification || NULL,
-          countryName: data?.countryName || '',
-          stateName: data?.stateName || '',
-          city: data?.city || '',
-          yearJoined: data?.yearJoined || 0,
+          surname: data?.Surname || '',
+          firstName: data?.FirstName || '',
+          email: data?.Email || '',
+          address: data?.Address || '',
+          phoneNumber: data?.PhoneNumber || '',
+          gender: data?.Gender || 'Male',
+          nearestBusStop: data?.NearestBusStop || '',
+          maritalStatus: data?.MaritalStatus || 'Single',
+          employmentStatus: data?.EmploymentStatus || null,
+          qualification: data?.Qualification || 'LeavingSchoolCertificate',
+          countryName: data?.CountryName || '',
+          stateName: data?.StateName || '',
+          additionalInformation: '',
+          city: data?.City || '',
+          yearJoined: data?.YearJoined || 0,
         }}
-        validationSchema={updateConvertSchema}
+        //validationSchema={updateConvertSchema}
         enableReinitialize={true}
         onSubmit={(values, actions) => {
+          console.log(values);
           const payload = {
             surname: values?.surname,
             firstName: values?.firstName,
-            email: data?.email,
+            email: data?.Email,
             address: values?.address,
             phoneNumber: values?.phoneNumber,
-            gender: values?.gender,
+            gender: data?.Gender,
             nearestBusStop: values?.nearestBusStop,
             maritalStatus: values?.maritalStatus,
             employmentStatus: values?.employmentStatus,
             qualification: values?.qualification,
             countryName: values?.countryName,
             stateName: values?.stateName,
-            additionalInformation: data?.additionalInformation,
-            city: data?.city,
-            yearJoined: data?.yearJoined,
+            additionalInformation: values?.additionalInformation,
+            city: values?.city,
+            yearJoined: values?.yearJoined,
           };
           handleUpdateConvert(payload, actions);
         }}
@@ -196,7 +198,7 @@ export default function EditConvertDetails({
               </div>
             </div>
             <div className="w-full flex md:flex-row flex-col gap-3">
-              <div className="w-full">
+              {/* <div className="w-full">
                 <label className="text-sm ext-black leading-4" htmlFor="gender">
                   Gender
                 </label>
@@ -212,14 +214,14 @@ export default function EditConvertDetails({
                   setFieldValue={(name, value) => setFieldValue(name, value)}
                   className="w-full outline-none"
                   placeholder="Select Gender"
-                  defaultValue={data?.gender}
+                  defaultValue={data?.Gender}
                 />
                 {errors.gender && touched.gender ? (
                   <div className="text-xs mt-2 text-red-700">
                     {errors.gender}
                   </div>
                 ) : null}
-              </div>
+              </div> */}
               <div className="w-full">
                 <label
                   className="text-sm ext-black leading-4"
@@ -339,11 +341,11 @@ export default function EditConvertDetails({
                 >
                   Nearest Bus-stop
                 </label>
-                <textarea
+                <input
                   type="text"
                   name="nearestBusStop"
                   id="nearestBusStop"
-                  className={`w-full h-[100px] border border-secondary text-base p-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
+                  className={`w-full min-h-[46px] border border-secondary text-base p-4 rounded mt-2 outline-none bg-background_white focus:bg-background_white`}
                   placeholder="Enter Your Nearest Bus Stop"
                   onChange={handleChange}
                   value={values?.nearestBusStop}
@@ -354,6 +356,8 @@ export default function EditConvertDetails({
                   </div>
                 ) : null}
               </div>
+            </div>
+            <div className="w-full flex md:flex-row flex-col gap-3">
               <div className="w-full flex flex-col">
                 <label
                   className="text-sm text-black leading-4"
