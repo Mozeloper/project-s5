@@ -6,12 +6,14 @@ import toast from 'react-hot-toast';
 import { api } from '../../../services/api';
 import { appUrls } from '../../../services/urls';
 import { FaSpinner } from 'react-icons/fa';
-
+import SearchBoxIndex from '../../Searchbox/searchBoxIndex';
+import { useDTIAdminNames } from '../../../hooks/useFetchNewBelievers';
 
 export default function AssignNewBelieverToAdmin({ handleAssignToAdmin, convertId, roles, name }) {
   const { closeModal } = useModalToggle();
+  const { data: DtiAdminName, isError, isLoading } = useDTIAdminNames();
   // console.log(convertId, roles);
-   const [isLoading, setIsLoading] = useState(null);
+
 
   const handleClose = () => {
     closeModal();
@@ -112,7 +114,7 @@ export default function AssignNewBelieverToAdmin({ handleAssignToAdmin, convertI
       //   duration: 3000,
       // });
     } finally{
-      setIsLoading(null);
+      
     }
     // Replace this with your actual API call logic
     // You can send a request to add or remove the role based on the 'adminRoles' state
@@ -122,75 +124,29 @@ export default function AssignNewBelieverToAdmin({ handleAssignToAdmin, convertI
     <>
       <div className="bg-white p-8 md:w-[400px] min-h-[220px] rounded-md flex flex-col gap-4 md:mt-0 mt-2 items-center justify-center">
         <h3 className="text-gray-700 text-lg font-bold">
-          <span className="text-primary">{name}</span> is currently assigned to
-          the checked admin roles:
+          Assign<span className="text-primary">{name}</span> to a New Believers Admin
+          
         </h3>
         <p>
-          Click on any of the checkboxes to assign or remove this user from the
-          Role
+        Please search and select the New Believers Admin you would like to assign
         </p>
+        <div className="relative w-full mb-6">
+      <p
+        htmlFor="worker_name"
+        className="block mb-2 text-base font-medium text-gray-900 "
+      >
+        Search Workers Name
+      </p>
+        <SearchBoxIndex 
+          searchArray={DtiAdminName && DtiAdminName?.Data} 
+          // bg={'bg-transparent'} 
+          textColor="#CBCBCB" 
+          placeholder="Search NewBelievers Admin's Name..."
+        />
+      </div>
         <div className="w-full flex flex-col gap-y-4 py-5">
           {/* <h2>Admin Roles for Admin ID: {convertId}</h2> */}
-          <div>
-            <label className="flex gap-x-3">
-              {isLoading === 'SuperAdmin' ? (
-                <FaSpinner className="animate-spin" />
-              ) : (
-                <input
-                  type="checkbox"
-                  checked={adminRoles.SuperAdmin}
-                  onChange={() => handleRoleToggle('SuperAdmin')}
-                  className="!checked:bg-red-500"
-                />
-              )}
-              General Admin
-            </label>
-          </div>
-          <div>
-            <label className="flex gap-x-3">
-              {isLoading === 'DTIAdmin' ? (
-                <FaSpinner className="animate-spin" />
-              ) : (
-                <input
-                  type="checkbox"
-                  checked={adminRoles.DTIAdmin}
-                  onChange={() => handleRoleToggle('DTIAdmin')}
-                  className=""
-                />
-              )}
-              DTI Admin
-            </label>
-          </div>
-          <div>
-            <label className="flex gap-x-3">
-              {isLoading === 'MinistryAdmin' ? (
-                <FaSpinner className="animate-spin" />
-              ) : (
-                <input
-                  type="checkbox"
-                  checked={adminRoles.MinistryAdmin}
-                  onChange={() => handleRoleToggle('MinistryAdmin')}
-                  className="accent-red-700 checked:bg-blue-500 read-only:bg-gray-100"
-                />
-              )}
-              Ministry Admin
-            </label>
-          </div>
-          <div>
-            <label className="flex gap-x-3">
-              {isLoading === 'NewConvertAdmin' ? (
-                <FaSpinner className="animate-spin" />
-              ) : (
-                <input
-                  type="checkbox"
-                  checked={adminRoles.NewConvertAdmin}
-                  onChange={() => handleRoleToggle('NewConvertAdmin')}
-                  className=""
-                />
-              )}
-              New Believers Admin
-            </label>
-          </div>
+         
         </div>
         <div className="w-full">
           <Button
