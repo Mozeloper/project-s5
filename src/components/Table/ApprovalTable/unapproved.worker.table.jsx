@@ -97,14 +97,16 @@ export default function UnapprovedWorkerTable() {
     [deleteUserAsync, workerId]
   );
 
-  const handleOptionsClick = (event) => {
-    const innerText = event.currentTarget.innerText;
+  const handleOptionsClick = (event, option) => {
+    //const innerText = event.currentTarget.innerText;
+    const innerText = option.name;
     const id = event.currentTarget.id;
     if (innerText.toLowerCase() === 'approve') {
       setDisplayUi(
         <ConfirmDeactivate
           handleDeactivate={handleApprovedConfirmation.bind(null, id)}
           screenName={innerText}
+          name={event.selectedUserData.name}
         />
       );
     } else if (innerText.toLowerCase() === 'delete') {
@@ -112,6 +114,7 @@ export default function UnapprovedWorkerTable() {
         <ConfirmDeactivate
           handleDeactivate={handleDelete.bind(null, id)}
           screenName={innerText}
+          name={event.selectedUserData.name}
         />
       );
     } else {
