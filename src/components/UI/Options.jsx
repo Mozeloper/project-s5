@@ -13,7 +13,7 @@ import AddSoulsFormControl from './Forms/addSoul.form';
 
 export default function TableOptions({
   optionsList,
-  handleClick,
+  handleClick = () => null,
   displayModalUi,
   id,
   pageLink,
@@ -31,12 +31,16 @@ export default function TableOptions({
     setSelectedOption(option);
     const innerText = event.currentTarget.innerText;
     const itemId = event.currentTarget.id;
-    if (innerText.toLowerCase() === 'view') {
-      navigate(`/${pageLink}/${itemId}`);
-    } else {
+    
       openModal(innerText);
       handleClick(event, option);
-    }
+    
+    // if (innerText.toLowerCase() === 'view') {
+    //   navigate(`/${pageLink}/${itemId}`);
+    // } else {
+    //   openModal(innerText);
+    //   handleClick(event, option);
+    // }
   };
 
   const renderModalContent = () => {
@@ -44,7 +48,8 @@ export default function TableOptions({
     if(selectedOption?.name.toLowerCase() === 'view') {
       navigate(`/${pageLink}/${id}`);
     }
-   else if (selectedOption) {
+   else 
+   if (selectedOption) {
       return (
         <TransitionsModal
           //isModalOpen={isOpen}
@@ -68,18 +73,19 @@ export default function TableOptions({
           <AddAdminFormControl />
         </TransitionsModal>
       );
-    } else if (modalType === 'AddSoul') {
-      return (
-        <TransitionsModal
-        heading={'Add New Soul Form'}
-        width={'max-w-2xl w-[90%] bg-[#Bf0A30]'}
-          name={'+ Add New Soul'}
-        >
-          {/* {displayModalUi} */}
-          <AddSoulsFormControl />
-        </TransitionsModal>
-      );
-    }
+    } 
+    // else if (modalType === 'AddSoul') {
+    //   return (
+    //     <TransitionsModal
+    //     heading={'Add New Soul Form'}
+    //     width={'max-w-2xl w-[90%] bg-[#Bf0A30]'}
+    //       name={'+ Add New Soul'}
+    //     >
+    //       {/* {displayModalUi} */}
+    //       <AddSoulsFormControl />
+    //     </TransitionsModal>
+    //   );
+    // }
     return null;
   };
 
