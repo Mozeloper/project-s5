@@ -69,13 +69,15 @@ export const SoulsTable = () => {
   });
 
   const handleOptionsClick = (event) => {
-    const innerText = event.currentTarget.innerText;
-    const id = event.currentTarget.id;
-    if (innerText.toLowerCase() === 'view') {
-      navigate(`/souls/${id}`);
-    } else if (modalType === 'AddSoul') {
-      setDisplayUi(<AddSoulsFormControl />);
-    }
+    // const innerText = event.currentTarget.innerText;
+    // const id = event.currentTarget.id;
+    //console.log(innerText);
+    // if (innerText.toLowerCase() === 'view') {
+    //   navigate(`/souls/${id}`);
+    //  }
+    // else if (modalType === 'AddSoul') {
+    //   setDisplayUi(<AddSoulsFormControl />);
+    // }
   };
 
   const handlePaginationChange = (event, value) => {
@@ -136,7 +138,7 @@ export const SoulsTable = () => {
             <>
               <ReusableTable
                 pageLink={'souls'}
-                optionModal={displayUi}
+                // optionModal={displayUi}
                 optionArrayList={optionList}
                 optionsHandleClick={handleOptionsClick}
                 headers={headers}
@@ -154,12 +156,13 @@ export const SoulsTable = () => {
           )}
         </div>
       </div>
-      <TransitionsModal2
+      {/* <TransitionsModal2
+      isModalOpen={modalType == "AddSoul"}
         heading={'Add New Soul Form'}
         width={'max-w-2xl w-[90%] bg-[#Bf0A30]'}
       >
         <AddSoulsFormControl />
-      </TransitionsModal2>
+      </TransitionsModal2> */}
     </Fragment>
   );
 };
