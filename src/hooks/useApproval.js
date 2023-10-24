@@ -9,6 +9,7 @@ import {
 import { getUnapprovedWorker } from "../services/details(id).api";
 import { QueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { getUnApprovalCount } from "../services/admins.api";
 
 //Quary / fetcher functions
 const queryClient = new QueryClient();
@@ -20,6 +21,14 @@ export function useFetchAllUnapproved({ pageNumber, pageSize, searchquery }) {
       staleTime: 360000,
       enabled: !!pageNumber,
     }
+  );
+  return UnApproval;
+}
+
+export function useFetchUnapprovedCount() {
+  const UnApproval = useQuery(
+    ['UnApprovedWorkersCount'],
+    async () => await getUnApprovalCount(),
   );
   return UnApproval;
 }
