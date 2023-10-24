@@ -18,10 +18,11 @@ export default function DtiTable() {
   const queryClient = useQueryClient();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  let { textSearch, setTextSearch } = useTextSearchNav()
+  // let { textSearch, setTextSearch } = useTextSearchNav()
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
+  const [textSearch, setTextSearch ] = useState('');
 
   /**
    * Hook for fetching all converts in DTI Stage
@@ -60,6 +61,11 @@ export default function DtiTable() {
     console.log(`modifying convert with ${id}`);
   };
 
+
+  const handleSearchChange = (newQuery) => {
+    setTextSearch(prev => prev = newQuery)
+  }
+  
   /**
    * Handler for suspending a Convert from DTI
    * @param {number} id
@@ -148,6 +154,8 @@ export default function DtiTable() {
                     filterNumber={10}
                     optionArrayList={optionList}
                     optionsHandleClick={handleDtiOptionsClick}
+                    textSearch={textSearch}
+                    setTextSearch={handleSearchChange}
                   />
 
                   <PaginationFooter

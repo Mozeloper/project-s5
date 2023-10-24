@@ -17,11 +17,12 @@ import { useFetchAllDeactivatedWorker } from '../../../hooks/useApproval'
 export default function DeactivatedWorkerTable() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  let { textSearch, setTextSearch } = useTextSearchNav()
+  // let { textSearch, setTextSearch } = useTextSearchNav()
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
   const queryClient = useQueryClient();
+  const [textSearch, setTextSearch ] = useState('');
 
   /**
    * Hook for fetching list of Deactivated Workers
@@ -83,6 +84,10 @@ export default function DeactivatedWorkerTable() {
       null;
     }
   };
+
+  const handleSearchChange = (newQuery) => {
+    setTextSearch(prev => prev = newQuery)
+  }
 
   /**
    * Handler for Reactivating a Worker
@@ -146,6 +151,8 @@ export default function DeactivatedWorkerTable() {
                 filterNumber={11}
                 optionArrayList={optionList}
                 optionsHandleClick={handleOptionsClick}
+                textSearch={textSearch}
+                setTextSearch={handleSearchChange}
               />
 
               <PaginationFooter

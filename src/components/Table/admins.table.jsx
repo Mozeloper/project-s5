@@ -18,7 +18,7 @@ export default function AdminTables() {
   const [displayUi, setDisplayUi] = React.useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  let { textSearch, setTextSearch } = useTextSearchNav();
+  const [textSearch, setTextSearch ] = useState('');
 
   const {
     data: AdminsData,
@@ -32,6 +32,10 @@ export default function AdminTables() {
 
   const { openModal } = useModalToggle();
 
+  const handleSearchChange = (newQuery) => {
+    setTextSearch(prev => prev = newQuery)
+  }
+  
   const optionList = [
     { icon: <GrView className="text-blue-500" />, name: 'View' },
     { icon: <GiConfirmed className="text-green-500" />, name: 'Modify' },
@@ -156,7 +160,9 @@ export default function AdminTables() {
                     filterNumber={11}
                     optionArrayList={optionList}
                     optionsHandleClick={handleOptionsClick}
-                    totalSearchData={searchAdmins && searchAdmins.Data}
+                    textSearch={textSearch}
+                    setTextSearch={handleSearchChange}
+                    totalSearchData={searchAdmins.Data && searchAdmins.Data}
                   />
 
                   <PaginationFooter

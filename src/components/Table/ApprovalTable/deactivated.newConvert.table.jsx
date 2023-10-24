@@ -16,7 +16,7 @@ import { useTextSearchNav } from "../../../context/textSearch.context";
 export default function DeactivatedNewConvertTable() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  let { textSearch, setTextSearch } = useTextSearchNav()
+  // let { textSearch, setTextSearch } = useTextSearchNav()
   const [displayUi, setDisplayUi] = React.useState(null);
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
@@ -24,6 +24,7 @@ export default function DeactivatedNewConvertTable() {
   const [reason, setReason] = useState('');
   const [activeFunction, setActiveFunction] = useState('');
   const queryClient = useQueryClient();
+  const [textSearch, setTextSearch ] = useState('');
 
   /**
    * Hook for Fetching Deactivated Converts Data
@@ -150,6 +151,10 @@ export default function DeactivatedNewConvertTable() {
     setPageNumber(value);
   };
 
+  const handleSearchChange = (newQuery) => {
+    setTextSearch(prev => prev = newQuery)
+  }
+
   return (
     <div className="p-8 bg-white grid grid-cols-1 gap-y-8">
       <h3 className="sm:text-left text-center">
@@ -177,6 +182,8 @@ export default function DeactivatedNewConvertTable() {
                 filterNumber={11}
                 optionArrayList={optionList}
                 optionsHandleClick={handleOptionsClick}
+                textSearch={textSearch}
+                setTextSearch={handleSearchChange}
               />
 
               <PaginationFooter
