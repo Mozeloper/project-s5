@@ -62,11 +62,13 @@ export default function DeactivatedWorkerTable() {
   const handleOptionsClick = (event, option) => {
     const innerText = option.name;
     const id = event.currentTarget.id;
+    //console.log(event.selectedUserData)
     if (innerText.toLowerCase() === 'reactivate') {
       setDisplayUi(
         <ConfirmDeactivate
           handleDeactivate={handleReactivate.bind(null, id)}
           screenName={innerText}
+          name={event.selectedUserData.name}
         />
       );
     } else if (innerText.toLowerCase() === 'delete') {
@@ -74,6 +76,7 @@ export default function DeactivatedWorkerTable() {
         <ConfirmDeactivate
           handleDeactivate={handleDelete.bind(null, id)}
           screenName={innerText}
+          name={event.selectedUserData.name}
         />
       );
     } else {
