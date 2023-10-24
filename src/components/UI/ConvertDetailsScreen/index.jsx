@@ -39,7 +39,7 @@ const ConvertDetailsByIdScreen = ({
             <EditConvertDetails data={data} setOpenModal={setOpenModal} />
           </ModalPopup>
           <div className="overflow-hidden">
-            <div className="w-full rounded-md relative h-[240px] bg-gradient-to-b from-[#232931] to-[#38404b] p-4 ">
+            <div className="w-full rounded-md relative min-h-[240px] bg-gradient-to-b from-[#232931] to-[#38404b] p-4 ">
               <div className="flex justify-between mb-5">
                 <ReturnToPrevious />
                 <div className="w-full flex justify-end">
@@ -215,7 +215,7 @@ const ConvertDetailsByIdScreen = ({
                 )}
               </div>
             </div>
-            <section className="mt-[180px] md:mt-28 m-auto md:mx-[30px] p-5 md:p-0">
+            <section className="mt-2 md:mt-28 m-auto md:mx-[30px] p-5 md:p-0">
               <Box sx={{ typography: 'body1' }}>
                 <TabContext value={value}>
                   <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -420,7 +420,7 @@ const ConvertDetailsByIdScreen = ({
                               Qualification
                             </h3>{' '}
                             <span>
-                              {(data && data?.Qualification) ||
+                              {(data && data?.qualification) ||
                                 (data && data?.Qualification) ||
                                 '...'}
                             </span>
@@ -431,16 +431,16 @@ const ConvertDetailsByIdScreen = ({
                             </h3>{' '}
                             <span>
                               {(data && data?.EmploymentStatus) ||
-                                (data && data?.EmploymentStatus) ||
+                                (data && data?.employmentStatus) ||
                                 '...'}
                             </span>
                           </div>
-                          <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                          {data?.Status.toLowerCase() === "ministry" && <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                             <h3 className="font-bold md:w-[20%]">
                               Member Since
                             </h3>{' '}
                             <span>{(data && data?.YearJoined) || '...'}</span>
-                          </div>
+                          </div>}
                           {/* <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                             <h3 className="font-bold md:w-[20%]">
                               Organization
