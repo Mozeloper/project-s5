@@ -1,21 +1,23 @@
-import TabContext from '@mui/lab/TabContext'
-import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
-import Box from '@mui/material/Box'
-import Tab from '@mui/material/Tab'
-import React from 'react'
-import { MdNotificationsActive } from 'react-icons/md'
-import { Link } from 'react-router-dom'
-import PageTitle from '../../../components/PageTitle'
-import DtiTable from '../../../components/Table/dti.table'
-import MinstryTable from '../../../components/Table/ministry.table'
-import NewBelieversTable from '../../../components/Table/newbelievers.table'
-import { PerformersTable } from '../../../components/Table/performers.table'
-import { SoulsAdminTable } from '../../../components/Table/souls.admin.table'
-import { SoulsTable } from '../../../components/Table/souls.table'
-import Charts from '../../../components/chart/chart'
-import { userFullName } from '../../../utils/index'
-import './vibration.css'
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import React from 'react';
+import { MdNotificationsActive } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import PageTitle from '../../../components/PageTitle';
+import DtiTable from '../../../components/Table/dti.table';
+import MinstryTable from '../../../components/Table/ministry.table';
+import NewBelieversTable from '../../../components/Table/newbelievers.table';
+import { PerformersTable } from '../../../components/Table/performers.table';
+import { SoulsAdminTable } from '../../../components/Table/souls.admin.table';
+import { SoulsTable } from '../../../components/Table/souls.table';
+import Charts from '../../../components/chart/chart';
+import { userFullName } from '../../../utils/index';
+import './vibration.css';
+import { useFetchUnapprovedCount } from '../../../hooks/useApproval';
+import { FaSpinner } from 'react-icons/fa6';
 
 export default function Home() {
   //const roles = useRole();
@@ -24,6 +26,8 @@ export default function Home() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const { data: CountData, isLoading, isError } = useFetchUnapprovedCount();
+  console.log(CountData);
 
   const roles = JSON.parse(sessionStorage.getItem('role'));
   const isSuperAdmin = roles.includes('SuperAdmin');
@@ -79,17 +83,44 @@ export default function Home() {
           <h2 className="font-bold text-3xl">
             Hello, <span className="capitalize">{userObj?.FirstName}!</span>
           </h2>
-          <small className="text-gray-500">
-            You have 0 pending notifications
-          </small>
+          {(isSuperAdmin ||
+            isDtiAdmin ||
+            isMinistryAdmin ||
+            isNewBelieversAdmin) && (
+            <>
+              {isError && (
+                <small className="text-gray-500 flex">
+                  Unable to fetch Approvals Count, please refresh your browser.
+                </small>
+              )}
+              {(CountData || isLoading) && (
+                <small className="text-gray-500 flex">
+                  You have{' '}
+                  {isLoading ? (
+                    <FaSpinner className="text-sm animate-spin mx-2" />
+                  ) : CountData ? (
+                    CountData?.TotalDataCount
+                  ) : (
+                    ''
+                  )}{' '}
+                  pending approvals{' '}
+                </small>
+              )}
+            </>
+          )}
         </div>
-        <Link
-          to="/approvals"
-          className="bg-primary h-11 text-white py-3 px-5 rounded-full flex justify-center max-w-[145px] mt-5 md:mt-0"
-        >
-          <MdNotificationsActive className="w-[18px] h-[18px] mr-2 vibrate-icon" />
-          <small>Notifications</small>
-        </Link>{' '}
+        {(isSuperAdmin ||
+          isDtiAdmin ||
+          isMinistryAdmin ||
+          isNewBelieversAdmin) && (
+          <Link
+            to="/approvals"
+            className="bg-[#Bf0A30] h-11 text-white py-3 px-5 rounded font-medium flex justify-center max-w-[200px] mt-5 md:mt-0"
+          >
+            <MdNotificationsActive className="w-[18px] h-[18px] mr-2 vibrate-icon" />
+            <small>View Approvals</small>
+          </Link>
+        )}
       </div>
 
       <Box sx={{ width: '100%', typography: 'body1' }}>
