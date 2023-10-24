@@ -175,12 +175,23 @@ export async function assignConvertToAdmin(convertId, adminId) {
       if (responseJson.Message) {
         toast.error(responseJson.Message, 5000);
       }
-
     } else {
       // Something happened in setting up the request that triggered an Error
       console.log('Error', error.response.status);
     }
     //console.log(error.config);
+    throw new Error(error.message || error);
+  }
+}
+
+export async function getUnApprovalCount() {
+  try {
+    const fetchUnApprovalCount = await api.get(
+      `${appUrls?.GET_ALL_UNAPPROVED_WORKERS}`
+    );
+    const fetchUnApprovalCountRes = await fetchUnApprovalCount?.data.Data;
+    return fetchUnApprovalCountRes;
+  } catch (error) {
     throw new Error(error.message || error);
   }
 }

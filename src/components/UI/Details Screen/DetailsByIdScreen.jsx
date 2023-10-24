@@ -239,12 +239,12 @@ const DetailsByIdScreen = ({
                           <h3 className="font-bold md:w-[20%]">Gender</h3>{' '}
                           <span>{(data && data?.Gender) || '...'}</span>
                         </div>
-                        <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                        {data && data?.DateOfBirth && <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
                             Date of Birth
                           </h3>{' '}
                           <span>{(data && data?.DateOfBirth.split('-').slice(0,2).join('-')) || '...'}</span>
-                        </div>
+                        </div>}
                         <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                           <h3 className="font-bold md:w-[20%]">
                             Marital Status

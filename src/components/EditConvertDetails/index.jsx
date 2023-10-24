@@ -7,12 +7,14 @@ import { appUrls } from '../../services/urls';
 import { api } from '../../services/api';
 import { toast } from 'react-hot-toast';
 import SearchableSelect from '../CustomSelect';
+import { useQueryClient } from 'react-query';
 
 export default function EditConvertDetails({
   setOpenModal,
   data,
   // handleConvertUpdate,
 }) {
+  const queryClient = useQueryClient();
   const updateConvertSchema = Yup.object().shape({
     email: Yup.string(),
     firstName: Yup.string().required('First Name is required'),
@@ -30,11 +32,12 @@ export default function EditConvertDetails({
     yearJoined: Yup.number(),
   });
 
-  const handleUpdateConvert = async (payload, actions) => {
+  const handleUpdateConvert = async ( convertId, payload, actions) => {
     try {
-      const res = await api.post(appUrls.UPDATE_CONVERT, payload);
+      const res = await api.post(`${appUrls.UPDATE_CONVERT}?newconvertId=${convertId}`, payload);
       if (res?.status === 200) {
         // handleConvertUpdate();
+        queryClient.invalidateQueries('soul');
         setOpenModal(false);
         toast.success('Updated Successful', {
           icon: '👏',
@@ -98,7 +101,7 @@ export default function EditConvertDetails({
             city: values?.city,
             yearJoined: values?.yearJoined,
           };
-          handleUpdateConvert(payload, actions);
+          handleUpdateConvert(data?.Id, payload, actions);
         }}
       >
         {({
@@ -306,7 +309,7 @@ export default function EditConvertDetails({
                 ) : null}
               </div>
 
-              <div className="w-full flex flex-col">
+              {/* <div className="w-full flex flex-col">
                 <label
                   className="text-sm text-black leading-4"
                   htmlFor="yearJoined"
@@ -327,7 +330,7 @@ export default function EditConvertDetails({
                     {errors.yearJoined}
                   </div>
                 ) : null}
-              </div>
+              </div> */}
             </div>
 
             <h3 className="font-bold mt-10 text-primary">
