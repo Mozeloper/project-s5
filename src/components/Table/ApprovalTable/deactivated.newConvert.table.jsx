@@ -70,14 +70,16 @@ export default function DeactivatedNewConvertTable() {
     { icon: <MdDeleteSweep />, name: ` Delete` },
   ];
 
-  const handleOptionsClick = (event) => {
-    const innerText = event.currentTarget.innerText;
+  const handleOptionsClick = (event, option) => {
+    //const innerText = event.currentTarget.innerText;
+    const innerText = option.name;
     const id = event.currentTarget.id;
     if (innerText.toLowerCase() === 'reactivate') {
       setDisplayUi(
         <ConfirmDeactivate
           handleDeactivate={handleReactivate.bind(null, id)}
           screenName={innerText}
+          name={event.selectedUserData.name}
         />
       );
     } else if (innerText.toLowerCase() === 'delete') {
@@ -85,6 +87,7 @@ export default function DeactivatedNewConvertTable() {
         <ConfirmDeactivate
           handleDeactivate={handleDelete.bind(null, id)}
           screenName={innerText}
+          name={event.selectedUserData.name}
         />
       );
     } else {

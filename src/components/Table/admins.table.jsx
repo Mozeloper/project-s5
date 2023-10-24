@@ -70,9 +70,12 @@ export default function AdminTables() {
     console.log(`suspend admin with id of ${id}`);
   };
 
-  const handleOptionsClick = (event) => {
+  const handleOptionsClick = (event, option) => {
     // console.log(event.selectedUserData)
-    const innerText = event.currentTarget.innerText;
+    const innerText = option.name;
+    // console.log(innerText);
+    // const { name: Name, roles: Roles } = event.selectedUserData;
+    // const innerText = event.currentTarget.innerText;
     const id = event.currentTarget.id;
     const { name: Name, roles: Roles } = event.selectedUserData;
 

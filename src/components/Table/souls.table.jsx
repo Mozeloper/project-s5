@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import PaginationFooter from '../PaginationFooter';
 import SearchBox from '../Searchbox/searchbox';
 import Loader from '../Loader';
-import TransitionsModal2 from '../ModalPopup/modalTransition2';
+import TransitionsModal from '../ModalPopup/modalTransition';
 import AddSoulsFormControl from '../UI/Forms/addSoul.form';
 import ReusableTable from './Table.reusable';
 import { useFetchSoulsUnderMe } from '../../hooks/useFetchNewConvert';
@@ -68,15 +68,17 @@ export const SoulsTable = () => {
     };
   });
 
-  const handleOptionsClick = (event) => {
-    const innerText = event.currentTarget.innerText;
-    const id = event.currentTarget.id;
-    if (innerText.toLowerCase() === 'view') {
-      navigate(`/souls/${id}`);
-    } else if (modalType === 'AddSoul') {
-      setDisplayUi(<AddSoulsFormControl />);
-    }
-  };
+  //const handleOptionsClick = (event) => {
+    // const innerText = event.currentTarget.innerText;
+    // const id = event.currentTarget.id;
+    //console.log(innerText);
+    // if (innerText.toLowerCase() === 'view') {
+    //   navigate(`/souls/${id}`);
+    //  }
+    // else if (modalType === 'AddSoul') {
+    //   setDisplayUi(<AddSoulsFormControl />);
+    // }
+  //};
 
   const handlePaginationChange = (event, value) => {
     setPageNumber(value);
@@ -138,7 +140,7 @@ export const SoulsTable = () => {
                 pageLink={'souls'}
                 optionModal={displayUi}
                 optionArrayList={optionList}
-                optionsHandleClick={handleOptionsClick}
+                // optionsHandleClick={handleOptionsClick}
                 headers={headers}
                 data={!isError && data}
                 filterNumber={9}
@@ -154,12 +156,13 @@ export const SoulsTable = () => {
           )}
         </div>
       </div>
-      <TransitionsModal2
+      {modalType == "AddSoul" && <TransitionsModal
+      isModalOpen={modalType == "AddSoul"}
         heading={'Add New Soul Form'}
         width={'max-w-2xl w-[90%] bg-[#Bf0A30]'}
       >
         <AddSoulsFormControl />
-      </TransitionsModal2>
+      </TransitionsModal>}
     </Fragment>
   );
 };

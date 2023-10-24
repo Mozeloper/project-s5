@@ -51,8 +51,9 @@ export default function Table({ tableDataArray, pageLink }) {
    * Function in charge of launching the modal to be displayed
    * @param {Event} event
    */
-  const handleClick = (event) => {
-    const innerText = event.currentTarget.innerText;
+  const handleClick = (event, option) => {
+    //const innerText = event.currentTarget.innerText;
+    const innerText = option.name;
     const id = event.currentTarget.id;
      if (innerText.toLowerCase() === 'promote') {
       setDisplayUi(

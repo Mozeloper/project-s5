@@ -23,7 +23,7 @@ const ConvertDetailsByIdScreen = ({
   const [openModal, setOpenModal] = useState(false);
 
  
-  console.log(`data : ${data}`);
+  //console.log(`data : ${data}`);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
