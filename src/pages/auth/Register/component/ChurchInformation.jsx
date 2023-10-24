@@ -44,11 +44,11 @@ export default function ChurchInformation({
     // );
 
     // Format the date using native JavaScript Date
-    const formattedDateOfBirth = formatToISODate(userValues?.dateOfBirth);
+    // const formattedDateOfBirth = formatToISODate(userValues?.dateOfBirth);
 
     const payload = {
       ...userValues,
-      dateOfBirth: formattedDateOfBirth,
+      // dateOfBirth: formattedDateOfBirth,
       ...values, // Include the form values
     };
     try {

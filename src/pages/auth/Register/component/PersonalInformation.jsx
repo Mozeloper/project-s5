@@ -16,7 +16,7 @@ export default function PersonalInformation({
     maritalStatus: Yup.string().required('Select Marital status'),
     countryName: Yup.string().required('Select country'),
     stateName: Yup.string().required('Select country'),
-    city: Yup.string().string(),
+    city: Yup.string(),
     nameOfOrganization: Yup.string(),
     homeAddress: Yup.string(),
     nearestBusStop: Yup.string(),
@@ -32,12 +32,13 @@ export default function PersonalInformation({
       <Formik
         initialValues={{
           gender: userValues?.gender || '',
+          dateOfBirth: '',
           employmentStatus: userValues?.employmentStatus || '',
           qualification: userValues?.qualification || '',
           maritalStatus: userValues?.maritalStatus || '',
           countryName: userValues?.countryName || '',
           stateName: userValues?.stateName || '',
-          City: userValues?.city || '',
+          city: userValues?.city || '',
           nameOfOrganization: userValues?.nameOfOrganization || '',
           homeAddress: userValues?.homeAddress || '',
           nearestBusStop: userValues?.nearestBusStop || '',
@@ -387,9 +388,7 @@ export default function PersonalInformation({
                   value={values?.city}
                 />
                 {errors.city && touched.city ? (
-                  <div className="text-xs mt-2 text-red-700">
-                    {errors.city}
-                  </div>
+                  <div className="text-xs mt-2 text-red-700">{errors.city}</div>
                 ) : null}
               </div>
             </div>
