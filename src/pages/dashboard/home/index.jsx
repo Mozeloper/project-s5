@@ -95,15 +95,15 @@ export default function Home() {
               )}
               {(CountData || isLoading) && (
                 <small className="text-gray-500 flex">
-                  You have{' '}
+                  There are{' '}
                   {isLoading ? (
                     <FaSpinner className="text-sm animate-spin mx-2" />
                   ) : CountData ? (
-                    CountData?.TotalDataCount
+                    <span className='font-bold mx-1 text-blue-600'>{CountData?.TotalDataCount}</span>
                   ) : (
                     ''
                   )}{' '}
-                  pending approvals{' '}
+                  pending approval requests{' '}
                 </small>
               )}
             </>
