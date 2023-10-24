@@ -11,7 +11,6 @@ export default function PersonalInformation({
 }) {
   const signupSchema = Yup.object().shape({
     gender: Yup.number().required('Gender is Required'),
-    dateOfBirth: Yup.string().required('Date Of Birth is Required'),
     employmentStatus: Yup.string(),
     qualification: Yup.string(),
     maritalStatus: Yup.string().required('Select Marital status'),
@@ -33,7 +32,6 @@ export default function PersonalInformation({
       <Formik
         initialValues={{
           gender: userValues?.gender || '',
-          dateOfBirth: userValues?.dateOfBirth || '',
           employmentStatus: userValues?.employmentStatus || '',
           qualification: userValues?.qualification || '',
           maritalStatus: userValues?.maritalStatus || '',
@@ -91,7 +89,7 @@ export default function PersonalInformation({
                   </div>
                 ) : null}
               </div>
-              <div className="mb-1 w-full">
+              {/* <div className="mb-1 w-full">
                 <label
                   htmlFor="dateOfBirth"
                   className={`text-sm md:text-black text-white leading-4`}
@@ -116,7 +114,7 @@ export default function PersonalInformation({
                     {errors.dateOfBirth}
                   </div>
                 ) : null}
-              </div>
+              </div> */}
             </div>
             <div className="w-full flex md:flex-row flex-col gap-2 mb-2">
               <div className="w-full mt-2">
