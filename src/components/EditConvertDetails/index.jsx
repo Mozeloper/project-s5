@@ -306,7 +306,7 @@ export default function EditConvertDetails({
                 ) : null}
               </div>
 
-              <div className="w-full flex flex-col">
+              {/* <div className="w-full flex flex-col">
                 <label
                   className="text-sm text-black leading-4"
                   htmlFor="yearJoined"
@@ -327,7 +327,7 @@ export default function EditConvertDetails({
                     {errors.yearJoined}
                   </div>
                 ) : null}
-              </div>
+              </div> */}
             </div>
 
             <h3 className="font-bold mt-10 text-primary">
