@@ -60,7 +60,7 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
           PhoneNumber: data?.PhoneNumber || '',
           Gender: data?.Gender || '',
           phoneNumber: data?.PhoneNumber || '',
-          dateOfBirth: data?.DateOfBirth || '',
+          dateOfBirth: '',
           department: data?.department || '',
           employmentStatus: data?.EmploymentStatus || '',
           maritalStatus: data?.MaritalStatus || '',
@@ -76,7 +76,7 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
         validationSchema={updateUserSchema}
         enableReinitialize={true}
         onSubmit={(values, actions) => {
-          const formattedDateOfBirth = formatToISODate(values?.dateOfBirth);
+          // const formattedDateOfBirth = formatToISODate(values?.dateOfBirth);
           // const formattedDate = moment(data?.DateOfBirth).format(
           //   "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
           // );
@@ -88,7 +88,7 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
             email: data?.Email,
             gender: data?.Gender,
             phoneNumber: values?.PhoneNumber,
-            dateOfBirth: formattedDateOfBirth,
+            dateOfBirth: '',
             department: data?.Department,
             employmentStatus: data?.EmploymentStatus,
             maritalStatus: values?.maritalStatus,
@@ -228,7 +228,7 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
               </div>
             </div>
             <div className="w-full flex md:flex-row flex-col gap-3">
-              <div className="w-full flex flex-col">
+              {/* <div className="w-full flex flex-col"> */}
                 {/* <label
                   className="text-sm text-black leading-4"
                   htmlFor="homeAddress"
@@ -249,7 +249,7 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
                     {errors.dateOfBirth}
                   </div>
                 ) : null} */}
-                <label
+                {/* <label
                   htmlFor="dateOfBirth"
                   className={`text-sm md:text-black text-white leading-4`}
                 >
@@ -273,7 +273,7 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
                     {errors.dateOfBirth}
                   </div>
                 ) : null}
-              </div>
+              </div> */}
               <div className="w-full">
                 <label className="text-sm ext-black leading-4" htmlFor="Gender">
                   Gender
@@ -353,7 +353,7 @@ export default function Update({ setOpenModal, data, handleGetUser }) {
                   name="yearJoined"
                   id="yearJoined"
                   className={`w-full h-[41px] text-sm px-4  border border-secondary rounded-lg mt-2 outline-none bg-grey700`}
-                  placeholder="Date Of Birth"
+                  placeholder="Year Joined Church"
                   onChange={handleChange}
                   value={values?.yearJoined}
                 />
