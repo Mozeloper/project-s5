@@ -9,6 +9,7 @@ import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import { useNavigate } from 'react-router-dom';
 import { useModalToggle } from '../../context/ConfirmationModal.context';
 import AddAdminFormControl from './Forms/addAdmin.form';
+import AddSoulsFormControl from './Forms/addSoul.form';
 
 export default function TableOptions({
   optionsList,
@@ -39,7 +40,11 @@ export default function TableOptions({
   };
 
   const renderModalContent = () => {
-    if (selectedOption) {
+    // console.log(selectedOption)
+    if(selectedOption?.name.toLowerCase() === 'view') {
+      navigate(`/${pageLink}/${id}`);
+    }
+   else if (selectedOption) {
       return (
         <TransitionsModal
           //isModalOpen={isOpen}
@@ -61,6 +66,17 @@ export default function TableOptions({
         >
           {/* {displayModalUi} */}
           <AddAdminFormControl />
+        </TransitionsModal>
+      );
+    } else if (modalType === 'AddSoul') {
+      return (
+        <TransitionsModal
+        heading={'Add New Soul Form'}
+        width={'max-w-2xl w-[90%] bg-[#Bf0A30]'}
+          name={'+ Add New Soul'}
+        >
+          {/* {displayModalUi} */}
+          <AddSoulsFormControl />
         </TransitionsModal>
       );
     }
