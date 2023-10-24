@@ -52,8 +52,9 @@ export const SoulsAdminTable = () => {
     { icon: <GrView className="text-blue-500" />, name: 'View' },
   ];
 
-  const handleOptionsClick = (event) => {
-    const innerText = event.currentTarget.innerText;
+  const handleOptionsClick = (event, option) => {
+    // const innerText = event.currentTarget.innerText;
+    const innerText = option.name;
     const id = event.currentTarget.id;
     if (innerText.toLowerCase() === 'view') {
       navigate(`/souls/${id}`);

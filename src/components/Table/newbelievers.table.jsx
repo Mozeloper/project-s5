@@ -107,7 +107,7 @@ export default function NewBelieversTable() {
    */
   const handleOptionsClick = (event, option) => {
     const innerText = option.name;
-    console.log(innerText);
+    // console.log(innerText);
     const id = event.currentTarget.id;
     const { name: Name, roles: Roles } = event.selectedUserData;
 
