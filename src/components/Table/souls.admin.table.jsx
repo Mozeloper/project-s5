@@ -21,7 +21,9 @@ export const SoulsAdminTable = () => {
   const [displayUi, setDisplayUi] = React.useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  let { textSearch, setTextSearch } = useTextSearchNav()
+  // let { textSearch, setTextSearch } = useTextSearchNav()
+  const [textSearch, setTextSearch ] = useState('');
+  
   const {
     data: soulsData,
     isError,
@@ -64,6 +66,10 @@ export const SoulsAdminTable = () => {
   const handlePaginationChange = (event, value) => {
     setPageNumber(value);
   };
+
+  const handleSearchChange = (newQuery) => {
+    setTextSearch(prev => prev = newQuery)
+  }
 
   return (
     <Fragment>
@@ -112,6 +118,8 @@ export const SoulsAdminTable = () => {
                 data={!isError && data}
                 filterNumber={9}
                 hideSearch="true"
+                textSearch={textSearch}
+                setTextSearch={handleSearchChange}
               />
 
               <PaginationFooter

@@ -16,12 +16,12 @@ import { useTextSearchNav } from '../../../context/textSearch.context';
 export default function UnapprovedWorkerTable() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  let { textSearch, setTextSearch } = useTextSearchNav()
+  // let { textSearch, setTextSearch } = useTextSearchNav()
   const [modalConfirmation, setModalConfirmation] = useState(false);
   const [displayUi, setDisplayUi] = React.useState(null);
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
-
+  const [textSearch, setTextSearch ] = useState('');
   const [workerId, setWorkerId] = useState('');
   const [activeFunction, setActiveFunction] = useState('');
   const {
@@ -69,6 +69,10 @@ export default function UnapprovedWorkerTable() {
         if (activeFunction === 'delete') return await deleteUserAsync();
     } )();
   }, [workerId])
+  
+  const handleSearchChange = (newQuery) => {
+    setTextSearch(prev => prev = newQuery)
+  }
   
   const handleApprovedConfirmation = useCallback(
     async (id) => {
@@ -160,6 +164,8 @@ export default function UnapprovedWorkerTable() {
                 filterNumber={11}
                 optionArrayList={optionList}
                 optionsHandleClick={handleOptionsClick}
+                textSearch={textSearch}
+                setTextSearch={handleSearchChange}
               />
 
               {/* Pagination Section */}

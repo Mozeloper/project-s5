@@ -23,7 +23,8 @@ export const SoulsTable = () => {
   const [displayUi, setDisplayUi] = React.useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  let { textSearch, setTextSearch } = useTextSearchNav();
+  // let { textSearch, setTextSearch } = useTextSearchNav();
+  const [textSearch, setTextSearch ] = useState('');
 
   /**
    * React Query Hook for fetching all souls registered by the worker
@@ -79,6 +80,10 @@ export const SoulsTable = () => {
     //   setDisplayUi(<AddSoulsFormControl />);
     // }
   //};
+
+  const handleSearchChange = (newQuery) => {
+    setTextSearch(prev => prev = newQuery)
+  }
 
   const handlePaginationChange = (event, value) => {
     setPageNumber(value);
@@ -144,6 +149,8 @@ export const SoulsTable = () => {
                 headers={headers}
                 data={!isError && data}
                 filterNumber={9}
+                textSearch={textSearch}
+                setTextSearch={handleSearchChange}
               />
 
               <PaginationFooter

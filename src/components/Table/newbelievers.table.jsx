@@ -21,10 +21,10 @@ export default function NewBelieversTable() {
   const queryClient = useQueryClient();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  let { textSearch, setTextSearch } = useTextSearchNav();
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
+  const [textSearch, setTextSearch ] = useState('');
 
   /**
    * Hook for fetching all converts in new believers stage
@@ -57,6 +57,10 @@ export default function NewBelieversTable() {
       name: 'Disable',
     },
   ];
+
+  const handleSearchChange = (newQuery) => {
+    setTextSearch(prev => prev = newQuery)
+  }
 
   /**
    * Function for handling promotion of a new beleiver (note the function is currently being handled by the modal)
@@ -185,6 +189,9 @@ export default function NewBelieversTable() {
                     filterNumber={10}
                     optionArrayList={optionList}
                     optionsHandleClick={handleOptionsClick}
+                    textSearch={textSearch}
+                    setTextSearch={handleSearchChange}
+                    // totalSearchData={searchAdmins.Data && searchAdmins.Data}
                   />
 
                   <PaginationFooter

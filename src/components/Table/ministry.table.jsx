@@ -16,10 +16,11 @@ export default function MinstryTable() {
   const queryClient = useQueryClient();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  let { textSearch, setTextSearch } = useTextSearchNav()
+  // let { textSearch, setTextSearch } = useTextSearchNav()
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
+  const [textSearch, setTextSearch ] = useState('');
 
   /**
    * Hook for fetching All Converts in Ministry Stage
@@ -49,6 +50,10 @@ export default function MinstryTable() {
       name: 'disable',
     },
   ];
+
+  const handleSearchChange = (newQuery) => {
+    setTextSearch(prev => prev = newQuery)
+  }
 
   /**
    * Handler for suspending a minstry convert
@@ -130,6 +135,8 @@ export default function MinstryTable() {
                     filterNumber={10}
                     optionArrayList={optionList}
                     optionsHandleClick={handleOptionsClick}
+                    textSearch={textSearch}
+                    setTextSearch={handleSearchChange}
                   />
 
                   <PaginationFooter

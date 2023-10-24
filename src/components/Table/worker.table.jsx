@@ -10,7 +10,9 @@ import SearchBox from '../Searchbox/searchbox';
 export default function WorkersTable() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(7);
-  let { textSearch, setTextSearch } = useTextSearchNav();
+  // let { textSearch, setTextSearch } = useTextSearchNav();
+  const [textSearch, setTextSearch ] = useState('');
+  
   const {
     data: WorkersData,
     isError,

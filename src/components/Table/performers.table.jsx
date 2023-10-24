@@ -10,7 +10,8 @@ export const PerformersTable = () => {
   const [headers, setHeaders] = useState([] || undefined || null);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
-
+  const [textSearch, setTextSearch ] = useState('');
+  
   /**
    * Hook for fetching Top Performers
    */
@@ -37,8 +38,9 @@ export const PerformersTable = () => {
     { icon: <GrView className="text-blue-500" />, name: 'View' },
   ];
 
-
-
+  const handleSearchChange = (newQuery) => {
+    setTextSearch(prev => prev = newQuery)
+  }
 
   return (
     <Fragment>
@@ -70,6 +72,8 @@ export const PerformersTable = () => {
                 data={!isError && data}
                 filterNumber={9}
                 hideSearch="true"
+                textSearch={textSearch}
+                setTextSearch={handleSearchChange}
               />
 
             </>
