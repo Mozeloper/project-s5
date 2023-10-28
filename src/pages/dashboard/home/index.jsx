@@ -4,9 +4,11 @@ import TabPanel from '@mui/lab/TabPanel';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import React from 'react';
+import { FaSpinner } from 'react-icons/fa6';
 import { MdNotificationsActive } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import PageTitle from '../../../components/PageTitle';
+import SummeryCard from '../../../components/SummeryCard/summeryCard';
 import DtiTable from '../../../components/Table/dti.table';
 import MinstryTable from '../../../components/Table/ministry.table';
 import NewBelieversTable from '../../../components/Table/newbelievers.table';
@@ -14,12 +16,17 @@ import { PerformersTable } from '../../../components/Table/performers.table';
 import { SoulsAdminTable } from '../../../components/Table/souls.admin.table';
 import { SoulsTable } from '../../../components/Table/souls.table';
 import Charts from '../../../components/chart/chart';
+import { useFetchUnapprovedCount } from '../../../hooks/useApproval';
+import {
+  useFetchAdminDashboardAnalytics,
+  useFetchPersonalAnalytics,
+} from '../../../hooks/useFetchAnalytics';
 import { userFullName } from '../../../utils/index';
 import './vibration.css';
-import { useFetchUnapprovedCount } from '../../../hooks/useApproval';
-import { FaSpinner } from 'react-icons/fa6';
 
 export default function Home() {
+  const workerId = JSON.parse(sessionStorage.getItem('userObj')).Id;
+
   //const roles = useRole();
   const [value, setValue] = React.useState('1');
 
@@ -44,6 +51,10 @@ export default function Home() {
   let isLoading = false;
   let isError = false;
 
+  let AnalyticsData = null;
+  let isAnalyticsLoading = false;
+  let isAnalyticsError = false;
+
   if (isSuperAdmin || isDtiAdmin || isMinistryAdmin || isNewBelieversAdmin) {
     const {
       data,
@@ -56,29 +67,29 @@ export default function Home() {
     isError = error;
   }
 
-  // if(!isSuperAdmin) {
+  if (isSuperAdmin || isDtiAdmin || isMinistryAdmin || isNewBelieversAdmin) {
+    const {
+      data,
+      isLoading: loading,
+      isError: error,
+    } = useFetchAdminDashboardAnalytics();
 
-  // const {
-  //   data: DynamicDashboardAnalytics,
-  //   isError,
-  //   isLoading,
-  // } = useFetchMyAnalytics();
+    AnalyticsData = data;
+    console.log(AnalyticsData);
+    isAnalyticsLoading = loading;
+    isAnalyticsError = error;
+  } else {
+    const {
+      data,
+      isLoading: loading,
+      isError: error,
+    } = useFetchPersonalAnalytics({ AnalyticsId: workerId });
 
-  // return (data, isError, isLoading)
-
-  // } else {
-
-  // const {
-  //   data: DynamicDashboardAnalytics,
-  //   isError,
-  //   isLoading,
-  // } = useFetchAdminDashboardAnalytics({
-  //   userId,
-  // });
-
-  // return data, isError, isLoading;
-
-  // }
+    AnalyticsData = data;
+    console.log(AnalyticsData);
+    isAnalyticsLoading = loading;
+    isAnalyticsError = error;
+  }
 
   const ChartDatas = [
     {
@@ -99,10 +110,10 @@ export default function Home() {
           <h2 className="font-bold text-3xl">
             Hello, <span className="capitalize">{userObj?.FirstName}!</span>
           </h2>
-          {(isSuperAdmin ||
-            isDtiAdmin ||
-            isMinistryAdmin ||
-            isNewBelieversAdmin) && (
+          {isSuperAdmin ||
+          isDtiAdmin ||
+          isMinistryAdmin ||
+          isNewBelieversAdmin ? (
             <>
               {isError && (
                 <small className="text-gray-500 flex">
@@ -122,6 +133,30 @@ export default function Home() {
                     ''
                   )}{' '}
                   pending approval requests{' '}
+                </small>
+              )}
+            </>
+          ) : (
+            <>
+              {isAnalyticsError && (
+                <small className="text-gray-500 flex">
+                  Unable to fetch Souls Count, please refresh your browser.
+                </small>
+              )}
+              {(AnalyticsData || isLoading) && (
+                <small className="text-gray-500 flex">
+                  You&apos;ve won{' '}
+                  {isAnalyticsLoading ? (
+                    <FaSpinner className="text-sm animate-spin mx-2" />
+                  ) : AnalyticsData?.Data ? (
+                    <span className="font-bold mx-1 text-blue-600">
+                      {AnalyticsData?.Data?.SoulsCountThisMonth}
+                    </span>
+                  ) : (
+                    ''
+                  )}{' '}
+                  soul{AnalyticsData?.Data?.SoulsCountThisMonth > 1 ? 's' : ''}{' '}
+                  this month{' '}
                 </small>
               )}
             </>
@@ -164,18 +199,16 @@ export default function Home() {
             ) : isNewBelieversAdmin ? (
               <NewBelieversTable />
             ) : (
-              <SoulsTable />
+              <SoulsTable hideSearch={true} />
             )}
           </TabPanel>
           <TabPanel value="2" className="!px-2">
             <div className="">
-              {/* <SummeryCard
-                data={
-                  DynamicDashboardAnalytics && DynamicDashboardAnalytics?.Data
-                }
-                loading={isLoading}
-                error={isError}
-              /> */}
+              <SummeryCard
+                data={AnalyticsData && AnalyticsData?.Data}
+                loading={isAnalyticsLoading}
+                error={isAnalyticsError}
+              />
             </div>
             <div className="p-2"></div>
             <div className="bg-white rounded-md">

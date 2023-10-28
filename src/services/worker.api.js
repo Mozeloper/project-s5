@@ -5,7 +5,6 @@ import { appUrls } from './urls';
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export async function promoteAWorker(workerId, role) {
-
   try {
     const promoteWorker = await api.post(
       `${baseUrl}${appUrls.ADD_ROLE_TO_USER}?userId=${workerId}&roles=${role}`
@@ -22,10 +21,10 @@ export async function promoteAWorker(workerId, role) {
 }
 
 export async function suspendAWorker(workerId, reason) {
-      let payload = {
-        id: workerId,
-        reasonForDeactivation: reason,
-      };
+  let payload = {
+    id: workerId,
+    reasonForDeactivation: reason,
+  };
   try {
     const suspendWorker = await api.post(
       `${baseUrl}${appUrls.SUSPEND_A_WORKER}`,
@@ -42,8 +41,32 @@ export async function suspendAWorker(workerId, reason) {
   }
 }
 
+export async function uploadProfileImage(imgUrl) {
+  try {
+    const formData = new FormData();
+    formData.append('file', imgUrl);
+
+    const updateProfile = await api.post(
+      `${baseUrl}${appUrls.UPDATE_PROFILE_IMG}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    if (updateProfile?.status === 200) {
+      toast.success('Worker was suspeneded successfully');
+    }
+    const updatedProfileRes = updateProfile?.data;
+    return updatedProfileRes;
+  } catch (error) {
+    toast.error('Opps! Could not update profile image, please try again');
+    throw new Error(error.message || error);
+  }
+}
+
 export async function reactivateAWorker(workerId) {
-  
   try {
     const reactivedWorker = await api.post(
       `${baseUrl}${appUrls.REACTIVATE_A_WORKER}/?workerId=${workerId}`
@@ -60,7 +83,6 @@ export async function reactivateAWorker(workerId) {
 }
 
 export async function deleteWorkerById(workerId) {
-  
   try {
     const deletedWorker = await api.post(
       `${baseUrl}${appUrls.DELETE_A_WORKER}/?workerId=${workerId}`

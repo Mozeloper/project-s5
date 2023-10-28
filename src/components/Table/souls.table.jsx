@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTextSearchNav } from '../../context/textSearch.context';
 import { useModalToggle } from '../../context/ConfirmationModal.context';
 
-export const SoulsTable = () => {
+export const SoulsTable = ({ hideSearch = false }) => {
   const { modalType, openModal } = useModalToggle();
 
   const workerId = JSON.parse(sessionStorage.getItem('userObj'))?.Id;
@@ -24,7 +24,7 @@ export const SoulsTable = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   // let { textSearch, setTextSearch } = useTextSearchNav();
-  const [textSearch, setTextSearch ] = useState('');
+  const [textSearch, setTextSearch] = useState('');
 
   /**
    * React Query Hook for fetching all souls registered by the worker
@@ -70,20 +70,20 @@ export const SoulsTable = () => {
   });
 
   //const handleOptionsClick = (event) => {
-    // const innerText = event.currentTarget.innerText;
-    // const id = event.currentTarget.id;
-    //console.log(innerText);
-    // if (innerText.toLowerCase() === 'view') {
-    //   navigate(`/souls/${id}`);
-    //  }
-    // else if (modalType === 'AddSoul') {
-    //   setDisplayUi(<AddSoulsFormControl />);
-    // }
+  // const innerText = event.currentTarget.innerText;
+  // const id = event.currentTarget.id;
+  //console.log(innerText);
+  // if (innerText.toLowerCase() === 'view') {
+  //   navigate(`/souls/${id}`);
+  //  }
+  // else if (modalType === 'AddSoul') {
+  //   setDisplayUi(<AddSoulsFormControl />);
+  // }
   //};
 
   const handleSearchChange = (newQuery) => {
-    setTextSearch(prev => prev = newQuery)
-  }
+    setTextSearch((prev) => (prev = newQuery));
+  };
 
   const handlePaginationChange = (event, value) => {
     setPageNumber(value);
@@ -109,14 +109,16 @@ export const SoulsTable = () => {
               </p>
             </div>
 
-            <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-              <button
-                onClick={AddSoulModal}
-                className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6 min-w-max"
-              >
-                Add A Soul
-              </button>
-            </div>
+            {!hideSearch && (
+              <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                <button
+                  onClick={AddSoulModal}
+                  className="block rounded-md px-3 bg-[#Bf0A30] py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#38404b] delay-100 ease-in-out duration-300 p-6 min-w-max"
+                >
+                  Add A Soul
+                </button>
+              </div>
+            )}
           </div>
           {isLoading ? (
             <Loader />
@@ -150,6 +152,7 @@ export const SoulsTable = () => {
                 data={!isError && data}
                 filterNumber={9}
                 textSearch={textSearch}
+                hideSearch={hideSearch}
                 setTextSearch={handleSearchChange}
               />
 
@@ -163,13 +166,15 @@ export const SoulsTable = () => {
           )}
         </div>
       </div>
-      {modalType == "AddSoul" && <TransitionsModal
-      isModalOpen={modalType == "AddSoul"}
-        heading={'Add New Soul Form'}
-        width={'max-w-2xl w-[90%] bg-[#Bf0A30]'}
-      >
-        <AddSoulsFormControl />
-      </TransitionsModal>}
+      {modalType == 'AddSoul' && (
+        <TransitionsModal
+          isModalOpen={modalType == 'AddSoul'}
+          heading={'Add New Soul Form'}
+          width={'max-w-2xl w-[90%] bg-[#Bf0A30]'}
+        >
+          <AddSoulsFormControl />
+        </TransitionsModal>
+      )}
     </Fragment>
   );
 };

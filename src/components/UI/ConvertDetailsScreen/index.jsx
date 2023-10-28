@@ -1,17 +1,17 @@
 import ResultNotFound from '@/components/ResultNotFound';
 import ReturnToPrevious from '@/components/ReturnToPrevious';
-import { Email, Phone } from '@mui/icons-material';
+import { Phone } from '@mui/icons-material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { Skeleton } from '@mui/material';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ModalPopup from '../../ModalPopup';
-import EditConvertDetails from '../../EditConvertDetails';
 import Button from '../../Button';
+import EditConvertDetails from '../../EditConvertDetails';
+import ModalPopup from '../../ModalPopup';
 
 const ConvertDetailsByIdScreen = ({
   data,
@@ -21,15 +21,16 @@ const ConvertDetailsByIdScreen = ({
 }) => {
   const [value, setValue] = React.useState(isDeactivated ? '0' : '1');
   const [openModal, setOpenModal] = useState(false);
+  const roles = JSON.parse(sessionStorage.getItem('role'));
+  //check if user is not an admin
+  const isUser = roles.includes('User') && roles.length <= 1;
+  const isAdmin = roles.some((role) => role.toLowerCase().includes('admin'));
 
- 
   //console.log(`data : ${data}`);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  
-  
 
   return (
     <div>
@@ -42,25 +43,29 @@ const ConvertDetailsByIdScreen = ({
             <div className="w-full rounded-md relative min-h-[240px] bg-gradient-to-b from-[#232931] to-[#38404b] p-4 ">
               <div className="flex justify-between mb-5">
                 <ReturnToPrevious />
-                <div className="w-full flex justify-end">
-                  {data?.FirstName ? (
-                    <Button
-                      title="Edit"
-                      className="w-[126px] text-sm rounded-md"
-                      backgroundColor="bg-white"
-                      textColor="text-secondary"
-                      onClick={() => setOpenModal(true)}
-                    />
-                  ) : (
-                    <Skeleton
-                      animation="wave"
-                      variant="rectangular"
-                      width={126}
-                      height={40}
-                      className="w-[126px] text-sm rounded-md !bg-gray-200"
-                    />
-                  )}
-                </div>
+                {(isAdmin || (isUser && !data?.IsAssigned)) && (
+                  // show edit button for none admin user only when the soul has not yet been assigned
+
+                  <div className="w-full flex justify-end">
+                    {data?.FirstName ? (
+                      <Button
+                        title="Edit"
+                        className="w-[126px] text-sm rounded-md"
+                        backgroundColor="bg-white"
+                        textColor="text-secondary"
+                        onClick={() => setOpenModal(true)}
+                      />
+                    ) : (
+                      <Skeleton
+                        animation="wave"
+                        variant="rectangular"
+                        width={126}
+                        height={40}
+                        className="w-[126px] text-sm rounded-md !bg-gray-200"
+                      />
+                    )}
+                  </div>
+                )}
               </div>
               <div className="md:absolute md:-bottom-24 flex flex-col md:flex-row md:gap-5 gap-2 md:left-[30px] md:right-[30px] bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
                 <div className="flex gap-4">
@@ -435,12 +440,14 @@ const ConvertDetailsByIdScreen = ({
                                 '...'}
                             </span>
                           </div>
-                          {data?.Status.toLowerCase() === "ministry" && <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
-                            <h3 className="font-bold md:w-[20%]">
-                              Member Since
-                            </h3>{' '}
-                            <span>{(data && data?.YearJoined) || '...'}</span>
-                          </div>}
+                          {data?.Status.toLowerCase() === 'ministry' && (
+                            <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                              <h3 className="font-bold md:w-[20%]">
+                                Member Since
+                              </h3>{' '}
+                              <span>{(data && data?.YearJoined) || '...'}</span>
+                            </div>
+                          )}
                           {/* <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                             <h3 className="font-bold md:w-[20%]">
                               Organization

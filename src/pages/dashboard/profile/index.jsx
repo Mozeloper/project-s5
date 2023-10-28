@@ -11,11 +11,15 @@ import { api } from '../../../services/api';
 import { appUrls } from '../../../services/urls';
 import Update from './components/Update';
 import { Skeleton } from '@mui/material';
+import TransitionsModal from '../../../components/ModalPopup/modalTransition';
+import ProfileImageUploader from '../../../components/ProfileImageUploader';
+import { useModalToggle } from '../../../context/ConfirmationModal.context';
 
 export default function PersonalDetailsSettings() {
   const [data, setData] = useState({});
   const [openModal, setOpenModal] = useState(false);
   const [showPasswordFields, setShowPasswordFields] = useState(false);
+  const { modalType, openModal: transitionOpen } = useModalToggle();
 
   const changePassowordSchema = Yup.object().shape({
     current_password: Yup.string()
@@ -85,6 +89,13 @@ export default function PersonalDetailsSettings() {
           setOpenModal={setOpenModal}
         />
       </ModalPopup>
+      <TransitionsModal
+        isModalOpen={modalType === 'Profile Image'}
+        heading=""
+        width={'max-w-max w-[90%]'}
+      >
+        <ProfileImageUploader imageUrl={data && data.PhotoUrl} />
+      </TransitionsModal>
       <div className="overflow-hidden">
         <div className="w-full rounded-md relative h-[240px] bg-gradient-to-b from-[#232931] to-[#38404b] p-4">
           <div className="w-full flex justify-end">
@@ -109,13 +120,14 @@ export default function PersonalDetailsSettings() {
           <div className="absolute -bottom-24 flex md:gap-16 gap-2 md:left-[30px] md:right-[30px] right-0 left-0 bg-white rounded-lg min-h-[150px] h-auto md:p-4 p-2">
             <div className="flex gap-4">
               {/* added min height and width to prevent flickering  */}
-              {data && data?.PhotoUrl ? (
+              {data && data?.FirstName ? (
                 data?.PhotoUrl !== '' ? (
                   <img
                     src={data?.PhotoUrl}
                     alt="profile_img"
                     loading="lazy"
-                    className="w-auto min-h-[160px] rounded object-cover min-w-[160px] max-h-[160px] relative -top-16"
+                    className="w-auto min-h-[160px] rounded object-cover min-w-[160px] max-h-[160px] relative -top-16 cursor-pointer"
+                    onClick={() => transitionOpen('Profile Image')}
                   />
                 ) : (
                   <img
@@ -124,9 +136,10 @@ export default function PersonalDetailsSettings() {
                         ? MaleProfileImg
                         : FemaleProfileImg
                     }
+                    onClick={() => transitionOpen('Profile Image')}
                     alt="profile_img"
                     loading="lazy"
-                    className="w-auto min-h-[160px] min-w-[160px] max-h-[160px] relative -top-16"
+                    className="w-auto min-h-[160px] min-w-[160px] max-h-[160px] relative -top-16 cursor-pointer"
                   />
                 )
               ) : (
