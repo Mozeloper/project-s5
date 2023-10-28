@@ -6,6 +6,7 @@ import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import { ListItemIcon } from '@mui/material';
 import { useModalToggle } from '../../context/ConfirmationModal.context';
+import { Close } from '@mui/icons-material';
 
 const style = {
   position: 'absolute',
@@ -28,7 +29,6 @@ export default function TransitionsModal({
   icon,
   isModalOpen,
 }) {
-  
   const { isOpen, openModal, closeModal } = useModalToggle();
   const handleOpen = () => {
     openModal(isModalOpen);
@@ -59,6 +59,10 @@ export default function TransitionsModal({
       >
         <Fade in={isOpen}>
           <Box sx={style} className={`${width}`}>
+            <Close
+              onClick={closeModal}
+              className="absolute p-[5px] !top-[-10px] !right-[-10px] text-white bg-red-600 rounded-full cursor-pointer"
+            />
             <Typography id="transition-modal-title">{heading}</Typography>
             <Typography
               id="transition-modal-description"
