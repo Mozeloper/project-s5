@@ -1,13 +1,15 @@
-import React from "react";
-import { GiConfirmed } from "react-icons/gi";
-import Button from "../../../Button";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { GiConfirmed } from 'react-icons/gi';
+import Button from '../../../Button';
+import { useNavigate } from 'react-router-dom';
 
 export default function LogoutConfirm({ setLogoutConfirmation }) {
   const navigate = useNavigate();
   const handleLogout = () => {
     sessionStorage.clear();
-    navigate("/");
+    navigate('/');
+    //reload the browser after logging out so all states in react query are cleared
+    location.reload();
   };
   return (
     <>
