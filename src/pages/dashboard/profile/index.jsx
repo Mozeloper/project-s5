@@ -185,10 +185,12 @@ export default function PersonalDetailsSettings() {
               <h3 className="font-bold w-[20%]">Gender</h3>{' '}
               <span>{data?.Gender || '...'}</span>
             </div>
-            {data && data?.DateOfBirth &&   <div className="flex gap-x-16">
-              <h3 className="font-bold w-[20%]">Date of Birth</h3>{' '}
-              <span>{data?.DateOfBirth || '...'}</span>
-            </div>}
+            {data && data?.DateOfBirth && (
+              <div className="flex gap-x-16">
+                <h3 className="font-bold w-[20%]">Date of Birth</h3>{' '}
+                <span>{data?.DateOfBirth || '...'}</span>
+              </div>
+            )}
             <div className="flex gap-x-16">
               <h3 className="font-bold w-[20%]">Marital Status</h3>{' '}
               <span>{data?.MaritalStatus || '...'}</span>
@@ -360,6 +362,13 @@ export default function PersonalDetailsSettings() {
               </div>
             )}
           </div>
+          {/* <ProfileImageUploader
+            imageUrl="URL_OF_CURRENT_IMAGE"
+            onImageChange={(newImageUrl) => {
+              // Handle the new image here (e.g., send it to the server)
+              console.log('New Image URL:', newImageUrl);
+            }}
+          /> */}
         </div>
       </div>
     </>

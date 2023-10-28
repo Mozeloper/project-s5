@@ -26,8 +26,8 @@ export default function Home() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const { data: CountData, isLoading, isError } = useFetchUnapprovedCount();
-  console.log(CountData);
+  // const { data: CountData, isLoading, isError } = useFetchUnapprovedCount();
+  // console.log(CountData);
 
   const roles = JSON.parse(sessionStorage.getItem('role'));
   const isSuperAdmin = roles.includes('SuperAdmin');
@@ -39,6 +39,22 @@ export default function Home() {
   const fullName = userFullName();
   const userObj = JSON.parse(sessionStorage.getItem('userObj'));
   const userId = userObj?.Id;
+
+  let CountData = null;
+  let isLoading = false;
+  let isError = false;
+
+  if (isSuperAdmin || isDtiAdmin || isMinistryAdmin || isNewBelieversAdmin) {
+    const {
+      data,
+      isLoading: loading,
+      isError: error,
+    } = useFetchUnapprovedCount();
+
+    CountData = data;
+    isLoading = loading;
+    isError = error;
+  }
 
   // if(!isSuperAdmin) {
 
@@ -99,7 +115,9 @@ export default function Home() {
                   {isLoading ? (
                     <FaSpinner className="text-sm animate-spin mx-2" />
                   ) : CountData ? (
-                    <span className='font-bold mx-1 text-blue-600'>{CountData?.TotalDataCount}</span>
+                    <span className="font-bold mx-1 text-blue-600">
+                      {CountData?.TotalDataCount}
+                    </span>
                   ) : (
                     ''
                   )}{' '}

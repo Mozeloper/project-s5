@@ -172,7 +172,7 @@ export default function Signin() {
           </Formik>
           <div className="text-center">
             <small className="text-primary font-bold">
-              Powered by The Potters House of Lagos
+              Powered by The Potter&apos;s House of Lagos
             </small>
           </div>
         </div>

@@ -37,8 +37,9 @@ export default function WorkersTable() {
                 Workers
               </h1>
               <p className="mt-2 text-sm text-gray-700">
-                Here is a list of the workers at The Potter's House of Lagos,
-                including their name, email address, role, and presence status.
+                Here is a list of the workers at The Potter&apos;s House of
+                Lagos, including their name, email address, role, and presence
+                status.
               </p>
             </div>
           </div>
