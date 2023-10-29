@@ -56,7 +56,7 @@ export async function uploadProfileImage(imgUrl) {
       }
     );
     if (updateProfile?.status === 200) {
-      toast.success('Worker was suspeneded successfully');
+      toast.success('Profile was Updated successfully');
     }
     const updatedProfileRes = updateProfile?.data;
     return updatedProfileRes;
