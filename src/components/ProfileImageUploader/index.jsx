@@ -42,7 +42,7 @@ export default function ProfileImageUploader({ imageUrl }) {
         if (uploadImg?.status === 'resolved')
           closeModal();
         location.reload();
-          console.log(uploadImg);
+          //console.log(uploadImg);
       } catch (error) {
         console.log(error);
       } finally {
@@ -71,6 +71,7 @@ export default function ProfileImageUploader({ imageUrl }) {
         )}
 
         <Button
+          disabled={newImageUrl === ''}
           onClick={handleSaveImage}
           isLoading={isLoading}
           title="Upload Image"
