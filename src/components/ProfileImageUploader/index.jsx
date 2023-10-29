@@ -28,7 +28,7 @@ export default function ProfileImageUploader({ imageUrl }) {
     if (newImageUrl) {
       // Send the new image to the server or perform any desired action
      // console.log(newImageUrl);
-      setIsLoading(true);
+      //setIsLoading(true);
 
       //   const formData = new FormData();
       //   formData.append('file', newImageUrl);
@@ -37,8 +37,11 @@ export default function ProfileImageUploader({ imageUrl }) {
       //formData.append('additionalData', 'someValue');
 
       try {
+        setIsLoading(true);
         const uploadImg = uploadProfileImage(newImageUrl);
+        if (uploadImg?.status === 'resolved')
           closeModal();
+        location.reload();
           console.log(uploadImg);
       } catch (error) {
         console.log(error);
