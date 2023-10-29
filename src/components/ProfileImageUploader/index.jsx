@@ -3,11 +3,13 @@ import { useDropzone } from 'react-dropzone';
 import Button from '../Button';
 import { uploadProfileImage } from '../../services/worker.api';
 import { useModalToggle } from '../../context/ConfirmationModal.context';
+import toast from 'react-hot-toast';
 
-export default function ProfileImageUploader({ imageUrl }) {
+
+export default function ProfileImageUploader({ imageUrl, handleUpload }) {
   const [newImageUrl, setNewImageUrl] = useState('');
   const [ImageUrl, setImageUrl] = useState(imageUrl || '');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmtting, setIsSubmtting] = useState(false);
   const { closeModal } = useModalToggle();
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -24,30 +26,27 @@ export default function ProfileImageUploader({ imageUrl }) {
     },
   });
 
-  const handleSaveImage = () => {
-    if (newImageUrl) {
-      // Send the new image to the server or perform any desired action
-     // console.log(newImageUrl);
-      //setIsLoading(true);
+  const handleSaveImage = async () => {
+    if (newImageUrl === '') {
+      toast.error('Please choose an image before attempting an upload');
+      return;
+    }
 
-      //   const formData = new FormData();
-      //   formData.append('file', newImageUrl);
+    try {
+      setIsSubmtting(true);
+      const uploadImg = await uploadProfileImage(newImageUrl);
 
-      // You can add additional data to the form if needed
-      //formData.append('additionalData', 'someValue');
-
-      try {
-        setIsLoading(true);
-        const uploadImg = uploadProfileImage(newImageUrl);
-        if (uploadImg?.status === 'resolved')
-          closeModal();
-        location.reload();
-          //console.log(uploadImg);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
+      if (uploadImg?.StatusCode === 200) {
+        setIsSubmtting(false);
+        closeModal();
+        handleUpload();
+        //location.reload();
       }
+
+
+    } catch (error) {
+      console.log(error);
+      setIsSubmtting(false);
     }
   };
 
@@ -73,10 +72,11 @@ export default function ProfileImageUploader({ imageUrl }) {
         <Button
           disabled={newImageUrl === ''}
           onClick={handleSaveImage}
-          isLoading={isLoading}
+          isLoading={isSubmtting}
           title="Upload Image"
-          type="submit"
         />
+
+
       </div>
     </>
   );
