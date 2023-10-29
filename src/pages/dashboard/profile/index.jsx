@@ -94,7 +94,7 @@ export default function PersonalDetailsSettings() {
         heading=""
         width={'max-w-max w-[90%]'}
       >
-        <ProfileImageUploader imageUrl={data && data.PhotoUrl} />
+        <ProfileImageUploader handleUpload={handleGetUser} imageUrl={data && data.PhotoUrl} />
       </TransitionsModal>
       <div className="overflow-hidden">
         <div className="w-full rounded-md relative h-[240px] bg-gradient-to-b from-[#232931] to-[#38404b] p-4">
@@ -375,13 +375,6 @@ export default function PersonalDetailsSettings() {
               </div>
             )}
           </div>
-          {/* <ProfileImageUploader
-            imageUrl="URL_OF_CURRENT_IMAGE"
-            onImageChange={(newImageUrl) => {
-              // Handle the new image here (e.g., send it to the server)
-              console.log('New Image URL:', newImageUrl);
-            }}
-          /> */}
         </div>
       </div>
     </>
