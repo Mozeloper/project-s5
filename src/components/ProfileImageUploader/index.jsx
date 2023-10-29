@@ -27,7 +27,7 @@ export default function ProfileImageUploader({ imageUrl }) {
   const handleSaveImage = () => {
     if (newImageUrl) {
       // Send the new image to the server or perform any desired action
-      console.log(newImageUrl);
+     // console.log(newImageUrl);
       setIsLoading(true);
 
       //   const formData = new FormData();
@@ -38,9 +38,8 @@ export default function ProfileImageUploader({ imageUrl }) {
 
       try {
         const uploadImg = uploadProfileImage(newImageUrl);
-        if (uploadImg?.status === 200) {
           closeModal();
-        }
+          console.log(uploadImg);
       } catch (error) {
         console.log(error);
       } finally {
