@@ -420,6 +420,18 @@ const ConvertDetailsByIdScreen = ({
                         </div>
                         <hr />
                         <div className="flex flex-col gap-y-6 mt-6">
+                        {data?.AdditionalInformation && 
+                          <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
+                            <h3 className="font-bold md:w-[20%]">
+                              Additional Information
+                            </h3>{' '}
+                            <span>
+                              {(data && data?.AdditionalInformation) ||
+                                (data && data?.AdditionalInformation) ||
+                                '...'}
+                            </span>
+                          </div>
+                        }
                           <div className="flex flex-col md:flex-row gap-y-2 gap-x-16">
                             <h3 className="font-bold md:w-[20%]">
                               Qualification
