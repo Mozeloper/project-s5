@@ -36,7 +36,7 @@ export default function AddSoulsFormControl() {
     phoneNumber: Yup.string().required('Phone Number is Required')
       .matches(phoneRegExp, 'Phone number is not valid')
       .required('Phone number is Required'),
-    email: Yup.string().email('Not a proper email'),
+    email: Yup.string(),
     gender: Yup.number().required('Gender is Required'),
     address: Yup.string(),
     nearestBusStop: Yup.string().required('Nearest Bus Stop is Required'),
