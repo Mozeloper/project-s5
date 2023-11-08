@@ -40,6 +40,7 @@ export default function AddSoulsFormControl() {
     gender: Yup.number().required('Gender is Required'),
     address: Yup.string(),
     nearestBusStop: Yup.string().required('Nearest Bus Stop is Required'),
+    additionalInformation: Yup.string()
   });
 
     const handleAddSoul = async (values) => {
@@ -52,6 +53,7 @@ export default function AddSoulsFormControl() {
         gender: values?.gender,
         address: values?.address,
         nearestBusStop: values?.nearestBusStop,
+        additionalInformation: values?.additionalInformation,
       };
       console.log(payload)
       try {
@@ -82,6 +84,8 @@ export default function AddSoulsFormControl() {
         gender: '',
         address: '',
         nearestBusStop: '',
+        additionalInformation: ''
+
       }}
       validationSchema={addSoulSchema}
       onSubmit={(values) => {
@@ -124,7 +128,7 @@ export default function AddSoulsFormControl() {
                 htmlFor="surName"
                 className="peer-focus:font-medium absolute text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                Surname
+                Surname <span className='text-primary'>*</span>
               </label>
             </div>
             <div className="relative z-0 w-full mb-6 group">
@@ -148,7 +152,7 @@ export default function AddSoulsFormControl() {
                 htmlFor="firstName"
                 className="peer-focus:font-medium absolute text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                First name
+                First name <span className='text-primary'>*</span>
               </label>
             </div>
           </div>
@@ -175,7 +179,7 @@ export default function AddSoulsFormControl() {
                 htmlFor="phoneNumber"
                 className="peer-focus:font-medium absolute text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                Phone number (08012345678)
+                Phone number (08012345678) <span className='text-primary'>*</span>
               </label>
             </div>
             <div className="relative z-0 w-full mb-6 group">
@@ -239,7 +243,7 @@ export default function AddSoulsFormControl() {
               htmlFor="address"
               className="peer-focus:font-medium absolute text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Address
+              Address <span className='text-primary'>*</span>
             </label>
           </div>
           <div className="relative z-0 w-full mb-6 group">
@@ -258,7 +262,26 @@ export default function AddSoulsFormControl() {
               htmlFor="nearestBusStop"
               className="peer-focus:font-medium absolute text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Nearest Bus Stop
+              Nearest Bus Stop <span className='text-primary'>*</span>
+            </label>
+          </div>
+          <div className="relative z-0 w-full mb-6 group">
+            <textarea
+              style={{ color: '#6B6B6B' }}
+              type="text"
+              name="additionalInformation"
+              id="additionalInformation"
+              className="block py-2.5 px-0 w-full text-gray-900 text-base bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+              onChange={handleChange}
+              value={values?.additionalInformation}
+            />
+            <label
+              htmlFor="additionalInformation"
+              className="peer-focus:font-medium absolute text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Comments/Additional Info
             </label>
           </div>
           <div className="flex gap-5">
