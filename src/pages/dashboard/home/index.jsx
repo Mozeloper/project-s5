@@ -19,6 +19,9 @@ import Charts from '../../../components/chart/chart';
 import { useFetchUnapprovedCount } from '../../../hooks/useApproval';
 import {
   useFetchAdminDashboardAnalytics,
+  useFetchNewConvertDashboardAnalytics,
+  useFetchDtiDashboardAnalytics,
+  useFetchMinistryDashboardAnalytics,
   useFetchPersonalAnalytics,
 } from '../../../hooks/useFetchAnalytics';
 import { userFullName } from '../../../utils/index';
@@ -67,12 +70,43 @@ export default function Home() {
     isError = error;
   }
 
-  if (isSuperAdmin || isDtiAdmin || isMinistryAdmin || isNewBelieversAdmin) {
+  if (isSuperAdmin) {
     const {
       data,
       isLoading: loading,
       isError: error,
     } = useFetchAdminDashboardAnalytics();
+
+    AnalyticsData = data;
+    console.log(AnalyticsData);
+    isAnalyticsLoading = loading;
+    isAnalyticsError = error;
+  }  else if (isDtiAdmin) {
+    const {
+      data,
+      isLoading: loading,
+      isError: error,
+    } = useFetchDtiDashboardAnalytics();
+
+    AnalyticsData = data;
+    isAnalyticsLoading = loading;
+    isAnalyticsError = error;
+  } else if (isMinistryAdmin) {
+    const {
+      data,
+      isLoading: loading,
+      isError: error,
+    } = useFetchMinistryDashboardAnalytics();
+
+    AnalyticsData = data;
+    isAnalyticsLoading = loading;
+    isAnalyticsError = error;
+  } else if (isNewBelieversAdmin) {
+    const {
+      data,
+      isLoading: loading,
+      isError: error,
+    } = useFetchNewConvertDashboardAnalytics();
 
     AnalyticsData = data;
     console.log(AnalyticsData);
