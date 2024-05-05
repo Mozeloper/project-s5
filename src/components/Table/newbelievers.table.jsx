@@ -15,7 +15,7 @@ import SuspendConvert from '../UI/SuspendConvert';
 import ReusableTable from './Table.reusable';
 import SearchBox from '../Searchbox/searchbox';
 import AssignNewBelieverToAdmin from '../UI/AssignNewBelieverToAdminScreen';
-import { assignConvertToAdmin } from '../../services/admins.api';
+import { assignConvertToAdmin, exportAllNewConverts } from '../../services/admins.api';
 
 export default function NewBelieversTable() {
   const queryClient = useQueryClient();
@@ -151,6 +151,15 @@ export default function NewBelieversTable() {
     setPageNumber(value);
   };
 
+  const handleExportClick = async () => {
+    try {
+      await exportAllNewConverts();
+      // Do something after export is successful, if needed
+    } catch (error) {
+      console.error('Error exporting converts:', error);
+      // Handle error
+    }
+  };
   return (
     <Fragment>
       <div className="bg-white">
@@ -191,6 +200,7 @@ export default function NewBelieversTable() {
                     optionsHandleClick={handleOptionsClick}
                     textSearch={textSearch}
                     setTextSearch={handleSearchChange}
+                    exportLink={handleExportClick}
                     // totalSearchData={searchAdmins.Data && searchAdmins.Data}
                   />
 

@@ -195,3 +195,41 @@ export async function getUnApprovalCount() {
     throw new Error(error.message || error);
   }
 }
+
+export async function exportAllNewConverts() {
+  try {
+    const exportedConverts = await api.get(
+      `${appUrls?.EXPORT_ALL_CONVERTS}`,
+      {responseType: 'blob'} // Specify the response type as blob
+    );
+    const exportedConvertsRes = await exportedConverts;
+    console.log(exportedConvertsRes);
+    // Create a Blob object from the response data
+    const blob = new Blob([exportedConvertsRes.data]);
+
+    // Create a URL for the Blob
+    const url = window.URL.createObjectURL(blob);
+
+    // Create a link element
+    const link = document.createElement('a');
+
+    // Set the href attribute to the URL of the Blob
+    link.href = url;
+
+    // Set the download attribute to specify the filename
+    link.setAttribute('download', 'NewConvertsData.xlsx'); // the desired filename
+
+    // Append the link to the document body
+    document.body.appendChild(link);
+
+    // Programmatically click the link to trigger the download
+    link.click();
+
+    // Cleanup: remove the link and revoke the URL
+    link.parentNode.removeChild(link);
+    window.URL.revokeObjectURL(url);
+    //return exportedConvertsRes;
+  } catch (error) {
+    throw new Error(error.message || error);
+  }
+}

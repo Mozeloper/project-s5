@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { camelCaseToSingleWords } from '../../Helper/toSeperateWord';
 import { Chip } from '@mui/material';
 import SearchBoxIndex from '../Searchbox/searchBoxIndex';
+import TruncatedText from '../TruncatedText';
 
 //This table is reuseable and can be use to render/display any data/apis as in (tabular form)/(table data)
 const ReusableTable = ({
@@ -21,14 +22,20 @@ const ReusableTable = ({
   hideSearch, // Add the hideSearch prop
   setTextSearch,
   textSearch,
+  exportLink,
 }) => {
   const filteredNumber = +filterNumber ?? +data?.length;
 
   //todo: Adding loading indicators on the table when a pageNumber is changed
   return (
+
     <div className="mt-8 flow-root px-[-1rem]">
+      <div className='flex justify-between items-center gap-5 w-full'>
+
+
       {hideSearch ? null : (
-        <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
+        <div className='flex w-full items-center gap-5'>
+        <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8 flex-1">
           <SearchBoxIndex
             searchArray={(totalSearchData && totalSearchData) ?? (data && data)}
             linkTo=""
@@ -36,7 +43,10 @@ const ReusableTable = ({
             setTextSearch={setTextSearch}
           />
         </div>
+        </div>
       )}
+      {exportLink ? <button onClick={() => exportLink()} className='ml-4 bg-blue-600 p-5 rounded-xl text-white hover:text-white/60'>Export</button> : null}
+      </div>
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle px-6 lg:px-8">
           <table className="min-w-full divide-y divide-gray-300 overflow-hidden">
@@ -179,6 +189,8 @@ const ReusableTable = ({
                               {row['IsActive'] ? 'Active' : 'Inactive'}
                             </div>
                           </div>
+                        ) : head.toLowerCase() === 'additionalinformation' ? (
+                          <TruncatedText text={row[head]} maxLength='25'/>
                         ) : (
                           <div className="font-medium text-gray-900">
                             {row[head] ? row[head] : '-'}
