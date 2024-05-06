@@ -231,12 +231,12 @@ export default function AddSoulsFormControl() {
                 <div className="text-xs mt-2 text-red-700">{errors.gender}</div>
               ) : null}
             </div>
-            <div className="relative z-0 w-full mb-6 group">
+            <div className="relative w-full mb-6 group">
               <label
                 htmlFor="dateWonSoul"
                 className="block mb-2 text-base font-medium text-gray-900 "
               >
-                Date Won Soul <span className="text-primary ml-1">*</span>
+                Date Of Salvation <span className="text-primary ml-1">*</span>
               </label>
               <input
                   type="date"
