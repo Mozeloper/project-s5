@@ -208,7 +208,7 @@ export default function AddSoulsFormControl() {
             </div>
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
-            <div className="relative z-0 w-full mb-6 group">
+            <div className="relative w-full mb-6 group">
               <label
                 htmlFor="gender"
                 className="block mb-2 text-base font-medium text-gray-900 "
