@@ -21,7 +21,8 @@ export const appUrls = {
   GET_DEACTIVATED_WORKER_DETAILS: '/api/v1/SuperAdmin/get-deactivated-worker', //get deactivated worker by id
   ADD_ROLE_TO_USER: '/api/v1/SuperAdmin/Add-user-role', //accepts id & role as query  eg ?userId=1&roles=User
   REMOVE_ADMIN_FROM_ROLE: '/api/v1/SuperAdmin/Remove-user-role', //remove a role from an admin, accepts the admin's id and the role as a query param eg /ADMIN_ID?roles=User
-
+  EXPORT_ALL_WORKERS: '/api/v1/SuperAdmin/export-workers',
+  
   //Worker
   GETSINGLEWORKERDETAILS_URL: '/api/v1/Worker/get-worker-profile', //user's pofile
 

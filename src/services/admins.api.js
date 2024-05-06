@@ -203,7 +203,7 @@ export async function exportAllNewConverts() {
       {responseType: 'blob'} // Specify the response type as blob
     );
     const exportedConvertsRes = await exportedConverts;
-    console.log(exportedConvertsRes);
+    // console.log(exportedConvertsRes);
     // Create a Blob object from the response data
     const blob = new Blob([exportedConvertsRes.data]);
 

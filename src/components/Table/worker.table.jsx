@@ -6,6 +6,7 @@ import Loader from '../Loader'
 import PaginationFooter from '../PaginationFooter'
 import Table from './table'
 import SearchBox from '../Searchbox/searchbox';
+import { exportAllWorkers } from '../../services/worker.api'
 
 export default function WorkersTable() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -31,7 +32,7 @@ export default function WorkersTable() {
       <div className="bg-white rounded-md">
         {/* <SearchBox /> */}
         <div className="px-4 sm:px-6 lg:px-8 bg-white py-7">
-          <div className="sm:flex sm:items-center">
+          <div className="sm:flex sm:items-center space-y-5">
             <div className="sm:flex-auto">
               <h1 className="text-2xl font-semibold leading-6 text-gray-900">
                 Workers
@@ -42,6 +43,8 @@ export default function WorkersTable() {
                 status.
               </p>
             </div>
+            { WorkersData?.Data?.length > 1 ? <button onClick={() => exportAllWorkers()} className=' bg-blue-600 p-4 text-xs rounded-xl text-white hover:text-white/60'>Export All Workers</button> : null }
+
           </div>
           {isLoading ? (
             <Loader />
