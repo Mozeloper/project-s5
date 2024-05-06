@@ -45,7 +45,7 @@ const ReusableTable = ({
         </div>
         </div>
       )}
-      {exportLink ? <button onClick={() => exportLink()} className='ml-4 bg-blue-600 p-5 rounded-xl text-white hover:text-white/60'>Export</button> : null}
+      {exportLink ? <button onClick={() => exportLink()} className='ml-4 bg-blue-600 p-6 rounded-xl text-xs text-white hover:text-white/60'>Export</button> : null}
       </div>
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle px-6 lg:px-8">
