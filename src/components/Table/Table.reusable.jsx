@@ -1,12 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { SlOptionsVertical } from 'react-icons/sl';
-import TableOptions from '../UI/Options';
-import EditIcon from '@mui/icons-material/Edit';
-import { camelCaseToSingleWords } from '../../Helper/toSeperateWord';
-import { Chip } from '@mui/material';
-import SearchBoxIndex from '../Searchbox/searchBoxIndex';
-import TruncatedText from '../TruncatedText';
+import React from "react";
+import { Link } from "react-router-dom";
+import { SlOptionsVertical } from "react-icons/sl";
+import TableOptions from "../UI/Options";
+import EditIcon from "@mui/icons-material/Edit";
+import { camelCaseToSingleWords } from "../../Helper/toSeperateWord";
+import { Chip } from "@mui/material";
+import SearchBoxIndex from "../Searchbox/searchBoxIndex";
+import TruncatedText from "../TruncatedText";
 
 //This table is reuseable and can be use to render/display any data/apis as in (tabular form)/(table data)
 const ReusableTable = ({
@@ -28,24 +28,35 @@ const ReusableTable = ({
 
   //todo: Adding loading indicators on the table when a pageNumber is changed
   return (
-
     <div className="mt-8 flow-root px-[-1rem]">
-      <div className='flex justify-between items-center gap-5 w-full'>
-
-
-      {hideSearch ? null : (
-        <div className='flex w-full items-center gap-5'>
-        <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8 flex-1">
-          <SearchBoxIndex
-            searchArray={(totalSearchData && totalSearchData) ?? (data && data)}
-            linkTo=""
-            textSearch={textSearch}
-            setTextSearch={setTextSearch}
-          />
-        </div>
-        </div>
-      )}
-      {exportLink ? <button onClick={() => exportLink()} className='ml-4 bg-blue-600 p-6 rounded-xl text-xs text-white hover:text-white/60'>Export</button> : null}
+      <div className="flex justify-between items-center gap-5 w-full">
+        {hideSearch ? null : (
+          <div className="flex w-full items-center gap-5">
+            <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8 flex-1">
+              <SearchBoxIndex
+                searchArray={
+                  (totalSearchData && totalSearchData) ?? (data && data)
+                }
+                linkTo=""
+                textSearch={textSearch}
+                setTextSearch={setTextSearch}
+              />
+            </div>
+          </div>
+        )}
+        {/* (
+          <a href={exportLink} download>
+            Export
+          </a>
+        )  */}
+        {exportLink ? (
+          <button
+            onClick={() => exportLink()}
+            className="ml-4 bg-red-600 p-6 rounded-xl text-sm text-white hover:text-white/60"
+          >
+            Export
+          </button>
+        ) : null}
       </div>
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle px-6 lg:px-8">
@@ -56,9 +67,9 @@ const ReusableTable = ({
                   ?.slice(0, +filteredNumber)
                   .filter((head) => {
                     return (
-                      (head.toLowerCase() !== 'surname' &&
-                        head.toLowerCase() !== 'firstname') ||
-                      head.toLowerCase() === 'fullname'
+                      (head.toLowerCase() !== "surname" &&
+                        head.toLowerCase() !== "firstname") ||
+                      head.toLowerCase() === "fullname"
                     );
                   })
                   .map((head) => (
@@ -66,33 +77,33 @@ const ReusableTable = ({
                       key={head}
                       scope="col"
                       className={`pr-3 py-3.5 text-left uppercase text-sm font-semibold text-gray-900 ${
-                        head.toLowerCase() === 'email' ||
-                        head.toLowerCase() === 'id' ||
-                        head.toLowerCase() === 'username' ||
-                        head.toLowerCase() === 'surname' ||
-                        head.toLowerCase() === 'othernames' ||
-                        head.toLowerCase() === 'workerid' ||
-                        head.toLowerCase() === 'dateofbirth' ||
-                        head.toLowerCase() === 'address' ||
-                        head.toLowerCase() === 'datecreated' ||
-                        head.toLowerCase() === 'yearjoined' ||
-                        head.toLowerCase() === 'isassigned'
-                          ? 'hidden'
-                          : ''
+                        head.toLowerCase() === "email" ||
+                        head.toLowerCase() === "id" ||
+                        head.toLowerCase() === "username" ||
+                        head.toLowerCase() === "surname" ||
+                        head.toLowerCase() === "othernames" ||
+                        head.toLowerCase() === "workerid" ||
+                        head.toLowerCase() === "dateofbirth" ||
+                        head.toLowerCase() === "address" ||
+                        head.toLowerCase() === "datecreated" ||
+                        head.toLowerCase() === "yearjoined" ||
+                        head.toLowerCase() === "isassigned"
+                          ? "hidden"
+                          : ""
                       }`}
                     >
-                      {(head.toLowerCase() === 'firstname' &&
-                        head.toLowerCase() === 'surname') ||
-                      head.toLowerCase() === 'fullname' ||
-                      head === 'fullName'
-                        ? 'Name'
-                        : head.toLowerCase() === 'isactive'
-                        ? 'Status'
+                      {(head.toLowerCase() === "firstname" &&
+                        head.toLowerCase() === "surname") ||
+                      head.toLowerCase() === "fullname" ||
+                      head === "fullName"
+                        ? "Name"
+                        : head.toLowerCase() === "isactive"
+                        ? "Status"
                         : camelCaseToSingleWords(head)}
                     </th>
                   ))}
                 <th className="pr-3 py-3.5 text-left uppercase text-sm font-semibold text-gray-900">
-                  {headers && headers.length > 1 && 'ACTIONS'}
+                  {headers && headers.length > 1 && "ACTIONS"}
                 </th>
               </tr>
             </thead>
@@ -103,97 +114,97 @@ const ReusableTable = ({
                     ?.slice(0, +filteredNumber)
                     .filter((head) => {
                       return (
-                        (head.toLowerCase() !== 'surname' &&
-                          head.toLowerCase() !== 'firstname') ||
-                        head.toLowerCase() === 'fullname'
+                        (head.toLowerCase() !== "surname" &&
+                          head.toLowerCase() !== "firstname") ||
+                        head.toLowerCase() === "fullname"
                       );
                     })
                     .map((head) => (
                       <td
                         key={head}
                         className={`whitespace-nowrap py-5 pr-3 text-sm sm:pl-0 ${
-                          head.toLowerCase() === 'email' ||
-                          head.toLowerCase() === 'id' ||
-                          head.toLowerCase() === 'username' ||
-                          head.toLowerCase() === 'surname' ||
-                          head.toLowerCase() === 'othernames' ||
-                          head.toLowerCase() === 'workerid' ||
-                          head.toLowerCase() === 'dateofbirth' ||
-                          head.toLowerCase() === 'address' ||
-                          head.toLowerCase() === 'datecreated' ||
-                          head.toLowerCase() === 'yearjoined' ||
-                          head.toLowerCase() === 'datecreated' ||
-                          head.toLowerCase() === 'isassigned'
-                            ? 'hidden'
-                            : ''
+                          head.toLowerCase() === "email" ||
+                          head.toLowerCase() === "id" ||
+                          head.toLowerCase() === "username" ||
+                          head.toLowerCase() === "surname" ||
+                          head.toLowerCase() === "othernames" ||
+                          head.toLowerCase() === "workerid" ||
+                          head.toLowerCase() === "dateofbirth" ||
+                          head.toLowerCase() === "address" ||
+                          head.toLowerCase() === "datecreated" ||
+                          head.toLowerCase() === "yearjoined" ||
+                          head.toLowerCase() === "datecreated" ||
+                          head.toLowerCase() === "isassigned"
+                            ? "hidden"
+                            : ""
                         }`}
                       >
-                        {(head.toLowerCase() === 'firstname' &&
-                          head.toLowerCase() === 'surname') ||
-                        head.toLowerCase() === 'fullname' ? (
-                          <Link to={`/${pageLink}/${row['id'] ?? row['Id']}`}>
+                        {(head.toLowerCase() === "firstname" &&
+                          head.toLowerCase() === "surname") ||
+                        head.toLowerCase() === "fullname" ? (
+                          <Link to={`/${pageLink}/${row["id"] ?? row["Id"]}`}>
                             <div className="flex items-center">
                               <div>
                                 <div className="font-medium text-gray-900 !capitalize">
                                   {/* {row['SurName'] || row['surname']}{' '}
                                 {row['FirstName'] || row['firstName']}
                                 {row['FullName'] ?? row['fullName']} */}
-                                  {row['SurName'] && row['FirstName']
-                                    ? `${row['FirstName']} ${row['SurName']}`
-                                    : row['FullName'] || row['fullName']}
+                                  {row["SurName"] && row["FirstName"]
+                                    ? `${row["FirstName"]} ${row["SurName"]}`
+                                    : row["FullName"] || row["fullName"]}
                                 </div>
                                 {/* This condition renders the email under name of the user */}
                                 <div className="mt-1 text-gray-500">
-                                  {row['Email'] || row['email'] || ''}
+                                  {row["Email"] || row["email"] || ""}
                                 </div>
                               </div>
                             </div>
                           </Link>
-                        ) : head.toLowerCase() === 'roles' ? (
+                        ) : head.toLowerCase() === "roles" ? (
                           <div>
                             <div className="font-semibold text-gray-900">
-                              {(row['ROLES'] ?? row['Roles']).map((role) => (
+                              {(row["ROLES"] ?? row["Roles"]).map((role) => (
                                 <Chip
                                   key={role}
                                   label={
-                                    role.toLowerCase() === 'superadmin'
-                                      ? 'Admin'
-                                      : role.toLowerCase() === 'newconvertadmin'
-                                      ? 'Believers'
-                                      : role.toLowerCase() === 'dtiadmin'
-                                      ? 'DTI'
-                                      : 'Ministry'
+                                    role.toLowerCase() === "superadmin"
+                                      ? "Admin"
+                                      : role.toLowerCase() === "newconvertadmin"
+                                      ? "Believers"
+                                      : role.toLowerCase() === "dtiadmin"
+                                      ? "DTI"
+                                      : "Ministry"
                                   }
                                   className={`${
-                                    role.toLowerCase() === 'superadmin'
-                                      ? '!bg-primary !text-white'
-                                      : role.toLowerCase() === 'newconvertadmin'
-                                      ? '!bg-yellow-300'
-                                      : role.toLowerCase() === 'dtiadmin'
-                                      ? '!bg-blue-600 !text-white'
-                                      : '!bg-green-700 !text-white'
+                                    role.toLowerCase() === "superadmin"
+                                      ? "!bg-primary !text-white"
+                                      : role.toLowerCase() === "newconvertadmin"
+                                      ? "!bg-yellow-300"
+                                      : role.toLowerCase() === "dtiadmin"
+                                      ? "!bg-blue-600 !text-white"
+                                      : "!bg-green-700 !text-white"
                                   } cursor-pointer !text-[9px] mr-1`}
                                 />
                               ))}
                             </div>
                           </div>
-                        ) : head.toLowerCase() === 'isactive' ? (
+                        ) : head.toLowerCase() === "isactive" ? (
                           <div>
                             <div
                               className={`text-xs font-semibold text-gray-900  inline-flex items-center rounded-md bg-green-50 px-2 py-1 ${
-                                row['IsActive']
-                                  ? 'text-green-700 bg-green-50 '
-                                  : 'text-red-700 bg-red-50'
+                                row["IsActive"]
+                                  ? "text-green-700 bg-green-50 "
+                                  : "text-red-700 bg-red-50"
                               }`}
                             >
-                              {row['IsActive'] ? 'Active' : 'Inactive'}
+                              {row["IsActive"] ? "Active" : "Inactive"}
                             </div>
                           </div>
-                        ) : head.toLowerCase() === 'additionalinformation' ? (
-                          <TruncatedText text={row[head]} maxLength='25'/>
+                        ) : head.toLowerCase() === "additionalinformation" ? (
+                          <TruncatedText text={row[head]} maxLength="25" />
                         ) : (
                           <div className="font-medium text-gray-900">
-                            {row[head] ? row[head] : '-'}
+                            {row[head] ? row[head] : "-"}
                           </div>
                         )}
                       </td>
@@ -205,15 +216,15 @@ const ReusableTable = ({
                           displayModalUi={optionModal}
                           optionsList={optionArrayList}
                           handleClick={optionsHandleClick}
-                          id={row['Id'] ?? row['id']}
+                          id={row["Id"] ?? row["id"]}
                           pageLink={pageLink}
                           selectedUserData={{
                             name:
-                              row['SurName'] && row['FirstName']
-                                ? `${row['FirstName']} ${row['SurName']}`
-                                : row['FullName'] || row['fullName'],
-                            roles: row['ROLES'] || row['Roles'],
-                            isAssigned: row['IsAssigned'] || row['isassigned'],
+                              row["SurName"] && row["FirstName"]
+                                ? `${row["FirstName"]} ${row["SurName"]}`
+                                : row["FullName"] || row["fullName"],
+                            roles: row["ROLES"] || row["Roles"],
+                            isAssigned: row["IsAssigned"] || row["isassigned"],
                           }}
                         />
                       )

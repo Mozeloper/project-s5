@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { appUrls } from './urls';
-import { api } from './api';
-import toast from 'react-hot-toast';
+import axios from "axios";
+import { appUrls } from "./urls";
+import { api } from "./api";
+import toast from "react-hot-toast";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -99,7 +99,7 @@ export async function suspendAConvert(convertId, reason) {
 export async function promoteConvertToMinistry(convertId, departmentId) {
   const payload = {
     id: `${convertId}`,
-    status: 'NewBeliever',
+    status: "NewBeliever",
     departmentId: `${departmentId}`,
   };
   try {
@@ -177,7 +177,7 @@ export async function assignConvertToAdmin(convertId, adminId) {
       }
     } else {
       // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.response.status);
+      console.log("Error", error.response.status);
     }
     //console.log(error.config);
     throw new Error(error.message || error);
@@ -198,9 +198,10 @@ export async function getUnApprovalCount() {
 
 export async function exportAllNewConverts() {
   try {
+    // startDate and endDate
     const exportedConverts = await api.get(
       `${appUrls?.EXPORT_ALL_CONVERTS}`,
-      {responseType: 'blob'} // Specify the response type as blob
+      { responseType: "blob" } // Specify the response type as blob
     );
     const exportedConvertsRes = await exportedConverts;
     // console.log(exportedConvertsRes);
@@ -211,13 +212,13 @@ export async function exportAllNewConverts() {
     const url = window.URL.createObjectURL(blob);
 
     // Create a link element
-    const link = document.createElement('a');
+    const link = document.createElement("a");
 
     // Set the href attribute to the URL of the Blob
     link.href = url;
 
     // Set the download attribute to specify the filename
-    link.setAttribute('download', 'NewConvertsData.xlsx'); // the desired filename
+    link.setAttribute("download", "NewConvertsData.xlsx"); // the desired filename
 
     // Append the link to the document body
     document.body.appendChild(link);

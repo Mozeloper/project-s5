@@ -1,21 +1,28 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import { GiConfirmed } from 'react-icons/gi';
-import { GrView } from 'react-icons/gr';
-import { IoRemoveCircleSharp } from 'react-icons/io5';
-import { MdAssignmentAdd } from 'react-icons/md';
-import { useQueryClient } from 'react-query';
-import { useTextSearchNav } from '../../context/textSearch.context';
-import { useFetchNewBelievers } from '../../hooks/useFetchNewBelievers';
-import { suspendAConvert } from '../../services/admins.api';
-import Loader from '../Loader';
-import PaginationFooter from '../PaginationFooter';
-import PromoteConvertToDti from '../UI/PromoteScreen/PromoteConvertToDti';
-import SuspendConvert from '../UI/SuspendConvert';
-import ReusableTable from './Table.reusable';
-import SearchBox from '../Searchbox/searchbox';
-import AssignNewBelieverToAdmin from '../UI/AssignNewBelieverToAdminScreen';
-import { assignConvertToAdmin, exportAllNewConverts } from '../../services/admins.api';
+import React, { Fragment, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { GiConfirmed } from "react-icons/gi";
+import { GrView } from "react-icons/gr";
+import { IoRemoveCircleSharp } from "react-icons/io5";
+import { MdAssignmentAdd } from "react-icons/md";
+import { useQueryClient } from "react-query";
+import { useTextSearchNav } from "../../context/textSearch.context";
+import { useFetchNewBelievers } from "../../hooks/useFetchNewBelievers";
+import { suspendAConvert } from "../../services/admins.api";
+import Loader from "../Loader";
+import PaginationFooter from "../PaginationFooter";
+import PromoteConvertToDti from "../UI/PromoteScreen/PromoteConvertToDti";
+import SuspendConvert from "../UI/SuspendConvert";
+import ReusableTable from "./Table.reusable";
+import SearchBox from "../Searchbox/searchbox";
+import AssignNewBelieverToAdmin from "../UI/AssignNewBelieverToAdminScreen";
+import {
+  assignConvertToAdmin,
+  exportAllNewConverts,
+} from "../../services/admins.api";
+import TransitionsModal from "../ModalPopup/modalTransition";
+import ModalPopup from "../ModalPopup";
+import { useModalToggle } from "../../context/ConfirmationModal.context";
+import DateRangeForm from "../UI/Forms/DateRangeForm";
 
 export default function NewBelieversTable() {
   const queryClient = useQueryClient();
@@ -24,7 +31,11 @@ export default function NewBelieversTable() {
   const [headers, setHeaders] = useState([]);
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
-  const [textSearch, setTextSearch ] = useState('');
+  const [textSearch, setTextSearch] = useState("");
+  const [isExportable, setIsExportable] = useState(false);
+  const { modalType, openModal: transitionOpen } = useModalToggle();
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   /**
    * Hook for fetching all converts in new believers stage
@@ -49,18 +60,18 @@ export default function NewBelieversTable() {
   }, [NewBelieversData]);
 
   const optionList = [
-    { icon: <GrView className="text-blue-500" />, name: 'View' },
-    { icon: <MdAssignmentAdd className="text-red-700" />, name: 'Assign' },
-    { icon: <GiConfirmed className="text-green-500" />, name: 'Promote' },
+    { icon: <GrView className="text-blue-500" />, name: "View" },
+    { icon: <MdAssignmentAdd className="text-red-700" />, name: "Assign" },
+    { icon: <GiConfirmed className="text-red-500" />, name: "Promote" },
     {
       icon: <IoRemoveCircleSharp className="text-yellow-500" />,
-      name: 'Disable',
+      name: "Disable",
     },
   ];
 
   const handleSearchChange = (newQuery) => {
-    setTextSearch(prev => prev = newQuery)
-  }
+    setTextSearch((prev) => (prev = newQuery));
+  };
 
   /**
    * Function for handling promotion of a new beleiver (note the function is currently being handled by the modal)
@@ -81,7 +92,7 @@ export default function NewBelieversTable() {
     if (suspededConvert.StatusCode === 200) {
       toast.success(suspededConvert.Message);
       // Refetch the data after suspending the convert
-      queryClient.invalidateQueries('GetAllNewBelievers');
+      queryClient.invalidateQueries("GetAllNewBelievers");
       useFetchNewBelievers({ pageNumber, pageSize, searchquery });
     }
   };
@@ -97,7 +108,7 @@ export default function NewBelieversTable() {
       const AssignRes = await assignConvertToAdmin(id, adminId);
       if (AssignRes.StatusCode === 200) {
         toast.success(AssignRes.Message);
-        queryClient.invalidateQueries('GetAllNewBelievers');
+        queryClient.invalidateQueries("GetAllNewBelievers");
       }
     } catch (error) {
       // toast.error('Could not assign convert, please try again');
@@ -115,7 +126,7 @@ export default function NewBelieversTable() {
     const id = event.currentTarget.id;
     const { name: Name, roles: Roles } = event.selectedUserData;
 
-    if (innerText.toLowerCase() === 'promote') {
+    if (innerText.toLowerCase() === "promote") {
       setDisplayUi(
         <PromoteConvertToDti
           workerId={id}
@@ -123,14 +134,14 @@ export default function NewBelieversTable() {
           handlePromote={handlePromoteToDti.bind(null, id)}
         />
       );
-    } else if (innerText.toLowerCase() === 'disable') {
+    } else if (innerText.toLowerCase() === "disable") {
       setDisplayUi(
         <SuspendConvert
           handleDeactivate={handleSuspendNBCovert.bind(null, id)}
           screenName={innerText}
         />
       );
-    } else if (innerText.toLowerCase() === 'assign') {
+    } else if (innerText.toLowerCase() === "assign") {
       setDisplayUi(
         <AssignNewBelieverToAdmin
           handleAssignToAdmin={handleAssignNBToAdmin.bind(null, id)}
@@ -151,15 +162,21 @@ export default function NewBelieversTable() {
     setPageNumber(value);
   };
 
-  const handleExportClick = async () => {
+  const handleExportClick = () => {
+    console.log(`Exporting data from ${startDate} to ${endDate}`);
+    transitionOpen("openModal");
+  };
+
+  const handleExport = async () => {
     try {
       await exportAllNewConverts();
       // Do something after export is successful, if needed
     } catch (error) {
-      console.error('Error exporting converts:', error);
+      console.error("Error exporting converts:", error);
       // Handle error
     }
   };
+
   return (
     <Fragment>
       <div className="bg-white">
@@ -191,7 +208,7 @@ export default function NewBelieversTable() {
               ) : (
                 <>
                   <ReusableTable
-                    pageLink={'newconverts'}
+                    pageLink={"newconverts"}
                     optionModal={displayUi}
                     headers={headers}
                     data={data}
@@ -204,6 +221,19 @@ export default function NewBelieversTable() {
                     // totalSearchData={searchAdmins.Data && searchAdmins.Data}
                   />
 
+                  {/* {isExportable && ( */}
+                  <TransitionsModal
+                    isModalOpen={modalType == "openModal"}
+                    heading={"Export New Convert"}
+                    width={"max-w-2xl w-[90%] bg-[#Bf0A30]"}
+                  >
+                    <DateRangeForm
+                      startDate={startDate}
+                      endDate={endDate}
+                      onExport={handleExport}
+                    />
+                  </TransitionsModal>
+                  {/* )} */}
                   <PaginationFooter
                     pageNumber={pageNumber}
                     totalPerCount={Math.ceil(
@@ -217,7 +247,7 @@ export default function NewBelieversTable() {
             </>
           )}
           <div className="flex justify-center items-center">
-            {!isLoading && isFetching && 'Loading...'}
+            {!isLoading && isFetching && "Loading..."}
           </div>
         </div>
       </div>
