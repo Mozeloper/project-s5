@@ -196,12 +196,21 @@ export async function getUnApprovalCount() {
   }
 }
 
-export async function exportAllNewConverts() {
+export async function exportAllNewConverts({ startDate, endDate }) {
   try {
     // startDate and endDate
+    // const exportedConverts = await api.get(
+    //   `${appUrls?.EXPORT_ALL_CONVERTS}?startDate=${startDate}&endDate=${endDate}`,
+    //   { responseType: "blob" } // Specify the response type as blob
+    // );
+
+    // Ensure the dates are formatted correctly for the query string, e.g., month/day/year (MM/DD/YYYY)
+    const formattedStartDate = new Date(startDate).toLocaleDateString("en-US");
+    const formattedEndDate = new Date(endDate).toLocaleDateString("en-US");
+
     const exportedConverts = await api.get(
-      `${appUrls?.EXPORT_ALL_CONVERTS}`,
-      { responseType: "blob" } // Specify the response type as blob
+      `${appUrls?.EXPORT_ALL_CONVERTS}?startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
+      { responseType: "blob" } // Specify that the response is a blob (file download)
     );
     const exportedConvertsRes = await exportedConverts;
     // console.log(exportedConvertsRes);

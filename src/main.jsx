@@ -4,15 +4,15 @@ import { HashRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { QueryClient, QueryClientProvider } from "react-query";
- import { ReactQueryDevtools } from 'react-query/devtools'
- import ModalToggleContextProvider from "./context/ConfirmationModal.context.jsx";
+import { ReactQueryDevtools } from "react-query/devtools";
+import ModalToggleContextProvider from "./context/ConfirmationModal.context.jsx";
 //  import TextSearchNavContext from "./context/textSearch.context.js";
- import "./index.css";
+import "./index.css";
 import TextSearchNavContext from "./context/textSearch.context.tsx";
 
 const queryClient = new QueryClient({
-    defaultOptions: { queries: { staleTime: 10000 }}
-})
+  defaultOptions: { queries: { staleTime: 60000 } }, // 1 minute
+});
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -23,9 +23,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <App />
           </TextSearchNavContext>
         </ModalToggleContextProvider>
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-left"/>
-    </QueryClientProvider>
-    <Toaster />
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-left" />
+      </QueryClientProvider>
+      <Toaster />
     </HashRouter>
   </React.StrictMode>
 );

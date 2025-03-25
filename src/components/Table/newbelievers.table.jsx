@@ -6,7 +6,10 @@ import { IoRemoveCircleSharp } from "react-icons/io5";
 import { MdAssignmentAdd } from "react-icons/md";
 import { useQueryClient } from "react-query";
 import { useTextSearchNav } from "../../context/textSearch.context";
-import { useFetchNewBelievers } from "../../hooks/useFetchNewBelievers";
+import {
+  useExportNewBelievers,
+  useFetchNewBelievers,
+} from "../../hooks/useFetchNewBelievers";
 import { suspendAConvert } from "../../services/admins.api";
 import Loader from "../Loader";
 import PaginationFooter from "../PaginationFooter";
@@ -17,7 +20,7 @@ import SearchBox from "../Searchbox/searchbox";
 import AssignNewBelieverToAdmin from "../UI/AssignNewBelieverToAdminScreen";
 import {
   assignConvertToAdmin,
-  exportAllNewConverts,
+  // exportAllNewConverts,
 } from "../../services/admins.api";
 import TransitionsModal from "../ModalPopup/modalTransition";
 import ModalPopup from "../ModalPopup";
@@ -32,10 +35,11 @@ export default function NewBelieversTable() {
   const [data, setData] = useState([]);
   const [displayUi, setDisplayUi] = React.useState(null);
   const [textSearch, setTextSearch] = useState("");
-  const [isExportable, setIsExportable] = useState(false);
   const { modalType, openModal: transitionOpen } = useModalToggle();
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [dateRange, setDateRange] = useState({
+    startDate: "",
+    endDate: "",
+  });
 
   /**
    * Hook for fetching all converts in new believers stage
@@ -49,6 +53,15 @@ export default function NewBelieversTable() {
     isFetching,
     error,
   } = useFetchNewBelievers({ pageNumber, pageSize, searchquery: textSearch });
+
+  const {
+    data: exportData,
+    mutate: exportAllNewBelievers,
+    isLoading: isLoadingExport,
+  } = useExportNewBelievers({
+    startDate: dateRange.startDate,
+    endDate: dateRange.endDate,
+  });
 
   useEffect(() => {
     const getPosts = async () => {
@@ -88,7 +101,7 @@ export default function NewBelieversTable() {
    */
   const handleSuspendNBCovert = async (id, reason) => {
     const suspededConvert = await suspendAConvert(id, reason);
-    console.log(suspededConvert.Message);
+    // console.log(suspededConvert.Message);
     if (suspededConvert.StatusCode === 200) {
       toast.success(suspededConvert.Message);
       // Refetch the data after suspending the convert
@@ -103,7 +116,7 @@ export default function NewBelieversTable() {
    * @param {string} adminId
    */
   const handleAssignNBToAdmin = async (id, adminId) => {
-    console.log(id, adminId);
+    // console.log(id, adminId);
     try {
       const AssignRes = await assignConvertToAdmin(id, adminId);
       if (AssignRes.StatusCode === 200) {
@@ -163,18 +176,23 @@ export default function NewBelieversTable() {
   };
 
   const handleExportClick = () => {
-    console.log(`Exporting data from ${startDate} to ${endDate}`);
     transitionOpen("openModal");
   };
 
-  const handleExport = async () => {
-    try {
-      await exportAllNewConverts();
-      // Do something after export is successful, if needed
-    } catch (error) {
-      console.error("Error exporting converts:", error);
-      // Handle error
+  const handleExport = async (startDate, endDate) => {
+    // Handle the date range export
+
+    if (!startDate || !endDate) {
+      toast.error("Oops: Invalid dates. Try Again Later.");
+      return;
     }
+
+    // Only set dates and trigger export once dates are valid
+    setDateRange({ startDate, endDate });
+
+    // Only trigger the export if both dates are available
+    // if (dateRange.startDate && dateRange.endDate)
+    exportAllNewBelievers({ startDate, endDate });
   };
 
   return (
@@ -228,9 +246,8 @@ export default function NewBelieversTable() {
                     width={"max-w-2xl w-[90%] bg-[#Bf0A30]"}
                   >
                     <DateRangeForm
-                      startDate={startDate}
-                      endDate={endDate}
                       onExport={handleExport}
+                      isLoading={isLoadingExport}
                     />
                   </TransitionsModal>
                   {/* )} */}
