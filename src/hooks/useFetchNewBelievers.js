@@ -36,7 +36,6 @@ export function useDTIAdminNames(nameQuery = "") {
 
 // Export the new believer data
 export function useExportNewBelievers({ startDate, endDate }) {
-  console.log("startDate Query", startDate, "endDate Query", endDate);
   const exportBelievers = useMutation({
     mutationFn: async () => await exportAllNewConverts({ startDate, endDate }), // Your API call
     onSuccess: () => {
